@@ -18,7 +18,7 @@ string Invariable::le_mot_est_invariable(string mot, string l_source, string l_s
     langue_source = l_source;
     langue_sortie = l_sortie;
 
-    ifstream fichier_invariables(resourcePath() + "Dictionnaire/invariables.txt");
+    ifstream fichier_invariables(resourcePath() + "invariables.txt");
         
     // Est-ce un mot invariable ?
     

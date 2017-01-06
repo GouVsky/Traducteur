@@ -31,7 +31,7 @@ tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_
     
     for (int i = 0; i < 2; i++)
     {
-        ifstream fichier_noms_communs(resourcePath() + "Dictionnaire/noms_" + genre[i] + "s.txt");
+        ifstream fichier_noms_communs(resourcePath() + "noms_" + genre[i] + "s.txt");
         
         // Est-ce un nom commun ?
         
@@ -40,7 +40,7 @@ tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_
             fichier_noms_communs >> nom["A"] >> nom["F"] >> champ_lexical;
             
             // Si le mot possède plusieurs sens, on regarde lequel correspond.
-            
+
             istringstream iss_langue_source(nom[langue_source]);
             
             while (getline(iss_langue_source, mot_source, '/'))
@@ -100,7 +100,7 @@ tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_
         
         if (tableau_mots.empty())
         {
-            ifstream fichier_prenoms(resourcePath() + "Dictionnaire/prenoms_" + genre[i] + "s.txt");
+            ifstream fichier_prenoms(resourcePath() + "prenoms_" + genre[i] + "s.txt");
 
             // Est-ce un prénom ?
             

@@ -19,7 +19,7 @@ tuple <string, int, int> Expression::determine_si_existe_une_expression_dans_la_
     langue_source = l_source;
     langue_sortie = l_sortie;
 
-    ifstream monFichierExpressions(resourcePath() + "Dictionnaire/expressions.txt");
+    ifstream monFichierExpressions(resourcePath() + "expressions.txt");
 
     while(!monFichierExpressions.eof())
     {

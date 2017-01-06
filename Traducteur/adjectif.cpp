@@ -22,7 +22,7 @@ tuple <string, string> Adjectif::le_mot_est_un_adjectif(string mot, string l_sou
     langue_source = l_source;
     langue_sortie = l_sortie;
     
-    ifstream fichier_adjectifs(resourcePath() + "Dictionnaire/adjectifs.txt");
+    ifstream fichier_adjectifs(resourcePath() + "adjectifs.txt");
     
     while(!fichier_adjectifs.eof())
     {

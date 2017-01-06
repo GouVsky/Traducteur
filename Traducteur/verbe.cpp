@@ -20,7 +20,7 @@ using namespace std;
 
 string Verbe::le_verbe_est_irregulier(string verbe, string temps, string langue)
 {
-    ifstream fichier_verbes_irreguliers(resourcePath() + "Dictionnaire/verbes_irreguliers_" + langue + ".txt");
+    ifstream fichier_verbes_irreguliers(resourcePath() + "verbes_irreguliers_" + langue + ".txt");
     
     while(!fichier_verbes_irreguliers.eof())
     {
@@ -164,7 +164,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
     
     forme_verbe_sortie = "MEM2!65oG";
         
-    ifstream fichier_caracteristique(resourcePath() + "Dictionnaire/caracteristique_langue.txt");
+    ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
 
     while(!fichier_caracteristique.eof())
     {
@@ -174,7 +174,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
         
         for(int groupe_verbe = 1; groupe_verbe <= 3; groupe_verbe++)
         {
-            ifstream fichier_verbes(resourcePath() + "Dictionnaire/verbes_" + to_string(groupe_verbe) + ".txt");
+            ifstream fichier_verbes(resourcePath() + "verbes_" + to_string(groupe_verbe) + ".txt");
             
             while(!fichier_verbes.eof())
             {

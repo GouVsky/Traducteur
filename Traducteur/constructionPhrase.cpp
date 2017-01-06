@@ -79,7 +79,7 @@ void Phrase::choix_des_mots_selon_champ_lexical(int indice)
     
     int max = 0;
     string  le_mot = "", le_type = "";
-    
+        
     for (int i = 0; i < tableau_contenant_champs_lexicaux[indice].size(); i++)
     {
         for (int j = 0; j < tableau_contenant_champs_lexicaux[indice][i].size(); j++)
@@ -155,6 +155,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
     bool p_personnel = false;
     vector <string> s_source, s_sortie, significations, champs_lexicaux;
     
+
     for (int i = 0; i < phrase.size(); i++)
     {
         // Expression.
@@ -194,7 +195,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                     break;
                 }
             }
-            
+
             // Le mot n'est pas un pronom.
             
             if (p_personnel == false)
@@ -207,7 +208,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 //      - On ajoute son champ lexical dans un autre tableau.
                 
                 
-                
+
                 // Nom commun masculin ou féminin.
                 
                 tuple <vector <string>, vector <string>, vector <string>, string> mot_commun = nom_commun.le_mot_est_un_nom_commun(phrase[i], langue_source, langue_sortie);
