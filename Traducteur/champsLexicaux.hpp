@@ -25,18 +25,17 @@ class ChampsLexicaux
     
     static int tableau_des_champs_lexicaux[];
 
-    std::map <std::string, int> liste_champs_lexicaux = {{"-", 0},
-                                                         {"MER", 1},
-                                                         {"NOM", 2},
-                                                         {"CORPS", 3},
-                                                         {"RESEAU", 4},
-                                                         {"MUSIQUE", 5},
-                                                         {"MOBILIER", 6},
-                                                         {"DISTANCE", 7},
-                                                         {"PRINTEMPS", 8},
-                                                         {"TU_ES_UN_SORCIER_HARRY", 9},
-                                                         {"NATURE", 10},
-                                                         {"FOURNITURE", 11}};
+    std::map <std::string, int> liste_champs_lexicaux = {{"MER", 0},
+                                                         {"NOM", 1},
+                                                         {"CORPS", 2},
+                                                         {"RESEAU", 3},
+                                                         {"MUSIQUE", 4},
+                                                         {"MOBILIER", 5},
+                                                         {"DISTANCE", 6},
+                                                         {"PRINTEMPS", 7},
+                                                         {"TU_ES_UN_SORCIER_HARRY", 8},
+                                                         {"NATURE", 9},
+                                                         {"FOURNITURE", 10}};
 };
 
 #endif /* champsLexicaux_hpp */

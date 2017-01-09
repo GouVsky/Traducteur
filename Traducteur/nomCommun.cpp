@@ -15,7 +15,7 @@ using namespace std;
 
 // Détermine si le mot est un nom masculin ou féminin (nom commun ou prénom).
 
-tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_mot_est_un_nom_commun(string mot, string l_source, string l_sortie)
+tuple <vector <string>, vector <vector <string>>, vector <string>, string> NomCommun::le_mot_est_un_nom_commun(string mot, string l_source, string l_sortie)
 {
     ChampsLexicaux chp_lex;
     
@@ -27,7 +27,8 @@ tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_
     
     string nombre = "singulier";
     
-    vector <string> tableau_mots, tableau_champs_lexicaux, tableau_genre;
+    vector <string> tableau_mots, tableau_genre;
+    vector <vector <string>> tableau_champs_lexicaux;
     
     for (int i = 0; i < 2; i++)
     {
@@ -54,7 +55,15 @@ tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_
                     
                     while (getline(iss_champs_lexicaux, les_champs_lexicaux, '/') && getline(iss_langue_sortie, mot_sortie, '/'))
                     {
+                        // On ajoute les mots correspondants.
+                        
+                        tableau_genre.push_back(genre[i]);
+                        
+                        tableau_mots.push_back(mot_sortie);
+                        
                         // On récupère chaque champ lexical.
+
+                        tableau_champs_lexicaux.push_back(vector <string> ());
                         
                         istringstream iss_champ_lexical(les_champs_lexicaux);
                         
@@ -64,13 +73,7 @@ tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_
                             
                             chp_lex.incrementation_des_champs_lexicaux(un_des_champs_lexicaux);
                             
-                            tableau_champs_lexicaux.push_back(un_des_champs_lexicaux);
-                            
-                            // On ajoute les mots correspondants.
-                            
-                            tableau_genre.push_back(genre[i]);
-                            
-                            tableau_mots.push_back(mot_sortie);
+                            tableau_champs_lexicaux[tableau_champs_lexicaux.size() - 1].push_back(un_des_champs_lexicaux);
                         }
                     }
                     
@@ -115,7 +118,10 @@ tuple <vector <string>, vector <string>, vector <string>, string> NomCommun::le_
                     prenom[0] = toupper(prenom[0]);
                     
                     tableau_mots.push_back(prenom);
-                    tableau_champs_lexicaux.push_back("-");
+                    
+                    tableau_champs_lexicaux.push_back(vector <string> ());
+                    
+                    tableau_champs_lexicaux[tableau_champs_lexicaux.size() - 1].push_back("-");
                     
                     break;
                 }

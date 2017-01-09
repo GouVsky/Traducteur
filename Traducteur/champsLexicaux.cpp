@@ -8,8 +8,6 @@
 
 #include "champsLexicaux.hpp"
 
-#define NOMBRE_CHP_LEXICAUX 10
-
 using namespace std;
 
 int ChampsLexicaux::tableau_des_champs_lexicaux[] = {0};
@@ -19,7 +17,7 @@ int ChampsLexicaux::tableau_des_champs_lexicaux[] = {0};
 
 void ChampsLexicaux::initialisation()
 {
-    fill(tableau_des_champs_lexicaux, tableau_des_champs_lexicaux + NOMBRE_CHP_LEXICAUX, 0);
+    fill(tableau_des_champs_lexicaux, tableau_des_champs_lexicaux + liste_champs_lexicaux.size(), 0);
 }
 
 

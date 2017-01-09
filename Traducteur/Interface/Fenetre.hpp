@@ -26,7 +26,6 @@ class Fenetre
     public :
     
     Fenetre();
-    void creation_des_boutons();
     void mise_a_jour();
     void chargement_du_texte(std::clock_t debut);
     int creation_de_la_fenetre();
@@ -41,7 +40,7 @@ class Fenetre
     sf::Sprite sprite_source, sprite_sortie, chargement;
     
     bool stop = false;
-    int position_a, position_f, position_x = 0, position_y = 0;
+    int position_x = 0, position_y = 0;
     std::vector <std::string> tableau_source, tableau_sortie, structure;
     std::string texte_source, texte_sortie, langue_source, langue_sortie;
 };

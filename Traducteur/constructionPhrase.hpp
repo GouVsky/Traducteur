@@ -34,7 +34,7 @@ class Phrase
     
     std::vector <char> t_ponctuation;
     std::vector <bool> presence_verbe;
-    std::vector <int> indice_mot, indice_sous_phrase;
+    std::vector <int> indice_mot, indice_sous_phrase, indice_chp_lexical;
     std::string langue_source, langue_sortie, phrase_finale;
     std::map <std::string, std::string*> conjonction_coordination, pronom_personnel;
     
@@ -44,8 +44,8 @@ class Phrase
     
     std::vector <std::vector <std::vector <std::vector <std::string>>>> structure_du_texte_source;
     std::vector <std::vector <std::vector <std::vector <std::string>>>> structure_du_texte_sortie;
-    std::vector <std::vector <std::vector <std::vector <std::string>>>> tableau_contenant_champs_lexicaux;
     std::vector <std::vector <std::vector <std::vector <std::string>>>> tableau_contenant_significations_mot;
+    std::vector <std::vector <std::vector <std::vector <std::vector <std::string>>>>> tableau_contenant_champs_lexicaux;
     
     std::string cc_a[6] = {"but", "where", "so", "because", "when", "if"};
     std::string cc_f[8] = {"mais", "où", "donc", "or", "ni", "car", "parce-que", "quand"};

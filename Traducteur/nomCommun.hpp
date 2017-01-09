@@ -20,7 +20,7 @@ class NomCommun
 {
     public :
     
-    std::tuple <std::vector <std::string>, std::vector <std::string>, std::vector <std::string>, std::string> le_mot_est_un_nom_commun(std::string mot, std::string l_source, std::string l_sortie);
+    std::tuple <std::vector <std::string>, std::vector <std::vector <std::string>>, std::vector <std::string>, std::string> le_mot_est_un_nom_commun(std::string mot, std::string l_source, std::string l_sortie);
     
     private :
     

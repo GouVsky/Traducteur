@@ -109,14 +109,15 @@ void Fenetre::chargement_du_texte(clock_t debut)
                 
                 sleep(seconds(0.09));
                 
-                if (i == 360) i = 0;
+                if (i == 360)
+                {
+                    i = 0;
+                }
             }
         }
         
         else fin = clock();
     }
-    
-    return;
 }
 
 
