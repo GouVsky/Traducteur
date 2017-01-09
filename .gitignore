@@ -1,7 +1,7 @@
 .DS_Store
 build
 *.xcodeproj
-essai_texte.txt
+*.txt
 
 # Compiled Object files
 *.slo
