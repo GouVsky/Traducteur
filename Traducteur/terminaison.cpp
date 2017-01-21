@@ -42,7 +42,7 @@ void Terminaison::terminaisons_anglaises(int sujet, string temps, string verbe)
 void Terminaison::troisieme_groupe(int sujet, string verbe, string temps, string langue)
 {
     // Recherche des terminaisons.
-    // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchées est à la fin.
+    // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchée est à la fin.
     
     if (temps == "present" || temps == "present_be+ing")
     {
