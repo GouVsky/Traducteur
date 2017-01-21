@@ -48,20 +48,20 @@ class Verbe
                                           {"them", 6},
                                           {"les", 6}};
     
-    std::map <std::pair <std::string, int>, std::string> association = {{std::make_pair("A", 0), " me"},
-                                                                        {std::make_pair("A", 1), " you"},
-                                                                        {std::make_pair("A", 2), " him"},
-                                                                        {std::make_pair("A", 3), " her"},
-                                                                        {std::make_pair("A", 4), " it"},
-                                                                        {std::make_pair("A", 5), " us"},
-                                                                        {std::make_pair("A", 6), " them"},
-                                                                        {std::make_pair("F", 0), "me "},
-                                                                        {std::make_pair("F", 1), "te "},
-                                                                        {std::make_pair("F", 2), "le "},
-                                                                        {std::make_pair("F", 3), "la "},
-                                                                        {std::make_pair("F", 5), "nous "},
-                                                                        {std::make_pair("F", 7), "vous "},
-                                                                        {std::make_pair("F", 6), "les "}};
+    std::map <std::pair <std::string, int>, std::string> association = {{std::make_pair("A", 0), "me"},
+                                                                        {std::make_pair("A", 1), "you"},
+                                                                        {std::make_pair("A", 2), "him"},
+                                                                        {std::make_pair("A", 3), "her"},
+                                                                        {std::make_pair("A", 4), "it"},
+                                                                        {std::make_pair("A", 5), "us"},
+                                                                        {std::make_pair("A", 6), "them"},
+                                                                        {std::make_pair("F", 0), "me"},
+                                                                        {std::make_pair("F", 1), "te"},
+                                                                        {std::make_pair("F", 2), "le"},
+                                                                        {std::make_pair("F", 3), "la"},
+                                                                        {std::make_pair("F", 5), "nous"},
+                                                                        {std::make_pair("F", 7), "vous"},
+                                                                        {std::make_pair("F", 6), "les"}};
 
 };
 

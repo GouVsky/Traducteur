@@ -20,21 +20,26 @@ using namespace std;
 
 string Verbe::le_verbe_est_irregulier(string verbe, string temps, string langue)
 {
+    string irregularite;
+    
     ifstream fichier_verbes_irreguliers(resourcePath() + "verbes_irreguliers_" + langue + ".txt");
     
-    while(!fichier_verbes_irreguliers.eof())
+    while (!fichier_verbes_irreguliers.eof())
     {
         fichier_verbes_irreguliers >> verbe_irregulier["infinitif"] >> verbe_irregulier["passe_simple"] >> verbe_irregulier["participe_passe"];
 
-        if(verbe_irregulier["infinitif"] == verbe)
+        if (verbe_irregulier["infinitif"] == verbe)
         {
-            return verbe_irregulier[temps];
+            irregularite = verbe_irregulier[temps];
+            
+            break;
         }
     }
     
-    return "MEM2!65oG";
+    fichier_verbes_irreguliers.close();
+    
+    return irregularite;
 }
-
 
 
 
@@ -48,8 +53,12 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
     
     int position = 0;
         
-    string copie_verbe = le_verbe, construction_verbe = "", mot_bis;
-       
+    string copie_verbe = le_verbe,
+           construction_verbe,
+           mot_bis;
+    
+    tuple <string, string> terminaisons;
+    
     istringstream iss(caracteristique);
     
     // Construction du verbe.
@@ -69,8 +78,9 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
                 
                 else
                 {
-                    construction_verbe += le_verbe;
-                    construction_verbe += la_terminaison.construction_de_la_terminaison(groupe_verbe, temps, sujet, langue, le_verbe);
+                    terminaisons = la_terminaison.construction(groupe_verbe, temps, sujet, langue, le_verbe);
+                    
+                    construction_verbe += le_verbe + get <1> (terminaisons);
                 }
             }
             
@@ -99,12 +109,21 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
             
             else if (mot_bis == "radical")
             {
-                construction_verbe += copie_verbe.erase(copie_verbe.size() - 2);
+                // On calcule la terminaison puisque le radical est déterminé en fonction de celle-ci.
+                // Elle est différente pour les verbes français du troisième groupe.
+                
+                terminaisons = la_terminaison.construction(groupe_verbe, temps, sujet, langue, le_verbe);
+                
+                copie_verbe.erase(copie_verbe.size() - (get <0> (terminaisons).size()));
+                
+                construction_verbe += copie_verbe;
             }
             
             else if (mot_bis == "terminaison")
             {
-                construction_verbe += la_terminaison.construction_de_la_terminaison(groupe_verbe, temps, sujet, langue, le_verbe);
+                terminaisons = la_terminaison.construction(groupe_verbe, temps, sujet, langue, le_verbe);
+                
+                construction_verbe += get <1> (terminaisons);
             }
             
             else if (mot_bis == "avoir" || mot_bis == "etre" || mot_bis == "aller")
@@ -114,12 +133,19 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
             
             else
             {
-                construction_verbe += mot_bis + ' '; // To, will, would...
+                construction_verbe += mot_bis; // To, will, would...
             }
+            
+            get <0> (terminaisons).clear();
+            get <1> (terminaisons).clear();
         }
         
         position++;
+        
+        construction_verbe += ' ';
     }
+        
+    construction_verbe.erase(construction_verbe.size() - 1);
     
     return construction_verbe;
 }
@@ -144,39 +170,38 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
     
     // On récupère le type des mots qui précèdent le verbe.
     
-    for(int i = 0; i < structure_de_la_phrase.size(); i++)
+    for (int i = 0; i < structure_de_la_phrase.size(); i++)
     {
-        for(int j = 0; j < structure_de_la_phrase[i].size(); j++)
+        for (int j = 0; j < structure_de_la_phrase[i].size(); j++)
         {
-            if(structure_de_la_phrase[i][j].empty()) break;
-            
             structure.push_back(structure_de_la_phrase[i][j]);
         }
     }
     
     int le_sujet = sujet.creation_du_sujet(structure, langue_source, langue_sortie);
     
-    
+
     
     // Recherche du verbe.
     
     int taille = 0;
+    string champ_lexical_final;
     
     forme_verbe_sortie = "MEM2!65oG";
         
     ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
 
-    while(!fichier_caracteristique.eof())
+    while (!fichier_caracteristique.eof())
     {
         fichier_caracteristique >> temps_verbe >> caracteristique["A"] >> caracteristique["F"];
         
         // On teste les verbes de chaque groupe.
         
-        for(int groupe_verbe = 1; groupe_verbe <= 3; groupe_verbe++)
+        for (int groupe_verbe = 1; groupe_verbe <= 3; groupe_verbe++)
         {
             ifstream fichier_verbes(resourcePath() + "verbes_" + to_string(groupe_verbe) + ".txt");
             
-            while(!fichier_verbes.eof())
+            while (!fichier_verbes.eof())
             {
                 fichier_verbes >> verbe["A"] >> verbe["F"] >> marque_vb_irr["A"] >> marque_vb_irr["F"] >> champ_lexical;
                 
@@ -193,21 +218,23 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
                 
                 // On récupère le verbe de la phrase entrée par l'utilisateur.
                 
-                for(int i = 0; i < min(taille, (int) tableau.size() - compteur); i++)
+                for (int i = 0; i < min(taille, (int) tableau.size() - compteur); i++)
                 {
                     phrase += tableau[compteur + i] + ' ';
                 }
                 
-                phrase.erase(phrase.size()-1);
+                phrase.erase(phrase.size() - 1);
                 
                 // Si le verbe construit est identique à celui de la phrase, on construit le verbe dans la langue demandée.
                 // On vérifie également qu'il s'agit du plus grand verbe identifiable.
 
-                if(phrase == forme_verbe_source && taille > taille_verbe_source)
+                if (phrase == forme_verbe_source && taille > taille_verbe_source)
                 {
                     taille_verbe_source = taille;
                     
                     chp_lex.incrementation_des_champs_lexicaux(champ_lexical);
+                    
+                    champ_lexical_final = champ_lexical;
                     
                     forme_verbe_sortie = construction(caracteristique[langue_sortie], langue_sortie, temps_verbe, le_sujet, groupe_verbe, verbe[langue_sortie], marque_vb_irr[langue_sortie], tableau, compteur);
                     
@@ -218,8 +245,12 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
                 
                 phrase = "";
             }
+            
+            fichier_verbes.close();
         }
     }
     
-    return make_tuple(forme_verbe_sortie, champ_lexical, taille_verbe_source, taille_verbe_sortie);
+    fichier_caracteristique.close();
+    
+    return make_tuple(forme_verbe_sortie, champ_lexical_final, taille_verbe_source, taille_verbe_sortie);
 }

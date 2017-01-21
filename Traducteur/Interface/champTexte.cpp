@@ -61,7 +61,6 @@ void ChampTexte::easter_egg(RenderTexture * texture, Text texte, string mot, int
 
 
 
-
 // Affichage de chaque ligne.
 
 void ChampTexte::affichage_des_phrases(RenderTexture &texture, vector <string> t_justification, int indice_ligne)
@@ -73,12 +72,15 @@ void ChampTexte::affichage_des_phrases(RenderTexture &texture, vector <string> t
     for(int i = 0; i < t_justification.size(); i++)
     {
         taille = 0;
-                
+        
+        //wstring ws(t_justification[i].size(), L' ');
+        //ws.resize(mbstowcs(&ws[0], t_justification[i].c_str(), t_justification[i].size()));
+        
         texte.setFont(police);
         texte.setCharacterSize(37);
         texte.setColor(Color::Black);
         texte.setString(t_justification[i]);
-        
+
         // Si l'utilisateur a activé l'easter egg.
         
         if(t_justification[i].find("[rainbow]") != -1)
@@ -172,8 +174,7 @@ vector <string> ChampTexte::justification_du_texte(string phrase, int indice)
 
 void ChampTexte::texte_multilignes(char caractere)
 {
-    ligne = tableau[compteur];
-    ligne += caractere;
+    ligne = tableau[compteur] + caractere;
     
     Text texte(ligne, police, 37);
     
@@ -243,7 +244,7 @@ vector <string> ChampTexte::traitement_des_phrases(Font police_texte, string typ
     tableau.push_back("");
     
     texture->clear(Color::White);
-    
+        
     // On coupe le texte pour qu'il s'affiche sur plusieurs lignes si cela est nécessaire.
     
     for (int i = 0; i < texte.size(); i++)
@@ -254,7 +255,7 @@ vector <string> ChampTexte::traitement_des_phrases(Font police_texte, string typ
     // On justifie le texte et on l'affiche sur la texture correspondante.
     
     for (int i = 0; i <= compteur; i++)
-    {        
+    {
         vector <string> t_justification = justification_du_texte(tableau[i], i);
         
         affichage_des_phrases(* texture, t_justification, i);

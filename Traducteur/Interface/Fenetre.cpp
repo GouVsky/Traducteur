@@ -251,6 +251,8 @@ int Fenetre::creation_de_la_fenetre()
                         
                         thread un_thread = thread(&Fenetre::chargement_du_texte, this, debut);
                         
+                        texte_source += '\0';
+                        
                         tuple <string, vector <string>> resultat = bob_le_bricoleur.construction_du_texte(texte_source, langue_source, langue_sortie);
                         
                         stop = true;
@@ -278,9 +280,9 @@ int Fenetre::creation_de_la_fenetre()
                 }
                 
                 else
-                {
-                    texte_source.insert(position_x, 1, evenement.text.unicode);
-                    
+                {                    
+                    texte_source.insert(position_x, 1, static_cast<char> (evenement.text.unicode));
+                                        
                     position_x++;
                 }
             }
@@ -293,6 +295,8 @@ int Fenetre::creation_de_la_fenetre()
         mise_a_jour();
         
         stop = false;
+        
+        structure.clear();
     }
     
     return EXIT_SUCCESS;

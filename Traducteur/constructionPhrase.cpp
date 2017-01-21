@@ -39,8 +39,6 @@ void Phrase::assemblage_des_phrases()
     {
         for (int j = 0; j < t_final[i].size(); j++)
         {
-            if (t_final[i][j] == "") break;
-            
             // On met une majuscule au premier mot de la phrase.
             
             if (et_bill == false)
@@ -355,6 +353,8 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
             
             tableau_contenant_champs_lexicaux[indice][indice_sous_phrase[indice]][indice_mot[indice]].push_back(vector <string> ());
             
+            // Ajout des champs lexicaux.
+            
             for (int k = 0; k < champs_lexicaux[j].size(); k++)
             {
                 tableau_contenant_champs_lexicaux[indice][indice_sous_phrase[indice]][indice_mot[indice]][j].push_back(champs_lexicaux[j][k]);
@@ -433,7 +433,9 @@ void Phrase::recherche_virgule(string phrase, int indice)
             sous_phrase = "";
             
             while (phrase[i + 1] == ' ')
+            {
                 i++;
+            }
             
         }
         
@@ -458,11 +460,11 @@ void Phrase::recherche_conjonction_coordination(vector <string> tableau)
     conjonction_coordination["A"] = cc_a;
     conjonction_coordination["F"] = cc_f;
     
-    for (int i=0; i<tableau.size(); i++)
+    for (int i = 0; i < tableau.size(); i++)
     {
         // On cherche si le mot est une conjonction de coordination ou non.
 
-        for (int j = sizeof(conjonction_coordination[langue_source]) / sizeof(*conjonction_coordination[langue_source]); j--;)
+        for (int j = sizeof(conjonction_coordination[langue_source]) / sizeof(* conjonction_coordination[langue_source]); j--;)
         {
             if (tableau[i] == conjonction_coordination[langue_source][j])
             {
@@ -482,13 +484,13 @@ void Phrase::recherche_conjonction_coordination(vector <string> tableau)
         
         // est considérée comme étant une sous-phrase indépendante des autres.
         
-        if(conjonction == true || i == (int)tableau.size()-1)
+        if (conjonction == true || i == (int)tableau.size() - 1)
         {
             phrase.erase(phrase.size()-1);
 
             phrases_constituantes_le_texte.push_back(phrase);
             
-            if(conjonction == true)
+            if (conjonction == true)
             {
                 t_ponctuation.push_back(0);
             }
@@ -524,7 +526,7 @@ void Phrase::recherche_de_la_ponctuation(string t)
             
             istringstream iss(phrase);
             
-            while(getline(iss, mot, ' '))
+            while (getline(iss, mot, ' '))
             {
                 tableau.push_back(mot);
             }
@@ -622,6 +624,6 @@ tuple <string, vector <string>> Phrase::construction_du_texte(string texte, stri
     }
     
     assemblage_des_phrases();
-    
+        
     return make_tuple(phrase_finale, t_structure);
 }

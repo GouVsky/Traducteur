@@ -13,6 +13,7 @@
 using namespace std;
 
 
+
 // Détermine si le mot est adjectif.
 
 tuple <string, string> Adjectif::le_mot_est_un_adjectif(string mot, string l_source, string l_sortie)

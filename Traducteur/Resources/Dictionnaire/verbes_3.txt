@@ -2,6 +2,7 @@ believe croire non non -
 drink boire oui non -
 hear entendre oui non -
 learn apprendre oui non -
+must devoir non non -
 reach atteindre non non -
 see voir oui non -
 sell vendre oui non -

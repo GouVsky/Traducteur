@@ -8,68 +8,151 @@
 
 #include "terminaison.hpp"
 
-#include "futur.hpp"
-#include "imparfait.hpp"
-#include "presentGr1.hpp"
-#include "presentGr2.hpp"
-#include "passeSimple.hpp"
-#include "conditionnel.hpp"
-#include "participePasse.hpp"
-
 using namespace std;
 
 
-string Terminaison::construction_de_la_terminaison(int groupe_verbe, string temps, int sujet, string langue, string verbe)
+// Les terminaisons anglaises.
+
+void Terminaison::terminaisons_anglaises(int sujet, string temps, string verbe)
 {
-    Futur futur;
-    Imparfait imparfait;
-    PresentGr1 presentGr1;
-    PresentGr2 presentGr2;
-    PasseSimple passeSimple;
-    Conditionnel conditionnel;
-    ParticipePasse participePasse;
-    
-    if(temps == "present" || temps == "present_be+ing")
+    if (temps == "present" || temps == "present_be+ing")
     {
-        switch(groupe_verbe)
+        nouvelle_terminaison = A[sujet];
+    }
+    
+    else if (temps == "passe_compose" || temps == "imparfait" || temps == "passe_simple")
+    {
+        if (verbe[verbe.size() - 1] == 'e')
         {
-            case 1 : terminaison = presentGr1.terminaison_premier_groupe_present(sujet, langue);
-                break;
-                
-            case 2 : terminaison = presentGr2.terminaison_deuxieme_groupe_present(sujet, langue);
-                break;
-                
-            default :
-                break;
+            nouvelle_terminaison = 'd';
+        }
+        
+        else
+        {
+            nouvelle_terminaison = "ed";
+        }
+    }
+}
+
+
+
+
+// Les terminaisons des verbes du troisième groupe.
+
+void Terminaison::troisieme_groupe(int sujet, string verbe, string temps, string langue)
+{
+    // Recherche des terminaisons.
+    // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchées est à la fin.
+    
+    if (temps == "present" || temps == "present_be+ing")
+    {
+        if (verbe.find("evoir", verbe.size() - 5) != -1)
+        {
+            nouvelle_terminaison = present_evoir_F[sujet];
+            
+            ancienne_terminaison = "evoir";
+        }
+        
+        else if (verbe.find("oire", verbe.size() - 4) != -1)
+        {
+            nouvelle_terminaison = present_oire_F[sujet];
+            
+            ancienne_terminaison = "oire";
+        }
+        
+        else if (verbe.find("tir", verbe.size() - 3) != -1)
+        {
+            nouvelle_terminaison = present_tir_F[sujet];
+            
+            ancienne_terminaison = "tir";
+        }
+        
+        else if (verbe.find("ire", verbe.size() - 3) != -1)
+        {
+            nouvelle_terminaison = present_ire_F[sujet];
+            
+            ancienne_terminaison = "ire";
+        }
+        
+        else if (verbe.find("dre", verbe.size() - 3) != -1)
+        {
+            nouvelle_terminaison = present_dre_F[sujet];
+            
+            ancienne_terminaison = "dre";
+        }
+    }
+}
+
+
+
+
+// Les terminaisons des verbes du premier et deuxième groupe.
+
+void Terminaison::premier_et_deuxieme_groupe(int groupe_verbe, int sujet, string verbe, string temps, string langue)
+{
+    switch (groupe_verbe)
+    {
+        case 1 : ancienne_terminaison = "er";
+            break;
+            
+        case 2 : ancienne_terminaison = "ir";
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (temps == "present" || temps == "present_be+ing")
+    {
+        terminaisons["present_1_F"] = present_1_F[sujet];
+        terminaisons["present_2_F"] = present_2_F[sujet];
+        
+        nouvelle_terminaison = terminaisons[temps + "_" + to_string(groupe_verbe) + "_" + langue];
+    }
+    
+    else
+    {
+        terminaisons["passe_compose_F"] = "é";
+        terminaisons["futur_F"] = futur_F[sujet];
+        terminaisons["imparfait_F"] = imparfait_F[sujet];
+        terminaisons["conditionnel_F"] = conditionnel_F[sujet];
+        terminaisons["passe_simple_F"] = passe_simple_F[sujet];
+        
+        nouvelle_terminaison = terminaisons[temps + "_" + langue];
+    }
+}
+
+
+
+
+// Construction de la terminaison selon la langue, le groupe et le temps du verbe.
+
+tuple <string, string> Terminaison::construction(int groupe_verbe, string temps, int sujet, string langue, string verbe)
+{
+    nouvelle_terminaison = "";
+    ancienne_terminaison = "";
+    
+    // Le français.
+    
+    if (langue == "F")
+    {
+        if (groupe_verbe == 1 || groupe_verbe == 2)
+        {
+            premier_et_deuxieme_groupe(groupe_verbe, sujet, verbe, temps, langue);
+        }
+        
+        else
+        {
+            troisieme_groupe(sujet, verbe, temps, langue);
         }
     }
     
-    else if(temps == "imparfait" || temps == "passe_habitude")
+    // L'anglais.
+    
+    else
     {
-        terminaison = imparfait.terminaison_imparfait(sujet, langue);
+        terminaisons_anglaises(sujet, temps, verbe);
     }
     
-    else if(temps == "passe_compose" || temps == "plus_que_parfait") // La terminaison sera le participe passé du verbe.
-    {
-        terminaison = participePasse.terminaison_participe_passe(langue, verbe);
-    }
-    
-    else if(temps == "passe_simple")
-    {
-        terminaison = passeSimple.terminaison_passe_simple(sujet, langue, verbe);
-    }
-    
-    else if(temps == "futur_simple")
-    {
-        terminaison = futur.terminaison_futur(sujet, langue);
-    }
-    
-    else if(temps == "conditionnel")
-    {
-        terminaison = conditionnel.terminaison_conditionnel(sujet, langue);
-    }
-    
-    string of_the_jedi = terminaison;
-    
-    return of_the_jedi;
+    return make_tuple(ancienne_terminaison, nouvelle_terminaison);
 }

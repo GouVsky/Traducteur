@@ -36,7 +36,7 @@ class Phrase
     std::vector <bool> presence_verbe;
     std::vector <int> indice_mot, indice_sous_phrase, indice_chp_lexical;
     std::string langue_source, langue_sortie, phrase_finale;
-    std::map <std::string, std::string*> conjonction_coordination, pronom_personnel;
+    std::map <std::string, std::string *> conjonction_coordination, pronom_personnel;
     
     std::vector <std::vector <std::string>> t_final;
     
