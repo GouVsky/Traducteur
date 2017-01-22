@@ -13,7 +13,9 @@
 #include <string>
 #include <stdio.h>
 
-#define NB_TERMINAISON 9
+#define NB_TERMINAISONS 9
+#define NB_TERMINAISONS_GR_3 7
+
 
 class Terminaison
 {
@@ -28,24 +30,37 @@ class Terminaison
     
     std::string nouvelle_terminaison, ancienne_terminaison;
     
-    std::map <std::string, std::string> terminaisons;
+    std::map <std::string, std::string> terminaisons, groupe_3;
     
-    std::string A[NB_TERMINAISON] = {"", "", "s", "s", "s", "", "", "", ""};
+    // Les terminaisons anglaises au présent.
     
-    std::string futur_F[NB_TERMINAISON] = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
-    std::string present_1_F[NB_TERMINAISON] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
-    std::string passe_simple_F[NB_TERMINAISON] = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
-    std::string imparfait_F[NB_TERMINAISON] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
-    std::string present_2_F[NB_TERMINAISON] = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
-    std::string conditionnel_F[NB_TERMINAISON] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    std::string A[NB_TERMINAISONS] = {"", "", "s", "s", "s", "", "", "", ""};
     
-    // Les terminaisons du troisième groupe.
     
-    std::string present_tir_F[NB_TERMINAISON] = {"s", "s", "t", "t", "t", "tons", "tez", "tent", "tent"};
-    std::string present_ire_F[NB_TERMINAISON] = {"s", "s", "t", "t", "t", "ions", "iez", "ient", "ient"};
-    std::string present_dre_F[NB_TERMINAISON] = {"ds", "ds", "d", "d", "d", "dons", "dez", "dent", "dent"};
-    std::string present_oire_F[NB_TERMINAISON] = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
-    std::string present_evoir_F[NB_TERMINAISON] = {"ois", "ois", "oit", "oit", "oit", "evons", "evez", "oivent", "oivent"};
+    
+    // Les terminaisons françaises du premier et deuxième groupe à tous les temps.
+    
+    std::string futur_F[NB_TERMINAISONS] = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
+    std::string present_1_F[NB_TERMINAISONS] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
+    std::string passe_simple_F[NB_TERMINAISONS] = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
+    std::string imparfait_F[NB_TERMINAISONS] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    std::string present_2_F[NB_TERMINAISONS] = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
+    std::string conditionnel_F[NB_TERMINAISONS] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    
+    
+    // L'ensemble des terminaisons françaises du troisième groupe.
+    
+    std::string terminaisons_groupe_3[NB_TERMINAISONS_GR_3] = {"ir", "tir", "ire", "dre", "oir", "oire", "evoir"};
+    
+    // Les terminaisons du troisième groupe au présent.
+    
+    std::string present_ir_F[NB_TERMINAISONS] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
+    std::string present_tir_F[NB_TERMINAISONS] = {"s", "s", "t", "t", "t", "tons", "tez", "tent", "tent"};
+    std::string present_ire_F[NB_TERMINAISONS] = {"s", "s", "t", "t", "t", "ions", "iez", "ient", "ient"};
+    std::string present_dre_F[NB_TERMINAISONS] = {"ds", "ds", "d", "d", "d", "dons", "dez", "dent", "dent"};
+    std::string present_oir_F[NB_TERMINAISONS] = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
+    std::string present_oire_F[NB_TERMINAISONS] = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
+    std::string present_evoir_F[NB_TERMINAISONS] = {"ois", "ois", "oit", "oit", "oit", "evons", "evez", "oivent", "oivent"};
 };
 
 #endif /* terminaison_hpp */

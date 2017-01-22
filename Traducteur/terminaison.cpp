@@ -41,44 +41,43 @@ void Terminaison::terminaisons_anglaises(int sujet, string temps, string verbe)
 
 void Terminaison::troisieme_groupe(int sujet, string verbe, string temps, string langue)
 {
-    // Recherche des terminaisons.
-    // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchée est à la fin.
+    size_t max = 0;
     
     if (temps == "present" || temps == "present_be+ing")
     {
-        if (verbe.find("evoir", verbe.size() - 5) != -1)
-        {
-            nouvelle_terminaison = present_evoir_F[sujet];
-            
-            ancienne_terminaison = "evoir";
-        }
+        groupe_3["present_ir_F"] = present_ir_F[sujet];
+        groupe_3["present_ire_F"] = present_ire_F[sujet];
+        groupe_3["present_dre_F"] = present_dre_F[sujet];
+        groupe_3["present_tir_F"] = present_tir_F[sujet];
+        groupe_3["present_oir_F"] = present_oir_F[sujet];
+        groupe_3["present_oire_F"] = present_oire_F[sujet];
+        groupe_3["present_evoir_F"] = present_evoir_F[sujet];
+    }
+    
+    // Recherche des terminaisons.
+    // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchée est à la fin,
+    // et qu'elle doit être la plus grande possible.
+    
+    for (int i = 0; i < NB_TERMINAISONS_GR_3; i++)
+    {
+        string terminaison = terminaisons_groupe_3[i];
         
-        else if (verbe.find("oire", verbe.size() - 4) != -1)
-        {
-            nouvelle_terminaison = present_oire_F[sujet];
-            
-            ancienne_terminaison = "oire";
-        }
+        // On s'assure que la terminaison sélectionnée n'est pas plus grande que le verbe.
         
-        else if (verbe.find("tir", verbe.size() - 3) != -1)
+        if (terminaison.size() < verbe.size())
         {
-            nouvelle_terminaison = present_tir_F[sujet];
+            string fin_du_verbe = verbe.substr(verbe.size() - terminaison.size());
             
-            ancienne_terminaison = "tir";
-        }
-        
-        else if (verbe.find("ire", verbe.size() - 3) != -1)
-        {
-            nouvelle_terminaison = present_ire_F[sujet];
+            // On s'assure que la terminaison trouvée est la plus grande possible.
             
-            ancienne_terminaison = "ire";
-        }
-        
-        else if (verbe.find("dre", verbe.size() - 3) != -1)
-        {
-            nouvelle_terminaison = present_dre_F[sujet];
-            
-            ancienne_terminaison = "dre";
+            if (fin_du_verbe == terminaison && terminaison.size() > max)
+            {
+                nouvelle_terminaison = groupe_3[temps + "_" + terminaison + "_" + langue];
+                
+                ancienne_terminaison = terminaison;
+                
+                max = terminaison.size();
+            }
         }
     }
 }
