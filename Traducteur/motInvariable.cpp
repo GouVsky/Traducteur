@@ -22,11 +22,11 @@ string Invariable::le_mot_est_invariable(string mot, string l_source, string l_s
         
     // Est-ce un mot invariable ?
     
-    while(!fichier_invariables.eof())
+    while (!fichier_invariables.eof())
     {
         fichier_invariables >> invariable["A"] >> invariable["F"];
         
-        if(invariable[langue_source] == mot)
+        if (invariable[langue_source] == mot)
         {
             return invariable[langue_sortie];
         }

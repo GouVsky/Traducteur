@@ -25,11 +25,11 @@ tuple <string, string> Adjectif::le_mot_est_un_adjectif(string mot, string l_sou
     
     ifstream fichier_adjectifs(resourcePath() + "adjectifs.txt");
     
-    while(!fichier_adjectifs.eof())
+    while (!fichier_adjectifs.eof())
     {
         fichier_adjectifs >> adjectif["A"] >> adjectif["F"] >> champ_lexical;
         
-        if(adjectif[langue_source] == mot)
+        if (adjectif[langue_source] == mot)
         {
             // On incrémente les champs lexicaux concernés.
             
@@ -39,7 +39,5 @@ tuple <string, string> Adjectif::le_mot_est_un_adjectif(string mot, string l_sou
         }
     }
     
-    fichier_adjectifs.close();
-
-    return make_tuple("MEM2!65oG", "-");
+    return make_tuple("MEM2!65oG", champ_lexical);
 }

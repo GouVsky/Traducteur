@@ -21,9 +21,10 @@ class Terminaison
 {
     public :
     
+    Terminaison();
     void terminaisons_anglaises(int sujet, std::string temps, std::string verbe);
-    void troisieme_groupe(int sujet, std::string verbe, std::string temps, std::string langue);
-    void premier_et_deuxieme_groupe(int groupe_verbe, int sujet, std::string verbe, std::string temps, std::string langue);
+    void troisieme_groupe(int sujet, std::string verbe, std::string temps);
+    void premier_et_deuxieme_groupe(int groupe_verbe, int sujet, std::string temps);
     std::tuple <std::string, std::string> construction(int groupe_verbe, std::string temps, int sujet, std::string langue, std::string verbe);
     
     private :

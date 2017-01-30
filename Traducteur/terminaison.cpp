@@ -11,6 +11,14 @@
 using namespace std;
 
 
+Terminaison::Terminaison()
+{
+    
+}
+
+
+
+
 // Les terminaisons anglaises.
 
 void Terminaison::terminaisons_anglaises(int sujet, string temps, string verbe)
@@ -39,7 +47,7 @@ void Terminaison::terminaisons_anglaises(int sujet, string temps, string verbe)
 
 // Les terminaisons des verbes du troisième groupe.
 
-void Terminaison::troisieme_groupe(int sujet, string verbe, string temps, string langue)
+void Terminaison::troisieme_groupe(int sujet, string verbe, string temps)
 {
     size_t max = 0;
     
@@ -72,7 +80,7 @@ void Terminaison::troisieme_groupe(int sujet, string verbe, string temps, string
             
             if (fin_du_verbe == terminaison && terminaison.size() > max)
             {
-                nouvelle_terminaison = groupe_3[temps + "_" + terminaison + "_" + langue];
+                nouvelle_terminaison = groupe_3[temps + "_" + terminaison + "_F"];
                 
                 ancienne_terminaison = terminaison;
                 
@@ -87,7 +95,7 @@ void Terminaison::troisieme_groupe(int sujet, string verbe, string temps, string
 
 // Les terminaisons des verbes du premier et deuxième groupe.
 
-void Terminaison::premier_et_deuxieme_groupe(int groupe_verbe, int sujet, string verbe, string temps, string langue)
+void Terminaison::premier_et_deuxieme_groupe(int groupe_verbe, int sujet, string temps)
 {
     switch (groupe_verbe)
     {
@@ -106,7 +114,7 @@ void Terminaison::premier_et_deuxieme_groupe(int groupe_verbe, int sujet, string
         terminaisons["present_1_F"] = present_1_F[sujet];
         terminaisons["present_2_F"] = present_2_F[sujet];
         
-        nouvelle_terminaison = terminaisons[temps + "_" + to_string(groupe_verbe) + "_" + langue];
+        nouvelle_terminaison = terminaisons[temps + "_" + to_string(groupe_verbe) + "_F"];
     }
     
     else
@@ -117,7 +125,7 @@ void Terminaison::premier_et_deuxieme_groupe(int groupe_verbe, int sujet, string
         terminaisons["conditionnel_F"] = conditionnel_F[sujet];
         terminaisons["passe_simple_F"] = passe_simple_F[sujet];
         
-        nouvelle_terminaison = terminaisons[temps + "_" + langue];
+        nouvelle_terminaison = terminaisons[temps + "_F"];
     }
 }
 
@@ -137,12 +145,12 @@ tuple <string, string> Terminaison::construction(int groupe_verbe, string temps,
     {
         if (groupe_verbe == 1 || groupe_verbe == 2)
         {
-            premier_et_deuxieme_groupe(groupe_verbe, sujet, verbe, temps, langue);
+            premier_et_deuxieme_groupe(groupe_verbe, sujet, temps);
         }
         
         else
         {
-            troisieme_groupe(sujet, verbe, temps, langue);
+            troisieme_groupe(sujet, verbe, temps);
         }
     }
     

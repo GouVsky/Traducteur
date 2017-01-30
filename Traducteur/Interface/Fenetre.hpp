@@ -27,7 +27,7 @@ class Fenetre
     
     Fenetre();
     void mise_a_jour();
-    void chargement_du_texte(std::clock_t debut);
+    void chargement_du_texte();
     int creation_de_la_fenetre();
     
     private :

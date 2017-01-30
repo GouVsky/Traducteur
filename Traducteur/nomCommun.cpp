@@ -79,7 +79,7 @@ tuple <vector <string>, vector <vector <string>>, vector <string>, string> NomCo
                     
                     // Le mot est au pluriel.
                     
-                    if (mot[mot.size()-1] == 's')
+                    if (mot[mot.size() - 1] == 's')
                     {
                         nombre = "pluriel";
                         
@@ -87,7 +87,7 @@ tuple <vector <string>, vector <vector <string>>, vector <string>, string> NomCo
                         
                         for (int i = 0; i < tableau_mots.size(); i++)
                         {
-                            if (tableau_mots[i][tableau_mots[i].size()-1] != 's')
+                            if (tableau_mots[i][tableau_mots[i].size() - 1] != 's')
                             {
                                 tableau_mots[i] += 's';
                             }
@@ -100,35 +100,6 @@ tuple <vector <string>, vector <vector <string>>, vector <string>, string> NomCo
         }
         
         fichier_noms_communs.close();
-        
-        if (tableau_mots.empty())
-        {
-            ifstream fichier_prenoms(resourcePath() + "prenoms_" + genre[i] + "s.txt");
-
-            // Est-ce un prénom ?
-            
-            while (!fichier_prenoms.eof())
-            {
-                fichier_prenoms >> prenom;
-                
-                if (prenom == mot)
-                {
-                    tableau_genre.push_back(genre[i]);
-                    
-                    prenom[0] = toupper(prenom[0]);
-                    
-                    tableau_mots.push_back(prenom);
-                    
-                    tableau_champs_lexicaux.push_back(vector <string> ());
-                    
-                    tableau_champs_lexicaux[tableau_champs_lexicaux.size() - 1].push_back("-");
-                    
-                    break;
-                }
-            }
-            
-            fichier_prenoms.close();
-        }
     }
     
     return make_tuple(tableau_mots, tableau_champs_lexicaux, tableau_genre, nombre);

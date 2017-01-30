@@ -78,8 +78,10 @@ void Fenetre::mise_a_jour()
 
 // Affichage de l'icône de chargement du texte traduit.
 
-void Fenetre::chargement_du_texte(clock_t debut)
+void Fenetre::chargement_du_texte()
 {
+    clock_t debut = clock();
+    
     clock_t fin = clock();
     
     while (!stop)
@@ -87,7 +89,7 @@ void Fenetre::chargement_du_texte(clock_t debut)
         // Si le temps de traduction du texte est supérieur à 1,2 secondes,
         // on affiche l'icône de chargement.
         
-        if ((fin-debut) / (float) CLOCKS_PER_SEC > 1.2)
+        if ((fin - debut) / (float) CLOCKS_PER_SEC > 1.2)
         {
             for (int i = 0; i <= 360; i += 30)
             {
@@ -116,7 +118,10 @@ void Fenetre::chargement_du_texte(clock_t debut)
             }
         }
         
-        else fin = clock();
+        else
+        {
+            fin = clock();
+        }
     }
 }
 
@@ -245,11 +250,9 @@ int Fenetre::creation_de_la_fenetre()
                 {
                     if(!langue_source.empty())
                     {
-                        clock_t debut = clock();
-                        
                         Phrase bob_le_bricoleur;
                         
-                        thread un_thread = thread(&Fenetre::chargement_du_texte, this, debut);
+                        thread un_thread = thread(&Fenetre::chargement_du_texte, this);
                         
                         texte_source += '\0';
                         

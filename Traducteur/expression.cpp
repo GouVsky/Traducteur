@@ -21,32 +21,32 @@ tuple <string, int, int> Expression::determine_si_existe_une_expression_dans_la_
 
     ifstream monFichierExpressions(resourcePath() + "expressions.txt");
 
-    while(!monFichierExpressions.eof())
+    while (!monFichierExpressions.eof())
     {
         monFichierExpressions >> expression["A"] >> expression["F"];
                 
         // Si le premier mot de l'expression ne correspond pas au mot de la phrase, cela ne sert à rien de continuer.
         
-        if(expression[langue_source].substr(0, tableau[compteur].size()) == tableau[compteur])
+        if (expression[langue_source].substr(0, tableau[compteur].size()) == tableau[compteur])
         {
             // On relève les nombre de mots qui composent l'expression.
             
-            taille_expression_source = (int)count(expression[langue_source].begin(), expression[langue_source].end(), ';') + 1;
+            taille_expression_source = (int) count(expression[langue_source].begin(), expression[langue_source].end(), ';') + 1;
             
             // On construit l'expression avec les mots entrés par l'utilisateur.
 
-            for(int j=0; j < min(taille_expression_source, (int)tableau.size()-compteur); j++)
+            for (int i = 0; i < min(taille_expression_source, (int) tableau.size() - compteur); i++)
             {
-                phrase += tableau[compteur+j] + ';';
+                phrase += tableau[compteur + i] + ';';
             }
 
-            phrase.erase(phrase.size()-1);
+            phrase.erase(phrase.size() - 1);
 
             // On compare.
             
-            if(expression[langue_source] == phrase)
+            if (expression[langue_source] == phrase)
             {
-                taille_expression_sortie = (int)count(expression[langue_sortie].begin(), expression[langue_sortie].end(), ';') + 1;
+                taille_expression_sortie = (int) count(expression[langue_sortie].begin(), expression[langue_sortie].end(), ';') + 1;
                 
                 replace(expression[langue_sortie].begin(), expression[langue_sortie].end(), ';', ' ');
                 

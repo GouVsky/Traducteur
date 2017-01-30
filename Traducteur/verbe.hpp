@@ -21,7 +21,7 @@ class Verbe
     public :
     
     std::string le_verbe_est_irregulier(std::string verbe, std::string temps, std::string langue);
-    std::string construction(std::string caracteristique, std::string langue, std::string temps_verbe, int sujet, int groupe_verbe, std::string verbe, std::string marque_vb_si_irregulier, std::vector <std::string> tableau, int compteur);
+    std::string construction(std::string caracteristique, std::string langue, std::string temps_verbe, int sujet, int groupe_verbe, std::string verbe, std::string marque_vb_si_irregulier, std::vector <std::string> * tableau, int compteur);
     std::tuple <std::string, std::string, int, int> determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure_de_la_phrase, std::string l_source, std::string l_sortie);
     
     private :

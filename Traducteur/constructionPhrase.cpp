@@ -9,6 +9,7 @@
 #include "verbe.hpp"
 #include "adjectif.h"
 #include "expression.h"
+#include "nomPropre.hpp"
 #include "nomCommun.hpp"
 #include "motInvariable.h"
 #include "champsLexicaux.hpp"
@@ -148,6 +149,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
 {
     Verbe verbe;
     Adjectif adjectif;
+    NomPropre nom_propre;
     NomCommun nom_commun;
     Expression expression;
     Invariable invariable;
@@ -241,6 +243,28 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 }
                 
                 
+                // Nom propre masculin ou féminin.
+                
+                tuple <string, vector <string>> mot_propre = nom_propre.le_mot_est_un_nom_propre(phrase[i]);
+                
+                if (!(get <1> (mot_propre)).empty())
+                {
+                    for (int j = 0; j < (get <1> (mot_propre)).size(); j++)
+                    {
+                        // On stocke le genre.
+                        
+                        s_source.push_back(get <1> (mot_propre)[j] + "_1");
+                        s_sortie.push_back(get <1> (mot_propre)[j] + "_1");
+                        
+                        significations.push_back(get <0> (mot_propre));
+                        
+                        champs_lexicaux.push_back(vector <string> ());
+                        
+                        champs_lexicaux[champs_lexicaux.size() - 1].push_back("-");
+                    }
+                }
+                
+                
                 // Mot invariable.
                 
                 string mot_invariable = invariable.le_mot_est_invariable(phrase[i], langue_source, langue_sortie);
@@ -315,7 +339,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 
                 // Le mot n'est pas répertorié dans la base de données.
                 
-                if ((get <0> (mot_commun)).empty() && mot_invariable == "MEM2!65oG" && get <0> (resultat_verbe) == "MEM2!65oG" && get <0> (mot_adjectif) == "MEM2!65oG")
+                if ((get <0> (mot_commun)).empty() && (get <1> (mot_propre)).empty() && mot_invariable == "MEM2!65oG" && get <0> (resultat_verbe) == "MEM2!65oG" && get <0> (mot_adjectif) == "MEM2!65oG")
                 {
                     s_source.push_back("inconnu_1");
                     s_sortie.push_back("inconnu_1");

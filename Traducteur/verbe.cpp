@@ -46,7 +46,7 @@ string Verbe::le_verbe_est_irregulier(string verbe, string temps, string langue)
 
 // Construction du verbe en fonction du sujet, du temps et du groupe du verbe, et des caractéristiques propres à chaque langue.
 
-string Verbe::construction(string caracteristique, string langue, string temps, int sujet, int groupe_verbe, string le_verbe, string marque_vb_si_irr, vector <string> tableau, int compteur)
+string Verbe::construction(string caracteristique, string langue, string temps, int sujet, int groupe_verbe, string le_verbe, string marque_vb_si_irr, vector <string> * tableau, int compteur)
 {
     Auxilliaire auxilliaire;
     Terminaison la_terminaison;
@@ -91,9 +91,9 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
                 
                 position_pronom[langue] = position;
                 
-                if (compteur + position_pronom[langue_source] < tableau.size())
+                if (compteur + position_pronom[langue_source] < tableau->size())
                 {
-                    construction_verbe += association[make_pair(langue, pronom[tableau[compteur + position_pronom[langue_source]]])];
+                    construction_verbe += association[make_pair(langue, pronom[(* tableau)[compteur + position_pronom[langue_source]]])];
                 }
             }
             
@@ -178,7 +178,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
         }
     }
     
-    int le_sujet = sujet.creation_du_sujet(structure, langue_source, langue_sortie);
+    int le_sujet = sujet.creation_du_sujet(&structure, langue_source, langue_sortie);
     
 
     
@@ -210,7 +210,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
                 
                 // Construction du verbe.
                 
-                string forme_verbe_source = construction(caracteristique[langue_source], langue_source, temps_verbe, le_sujet, groupe_verbe, verbe[langue_source], marque_vb_irr[langue_source], tableau, compteur);
+                string forme_verbe_source = construction(caracteristique[langue_source], langue_source, temps_verbe, le_sujet, groupe_verbe, verbe[langue_source], marque_vb_irr[langue_source], &tableau, compteur);
                                 
                 // On récupère la taille du verbe.
                 
@@ -236,7 +236,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
                     
                     champ_lexical_final = champ_lexical;
                     
-                    forme_verbe_sortie = construction(caracteristique[langue_sortie], langue_sortie, temps_verbe, le_sujet, groupe_verbe, verbe[langue_sortie], marque_vb_irr[langue_sortie], tableau, compteur);
+                    forme_verbe_sortie = construction(caracteristique[langue_sortie], langue_sortie, temps_verbe, le_sujet, groupe_verbe, verbe[langue_sortie], marque_vb_irr[langue_sortie], &tableau, compteur);
                     
                     taille_verbe_sortie = (int) count(forme_verbe_sortie.begin(), forme_verbe_sortie.end(), ' ') + 1;
                 }

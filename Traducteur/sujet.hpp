@@ -11,7 +11,6 @@
 
 #include <string>
 #include <vector>
-#include <sstream>
 #include <stdio.h>
 #include <fstream>
 
@@ -19,8 +18,8 @@ class Sujet
 {
     public :
     
-    int transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> tableau);
-    int creation_du_sujet(std::vector <std::string> structure_de_la_phrase, std::string l_source, std::string l_sortie);
+    int transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> * tableau);
+    int creation_du_sujet(std::vector <std::string> * structure_de_la_phrase, std::string l_source, std::string l_sortie);
     
     private :
     
