@@ -12,13 +12,22 @@
 using namespace std;
 
 
+Expression::Expression(string source, string sortie)
+{
+    langue_source = source;
+    langue_sortie = sortie;
+    
+    taille_expression_source = 0;
+    taille_expression_sortie = 0;
+}
+
+
+
+
 // Détermine s'il existe une expression dans la phrase.
 
-tuple <string, int, int> Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur, vector <string> tableau, string l_source, string l_sortie)
+tuple <string, int, int> Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur, vector <string> tableau)
 {
-    langue_source = l_source;
-    langue_sortie = l_sortie;
-
     ifstream monFichierExpressions(resourcePath() + "expressions.txt");
 
     while (!monFichierExpressions.eof())

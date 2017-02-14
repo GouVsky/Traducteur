@@ -8,20 +8,23 @@
 
 #include "nomCommun.hpp"
 #include "ResourcePath.hpp"
-#include "champsLexicaux.hpp"
 
 using namespace std;
 
 
+NomCommun::NomCommun(string source, string sortie)
+{
+    langue_source = source;
+    langue_sortie = sortie;
+}
+
+
+
+
 // Détermine si le mot est un nom masculin ou féminin (nom commun ou prénom).
 
-tuple <vector <string>, vector <vector <string>>, vector <string>, string> NomCommun::le_mot_est_un_nom_commun(string mot, string l_source, string l_sortie)
+tuple <vector <string>, vector <vector <string>>, vector <string>, string> NomCommun::le_mot_est_un_nom_commun(string mot, ChampsLexicaux * champs_lexicaux)
 {
-    ChampsLexicaux chp_lex;
-    
-    langue_source = l_source;
-    langue_sortie = l_sortie;
-    
     genre[0] = "masculin";
     genre[1] = "feminin";
     
@@ -71,7 +74,7 @@ tuple <vector <string>, vector <vector <string>>, vector <string>, string> NomCo
                         {
                             // On incrémente le champ lexical concerné.
                             
-                            chp_lex.incrementation_des_champs_lexicaux(un_des_champs_lexicaux);
+                            champs_lexicaux->incrementation_des_champs_lexicaux(un_des_champs_lexicaux);
                             
                             tableau_champs_lexicaux[tableau_champs_lexicaux.size() - 1].push_back(un_des_champs_lexicaux);
                         }

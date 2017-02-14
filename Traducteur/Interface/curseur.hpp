@@ -15,25 +15,27 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-class Curseur
+class GCurseur
 {
     public :
     
-    int get_calcul_position();
-    void set_calcul_position(int position_dans_texte, int debut, int fin, int erreur, int coefficient, std::vector <std::string> tableau);
-    
-    void coloration(sf::Color couleur);
-    void set_position(std::string texte_source, int position_dans_phrase, int y);
-    void taille(int largeur, int hauteur);
-    void creation_curseur(sf::Color couleur, int y, int largeur, int hauteur, std::string texte, int position_dans_phrase);
-    sf::RectangleShape affichage(sf::Font police_texte, int position_dans_phrase, std::vector <std::string> tableau);
+    GCurseur();
+    void calcul_de_la_position(std::vector <std::string> tableau, std::vector <int> parametres);
+    int recuperer_position_y();
+    int recuperer_position_x();
+    void definir_position(int x, int y, std::vector <std::string> tableau, std::vector <int> parametres);
+    void definir_couleur(sf::Color c);
+    void definir_taille(int l, int h);
+    void afficher(sf::RenderTexture * texture);
     
     private :
 
-    int position;
+    int position_x,
+        position_y,
+        largeur,
+        hauteur;
     
-    sf::Text texte;
-    sf::Font police;
+    sf::Color couleur;
     sf::RectangleShape curseur;
 };
 

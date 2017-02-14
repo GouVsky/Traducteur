@@ -8,21 +8,23 @@
 
 #include "adjectif.h"
 #include "ResourcePath.hpp"
-#include "champsLexicaux.hpp"
 
 using namespace std;
+
+
+Adjectif::Adjectif(string source, string sortie)
+{
+    langue_source = source;
+    langue_sortie = sortie;
+}
+
 
 
 
 // Détermine si le mot est adjectif.
 
-tuple <string, string> Adjectif::le_mot_est_un_adjectif(string mot, string l_source, string l_sortie)
-{
-    ChampsLexicaux chp_lex;
-    
-    langue_source = l_source;
-    langue_sortie = l_sortie;
-    
+tuple <string, string> Adjectif::le_mot_est_un_adjectif(string mot, ChampsLexicaux * champs_lexicaux)
+{    
     ifstream fichier_adjectifs(resourcePath() + "adjectifs.txt");
     
     while (!fichier_adjectifs.eof())
@@ -33,7 +35,7 @@ tuple <string, string> Adjectif::le_mot_est_un_adjectif(string mot, string l_sou
         {
             // On incrémente les champs lexicaux concernés.
             
-            chp_lex.incrementation_des_champs_lexicaux(champ_lexical);
+            champs_lexicaux->incrementation_des_champs_lexicaux(champ_lexical);
             
             return make_tuple(adjectif[langue_sortie], champ_lexical);
         }

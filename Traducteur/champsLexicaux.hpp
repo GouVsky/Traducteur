@@ -10,6 +10,7 @@
 #define champsLexicaux_hpp
 
 #include <map>
+#include <vector>
 #include <string>
 #include <stdio.h>
 
@@ -17,13 +18,13 @@ class ChampsLexicaux
 {
     public :
     
-    void initialisation();
+    ChampsLexicaux();
     void incrementation_des_champs_lexicaux(std::string champ_lexical);
     int recuperation_tableau(std::string champ_lexical);
     
     private :
     
-    static int tableau_des_champs_lexicaux[];
+    std::vector <int> tableau_des_champs_lexicaux;
 
     std::map <std::string, int> liste_champs_lexicaux = {{"MER", 0},
                                                          {"NOM", 1},

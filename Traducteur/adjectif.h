@@ -15,11 +15,14 @@
 #include <stdio.h>
 #include <fstream>
 
+#include "champsLexicaux.hpp"
+
 class Adjectif
 {
     public :
     
-    std::tuple <std::string, std::string> le_mot_est_un_adjectif(std::string mot, std::string l_source, std::string l_sortie);
+    Adjectif(std::string source, std::string sortie);
+    std::tuple <std::string, std::string> le_mot_est_un_adjectif(std::string mot, ChampsLexicaux * champs_lexicaux);
     
     private :
     

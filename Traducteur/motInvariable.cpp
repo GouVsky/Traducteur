@@ -11,13 +11,20 @@
 
 using namespace std;
 
+
+Invariable::Invariable(string source, string sortie)
+{
+    langue_source = source;
+    langue_sortie = sortie;
+}
+
+
+
+
 // Détermine si le mot est un mot invariable (déterminant, adverbe...).
 
-string Invariable::le_mot_est_invariable(string mot, string l_source, string l_sortie)
+string Invariable::le_mot_est_invariable(string mot)
 {
-    langue_source = l_source;
-    langue_sortie = l_sortie;
-
     ifstream fichier_invariables(resourcePath() + "invariables.txt");
         
     // Est-ce un mot invariable ?

@@ -16,19 +16,29 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "champsLexicaux.hpp"
+
 class Verbe
 {
     public :
     
+    Verbe(std::string source, std::string sortie);
     std::string le_verbe_est_irregulier(std::string verbe, std::string temps, std::string langue);
     std::string construction(std::string caracteristique, std::string langue, std::string temps_verbe, int sujet, int groupe_verbe, std::string verbe, std::string marque_vb_si_irregulier, std::vector <std::string> * tableau, int compteur);
-    std::tuple <std::string, std::string, int, int> determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure_de_la_phrase, std::string l_source, std::string l_sortie);
+    std::tuple <std::string, std::string, int, int> determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux);
     
     private :
     
-    int taille_verbe_source = 0, taille_verbe_sortie = 0;
+    int taille_verbe_source,
+        taille_verbe_sortie;
         
-    std::string mot, langue_source, langue_sortie, temps_verbe, phrase, champ_lexical, forme_verbe_sortie;
+    std::string mot,
+                phrase,
+                temps_verbe,
+                champ_lexical,
+                langue_source,
+                langue_sortie,
+                forme_verbe_sortie;
     
     std::map <std::string, std::string> caracteristique, verbe, marque_vb_irr, verbe_irregulier;
     

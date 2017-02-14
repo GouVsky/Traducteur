@@ -18,7 +18,8 @@ class Invariable
 {
     public :
     
-    std::string le_mot_est_invariable(std::string mot, std::string l_source, std::string l_sortie);
+    Invariable(std::string source, std::string sortie);
+    std::string le_mot_est_invariable(std::string mot);
     
     private :
     

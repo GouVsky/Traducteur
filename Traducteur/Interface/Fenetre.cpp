@@ -1,76 +1,86 @@
 //
-//  Fenetre.cpp
+//  fenetre.cpp
 //  Traducteur
 //
-//  Created by Grégoire on 27/06/2016.
-//  Copyright © 2016 Grégoire. All rights reserved.
+//  Created by Grégoire on 05/02/2017.
+//  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "icone.hpp"
-#include "curseur.hpp"
-#include "Fenetre.hpp"
-#include "champTexte.hpp"
+
+#include "image.hpp"
+#include "fenetre.hpp"
 #include "ResourcePath.hpp"
-#include "ConstructionPhrase.hpp"
+#include "constructionPhrase.hpp"
 
 using namespace sf;
 using namespace std;
+
+
+RenderWindow Fenetre::fenetre;
+
+vector <Event> Fenetre::queue;
+
+int Fenetre::element_dans_la_queue = 0;
 
 
 // Initialisation des différents éléments.
 
 Fenetre::Fenetre()
 {
-    texture_source.clear(Color::White);
-    texture_sortie.clear(Color::White);
+    arret_du_chargement = false;
     
-    icone.setSmooth(true);
-    langues.setSmooth(true);
+    langue_source = "";
+    langue_sortie = "";
 }
 
 
 
-// Mise à jour de la fenêtre.
 
-void Fenetre::mise_a_jour()
+// On récupère les évènements stockés dans une queue.
+
+Event * Fenetre::recuperer_evenement()
 {
-    Icone icone;
-    Curseur curseur;
+    if (queue.size() > element_dans_la_queue)
+    {
+        element_dans_la_queue++;
+        
+        return &queue[element_dans_la_queue - 1];
+    }
     
+    return nullptr;
+}
+
+
+
+
+RenderWindow * Fenetre::recuperer_fenetre()
+{
+    return &fenetre;
+}
+
+
+
+
+void Fenetre::affichage_des_elements()
+{
+    Phrase bob_le_bricoleur(langue_source, langue_sortie);
     
-    fenetre.clear();
+    bob_le_bricoleur.construction_du_texte(champ_texte_source.recuperer_texte());
     
+    champ_texte_source.afficher();
+
+    rendu.afficher(bob_le_bricoleur.recuperer_texte_traduit());
     
-    // Affichage d'un curseur.
+    bouton_F.definir_couleur(Color(255, 255, 255, alpha_F));
+    bouton_A.definir_couleur(Color(255, 255, 255, alpha_A));
+        
+    langue_de_traduction.definir_couleur(Color(255, 255, 255, alpha_langue_traduction));
     
-    texture_source.draw(curseur.affichage(police, position_x, tableau_source));
+    bouton_F.afficher();
+    bouton_A.afficher();
+    langue_de_traduction.afficher();
     
-    // Affichage des textures.
-    
-    texture_source.display();
-    
-    texture_sortie.display();
-    
-    // Création des sprites.
-    
-    sprite_source.setTexture(texture_source.getTexture());
-    
-    sprite_sortie.setTexture(texture_sortie.getTexture());
-    sprite_sortie.setPosition(1043, 0);
-    
-    // Affichage des textures sur la fenêtre.
-    
-    fenetre.draw(sprite_source);
-    fenetre.draw(sprite_sortie);
-    
-    // Affichage des boutons.
-    
-    tuple <string, string> langue = icone.creation_des_boutons(&fenetre, langues, langue_source, langue_sortie);
-    
-    langue_source = get <0> (langue);
-    langue_sortie = get <1> (langue);
-    
-    fenetre.display();
+    fenetre.draw(chargement);
 }
 
 
@@ -84,7 +94,7 @@ void Fenetre::chargement_du_texte()
     
     clock_t fin = clock();
     
-    while (!stop)
+    while (!arret_du_chargement)
     {
         // Si le temps de traduction du texte est supérieur à 1,2 secondes,
         // on affiche l'icône de chargement.
@@ -93,19 +103,14 @@ void Fenetre::chargement_du_texte()
         {
             for (int i = 0; i <= 360; i += 30)
             {
-                if (stop)
+                if (arret_du_chargement)
                 {
                     break;
                 }
                 
-                chargement.setTexture(icone);
-                chargement.setScale(0.3, 0.3);
-                chargement.setPosition(2025, 50);
-                chargement.setOrigin(chargement.getLocalBounds().width / 2, chargement.getLocalBounds().height / 2);
+                //chargement.setRotation(i);
                 
-                chargement.setRotation(i);
-                
-                fenetre.draw(chargement);
+                affichage_des_elements();
                 
                 fenetre.display();
                 
@@ -128,57 +133,80 @@ void Fenetre::chargement_du_texte()
 
 
 
+void Fenetre::gestion_des_boutons()
+{
+    // La langue choisie est le français.
+    
+    if (bouton_F.est_presse())
+    {
+        alpha_F = 255;
+        alpha_A = 100;
+        
+        alpha_langue_traduction = 255;
+        langue_de_traduction.rogner_image(219, 0, 216, 146);
+        
+        langue_source = "F";
+        langue_sortie = "A";
+    }
+    
+    // La langue choisie est l'anglais.
+    
+    else if (bouton_A.est_presse())
+    {
+        alpha_F = 100;
+        alpha_A = 255;
+        
+        alpha_langue_traduction = 255;
+        langue_de_traduction.rogner_image(0, 0, 219, 146);
+        
+        langue_source = "A";
+        langue_sortie = "F";
+    }
+}
+
+
+
+
 // Création de la fenêtre.
 
 int Fenetre::creation_de_la_fenetre()
 {
-    fenetre.create(VideoMode(2083, 1000, 32), "", Style::Close);
-    
-    fenetre.setFramerateLimit(30);
-  
-    // Création de deux textures.
-    
-    if(texture_source.create(1040, 1000) == false)
-    {
-        return EXIT_FAILURE;
-    }
-    
-    if(texture_sortie.create(1040, 1000) == false)
-    {
-        return EXIT_FAILURE;
-    }
-    
-    // Création des icônes.
-    
-    if(langues.loadFromFile(resourcePath() + "selection_langue.png") == false)
-    {
-        return EXIT_FAILURE;
-    }
-    
-    if(icone.loadFromFile(resourcePath() + "icone_chargement.png") == false)
-    {
-        return EXIT_FAILURE;
-    }
-    
-    // Chargement de la police.
-    
+    fenetre.create(VideoMode(2080, 1030, 32), "", Style::Close);
+        
     if(police.loadFromFile(resourcePath() + "GenR102.TTF") == false)
     {
         return EXIT_FAILURE;
     }
+    
+    //Bouton inversion(&fenetre, "inversion.png");
+    
+    champ_texte_source.definir_taille(1005, 790);
+    champ_texte_source.definir_position(20, 200);
+    champ_texte_source.definir_police(police);
+    
+    rendu.definir_taille(1005, 790);
+    rendu.definir_position(1055, 200);
+    rendu.definir_police(police);
+    
+    bouton_F.definir_image("selection_langue.png");
+    bouton_F.definir_position(600, 50);
+    bouton_F.redimensionner(0.6, 0.6);
+    bouton_F.rogner_image(0, 0, 219, 146);
+    
+    bouton_A.definir_image("selection_langue.png");
+    bouton_A.definir_position(300, 50);
+    bouton_A.redimensionner(0.6, 0.6);
+    bouton_A.rogner_image(219, 0, 216, 146);
+    
+    langue_de_traduction.definir_image("selection_langue.png");
+    langue_de_traduction.definir_position(1480, 50);
+    langue_de_traduction.redimensionner(0.6, 0.6);
         
-    mise_a_jour();
-    
-    // Début du programme.
-    
-    Event evenement;
-    
-    Curseur curseur;
-    ChampTexte champ_texte;
-    
-    while(fenetre.isOpen())
+    while (fenetre.isOpen())
     {
-        while(fenetre.pollEvent(evenement))
+        fenetre.clear(Color::White);
+
+        while (fenetre.pollEvent(evenement))
         {
             // On ferme la fenêtre en pressant la croix ou en appuyant sur "ECHAP".
             
@@ -187,119 +215,19 @@ int Fenetre::creation_de_la_fenetre()
                 fenetre.close();
             }
             
-            // L'utilisateur fait un copié-collé dans la fenêtre.
+            // Le stockage des évènements permettra de gérer certains cas dans des champs de texte.
             
-            else if (evenement.type == Event::KeyPressed && evenement.key.system && evenement.key.code == Keyboard::V)
+            else
             {
-                FILE* copier_coller = popen("pbpaste", "r");
-                
-                if (!copier_coller) return EXIT_FAILURE;
-                
-                char buffer[1000];
-                
-                while (feof(copier_coller) == false)
-                {
-                    if (fgets(buffer, 1000, copier_coller) != NULL)
-                    {
-                        texte_source += buffer;
-                        
-                        position_x += texte_source.size();
-                    }
-                }
-                
-                pclose(copier_coller);
-            }
-            
-            else if (evenement.type == Event::KeyPressed && evenement.key.code == Keyboard::Up)
-            {
-                curseur.set_calcul_position(position_x, 0, - 1, 0, -1, tableau_source);
-                
-                position_x = curseur.get_calcul_position();
-            }
-            
-            else if (evenement.type == Event::KeyPressed && evenement.key.code == Keyboard::Down)
-            {
-                curseur.set_calcul_position(position_x, 1, 0, (int) tableau_source.size() - 1, 1, tableau_source);
-                
-                position_x = curseur.get_calcul_position();
-            }
-            
-            else if (evenement.type == Event::KeyPressed && evenement.key.code == Keyboard::Left)
-            {
-                if(position_x > 0)
-                {
-                    position_x--;
-                }
-            }
-            
-            else if (evenement.type == Event::KeyPressed && evenement.key.code == Keyboard::Right)
-            {
-                if(position_x < texte_source.size())
-                {
-                    position_x++;
-                }
-            }
-            
-            // L'utilisateur presse une touche du clavier.
-            
-            else if (evenement.type == Event::TextEntered)
-            {
-                // S'il s'agit de la touche "ENTREE", on effectue la traduction du texte.
-                
-                if(evenement.text.unicode == 10)
-                {
-                    if(!langue_source.empty())
-                    {
-                        Phrase bob_le_bricoleur;
-                        
-                        thread un_thread = thread(&Fenetre::chargement_du_texte, this);
-                        
-                        texte_source += '\0';
-                        
-                        tuple <string, vector <string>> resultat = bob_le_bricoleur.construction_du_texte(texte_source, langue_source, langue_sortie);
-                        
-                        stop = true;
-                        
-                        un_thread.join();
-                        
-                        texte_sortie = get <0> (resultat);
-                        
-                        structure = get <1> (resultat);
-                        
-                        break;
-                    }
-                }
-                
-                // S'il s'agit de la touche "BACKSPACE", on efface le dernier caractère.
-
-                else if (evenement.text.unicode == 8)
-                {
-                    if (texte_source.size() > 0 && position_x > 0)
-                    {
-                        texte_source.erase(position_x - 1, 1);
-                        
-                        position_x--;
-                    }
-                }
-                
-                else
-                {                    
-                    texte_source.insert(position_x, 1, static_cast<char> (evenement.text.unicode));
-                                        
-                    position_x++;
-                }
+                queue.push_back(evenement);
             }
         }
         
-        tableau_source = champ_texte.traitement_des_phrases(police, "source", texte_source, &texture_source, structure);
+        affichage_des_elements();
         
-        tableau_sortie = champ_texte.traitement_des_phrases(police, "sortie", texte_sortie, &texture_sortie, structure);
+        gestion_des_boutons();
         
-        mise_a_jour();
-        
-        stop = false;
-        
-        structure.clear();
+        fenetre.display();
     }
     
     return EXIT_SUCCESS;

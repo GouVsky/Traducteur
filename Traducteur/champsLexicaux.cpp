@@ -10,14 +10,12 @@
 
 using namespace std;
 
-int ChampsLexicaux::tableau_des_champs_lexicaux[] = {0};
-
 
 // Initialisation des champs lexicaux.
 
-void ChampsLexicaux::initialisation()
+ChampsLexicaux::ChampsLexicaux()
 {
-    fill(tableau_des_champs_lexicaux, tableau_des_champs_lexicaux + liste_champs_lexicaux.size(), 0);
+    tableau_des_champs_lexicaux.resize(liste_champs_lexicaux.size(), 0);
 }
 
 

@@ -18,12 +18,12 @@ class Sujet
 {
     public :
     
+    Sujet(std::string source, std::string sortie);
     int transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> * tableau);
-    int creation_du_sujet(std::vector <std::string> * structure_de_la_phrase, std::string l_source, std::string l_sortie);
+    int creation_du_sujet(std::vector <std::string> * structure_de_la_phrase);
     
     private :
     
-    int debut = 0;
     std::string langue_source, langue_sortie;
     
     std::string pp[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};

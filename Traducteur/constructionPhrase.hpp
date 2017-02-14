@@ -17,20 +17,27 @@
 #include <stdio.h>
 #include <iostream>
 
+#include "champsLexicaux.hpp"
+
 class Phrase
 {
     public :
     
-    Phrase();
+    Phrase(std::string source, std::string sortie);
+    ~Phrase();
+    std::vector <std::string> recuperer_structure_texte_traduit();
+    std::string recuperer_texte_traduit();
     void assemblage_des_phrases();
     void choix_des_mots_selon_champ_lexical(int indice);
     void traduction_des_mots(std::vector <std::string> phrase, int indice, bool virgule);
     void recherche_conjonction_coordination(std::vector <std::string> tableau);
     void recherche_virgule(std::string phrase, int indice);
     void recherche_de_la_ponctuation(std::string texte);
-    std::tuple <std::string, std::vector <std::string>> construction_du_texte(std::string texte, std::string l_source, std::string l_sortie);
+    void construction_du_texte(std::string texte);
     
     private :
+    
+    ChampsLexicaux champ_lexical;
     
     std::vector <char> t_ponctuation;
     std::vector <bool> presence_verbe;
@@ -39,9 +46,7 @@ class Phrase
     std::map <std::string, std::string *> conjonction_coordination, pronom_personnel;
     
     std::vector <std::vector <std::string>> t_final;
-    
     std::vector <std::string> t_structure, phrases_constituantes_le_texte;
-    
     std::vector <std::vector <std::vector <std::vector <std::string>>>> structure_du_texte_source;
     std::vector <std::vector <std::vector <std::vector <std::string>>>> structure_du_texte_sortie;
     std::vector <std::vector <std::vector <std::vector <std::string>>>> tableau_contenant_significations_mot;

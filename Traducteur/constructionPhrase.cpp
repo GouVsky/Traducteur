@@ -18,13 +18,51 @@
 using namespace std;
 
 
-Phrase::Phrase()
+Phrase::Phrase(string source, string sortie)
+{    
+    langue_source = source;
+    langue_sortie = sortie;
+}
+
+
+
+
+Phrase::~Phrase()
 {
-    // Remise à zéro des champs lexicaux.
+    t_final.clear();
     
-    ChampsLexicaux champs_lexicaux;
+    t_structure.clear();
     
-    champs_lexicaux.initialisation();
+    indice_mot.clear();
+    indice_sous_phrase.clear();
+    
+    presence_verbe.clear();
+    
+    structure_du_texte_source.clear();
+    structure_du_texte_sortie.clear();
+    
+    tableau_contenant_significations_mot.clear();
+    tableau_contenant_champs_lexicaux.clear();
+}
+
+
+
+
+// Retourne la structure du texte traduit.
+
+vector <string> Phrase::recuperer_structure_texte_traduit()
+{
+    return t_structure;
+}
+
+
+
+
+// Retourne le texte traduite.
+
+string Phrase::recuperer_texte_traduit()
+{
+    return phrase_finale;
 }
 
 
@@ -74,8 +112,6 @@ void Phrase::assemblage_des_phrases()
 
 void Phrase::choix_des_mots_selon_champ_lexical(int indice)
 {
-    ChampsLexicaux chp_lex;
-    
     string  le_mot = "", le_type = "";
     int max = 0, max_valeur_champ_lexical = 0, valeur_champ_lexical = 0;
     
@@ -89,8 +125,8 @@ void Phrase::choix_des_mots_selon_champ_lexical(int indice)
                 {
                     // On récupère la plus grande valeur parmi tous les champs lexicaux associés à une significations du mot.
                     
-                    valeur_champ_lexical = chp_lex.recuperation_tableau(tableau_contenant_champs_lexicaux[indice][i][j][k][l]);
-                    
+                    valeur_champ_lexical = champ_lexical.recuperation_tableau(tableau_contenant_champs_lexicaux[indice][i][j][k][l]);
+                                        
                     if (valeur_champ_lexical > max_valeur_champ_lexical)
                     {
                         max_valeur_champ_lexical = valeur_champ_lexical;
@@ -147,23 +183,23 @@ void Phrase::choix_des_mots_selon_champ_lexical(int indice)
 
 void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgule)
 {
-    Verbe verbe;
-    Adjectif adjectif;
     NomPropre nom_propre;
-    NomCommun nom_commun;
-    Expression expression;
-    Invariable invariable;
+    Verbe verbe(langue_source, langue_sortie);
+    Adjectif adjectif(langue_source, langue_sortie);
+    NomCommun nom_commun(langue_source, langue_sortie);
+    Expression expression(langue_source, langue_sortie);
+    Invariable invariable(langue_source, langue_sortie);
     
     bool p_personnel = false;
-    vector <string> s_source, s_sortie, significations;
     vector <vector <string>> champs_lexicaux;
+    vector <string> s_source, s_sortie, significations;
     
 
     for (int i = 0; i < phrase.size(); i++)
     {
         // Expression.
         
-        tuple <string, int, int> resultat_expression = expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase, langue_source, langue_sortie);
+        tuple <string, int, int> resultat_expression = expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
         
         if (get <0> (resultat_expression) != "MEM2!65oG")
         {
@@ -220,7 +256,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
 
                 // Nom commun masculin ou féminin.
                 
-                tuple <vector <string>, vector <vector <string>>, vector <string>, string> mot_commun = nom_commun.le_mot_est_un_nom_commun(phrase[i], langue_source, langue_sortie);
+                tuple <vector <string>, vector <vector <string>>, vector <string>, string> mot_commun = nom_commun.le_mot_est_un_nom_commun(phrase[i], &champ_lexical);
                                 
                 if (!(get <0> (mot_commun)).empty())
                 {
@@ -267,7 +303,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 
                 // Mot invariable.
                 
-                string mot_invariable = invariable.le_mot_est_invariable(phrase[i], langue_source, langue_sortie);
+                string mot_invariable = invariable.le_mot_est_invariable(phrase[i]);
                 
                 if (mot_invariable != "MEM2!65oG")
                 {
@@ -299,7 +335,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 
                 // Adjectif.
                 
-                tuple <string, string> mot_adjectif = adjectif.le_mot_est_un_adjectif(phrase[i], langue_source, langue_sortie);
+                tuple <string, string> mot_adjectif = adjectif.le_mot_est_un_adjectif(phrase[i], &champ_lexical);
                 
                 if (get <0> (mot_adjectif) != "MEM2!65oG")
                 {
@@ -316,7 +352,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 
                 // Verbe.
                 
-                tuple <string, string, int, int> resultat_verbe = verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, structure_du_texte_source[indice][indice_sous_phrase[indice]], langue_source, langue_sortie);
+                tuple <string, string, int, int> resultat_verbe = verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, structure_du_texte_source[indice][indice_sous_phrase[indice]], &champ_lexical);
                 
                 if (get <0> (resultat_verbe) != "MEM2!65oG")
                 {
@@ -352,7 +388,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 }
             }
         }
-        
+
         for(int j = 0; j < s_source.size(); j++)
         {
             // S'il y a une virgule après le mot, on l'ajoute.
@@ -483,7 +519,7 @@ void Phrase::recherche_conjonction_coordination(vector <string> tableau)
         
     conjonction_coordination["A"] = cc_a;
     conjonction_coordination["F"] = cc_f;
-    
+
     for (int i = 0; i < tableau.size(); i++)
     {
         // On cherche si le mot est une conjonction de coordination ou non.
@@ -507,10 +543,10 @@ void Phrase::recherche_conjonction_coordination(vector <string> tableau)
         // - une conjonction et la fin
         
         // est considérée comme étant une sous-phrase indépendante des autres.
-        
+
         if (conjonction == true || i == (int)tableau.size() - 1)
         {
-            phrase.erase(phrase.size()-1);
+            phrase.erase(phrase.size() - 1);
 
             phrases_constituantes_le_texte.push_back(phrase);
             
@@ -587,37 +623,20 @@ void Phrase::recherche_de_la_ponctuation(string t)
 
 // Découpe le texte en phrases.
 
-tuple <string, vector <string>> Phrase::construction_du_texte(string texte, string l_source, string l_sortie)
+void Phrase::construction_du_texte(string texte)
 {
     int compteur = 0;
     
     thread mes_threads[100];
-    
-    langue_source = l_source;
-    langue_sortie = l_sortie;
-    
-    t_final.clear();
-    
-    t_structure.clear();
-    
-    indice_mot.clear();
-    indice_sous_phrase.clear();
-    presence_verbe.clear();
-    
-    structure_du_texte_source.clear();
-    structure_du_texte_sortie.clear();
-    
-    tableau_contenant_significations_mot.clear();
-    tableau_contenant_champs_lexicaux.clear();
    
     recherche_de_la_ponctuation(texte);
-    
+
     // Création d'un thread par phrase.
     
     // Les phrases créées en multithread ont une vitesse de traduction différente selon leur complexité.
     // On les place donc dans un tableau dont l'indice de position correspond au numéro du thread.
     // Cela évite un mauvais ordre d'affichage des phrases.
-    
+
     while (compteur < phrases_constituantes_le_texte.size())
     {
         indice_mot.push_back(0);
@@ -648,6 +667,4 @@ tuple <string, vector <string>> Phrase::construction_du_texte(string texte, stri
     }
     
     assemblage_des_phrases();
-        
-    return make_tuple(phrase_finale, t_structure);
 }

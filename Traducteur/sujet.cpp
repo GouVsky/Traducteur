@@ -11,6 +11,15 @@
 using namespace std;
 
 
+Sujet::Sujet(string source, string sortie)
+{
+    langue_source = source;
+    langue_sortie = sortie;
+}
+
+
+
+
 // Simplification du sujet en pronom personnel.
 
 int Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> * tableau)
@@ -68,11 +77,8 @@ int Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> * tableau)
 
 // Création du sujet.
 
-int Sujet::creation_du_sujet(vector <string> * structure_de_la_phrase, string l_source, string l_sortie)
+int Sujet::creation_du_sujet(vector <string> * structure_de_la_phrase)
 {
-    langue_source = l_source;
-    langue_sortie = l_sortie;
-    
     vector <string> t_sujet;
     bool presence_verbe = false;
     
@@ -80,7 +86,7 @@ int Sujet::creation_du_sujet(vector <string> * structure_de_la_phrase, string l_
     // S'il s'agit d'une phrase composée, le sujet est compris entre la fin de la phrase précédente et le verbe (non inclus).
     // Sinon, il est compris entre le début et le verbe (non inclus).
         
-    for (int i = debut; i < structure_de_la_phrase->size(); i++)
+    for (int i = 0; i < structure_de_la_phrase->size(); i++)
     {
         // On recherche s'il y a la présence d'un verbe.
         
@@ -93,7 +99,7 @@ int Sujet::creation_du_sujet(vector <string> * structure_de_la_phrase, string l_
         
         if ((* structure_de_la_phrase)[i].find("conjonction_et") != -1)
         {
-            debut += i + 1;
+            i++;
             
             // S'il y a un verbe dans la phrase, à gauche du "et", alors il s'agit de deux phrases distinctes.
             // Le sujet de la première phrase n'est pas pris en compte puisqu'il a déjà été traduit.

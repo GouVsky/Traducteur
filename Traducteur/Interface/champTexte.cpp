@@ -6,260 +6,214 @@
 //  Copyright © 2016 Grégoire. All rights reserved.
 //
 
+#include "fenetre.hpp"
 #include "champTexte.hpp"
 
 using namespace sf;
 using namespace std;
 
-#define DEBUT_TEXTE 40
-#define FIN_TEXTE 970
 
-
-void ChampTexte::easter_egg(RenderTexture * texture, Text texte, string mot, int indice_ligne)
+GChampDeTexte::GChampDeTexte() : GZoneDeTexte()
 {
-    couleur[0] = Color::Color(160, 0, 155);
-    couleur[1] = Color::Color(4, 42, 200);
-    couleur[2] = Color::Color(0, 140, 255);
-    couleur[3] = Color::Color(0, 200, 0);
-    couleur[4] = Color::Color(240, 230, 10);
-    couleur[5] = Color::Color(236, 135, 0);
-    couleur[6] = Color::Red;
+    position_x_curseur = 0;
     
+    position_y_curseur = 0;
     
-    size_t position = mot.find("[rainbow]");
-    
-    // Si le mot "[rainbow]" n'est pas un mot à part,
-    // Il faut l'isoler pour qu'il puisse être coloré.
-    
-    texte.setString(mot.substr(0, position));
-    texte.setPosition(DEBUT_TEXTE + taille_phrase, 200 + indice_ligne * 45);
-    texture->draw(texte);
-    
-    taille = texte.getLocalBounds().width;
-    
-    // On colore le mot "[rainbow]".
-    
-    texte.setString(mot.substr(position, 9));
-    texte.setColor(couleur[(int) numero_couleur % 7]);
-    texte.setPosition(DEBUT_TEXTE + taille_phrase + taille, 200 + indice_ligne * 45);
-    texture->draw(texte);
-    
-    taille += texte.getLocalBounds().width;
-    
-    // Le reste du mot (s'il n'y avait pas d'espace avec [rainbow]).
-    
-    texte.setColor(Color::Black);
-    texte.setString(mot.substr(position + 9));
-    texte.setPosition(DEBUT_TEXTE + taille_phrase + taille, 200 + indice_ligne * 45);
-    texture->draw(texte);
-    
-    taille += texte.getLocalBounds().width;
-    
-    numero_couleur += 0.5;
+    parametres_curseur.resize(4, 0);
 }
 
 
 
 
-// Affichage de chaque ligne.
+// Récupère la taille du texte entré dans le champ de texte.
 
-void ChampTexte::affichage_des_phrases(RenderTexture &texture, vector <string> t_justification, int indice_ligne)
+int GChampDeTexte::recuperer_taille_texte()
 {
-    taille_phrase = 0;
+    Text texte;
     
-    // Affichage des mots.
+    texte.setString(texte_source);
+    texte.setFont(police);
     
-    for(int i = 0; i < t_justification.size(); i++)
-    {
-        taille = 0;
-        
-        //wstring ws(t_justification[i].size(), L' ');
-        //ws.resize(mbstowcs(&ws[0], t_justification[i].c_str(), t_justification[i].size()));
-        
-        texte.setFont(police);
-        texte.setCharacterSize(37);
-        texte.setColor(Color::Black);
-        texte.setString(t_justification[i]);
+    return texte.getLocalBounds().width;
+}
 
-        // Si l'utilisateur a activé l'easter egg.
-        
-        if(t_justification[i].find("[rainbow]") != -1)
+
+
+
+// Récupère le texte entré dans le champ de texte.
+
+string GChampDeTexte::recuperer_texte()
+{
+    return texte_source + '\0';
+}
+
+
+
+
+// Création d'un curseur.
+
+void GChampDeTexte::creer_curseur()
+{
+    curseur.definir_taille(3, 50);
+    curseur.definir_couleur(Color::Black);
+    curseur.definir_position(position_x_curseur, position_y_curseur, tableau, parametres_curseur);
+    curseur.afficher(&texture);
+}
+
+
+
+
+// Récupère ce qui est entré par l'utilisateur.
+
+void GChampDeTexte::traitement()
+{
+    Fenetre fenetre;
+
+    Event * evenement = fenetre.recuperer_evenement();
+    
+    if (evenement != nullptr)
+    {
+        if (evenement->type == Event::KeyPressed)
         {
-            easter_egg(&texture, texte, t_justification[i], indice_ligne);
-        }
-        
-        else
-        {
-            // Les mots non répertoriés dans la base de données sont affichés en rouge.
-            
-            if(type_texte == "sortie" && structure[compteur_structure] == "inconnu_1")
+            if (evenement->key.system && evenement->key.code == Keyboard::V)
             {
-                texte.setColor(Color::Red);
+                FILE * copier_coller = popen("pbpaste", "r");
+                
+                char buffer[1000] = {0};
+                
+                while (feof(copier_coller) == false)
+                {
+                    if (fgets(buffer, 1000, copier_coller) != NULL)
+                    {
+                        texte_source.insert(position_x_curseur, buffer);
+                        
+                        position_x_curseur = (int) texte_source.size();
+                    }
+                }
+                
+                texte_source.erase(position_x_curseur - 1, 1);
+                
+                position_x_curseur--;
+                
+                pclose(copier_coller);
             }
             
-            texte.setPosition(DEBUT_TEXTE + taille_phrase, 200 + indice_ligne * 45);
-            
-            texture.draw(texte);
-            
-            taille = texte.getLocalBounds().width;
-        }
-        
-        taille_phrase += taille;
-        
-        compteur_structure++;
-    }
-}
-
-
-
-
-// Justification du texte.
-
-vector <string> ChampTexte::justification_du_texte(string phrase, int indice)
-{
-    string mot = "";
-    vector <string> t_mots;
-    int nb_espace_a_ajouter = 0;
-    
-    Text ligne(phrase, police, 37);
-    
-    // On calcule la marge comprise entre la fin de la phrase et le seuil.
-    // On récupère la taille en pixel du caractère espace.
-    // Et on en déduit le nombre d'espace à ajouter.
-    
-    if(ligne.getLocalBounds().width > 0 && ligne.getLocalBounds().width < FIN_TEXTE)
-    {
-        Text espace(' ', police, 37);
-        
-        int difference = FIN_TEXTE - ligne.getLocalBounds().width;
-        
-        nb_espace_a_ajouter = difference / (espace.getLocalBounds().width);
-    }
-    
-    // Decoupage de la phrase à chaque espace pour isoler les mots.
-    
-    for(int i = 0; i < phrase.size(); i++)
-    {
-        if(phrase[i] == ' ' || i == phrase.size() - 1)
-        {
-            t_mots.push_back(mot + phrase[i]);
-            
-            mot = "";
-        }
-        
-        else
-        {
-            mot += phrase[i];
-        }
-    }
-    
-    // On ajoute un espace entre chaque mot jusqu'à atteindre le seuil.
-    // La dernière ligne n'est justifiée que si elle est suffisamment grande.
-    
-    if(indice < compteur || (indice == compteur && ligne.getLocalBounds().width > FIN_TEXTE - 20))
-    {
-        for(int i = 1; i < nb_espace_a_ajouter; i++)
-        {
-            t_mots[i % (t_mots.size() - 1)] += ' ';
-        }
-    }
-    
-    return t_mots;
-}
-
-
-
-
-// Construction d'un texte affiché sur plusieurs lignes.
-
-void ChampTexte::texte_multilignes(char caractere)
-{
-    ligne = tableau[compteur] + caractere;
-    
-    Text texte(ligne, police, 37);
-    
-    // Si la taille du texte dépasse un certain seuil, on l'affiche sur plusieurs lignes.
-    // On incrémente donc un compteur correspondant au numéro de la ligne.
-    
-    if(texte.getLocalBounds().width > FIN_TEXTE)
-    {
-        tableau.push_back("");
-
-        // On cherche le dernier espace.
-        // On vérifie également que ce n'est pas le dernier caractère de la ligne,
-        // afin qu'il ne se trouve pas au début de la ligne suivante.
-        
-        for(int i = (int) ligne.size() - 1; i >= 0; i--)
-        {
-            if(ligne[i] == ' ' && i < ligne.size() - 1)
+            else if (evenement->key.code == Keyboard::Up)
             {
-                // On envoie les caractères compris entre l'espace et la fin de la ligne à la ligne suivante.
+                parametres_curseur[0] = 0;
+                parametres_curseur[1] = -1;
+                parametres_curseur[2] = 0;
+                parametres_curseur[3] = -1;
                 
-                for(int j = i + 1; j < ligne.size() - 1; j++)
+                if (position_y_curseur > 0)
                 {
-                    tableau[compteur + 1] += tableau[compteur][j];
+                    position_y_curseur--;
                 }
+            }
+            
+            else if (evenement->key.code == Keyboard::Down)
+            {
+                parametres_curseur[0] = 1;
+                parametres_curseur[1] = 0;
+                parametres_curseur[2] = (int) tableau.size() - 1;
+                parametres_curseur[3] = 1;
                 
-                // On efface les caractères qui ont été envoyés à la ligne suivante.
-                // Si le dernier caractère est un espace, on ne fait rien.
-                
-                if(i + 1 < tableau[compteur].size())
+                if (position_y_curseur < tableau.size() - 1)
                 {
-                    tableau[compteur].erase(i + 1);
+                    position_y_curseur++;
                 }
-                
-                break;
+            }
+            
+            else if (evenement->key.code == Keyboard::Left)
+            {
+                if(position_x_curseur > 0)
+                {
+                    position_x_curseur--;
+                }
+            }
+            
+            else if (evenement->key.code == Keyboard::Right)
+            {
+                if(position_x_curseur < texte_source.size())
+                {
+                    position_x_curseur++;
+                }
             }
         }
         
-        compteur++;
+        // L'utilisateur presse une touche du clavier.
         
-        ligne = "";
+        else if (evenement->type == Event::TextEntered)
+        {
+            // S'il s'agit de la touche "ENTREE", on effectue la traduction du texte.
+            
+            if(evenement->text.unicode == 10)
+            {
+                
+            }
+            
+            // S'il s'agit de la touche "BACKSPACE", on efface le dernier caractère.
+            
+            else if (evenement->text.unicode == 8)
+            {
+                if (texte_source.size() > 0 && position_x_curseur > 0)
+                {
+                    texte_source.erase(position_x_curseur - 1, 1);
+                    
+                    position_x_curseur--;
+                }
+            }
+            
+            else
+            {
+                texte_source.insert(position_x_curseur, 1, static_cast <char> (evenement->text.unicode));
+                
+                position_x_curseur++;
+            }
+        }
     }
     
-    tableau[compteur] += caractere;
+    traitement_des_phrases(texte_source, &texture);
 }
 
 
 
 
-// Traitement des phrases puis affichage à l'écran.
+// Efface le contenu du champ de texte.
 
-vector <string> ChampTexte::traitement_des_phrases(Font police_texte, string type, string texte, RenderTexture * texture, std::vector <std::string> structure_texte)
+void GChampDeTexte::effacer_contenu()
 {
-    type_texte = type;
+    texte_source = "";
+    
+    position_x_curseur = 0;
+    
+    position_y_curseur = 0;
+}
 
-    police = police_texte;
+
+
+
+// Affichage du champ de texte.
+
+void GChampDeTexte::afficher()
+{
+    Fenetre fenetre;
     
-    structure = structure_texte;
+    texture.create(largeur, hauteur);
     
-    // Réinitialisation.
+    texture.clear(Color::White);
     
-    ligne = "";
+    traitement();
     
-    compteur = 0;
-    compteur_structure = 0;
+    definir_contours();
     
-    tableau.clear();
-    tableau.push_back("");
+    creer_curseur();
     
-    texture->clear(Color::White);
+    texture.display();
         
-    // On coupe le texte pour qu'il s'affiche sur plusieurs lignes si cela est nécessaire.
+    sprite.setTexture(texture.getTexture());
+    sprite.setPosition(position_x, position_y);
     
-    for (int i = 0; i < texte.size(); i++)
-    {
-        texte_multilignes(texte[i]);
-    }
-    
-    // On justifie le texte et on l'affiche sur la texture correspondante.
-    
-    for (int i = 0; i <= compteur; i++)
-    {
-        vector <string> t_justification = justification_du_texte(tableau[i], i);
-        
-        affichage_des_phrases(* texture, t_justification, i);
-    }
-    
-    return tableau;
+    (fenetre.recuperer_fenetre())->draw(sprite);
+    (fenetre.recuperer_fenetre())->draw(contour);
 }

@@ -11,9 +11,17 @@
 #include "terminaison.hpp"
 #include "auxilliaire.hpp"
 #include "ResourcePath.hpp"
-#include "champsLexicaux.hpp"
 
 using namespace std;
+
+
+Verbe::Verbe(string source, string sortie)
+{
+    langue_source = source;
+    langue_sortie = sortie;
+}
+
+
 
 
 // Cherche le passé et le participe passé du verbe irrégulier.
@@ -155,16 +163,11 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
 
 // Détermine le verbe de la phrase.
 
-tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> tableau, vector <vector <string>> structure_de_la_phrase, string l_source, string l_sortie)
+tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> tableau, vector <vector <string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux)
 {
-    langue_source = l_source;
-    langue_sortie = l_sortie;
-    
-    ChampsLexicaux chp_lex;
-
     // Création du sujet.
 
-    Sujet sujet;
+    Sujet sujet(langue_source, langue_sortie);
 
     vector <string> structure;
     
@@ -178,7 +181,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
         }
     }
     
-    int le_sujet = sujet.creation_du_sujet(&structure, langue_source, langue_sortie);
+    int le_sujet = sujet.creation_du_sujet(&structure);
     
 
     
@@ -232,7 +235,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
                 {
                     taille_verbe_source = taille;
                     
-                    chp_lex.incrementation_des_champs_lexicaux(champ_lexical);
+                    champs_lexicaux->incrementation_des_champs_lexicaux(champ_lexical);
                     
                     champ_lexical_final = champ_lexical;
                     

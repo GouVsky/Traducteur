@@ -17,6 +17,7 @@ close fermer non non -
 continue continuer non non -
 cook cuisiner non non -
 cram entasser non non -
+crush éclater non non -
 cry pleurer non non -
 cut couper oui non -
 create créer non non -

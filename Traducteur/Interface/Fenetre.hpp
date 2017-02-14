@@ -1,22 +1,22 @@
 //
-//  Fenetre.hpp
+//  fenetre.hpp
 //  Traducteur
 //
-//  Created by Grégoire on 27/06/2016.
-//  Copyright © 2016 Grégoire. All rights reserved.
+//  Created by Grégoire on 05/02/2017.
+//  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#ifndef Fenetre_hpp
-#define Fenetre_hpp
+#ifndef fenetre_hpp
+#define fenetre_hpp
 
-#include <map>
-#include <ctime>
+#include <thread>
 #include <string>
-#include <vector>
 #include <stdio.h>
-#include <sstream>
-#include <locale>
-#include <codecvt>
+
+#include "bouton.hpp"
+#include "zoneTexte.hpp"
+#include "champTexte.hpp"
+#include "renduTexte.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -26,23 +26,44 @@ class Fenetre
     public :
     
     Fenetre();
-    void mise_a_jour();
+    static sf::Event * recuperer_evenement();
+    static sf::RenderWindow * recuperer_fenetre();
+    void affichage_des_elements();
     void chargement_du_texte();
+    void gestion_des_boutons();
     int creation_de_la_fenetre();
     
     private :
-
-    sf::Font police;
-    sf::Image image;
-    sf::RenderWindow fenetre;
-    sf::Texture langues, icone;
-    sf::RenderTexture texture_source, texture_sortie;
-    sf::Sprite sprite_source, sprite_sortie, chargement;
     
-    bool stop = false;
-    int position_x = 0, position_y = 0;
-    std::vector <std::string> tableau_source, tableau_sortie, structure;
-    std::string texte_source, texte_sortie, langue_source, langue_sortie;
+    sf::Font police;
+    sf::Texture texture;
+    sf::Event evenement;
+    sf::Sprite chargement;
+    static sf::RenderWindow fenetre;
+    
+    static std::vector <sf::Event> queue;
+    
+    bool arret_du_chargement;
+    
+    static int element_dans_la_queue;
+    
+    int alpha_F = 120,
+        alpha_A = 120,
+        alpha_langue_traduction = 0;
+    
+    std::string langue_source,
+                langue_sortie,
+                texte_traduit;
+    
+    GBouton bouton_F,
+            bouton_A,
+            traduire,
+            suppression,
+            langue_de_traduction;
+    
+    GChampDeTexte champ_texte_source;
+    
+    GTexteDeRendu rendu;
 };
 
-#endif /* Fenetre_hpp */
+#endif /* fenetre_hpp */
