@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#include "expression.h"
+#include "Expression.h"
 #include "ResourcePath.hpp"
 
 using namespace std;

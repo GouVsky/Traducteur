@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#include "motInvariable.h"
+#include "Invariable.h"
 #include "ResourcePath.hpp"
 
 using namespace std;

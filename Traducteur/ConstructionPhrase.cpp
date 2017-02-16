@@ -6,14 +6,14 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
-#include "verbe.hpp"
-#include "adjectif.h"
-#include "expression.h"
-#include "nomPropre.hpp"
-#include "nomCommun.hpp"
-#include "motInvariable.h"
-#include "champsLexicaux.hpp"
-#include "constructionPhrase.hpp"
+#include "Verbe.hpp"
+#include "Adjectif.h"
+#include "Expression.h"
+#include "NomPropre.hpp"
+#include "NomCommun.hpp"
+#include "Invariable.h"
+#include "ChampsLexicaux.hpp"
+#include "ConstructionPhrase.hpp"
 
 using namespace std;
 
@@ -113,6 +113,7 @@ void Phrase::assemblage_des_phrases()
 void Phrase::choix_des_mots_selon_champ_lexical(int indice)
 {
     string  le_mot = "", le_type = "";
+    
     int max = 0, max_valeur_champ_lexical = 0, valeur_champ_lexical = 0;
     
     for (int i = 0; i < tableau_contenant_champs_lexicaux[indice].size(); i++)
@@ -415,11 +416,11 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
             }
         }
 
-        for(int j = 0; j < s_source.size(); j++)
+        for (int j = 0; j < s_source.size(); j++)
         {
             // S'il y a une virgule après le mot, on l'ajoute.
             
-            if(i == phrase.size() - 1 && virgule == true)
+            if (i == phrase.size() - 1 && virgule == true)
             {
                 significations[j] += ',';
             }
@@ -471,11 +472,11 @@ void Phrase::recherche_virgule(string phrase, int indice)
     vector <string> tableau;
     string sous_phrase = "", mot = "";
     
-    for(int i = 0; i < phrase.size(); i++)
+    for (int i = 0; i < phrase.size(); i++)
     {
-        if(phrase[i] == ',' || i == phrase.size() - 1)
+        if (phrase[i] == ',' || i == phrase.size() - 1)
         {
-            if(phrase[i] != ',')
+            if (phrase[i] != ',')
             {
                 sous_phrase += phrase[i];
             }
@@ -489,7 +490,7 @@ void Phrase::recherche_virgule(string phrase, int indice)
             
             istringstream iss(sous_phrase);
             
-            while(getline(iss, mot, ' '))
+            while (getline(iss, mot, ' '))
             {
                 tableau.push_back(mot);
             }
@@ -506,7 +507,7 @@ void Phrase::recherche_virgule(string phrase, int indice)
             
             // S'il y a un verbe dans le morceau de phrase, on considère qu'elle est indépendante du reste.
 
-            if(presence_verbe[indice] == true)
+            if (presence_verbe[indice] == true)
             {
                 presence_verbe[indice] = false;
                 
@@ -570,7 +571,7 @@ void Phrase::recherche_conjonction_coordination(vector <string> tableau)
         
         // est considérée comme étant une sous-phrase indépendante des autres.
 
-        if (conjonction == true || i == (int)tableau.size() - 1)
+        if (conjonction == true || i == (int) tableau.size() - 1)
         {
             phrase.erase(phrase.size() - 1);
 

@@ -6,7 +6,7 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
-#include "auxilliaire.hpp"
+#include "Auxilliaire.hpp"
 
 using namespace std;
 

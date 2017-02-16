@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "champsLexicaux.hpp"
+#include "ChampsLexicaux.hpp"
 
 class Phrase
 {

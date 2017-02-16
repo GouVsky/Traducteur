@@ -6,7 +6,7 @@
 //  Copyright © 2016 Grégoire. All rights reserved.
 //
 
-#include "champsLexicaux.hpp"
+#include "ChampsLexicaux.hpp"
 
 using namespace std;
 

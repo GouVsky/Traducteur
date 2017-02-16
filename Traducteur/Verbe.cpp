@@ -6,10 +6,10 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
-#include "verbe.hpp"
-#include "sujet.hpp"
-#include "terminaison.hpp"
-#include "auxilliaire.hpp"
+#include "Verbe.hpp"
+#include "Sujet.hpp"
+#include "Terminaison.hpp"
+#include "Auxilliaire.hpp"
 #include "ResourcePath.hpp"
 
 using namespace std;

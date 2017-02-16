@@ -6,7 +6,7 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "nomPropre.hpp"
+#include "NomPropre.hpp"
 #include "ResourcePath.hpp"
 
 using namespace std;

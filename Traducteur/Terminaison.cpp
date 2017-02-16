@@ -6,7 +6,7 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
-#include "terminaison.hpp"
+#include "Terminaison.hpp"
 
 using namespace std;
 

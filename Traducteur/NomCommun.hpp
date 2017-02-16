@@ -16,7 +16,7 @@
 #include <sstream>
 #include <stdio.h>
 
-#include "champsLexicaux.hpp"
+#include "ChampsLexicaux.hpp"
 
 class NomCommun
 {

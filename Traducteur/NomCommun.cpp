@@ -6,7 +6,7 @@
 //  Copyright © 2016 Grégoire. All rights reserved.
 //
 
-#include "nomCommun.hpp"
+#include "NomCommun.hpp"
 #include "ResourcePath.hpp"
 
 using namespace std;

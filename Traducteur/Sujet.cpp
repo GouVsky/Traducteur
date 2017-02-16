@@ -6,7 +6,7 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
-#include "sujet.hpp"
+#include "Sujet.hpp"
 
 using namespace std;
 
