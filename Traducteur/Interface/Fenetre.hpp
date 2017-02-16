@@ -29,7 +29,7 @@ class Fenetre
     static sf::Event * recuperer_evenement();
     static sf::RenderWindow * recuperer_fenetre();
     void affichage_des_elements();
-    void chargement_du_texte();
+    //void chargement_du_texte();
     void gestion_des_boutons();
     int creation_de_la_fenetre();
     
@@ -42,9 +42,7 @@ class Fenetre
     static sf::RenderWindow fenetre;
     
     static std::vector <sf::Event> queue;
-    
-    bool arret_du_chargement;
-    
+        
     static int element_dans_la_queue;
     
     int alpha_F = 120,

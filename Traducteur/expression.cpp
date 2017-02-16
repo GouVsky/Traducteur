@@ -24,10 +24,37 @@ Expression::Expression(string source, string sortie)
 
 
 
+int Expression::recuperer_taille_expression_sortie()
+{
+    return taille_expression_sortie;
+}
+
+
+
+
+int Expression::recuperer_taille_expression_source()
+{
+    return taille_expression_source;
+}
+
+
+
+
+string Expression::recuperer_expression()
+{
+    return expression[langue_sortie];
+}
+
+
+
+
 // Détermine s'il existe une expression dans la phrase.
 
-tuple <string, int, int> Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur, vector <string> tableau)
+void Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur, vector <string> tableau)
 {
+    taille_expression_source = 0;
+    taille_expression_sortie = 0;
+    
     ifstream monFichierExpressions(resourcePath() + "expressions.txt");
 
     while (!monFichierExpressions.eof())
@@ -59,7 +86,7 @@ tuple <string, int, int> Expression::determine_si_existe_une_expression_dans_la_
                 
                 replace(expression[langue_sortie].begin(), expression[langue_sortie].end(), ';', ' ');
                 
-                return make_tuple(expression[langue_sortie], taille_expression_source, taille_expression_sortie);
+                break;
             }
         }
         
@@ -68,6 +95,4 @@ tuple <string, int, int> Expression::determine_si_existe_une_expression_dans_la_
         phrase = "";
         taille_expression_source = 0;
     }
-    
-    return make_tuple("MEM2!65oG", 0, 0); // S'il n'y a pas d'expression.
 }

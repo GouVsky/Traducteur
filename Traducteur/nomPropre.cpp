@@ -12,13 +12,47 @@
 using namespace std;
 
 
-tuple <string, vector <string>> NomPropre::le_mot_est_un_nom_propre(std::string mot)
+NomPropre::NomPropre()
+{
+    nombre_de_prenoms = 0;
+}
+
+
+
+
+int NomPropre::recuperer_nombre_de_mots()
+{
+    return nombre_de_prenoms;
+}
+
+
+
+
+string NomPropre::recuperer_genre(int numero_du_mot)
+{
+    return tableau_des_genres[numero_du_mot];
+}
+
+
+
+
+string NomPropre::recuperer_mot(int numero_du_mot)
+{
+    return tableau_des_prenoms[numero_du_mot];
+}
+
+
+
+
+void NomPropre::le_mot_est_un_nom_propre(std::string mot)
 {
     genre[0] = "masculin";
     genre[1] = "feminin";
     
-    string prenom_final;
-    vector <string> tableau_genre;
+    nombre_de_prenoms = 0;
+    
+    tableau_des_prenoms.clear();
+    tableau_des_genres.clear();
     
     for (int i = 0; i < 2; i++)
     {
@@ -32,11 +66,12 @@ tuple <string, vector <string>> NomPropre::le_mot_est_un_nom_propre(std::string 
             
             if (prenom == mot)
             {
-                tableau_genre.push_back(genre[i]);
+                nombre_de_prenoms++;
                 
                 prenom[0] = toupper(prenom[0]);
                 
-                prenom_final = prenom;
+                tableau_des_prenoms.push_back(prenom);
+                tableau_des_genres.push_back(genre[i]);
                 
                 break;
             }
@@ -44,7 +79,5 @@ tuple <string, vector <string>> NomPropre::le_mot_est_un_nom_propre(std::string 
         
         fichier_prenoms.close();
     }
-    
-    return make_tuple(prenom_final, tableau_genre);
 }
 

@@ -23,9 +23,13 @@ class Verbe
     public :
     
     Verbe(std::string source, std::string sortie);
+    int recuperer_taille_verbe_sortie();
+    int recuperer_taille_verbe_source();
+    std::string recuperer_champ_lexical();
+    std::string recuperer_verbe();
     std::string le_verbe_est_irregulier(std::string verbe, std::string temps, std::string langue);
     std::string construction(std::string caracteristique, std::string langue, std::string temps_verbe, int sujet, int groupe_verbe, std::string verbe, std::string marque_vb_si_irregulier, std::vector <std::string> * tableau, int compteur);
-    std::tuple <std::string, std::string, int, int> determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux);
+    void determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux);
     
     private :
     
@@ -38,9 +42,13 @@ class Verbe
                 champ_lexical,
                 langue_source,
                 langue_sortie,
-                forme_verbe_sortie;
+                forme_verbe_sortie,
+                champ_lexical_final;
     
-    std::map <std::string, std::string> caracteristique, verbe, marque_vb_irr, verbe_irregulier;
+    std::map <std::string, std::string> caracteristique,
+                                        verbe,
+                                        marque_vb_irr,
+                                        verbe_irregulier;
     
     std::map <std::string, int> position_pronom;
     

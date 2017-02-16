@@ -19,11 +19,21 @@ class NomPropre
 {
     public :
     
-    std::tuple <std::string, std::vector <std::string>> le_mot_est_un_nom_propre(std::string mot);
+    NomPropre();
+    int recuperer_nombre_de_mots();
+    std::string recuperer_genre(int numero_du_mot);
+    std::string recuperer_mot(int numero_du_mot);
+    void le_mot_est_un_nom_propre(std::string mot);
     
     private :
     
+    int nombre_de_prenoms;
+    
     std::string prenom;
+    
+    std::vector <std::string> tableau_des_prenoms,
+                              tableau_des_genres;
+    
     std::map <int, std::string> genre;
 };
 

@@ -27,8 +27,6 @@ int Fenetre::element_dans_la_queue = 0;
 
 Fenetre::Fenetre()
 {
-    arret_du_chargement = false;
-    
     langue_source = "";
     langue_sortie = "";
 }
@@ -63,11 +61,11 @@ RenderWindow * Fenetre::recuperer_fenetre()
 
 void Fenetre::affichage_des_elements()
 {
-    Phrase bob_le_bricoleur(langue_source, langue_sortie);
-    
-    bob_le_bricoleur.construction_du_texte(champ_texte_source.recuperer_texte());
-    
     champ_texte_source.afficher();
+
+    Phrase bob_le_bricoleur(langue_source, langue_sortie);
+
+    bob_le_bricoleur.construction_du_texte(champ_texte_source.recuperer_texte());
 
     rendu.afficher(bob_le_bricoleur.recuperer_texte_traduit());
     
@@ -88,7 +86,7 @@ void Fenetre::affichage_des_elements()
 
 // Affichage de l'icône de chargement du texte traduit.
 
-void Fenetre::chargement_du_texte()
+/*void Fenetre::chargement_du_texte()
 {
     clock_t debut = clock();
     
@@ -128,7 +126,7 @@ void Fenetre::chargement_du_texte()
             fin = clock();
         }
     }
-}
+}*/
 
 
 

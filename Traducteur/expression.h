@@ -20,7 +20,10 @@ class Expression
     public :
     
     Expression(std::string source, std::string sortie);
-    std::tuple <std::string, int, int> determine_si_existe_une_expression_dans_la_phrase(int compteur, std::vector <std::string> phrase);
+    int recuperer_taille_expression_sortie();
+    int recuperer_taille_expression_source();
+    std::string recuperer_expression();
+    void determine_si_existe_une_expression_dans_la_phrase(int compteur, std::vector <std::string> phrase);
     
     private :
     

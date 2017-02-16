@@ -16,6 +16,24 @@ Invariable::Invariable(string source, string sortie)
 {
     langue_source = source;
     langue_sortie = sortie;
+    
+    nombre_de_mots = 0;
+}
+
+
+
+
+int Invariable::recuperer_nombre_de_mots()
+{
+    return nombre_de_mots;
+}
+
+
+
+
+string Invariable::recuperer_mot()
+{
+    return invariable[langue_sortie];
 }
 
 
@@ -23,8 +41,10 @@ Invariable::Invariable(string source, string sortie)
 
 // Détermine si le mot est un mot invariable (déterminant, adverbe...).
 
-string Invariable::le_mot_est_invariable(string mot)
+void Invariable::le_mot_est_invariable(string mot)
 {
+    nombre_de_mots = 0;
+    
     ifstream fichier_invariables(resourcePath() + "invariables.txt");
         
     // Est-ce un mot invariable ?
@@ -35,11 +55,11 @@ string Invariable::le_mot_est_invariable(string mot)
         
         if (invariable[langue_source] == mot)
         {
-            return invariable[langue_sortie];
+            nombre_de_mots++;
+            
+            break;
         }
     }
     
     fichier_invariables.close();
-    
-    return "MEM2!65oG"; // Si le mot n'est pas invariable.
 }

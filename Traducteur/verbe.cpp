@@ -19,6 +19,41 @@ Verbe::Verbe(string source, string sortie)
 {
     langue_source = source;
     langue_sortie = sortie;
+    
+    taille_verbe_source = 0;
+    taille_verbe_sortie = 0;
+}
+
+
+
+
+int Verbe::recuperer_taille_verbe_sortie()
+{
+    return taille_verbe_sortie;
+}
+
+
+
+
+int Verbe::recuperer_taille_verbe_source()
+{
+    return taille_verbe_source;
+}
+
+
+
+
+string Verbe::recuperer_champ_lexical()
+{
+    return champ_lexical_final;
+}
+
+
+
+
+string Verbe::recuperer_verbe()
+{
+    return forme_verbe_sortie;
 }
 
 
@@ -152,7 +187,7 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
         
         construction_verbe += ' ';
     }
-        
+    
     construction_verbe.erase(construction_verbe.size() - 1);
     
     return construction_verbe;
@@ -163,7 +198,7 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
 
 // Détermine le verbe de la phrase.
 
-tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> tableau, vector <vector <string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux)
+void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> tableau, vector <vector <string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux)
 {
     // Création du sujet.
 
@@ -188,10 +223,14 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
     // Recherche du verbe.
     
     int taille = 0;
-    string champ_lexical_final;
     
-    forme_verbe_sortie = "MEM2!65oG";
-        
+    taille_verbe_source = 0;
+    taille_verbe_sortie = 0;
+    
+    forme_verbe_sortie = "";
+    
+    champ_lexical_final = "";
+            
     ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
 
     while (!fichier_caracteristique.eof())
@@ -214,7 +253,7 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
                 // Construction du verbe.
                 
                 string forme_verbe_source = construction(caracteristique[langue_source], langue_source, temps_verbe, le_sujet, groupe_verbe, verbe[langue_source], marque_vb_irr[langue_source], &tableau, compteur);
-                                
+                                                
                 // On récupère la taille du verbe.
                 
                 taille = (int) count(forme_verbe_source.begin(), forme_verbe_source.end(), ' ') + 1;
@@ -254,6 +293,4 @@ tuple <string, string, int, int> Verbe::determine_si_existe_un_verbe_dans_la_phr
     }
     
     fichier_caracteristique.close();
-    
-    return make_tuple(forme_verbe_sortie, champ_lexical_final, taille_verbe_source, taille_verbe_sortie);
 }

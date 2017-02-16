@@ -22,12 +22,20 @@ class Adjectif
     public :
     
     Adjectif(std::string source, std::string sortie);
-    std::tuple <std::string, std::string> le_mot_est_un_adjectif(std::string mot, ChampsLexicaux * champs_lexicaux);
+    int recuperer_nombre_de_adjectifs();
+    std::string recuperer_champ_lexical();
+    std::string recuperer_adjectif();
+    void le_mot_est_un_adjectif(std::string mot, ChampsLexicaux * champs_lexicaux);
     
     private :
     
+    int nombre_de_adjectifs;
+    
+    std::string champ_lexical,
+                langue_source,
+                langue_sortie;
+
     std::map <std::string, std::string> adjectif;
-    std::string champ_lexical, langue_source, langue_sortie;
 };
 
 #endif /* defined(__Traducteur_universel__adjectif__) */

@@ -199,20 +199,25 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
     {
         // Expression.
         
-        tuple <string, int, int> resultat_expression = expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
+        expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
         
-        if (get <0> (resultat_expression) != "MEM2!65oG")
+        int taille_source = expression.recuperer_taille_expression_source();
+        int taille_sortie = expression.recuperer_taille_expression_sortie();
+        
+        if (expression.recuperer_taille_expression_sortie() > 0)
         {
-            s_source.push_back("expression_" + to_string(get <1> (resultat_expression)));
-            s_sortie.push_back("expression_" + to_string(get <2> (resultat_expression)));
+            s_source.push_back("expression_" + to_string(taille_source));
+            s_sortie.push_back("expression_" + to_string(taille_sortie));
             
-            significations.push_back(get <0> (resultat_expression));
+            // On stocke l'expression.
+            
+            significations.push_back(expression.recuperer_expression());
             
             champs_lexicaux.push_back(vector <string> ());
             
             champs_lexicaux[champs_lexicaux.size() - 1].push_back("-");
             
-            i += get <1> (resultat_expression) - 1;
+            i += taille_source - 1;
         }
         
         else
@@ -224,7 +229,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
             
             for (int j = 8; j--;)
             {
-                if(pronom_personnel[langue_source][j] == phrase[i])
+                if (pronom_personnel[langue_source][j] == phrase[i])
                 {
                     p_personnel = true;
                     
@@ -253,67 +258,77 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 //      - On ajoute son champ lexical dans un autre tableau.
                 
                 
-
+                
                 // Nom commun masculin ou féminin.
                 
-                tuple <vector <string>, vector <vector <string>>, vector <string>, string> mot_commun = nom_commun.le_mot_est_un_nom_commun(phrase[i], &champ_lexical);
+                nom_commun.le_mot_est_un_nom_commun(phrase[i], &champ_lexical);
+                
+                int nombre_de_noms_communs = nom_commun.recuperer_nombre_de_significations();
                                 
-                if (!(get <0> (mot_commun)).empty())
+                for (int j = 0; j < nombre_de_noms_communs; j++)
                 {
-                    for (int j = 0; j < (get <0> (mot_commun)).size(); j++)
+                    int nombre_de_champs_lexicaux = nom_commun.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
+
+                    // On stocke le genre et le nombre.
+                    
+                    s_source.push_back(nom_commun.recuperer_genre(j) + '_' + nom_commun.recuperer_nombre(j) + "_1");
+                    s_sortie.push_back(nom_commun.recuperer_genre(j) + '_' + nom_commun.recuperer_nombre(j) + "_1");
+                    
+                    // On stocke le mots.
+                    
+                    significations.push_back(nom_commun.recuperer_mot(j));
+                    
+                    // On stocke les champs lexicaux.
+                    
+                    champs_lexicaux.push_back(vector <string> ());
+                    
+                    for (int k = 0; k < nombre_de_champs_lexicaux; k++)
                     {
-                        // On stocke le genre et le nombre.
-                        
-                        s_source.push_back(get <2> (mot_commun)[j] + "_" + get <3> (mot_commun) + "_1");
-                        s_sortie.push_back(get <2> (mot_commun)[j] + "_" + get <3> (mot_commun) + "_1");
-                        
-                        significations.push_back(get <0> (mot_commun)[j]);
-                        
-                        champs_lexicaux.push_back(vector <string> ());
-                                                
-                        for (int k = 0; k < get <1> (mot_commun)[j].size(); k++)
-                        {
-                            champs_lexicaux[champs_lexicaux.size() - 1].push_back(get <1> (mot_commun)[j][k]);
-                        }
+                        champs_lexicaux[champs_lexicaux.size() - 1].push_back(nom_commun.recuperer_champ_lexical(j, k));
                     }
                 }
                 
                 
                 // Nom propre masculin ou féminin.
                 
-                tuple <string, vector <string>> mot_propre = nom_propre.le_mot_est_un_nom_propre(phrase[i]);
+                nom_propre.le_mot_est_un_nom_propre(phrase[i]);
                 
-                if (!(get <1> (mot_propre)).empty())
+                int nombre_de_noms_propres = nom_propre.recuperer_nombre_de_mots();
+                
+                for (int j = 0; j < nombre_de_noms_propres; j++)
                 {
-                    for (int j = 0; j < (get <1> (mot_propre)).size(); j++)
-                    {
-                        // On stocke le genre.
-                        
-                        s_source.push_back(get <1> (mot_propre)[j] + "_1");
-                        s_sortie.push_back(get <1> (mot_propre)[j] + "_1");
-                        
-                        significations.push_back(get <0> (mot_propre));
-                        
-                        champs_lexicaux.push_back(vector <string> ());
-                        
-                        champs_lexicaux[champs_lexicaux.size() - 1].push_back("-");
-                    }
+                    // On stocke le genre.
+                    
+                    s_source.push_back(nom_propre.recuperer_genre(j) + "_1");
+                    s_sortie.push_back(nom_propre.recuperer_genre(j) + "_1");
+                    
+                    // On stocke les mots.
+                    
+                    significations.push_back(nom_propre.recuperer_mot(j));
+                    
+                    champs_lexicaux.push_back(vector <string> ());
+                    
+                    champs_lexicaux[champs_lexicaux.size() - 1].push_back("-");
                 }
                 
                 
                 // Mot invariable.
                 
-                string mot_invariable = invariable.le_mot_est_invariable(phrase[i]);
+                invariable.le_mot_est_invariable(phrase[i]);
                 
-                if (mot_invariable != "MEM2!65oG")
+                int nombre_de_mots_invariables = invariable.recuperer_nombre_de_mots();
+                
+                if (nombre_de_mots_invariables > 0)
                 {
+                    string mot_invariable = invariable.recuperer_mot();
+                    
                     // La conjonction "et" est un cas spécial :
                     // - Elle peut être utilisée comme conjonction de coordination entre deux phrase.
                     // - Ou pour former un sujet complexe.
                     
                     // (Se reporter à la classe "Sujet")
                     
-                    if(mot_invariable == "and" || mot_invariable == "et")
+                    if (mot_invariable == "and" || mot_invariable == "et")
                     {
                         s_source.push_back("conjonction_et_1");
                         s_sortie.push_back("conjonction_et_1");
@@ -335,47 +350,58 @@ void Phrase::traduction_des_mots(vector <string> phrase, int indice, bool virgul
                 
                 // Adjectif.
                 
-                tuple <string, string> mot_adjectif = adjectif.le_mot_est_un_adjectif(phrase[i], &champ_lexical);
+                adjectif.le_mot_est_un_adjectif(phrase[i], &champ_lexical);
                 
-                if (get <0> (mot_adjectif) != "MEM2!65oG")
+                int nombre_de_adjectifs = adjectif.recuperer_nombre_de_adjectifs();
+                
+                if (nombre_de_adjectifs > 0)
                 {
                     s_source.push_back("adjectif_1");
                     s_sortie.push_back("adjectif_1");
                     
-                    significations.push_back(get <0> (mot_adjectif));
+                    // On stocke l'adjectif.
+                    
+                    significations.push_back(adjectif.recuperer_adjectif());
                     
                     champs_lexicaux.push_back(vector <string> ());
                     
-                    champs_lexicaux[champs_lexicaux.size() - 1].push_back(get <1> (mot_adjectif));
+                    champs_lexicaux[champs_lexicaux.size() - 1].push_back(adjectif.recuperer_champ_lexical());
                 }
                 
                 
                 // Verbe.
                 
-                tuple <string, string, int, int> resultat_verbe = verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, structure_du_texte_source[indice][indice_sous_phrase[indice]], &champ_lexical);
+                verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, structure_du_texte_source[indice][indice_sous_phrase[indice]], &champ_lexical);
                 
-                if (get <0> (resultat_verbe) != "MEM2!65oG")
+                int taille_du_verbe = verbe.recuperer_taille_verbe_sortie();
+                
+                if (taille_du_verbe > 0)
                 {
                     presence_verbe[indice] = true;
                     
-                    s_source.push_back("verbe_" + to_string(get <2> (resultat_verbe)));
-                    s_sortie.push_back("verbe_" + to_string(get <3> (resultat_verbe)));
+                    s_source.push_back("verbe_" + to_string(verbe.recuperer_taille_verbe_source()));
+                    s_sortie.push_back("verbe_" + to_string(verbe.recuperer_taille_verbe_sortie()));
                     
-                    significations.push_back(get <0> (resultat_verbe));
+                    // On stocke le verbe.
+                    
+                    significations.push_back(verbe.recuperer_verbe());
+                    
+                    // On stocke les champs lexicaux.
                     
                     champs_lexicaux.push_back(vector <string> ());
                     
-                    champs_lexicaux[champs_lexicaux.size() - 1].push_back(get <1> (resultat_verbe));
+                    champs_lexicaux[champs_lexicaux.size() - 1].push_back(verbe.recuperer_champ_lexical());
                     
                     // On passe les termes qui composent le verbe.
                     
-                    i += get <2> (resultat_verbe) - 1;
+                    i += verbe.recuperer_taille_verbe_source() - 1;
                 }
                 
                 
                 // Le mot n'est pas répertorié dans la base de données.
                 
-                if ((get <0> (mot_commun)).empty() && (get <1> (mot_propre)).empty() && mot_invariable == "MEM2!65oG" && get <0> (resultat_verbe) == "MEM2!65oG" && get <0> (mot_adjectif) == "MEM2!65oG")
+                if (nombre_de_noms_communs == 0 && nombre_de_noms_propres == 0 && nombre_de_mots_invariables == 0 && nombre_de_adjectifs == 0
+                    && taille_du_verbe == 0)
                 {
                     s_source.push_back("inconnu_1");
                     s_sortie.push_back("inconnu_1");

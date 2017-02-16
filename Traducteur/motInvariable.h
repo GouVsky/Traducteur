@@ -19,11 +19,17 @@ class Invariable
     public :
     
     Invariable(std::string source, std::string sortie);
-    std::string le_mot_est_invariable(std::string mot);
+    int recuperer_nombre_de_mots();
+    std::string recuperer_mot();
+    void le_mot_est_invariable(std::string mot);
     
     private :
     
-    std::string langue_source, langue_sortie;
+    int nombre_de_mots;
+    
+    std::string langue_source,
+                langue_sortie;
+    
     std::map <std::string, std::string> invariable;
 };
 
