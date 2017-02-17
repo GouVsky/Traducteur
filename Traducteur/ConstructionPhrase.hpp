@@ -24,8 +24,11 @@ class Phrase
     public :
     
     Phrase(std::string source, std::string sortie, std::string texte);
-    std::vector <std::string> recuperer_structure_texte_traduit();
     std::string recuperer_phrase();
+    void ajouter_le_champ_lexical(std::string champ_lexical, int numero);
+    void ajouter_le_type_sortie(std::string type);
+    void ajouter_le_type_source(std::string type);
+    void ajouter_le_mot_sortie(std::string mot);
     void choix_des_mots_selon_champ_lexical();
     void traduction_des_mots(std::vector <std::string> phrase, bool virgule);
     void recherche_virgule();
