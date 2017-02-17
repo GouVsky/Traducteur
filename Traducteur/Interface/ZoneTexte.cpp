@@ -6,8 +6,8 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "fenetre.hpp"
-#include "zoneTexte.hpp"
+#include "Fenetre.hpp"
+#include "ZoneTexte.hpp"
 
 using namespace sf;
 using namespace std;

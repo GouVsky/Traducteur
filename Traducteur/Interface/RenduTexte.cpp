@@ -6,8 +6,8 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "fenetre.hpp"
-#include "renduTexte.hpp"
+#include "Fenetre.hpp"
+#include "RenduTexte.hpp"
 
 
 using namespace sf;

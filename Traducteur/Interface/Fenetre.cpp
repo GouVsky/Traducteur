@@ -7,10 +7,11 @@
 //
 
 
-#include "image.hpp"
-#include "fenetre.hpp"
+#include "Image.hpp"
+#include "Fenetre.hpp"
 #include "ResourcePath.hpp"
-#include "constructionPhrase.hpp"
+#include "ConstructionTexte.hpp"
+#include "ConstructionPhrase.hpp"
 
 using namespace sf;
 using namespace std;
@@ -62,8 +63,8 @@ RenderWindow * Fenetre::recuperer_fenetre()
 void Fenetre::affichage_des_elements()
 {
     champ_texte_source.afficher();
-
-    Phrase bob_le_bricoleur(langue_source, langue_sortie);
+    
+    Texte bob_le_bricoleur(langue_source, langue_sortie);
 
     bob_le_bricoleur.construction_du_texte(champ_texte_source.recuperer_texte());
 
@@ -175,9 +176,7 @@ int Fenetre::creation_de_la_fenetre()
     {
         return EXIT_FAILURE;
     }
-    
-    //Bouton inversion(&fenetre, "inversion.png");
-    
+        
     champ_texte_source.definir_taille(1005, 790);
     champ_texte_source.definir_position(20, 200);
     champ_texte_source.definir_police(police);

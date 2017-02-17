@@ -6,8 +6,8 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "image.hpp"
-#include "fenetre.hpp"
+#include "Image.hpp"
+#include "Fenetre.hpp"
 #include "ResourcePath.hpp"
 
 using namespace sf;

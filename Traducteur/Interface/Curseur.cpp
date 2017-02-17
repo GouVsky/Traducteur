@@ -6,7 +6,7 @@
 //  Copyright © 2016 Grégoire. All rights reserved.
 //
 
-#include "curseur.hpp"
+#include "Curseur.hpp"
 
 using namespace sf;
 using namespace std;

@@ -13,10 +13,10 @@
 #include <string>
 #include <stdio.h>
 
-#include "bouton.hpp"
-#include "zoneTexte.hpp"
-#include "champTexte.hpp"
-#include "renduTexte.hpp"
+#include "Bouton.hpp"
+#include "ZoneTexte.hpp"
+#include "ChampTexte.hpp"
+#include "RenduTexte.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

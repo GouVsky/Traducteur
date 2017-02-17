@@ -13,8 +13,8 @@
 #include <vector>
 #include <stdio.h>
 
-#include "curseur.hpp"
-#include "zoneTexte.hpp"
+#include "Curseur.hpp"
+#include "ZoneTexte.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

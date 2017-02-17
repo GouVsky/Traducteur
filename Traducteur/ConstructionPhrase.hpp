@@ -23,40 +23,37 @@ class Phrase
 {
     public :
     
-    Phrase(std::string source, std::string sortie);
-    ~Phrase();
+    Phrase(std::string source, std::string sortie, std::string texte);
     std::vector <std::string> recuperer_structure_texte_traduit();
-    std::string recuperer_texte_traduit();
-    void assemblage_des_phrases();
-    void choix_des_mots_selon_champ_lexical(int indice);
-    void traduction_des_mots(std::vector <std::string> phrase, int indice, bool virgule);
-    void recherche_conjonction_coordination(std::vector <std::string> tableau);
-    void recherche_virgule(std::string phrase, int indice);
-    void recherche_de_la_ponctuation(std::string texte);
-    void construction_du_texte(std::string texte);
+    std::string recuperer_phrase();
+    void choix_des_mots_selon_champ_lexical();
+    void traduction_des_mots(std::vector <std::string> phrase, bool virgule);
+    void recherche_virgule();
     
     private :
     
     ChampsLexicaux champ_lexical;
     
-    std::vector <char> t_ponctuation;
-    std::vector <bool> presence_verbe;
-    std::vector <int> indice_mot, indice_sous_phrase, indice_chp_lexical;
-    std::string langue_source, langue_sortie, phrase_finale;
-    std::map <std::string, std::string *> conjonction_coordination, pronom_personnel;
+    std::string _langue_source,
+                _langue_sortie,
+                _phrase_source,
+                _phrase_sortie;
     
-    std::vector <std::vector <std::string>> t_final;
-    std::vector <std::string> t_structure, phrases_constituantes_le_texte;
-    std::vector <std::vector <std::vector <std::vector <std::string>>>> structure_du_texte_source;
-    std::vector <std::vector <std::vector <std::vector <std::string>>>> structure_du_texte_sortie;
-    std::vector <std::vector <std::vector <std::vector <std::string>>>> tableau_contenant_significations_mot;
-    std::vector <std::vector <std::vector <std::vector <std::vector <std::string>>>>> tableau_contenant_champs_lexicaux;
+    bool presence_verbe;
     
-    std::string cc_a[6] = {"but", "where", "so", "because", "when", "if"};
-    std::string cc_f[8] = {"mais", "où", "donc", "or", "ni", "car", "parce-que", "quand"};
+    int indice_mot,
+        indice_sous_phrase;
     
-    std::string pp_a[9] = {"i", "you", "he", "she", "it", "we", "you", "they", "they"};
-    std::string pp_f[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+    std::vector <std::string> t_final,
+                              t_structure;
+    
+    std::vector <std::vector <std::vector <std::string>>> structure_du_texte_source,
+                                                          structure_du_texte_sortie,
+                                                          tableau_contenant_significations_mot;
+    
+    std::vector <std::vector <std::vector <std::vector <std::string>>>> tableau_contenant_champs_lexicaux;
+    
+    std::map <std::string, std::string *> pronom_personnel;
 };
 
 #endif /* constructionPhrase_hpp */

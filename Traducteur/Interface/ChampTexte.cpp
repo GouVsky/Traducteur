@@ -6,8 +6,8 @@
 //  Copyright © 2016 Grégoire. All rights reserved.
 //
 
-#include "fenetre.hpp"
-#include "champTexte.hpp"
+#include "Fenetre.hpp"
+#include "ChampTexte.hpp"
 
 using namespace sf;
 using namespace std;
