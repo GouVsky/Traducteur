@@ -28,7 +28,7 @@ class NomPropre : public Mot
     
     private :
     
-    std::string _prenom,
+    std::string _nom_propre,
                 _genre;
     
     std::map <int, std::string> genre;

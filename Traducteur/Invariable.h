@@ -27,7 +27,8 @@ class Invariable : public Mot
     private :
     
     std::string _langue_source,
-                _langue_sortie;
+                _langue_sortie,
+                _champs_lexicaux;
     
     std::map <std::string, std::string> invariable;
 };

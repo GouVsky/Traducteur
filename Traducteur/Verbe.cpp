@@ -186,23 +186,12 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
 {
     // Création du sujet.
 
-    Sujet sujet(_langue_source, _langue_sortie);
-
-    vector <string> structure;
+    Sujet sujet(structure_de_la_phrase);
     
-    // On récupère le type des mots qui précèdent le verbe.
+    sujet.creation_du_sujet();
     
-    for (int i = 0; i < structure_de_la_phrase.size(); i++)
-    {
-        for (int j = 0; j < structure_de_la_phrase[i].size(); j++)
-        {
-            structure.push_back(structure_de_la_phrase[i][j]);
-        }
-    }
+    _sujet = sujet.recuperer_valeur();
     
-    int le_sujet = sujet.creation_du_sujet(&structure);
-    
-
     
     // Recherche du verbe.
     
@@ -228,14 +217,14 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
             
             while (!fichier_verbes.eof())
             {
-                fichier_verbes >> verbe["A"] >> verbe["F"] >> marque_vb_irr["A"] >> marque_vb_irr["F"] >> champ_lexical;
+                fichier_verbes >> verbe["A"] >> verbe["F"] >> marque_vb_irr["A"] >> marque_vb_irr["F"] >> _champs_lexicaux;
                 
                 position_pronom["A"] = 0;
                 position_pronom["F"] = 0;
                 
                 // Construction du verbe.
                 
-                string forme_verbe_source = construction(caracteristique[_langue_source], _langue_source, _temps_verbe, le_sujet, groupe_verbe, verbe[_langue_source], marque_vb_irr[_langue_source], &tableau, compteur);
+                string forme_verbe_source = construction(caracteristique[_langue_source], _langue_source, _temps_verbe, _sujet, groupe_verbe, verbe[_langue_source], marque_vb_irr[_langue_source], &tableau, compteur);
                                                 
                 // On récupère la taille du verbe.
                 
@@ -257,9 +246,9 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                 {
                     _taille_verbe_source = taille;
                                         
-                    champ_lexical = _champ_lexical;
+                    champ_lexical = _champs_lexicaux;
                     
-                    _forme_verbe_sortie = construction(caracteristique[_langue_sortie], _langue_sortie, _temps_verbe, le_sujet, groupe_verbe, verbe[_langue_sortie], marque_vb_irr[_langue_sortie], &tableau, compteur);
+                    _forme_verbe_sortie = construction(caracteristique[_langue_sortie], _langue_sortie, _temps_verbe, _sujet, groupe_verbe, verbe[_langue_sortie], marque_vb_irr[_langue_sortie], &tableau, compteur);
                     
                     _taille_verbe_sortie = (int) count(_forme_verbe_sortie.begin(), _forme_verbe_sortie.end(), ' ') + 1;
                 }

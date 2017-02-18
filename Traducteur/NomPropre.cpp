@@ -40,19 +40,19 @@ void NomPropre::le_mot_est_un_nom_propre(std::string mot)
     
     for (int i = 0; i < 2; i++)
     {
-        ifstream fichier_prenoms(resourcePath() + "prenoms_" + genre[i] + "s.txt");
+        ifstream fichier_noms_propres(resourcePath() + "noms_propres_" + genre[i] + "s.txt");
         
         // Est-ce un prénom ?
         
-        while (!fichier_prenoms.eof())
+        while (!fichier_noms_propres.eof())
         {
-            fichier_prenoms >> _prenom;
+            fichier_noms_propres >> _nom_propre;
             
-            if (_prenom == mot)
+            if (_nom_propre == mot)
             {
-                _prenom[0] = toupper(_prenom[0]);
+                _nom_propre[0] = toupper(_nom_propre[0]);
                 
-                ajouter_mot(_prenom);
+                ajouter_mot(_nom_propre);
                 
                 definir_genre(genre[i]);
                 
@@ -60,7 +60,7 @@ void NomPropre::le_mot_est_un_nom_propre(std::string mot)
             }
         }
         
-        fichier_prenoms.close();
+        fichier_noms_propres.close();
     }
 }
 

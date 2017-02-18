@@ -315,6 +315,8 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 for (int j = 0; j < nombre_de_mots_invariables; j++)
                 {
+                    int nombre_de_champ_lexicaux = invariable.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
+                    
                     string mot_invariable = invariable.recuperer_mot(j);
                     
                     // La conjonction "et" est un cas spécial :
@@ -337,7 +339,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     
                     ajouter_le_mot_sortie(mot_invariable);
                     
-                    ajouter_le_champ_lexical("-");
+                    ajouter_le_champ_lexical(invariable.recuperer_champs_lexicaux(), nombre_de_champ_lexicaux, j);
                 }
                 
                 
@@ -471,7 +473,6 @@ void Phrase::recherche_virgule()
             {
                 i++;
             }
-            
         }
         
         else

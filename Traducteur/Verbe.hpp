@@ -32,12 +32,13 @@ class Verbe : public Mot
     
     private :
     
-    int _taille_verbe_source,
+    int _sujet,
+        _taille_verbe_source,
         _taille_verbe_sortie;
         
     std::string _mot,
                 _temps_verbe,
-                _champ_lexical,
+                _champs_lexicaux,
                 _langue_source,
                 _langue_sortie,
                 _forme_verbe_source,
