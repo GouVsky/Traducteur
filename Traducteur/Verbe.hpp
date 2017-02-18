@@ -33,6 +33,7 @@ class Verbe : public Mot
     private :
     
     int _sujet,
+        _groupe_verbe,
         _taille_verbe_source,
         _taille_verbe_sortie;
         
@@ -42,7 +43,9 @@ class Verbe : public Mot
                 _langue_source,
                 _langue_sortie,
                 _forme_verbe_source,
-                _forme_verbe_sortie;
+                _forme_verbe_sortie,
+                _caracteristique,
+                _marque_vb_irr;
     
     std::map <std::string, std::string> caracteristique,
                                         verbe,

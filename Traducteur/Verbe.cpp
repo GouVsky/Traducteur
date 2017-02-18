@@ -200,7 +200,9 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     _taille_verbe_source = 0;
     _taille_verbe_sortie = 0;
     
-    string champ_lexical,
+    string champs_lexicaux,
+           temps_verbe,
+           mot_source,
            phrase;
             
     ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
@@ -224,38 +226,53 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                 
                 // Construction du verbe.
                 
-                string forme_verbe_source = construction(caracteristique[_langue_source], _langue_source, _temps_verbe, _sujet, groupe_verbe, verbe[_langue_source], marque_vb_irr[_langue_source], &tableau, compteur);
-                                                
-                // On récupère la taille du verbe.
+                istringstream iss_langue_source(verbe[_langue_source]);
                 
-                taille = (int) count(forme_verbe_source.begin(), forme_verbe_source.end(), ' ') + 1;
+                // On vérifie si le verbe possède plusieurs sens.
                 
-                // On récupère le verbe de la phrase entrée par l'utilisateur.
-                
-                for (int i = 0; i < min(taille, (int) tableau.size() - compteur); i++)
+                while (getline(iss_langue_source, mot_source, '/'))
                 {
-                    phrase += tableau[compteur + i] + ' ';
-                }
-                
-                phrase.erase(phrase.size() - 1);
-                
-                // Si le verbe construit est identique à celui de la phrase, on construit le verbe dans la langue demandée.
-                // On vérifie également qu'il s'agit du plus grand verbe identifiable.
-
-                if (phrase == forme_verbe_source && taille > _taille_verbe_source)
-                {
-                    _taille_verbe_source = taille;
-                                        
-                    champ_lexical = _champs_lexicaux;
+                    string forme_verbe_source = construction(caracteristique[_langue_source], _langue_source, _temps_verbe, _sujet, groupe_verbe, mot_source, marque_vb_irr[_langue_source], &tableau, compteur);
                     
-                    _forme_verbe_sortie = construction(caracteristique[_langue_sortie], _langue_sortie, _temps_verbe, _sujet, groupe_verbe, verbe[_langue_sortie], marque_vb_irr[_langue_sortie], &tableau, compteur);
+                    // On récupère la taille du verbe.
                     
-                    _taille_verbe_sortie = (int) count(_forme_verbe_sortie.begin(), _forme_verbe_sortie.end(), ' ') + 1;
+                    taille = (int) count(forme_verbe_source.begin(), forme_verbe_source.end(), ' ') + 1;
+                    
+                    // On récupère le verbe de la phrase entrée par l'utilisateur.
+                    
+                    for (int i = 0; i < min(taille, (int) tableau.size() - compteur); i++)
+                    {
+                        phrase += tableau[compteur + i] + ' ';
+                    }
+                    
+                    phrase.erase(phrase.size() - 1);
+                    
+                    // Si le verbe construit est identique à celui de la phrase, on construit le verbe dans la langue demandée.
+                    // On vérifie également qu'il s'agit du plus grand verbe identifiable.
+                    
+                    if (phrase == forme_verbe_source && taille > _taille_verbe_source)
+                    {
+                        temps_verbe = _temps_verbe;
+                        
+                        _groupe_verbe = groupe_verbe;
+                        
+                        _taille_verbe_source = taille;
+                        
+                        champs_lexicaux = _champs_lexicaux;
+                        
+                        _forme_verbe_sortie = verbe[_langue_sortie];
+                        
+                        _marque_vb_irr = marque_vb_irr[_langue_sortie];
+                        
+                        _caracteristique = caracteristique[_langue_sortie];
+                        
+                        break;
+                    }
+                    
+                    // Réinitialisation.
+                    
+                    phrase = "";
                 }
-                
-                // Réinitialisation.
-                
-                phrase = "";
             }
             
             fichier_verbes.close();
@@ -264,7 +281,16 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     
     fichier_caracteristique.close();
     
-    ajouter_mot(_forme_verbe_sortie);
+    // On stocke les différents sens du verbe.
     
-    ajouter_champs_lexicaux(champ_lexical);
+    istringstream iss_langue_source(_forme_verbe_sortie);
+    
+    while (getline(iss_langue_source, mot_source, '/'))
+    {
+        string verbe_traduit = construction(_caracteristique, _langue_sortie, temps_verbe, _sujet, _groupe_verbe, mot_source, _marque_vb_irr, &tableau, compteur);
+        
+        ajouter_mot(verbe_traduit);
+    }
+    
+    ajouter_champs_lexicaux(champs_lexicaux);
 }

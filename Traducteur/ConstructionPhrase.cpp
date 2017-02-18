@@ -392,7 +392,10 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 // Le mot n'est pas répertorié dans la base de données.
                 
-                if (nombre_de_noms_communs == 0 && nombre_de_noms_propres == 0 && nombre_de_mots_invariables == 0 && nombre_de_adjectifs == 0
+                if (nombre_de_noms_communs == 0
+                    && nombre_de_noms_propres == 0
+                    && nombre_de_mots_invariables == 0
+                    && nombre_de_adjectifs == 0
                     && nombre_de_verbes == 0)
                 {
                     ajouter_le_type_source("inconnu_1");
