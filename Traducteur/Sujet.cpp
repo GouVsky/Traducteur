@@ -27,6 +27,8 @@ Sujet::Sujet(vector <vector <string>> structure)
 
 
 
+// Retourne le chiffre associé au sujet du verbe.
+
 int Sujet::recuperer_valeur()
 {
     return _valeur;
@@ -34,6 +36,8 @@ int Sujet::recuperer_valeur()
 
 
 
+
+// Associe le sujet du verbe à un chiffre.
 
 void Sujet::definir_valeur(int valeur)
 {

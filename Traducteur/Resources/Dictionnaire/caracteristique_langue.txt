@@ -1,4 +1,3 @@
-present verbe-terminaison+pronom pronom+radical-terminaison
 present verbe-terminaison radical-terminaison
 present etre+verbe-ing radical-terminaison
 imparfait etre+verbe radical-terminaison

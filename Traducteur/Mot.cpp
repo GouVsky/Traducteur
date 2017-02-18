@@ -39,6 +39,8 @@ int Mot::recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(int numero_du_mot)
 
 
 
+// Retourne le nombre de sens qu'un mot peut posséder.
+
 int Mot::recuperer_nombre_de_mots()
 {
     return _nombre_de_mots;
@@ -66,6 +68,8 @@ string Mot::recuperer_mot(int numero_du_mot)
 
 
 
+
+// Ajoute tous les champs lexicaux qu'un mot peut posséder.
 
 void Mot::ajouter_champs_lexicaux(string champs_lexicaux)
 {
@@ -97,6 +101,8 @@ void Mot::ajouter_champs_lexicaux(string champs_lexicaux)
 
 
 
+
+// Ajoute tous les sens d'un mot.
 
 void Mot::ajouter_mot(string mot)
 {

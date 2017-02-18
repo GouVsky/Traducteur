@@ -27,6 +27,8 @@ Verbe::Verbe(string source, string sortie, ChampsLexicaux * champ_lexical) : Mot
 
 
 
+// Retourne la taille du verbe traduit.
+
 int Verbe::recuperer_taille_verbe_sortie()
 {
     return _taille_verbe_sortie;
@@ -34,6 +36,8 @@ int Verbe::recuperer_taille_verbe_sortie()
 
 
 
+
+// Retourne la taille du verbe source.
 
 int Verbe::recuperer_taille_verbe_source()
 {
@@ -45,7 +49,7 @@ int Verbe::recuperer_taille_verbe_source()
 
 // Cherche le passé et le participe passé du verbe irrégulier.
 
-string Verbe::le_verbe_est_irregulier(string verbe, string temps, string langue)
+string Verbe::le_verbe_est_irregulier(string verbe, string langue)
 {
     string irregularite;
     
@@ -53,11 +57,11 @@ string Verbe::le_verbe_est_irregulier(string verbe, string temps, string langue)
     
     while (!fichier_verbes_irreguliers.eof())
     {
-        fichier_verbes_irreguliers >> verbe_irregulier["infinitif"] >> verbe_irregulier["passe_simple"] >> verbe_irregulier["participe_passe"];
+        fichier_verbes_irreguliers >> _verbe_irregulier["infinitif"] >> _verbe_irregulier["passe_simple"] >> _verbe_irregulier["participe_passe"];
 
-        if (verbe_irregulier["infinitif"] == verbe)
+        if (_verbe_irregulier["infinitif"] == verbe)
         {
-            irregularite = verbe_irregulier[temps];
+            irregularite = _verbe_irregulier[_temps_verbe];
             
             break;
         }
@@ -73,94 +77,82 @@ string Verbe::le_verbe_est_irregulier(string verbe, string temps, string langue)
 
 // Construction du verbe en fonction du sujet, du temps et du groupe du verbe, et des caractéristiques propres à chaque langue.
 
-string Verbe::construction(string caracteristique, string langue, string temps, int sujet, int groupe_verbe, string le_verbe, string marque_vb_si_irr, vector <string> * tableau, int compteur)
+string Verbe::construction(string langue, string le_verbe, vector <string> * tableau, int compteur)
 {
     Auxilliaire auxilliaire;
     Terminaison la_terminaison;
     
     int position = 0;
         
-    string copie_verbe = le_verbe,
+    string terminaison,
            construction_verbe,
-           mot_bis;
+           copie_verbe = le_verbe,
+           mot_constituant_le_verbe;
     
     tuple <string, string> terminaisons;
     
-    istringstream iss(caracteristique);
+    istringstream iss(_conjugaison[langue]);
     
     // Construction du verbe.
     
-    while (getline(iss, _mot, '+'))
+    while (getline(iss, mot_constituant_le_verbe, '+'))
     {
-        istringstream iss_bis(_mot);
+        istringstream iss_bis(mot_constituant_le_verbe);
         
-        while (getline(iss_bis, mot_bis, '-'))
+        while (getline(iss_bis, terminaison, '-'))
         {
-            if (mot_bis == "verbe_et_terminaison")
+            if (terminaison == "verbe_et_terminaison")
             {
-                if (marque_vb_si_irr == "oui")
+                if (_irregulier_ou_non[langue] == "oui")
                 {
-                    construction_verbe += le_verbe_est_irregulier(le_verbe, temps, langue);
+                    construction_verbe += le_verbe_est_irregulier(le_verbe, langue);
                 }
                 
                 else
                 {
-                    terminaisons = la_terminaison.construction(groupe_verbe, temps, sujet, langue, le_verbe);
+                    terminaisons = la_terminaison.construction(_groupe_verbe, _temps_verbe, _sujet, langue, le_verbe);
                     
                     construction_verbe += le_verbe + get <1> (terminaisons);
                 }
             }
             
-            else if (mot_bis == "pronom")
+            else if (terminaison == "ing")
             {
-                // On enregistre combien de mots précèdent le pronom.
-                // On associe ensuite la langue et le pronom pour déterminer le pronom dans l'autre langue.
-                
-                position_pronom[langue] = position;
-                
-                if (compteur + position_pronom[_langue_source] < tableau->size())
-                {
-                    construction_verbe += association[make_pair(langue, pronom[(* tableau)[compteur + position_pronom[_langue_source]]])];
-                }
+                construction_verbe += terminaison;
             }
             
-            else if (mot_bis == "ing")
-            {
-                construction_verbe += mot_bis;
-            }
-            
-            else if (mot_bis == "verbe")
+            else if (terminaison == "verbe")
             {
                 construction_verbe += le_verbe;
             }
             
-            else if (mot_bis == "radical")
+            else if (terminaison == "radical")
             {
                 // On calcule la terminaison puisque le radical est déterminé en fonction de celle-ci.
                 // Elle est différente pour les verbes français du troisième groupe.
                 
-                terminaisons = la_terminaison.construction(groupe_verbe, temps, sujet, langue, le_verbe);
+                terminaisons = la_terminaison.construction(_groupe_verbe, _temps_verbe, _sujet, langue, le_verbe);
                 
                 copie_verbe.erase(copie_verbe.size() - (get <0> (terminaisons).size()));
                 
                 construction_verbe += copie_verbe;
             }
             
-            else if (mot_bis == "terminaison")
+            else if (terminaison == "terminaison")
             {
-                terminaisons = la_terminaison.construction(groupe_verbe, temps, sujet, langue, le_verbe);
+                terminaisons = la_terminaison.construction(_groupe_verbe, _temps_verbe, _sujet, langue, le_verbe);
                 
                 construction_verbe += get <1> (terminaisons);
             }
             
-            else if (mot_bis == "avoir" || mot_bis == "etre" || mot_bis == "aller")
+            else if (terminaison == "avoir" || terminaison == "etre" || terminaison == "aller")
             {
-                construction_verbe += auxilliaire.construction_auxilliaire(sujet, langue, mot_bis, temps);
+                construction_verbe += auxilliaire.construction_auxilliaire(_sujet, langue, terminaison, _temps_verbe);
             }
             
             else
             {
-                construction_verbe += mot_bis; // To, will, would...
+                construction_verbe += terminaison; // To, will, would...
             }
             
             get <0> (terminaisons).clear();
@@ -193,85 +185,71 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     _sujet = sujet.recuperer_valeur();
     
     
-    // Recherche du verbe.
-    
-    int taille = 0;
-    
-    _taille_verbe_source = 0;
-    _taille_verbe_sortie = 0;
-    
-    string champs_lexicaux,
-           temps_verbe,
-           mot_source,
-           phrase;
+    string mot_source,
+           forme_verbe_tmp;
             
     ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
 
     while (!fichier_caracteristique.eof())
     {
-        fichier_caracteristique >> _temps_verbe >> caracteristique["A"] >> caracteristique["F"];
+        fichier_caracteristique >> _temps_verbe >> _conjugaison["A"] >> _conjugaison["F"];
         
         // On teste les verbes de chaque groupe.
         
-        for (int groupe_verbe = 1; groupe_verbe <= 3; groupe_verbe++)
+        for (_groupe_verbe = 1; _groupe_verbe <= 3; _groupe_verbe++)
         {
-            ifstream fichier_verbes(resourcePath() + "verbes_" + to_string(groupe_verbe) + ".txt");
+            ifstream fichier_verbes(resourcePath() + "verbes_" + to_string(_groupe_verbe) + ".txt");
             
             while (!fichier_verbes.eof())
             {
-                fichier_verbes >> verbe["A"] >> verbe["F"] >> marque_vb_irr["A"] >> marque_vb_irr["F"] >> _champs_lexicaux;
-                
-                position_pronom["A"] = 0;
-                position_pronom["F"] = 0;
+                fichier_verbes >> _verbe["A"] >> _verbe["F"] >> _irregulier_ou_non["A"] >> _irregulier_ou_non["F"] >> _champs_lexicaux;
                 
                 // Construction du verbe.
                 
-                istringstream iss_langue_source(verbe[_langue_source]);
+                istringstream iss_langue_source(_verbe[_langue_source]);
                 
                 // On vérifie si le verbe possède plusieurs sens.
                 
                 while (getline(iss_langue_source, mot_source, '/'))
                 {
-                    string forme_verbe_source = construction(caracteristique[_langue_source], _langue_source, _temps_verbe, _sujet, groupe_verbe, mot_source, marque_vb_irr[_langue_source], &tableau, compteur);
+                    _forme_verbe_source = construction(_langue_source, mot_source, &tableau, compteur);
                     
                     // On récupère la taille du verbe.
                     
-                    taille = (int) count(forme_verbe_source.begin(), forme_verbe_source.end(), ' ') + 1;
+                    _taille_verbe_source = (int) count(_forme_verbe_source.begin(), _forme_verbe_source.end(), ' ') + 1;
                     
                     // On récupère le verbe de la phrase entrée par l'utilisateur.
                     
-                    for (int i = 0; i < min(taille, (int) tableau.size() - compteur); i++)
+                    forme_verbe_tmp = "";
+                    
+                    for (int i = 0; i < min(_taille_verbe_source, (int) tableau.size() - compteur); i++)
                     {
-                        phrase += tableau[compteur + i] + ' ';
+                        forme_verbe_tmp += tableau[compteur + i] + ' ';
                     }
                     
-                    phrase.erase(phrase.size() - 1);
+                    forme_verbe_tmp.erase(forme_verbe_tmp.size() - 1);
                     
-                    // Si le verbe construit est identique à celui de la phrase, on construit le verbe dans la langue demandée.
-                    // On vérifie également qu'il s'agit du plus grand verbe identifiable.
+                    // On traduit le verbe s'il est identique à celui de la phrase.
                     
-                    if (phrase == forme_verbe_source && taille > _taille_verbe_source)
+                    if (forme_verbe_tmp == _forme_verbe_source)
                     {
-                        temps_verbe = _temps_verbe;
+                        // On stocke tous les sens possibles du verbe une fois celui-ci traduit.
                         
-                        _groupe_verbe = groupe_verbe;
+                        istringstream iss_langue_source(_verbe[_langue_sortie]);
                         
-                        _taille_verbe_source = taille;
+                        while (getline(iss_langue_source, mot_source, '/'))
+                        {
+                            _forme_verbe_sortie = construction(_langue_sortie, mot_source, &tableau, compteur);
+                            
+                            _taille_verbe_sortie = (int) count(_forme_verbe_sortie.begin(), _forme_verbe_sortie.end(), ' ') + 1;
+                            
+                            ajouter_mot(_forme_verbe_sortie);
+                        }
                         
-                        champs_lexicaux = _champs_lexicaux;
-                        
-                        _forme_verbe_sortie = verbe[_langue_sortie];
-                        
-                        _marque_vb_irr = marque_vb_irr[_langue_sortie];
-                        
-                        _caracteristique = caracteristique[_langue_sortie];
+                        ajouter_champs_lexicaux(_champs_lexicaux);
                         
                         break;
                     }
-                    
-                    // Réinitialisation.
-                    
-                    phrase = "";
                 }
             }
             
@@ -280,17 +258,4 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     }
     
     fichier_caracteristique.close();
-    
-    // On stocke les différents sens du verbe.
-    
-    istringstream iss_langue_source(_forme_verbe_sortie);
-    
-    while (getline(iss_langue_source, mot_source, '/'))
-    {
-        string verbe_traduit = construction(_caracteristique, _langue_sortie, temps_verbe, _sujet, _groupe_verbe, mot_source, _marque_vb_irr, &tableau, compteur);
-        
-        ajouter_mot(verbe_traduit);
-    }
-    
-    ajouter_champs_lexicaux(champs_lexicaux);
 }

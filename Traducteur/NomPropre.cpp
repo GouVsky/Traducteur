@@ -41,9 +41,7 @@ void NomPropre::le_mot_est_un_nom_propre(std::string mot)
     for (int i = 0; i < 2; i++)
     {
         ifstream fichier_noms_propres(resourcePath() + "noms_propres_" + genre[i] + "s.txt");
-        
-        // Est-ce un prénom ?
-        
+                
         while (!fichier_noms_propres.eof())
         {
             fichier_noms_propres >> _nom_propre;

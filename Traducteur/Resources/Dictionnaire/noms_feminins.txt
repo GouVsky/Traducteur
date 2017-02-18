@@ -60,6 +60,7 @@ cow vache -
 crisis crise -
 curiosity curiosité -
 daisy marguerite -
+darkness obscurité -
 daughter fille -
 dawn aube -
 decision décision -
