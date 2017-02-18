@@ -14,21 +14,20 @@
 #include <fstream>
 #include <stdio.h>
 
-class Invariable
+#include "Mot.hpp"
+#include "ChampsLexicaux.hpp"
+
+class Invariable : public Mot
 {
     public :
     
-    Invariable(std::string source, std::string sortie);
-    int recuperer_nombre_de_mots();
-    std::string recuperer_mot();
+    Invariable(std::string source, std::string sortie, ChampsLexicaux * champs_lexicaux);
     void le_mot_est_invariable(std::string mot);
     
     private :
     
-    int nombre_de_mots;
-    
-    std::string langue_source,
-                langue_sortie;
+    std::string _langue_source,
+                _langue_sortie;
     
     std::map <std::string, std::string> invariable;
 };

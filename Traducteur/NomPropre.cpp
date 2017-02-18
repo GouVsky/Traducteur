@@ -12,33 +12,22 @@
 using namespace std;
 
 
-NomPropre::NomPropre()
+NomPropre::NomPropre() : Mot() {}
+
+
+
+
+string NomPropre::recuperer_genre()
 {
-    nombre_de_prenoms = 0;
+    return _genre;
 }
 
 
 
 
-int NomPropre::recuperer_nombre_de_mots()
+void NomPropre::definir_genre(string genre)
 {
-    return nombre_de_prenoms;
-}
-
-
-
-
-string NomPropre::recuperer_genre(int numero_du_mot)
-{
-    return tableau_des_genres[numero_du_mot];
-}
-
-
-
-
-string NomPropre::recuperer_mot(int numero_du_mot)
-{
-    return tableau_des_prenoms[numero_du_mot];
+    _genre = genre;
 }
 
 
@@ -49,11 +38,6 @@ void NomPropre::le_mot_est_un_nom_propre(std::string mot)
     genre[0] = "masculin";
     genre[1] = "feminin";
     
-    nombre_de_prenoms = 0;
-    
-    tableau_des_prenoms.clear();
-    tableau_des_genres.clear();
-    
     for (int i = 0; i < 2; i++)
     {
         ifstream fichier_prenoms(resourcePath() + "prenoms_" + genre[i] + "s.txt");
@@ -62,16 +46,15 @@ void NomPropre::le_mot_est_un_nom_propre(std::string mot)
         
         while (!fichier_prenoms.eof())
         {
-            fichier_prenoms >> prenom;
+            fichier_prenoms >> _prenom;
             
-            if (prenom == mot)
+            if (_prenom == mot)
             {
-                nombre_de_prenoms++;
+                _prenom[0] = toupper(_prenom[0]);
                 
-                prenom[0] = toupper(prenom[0]);
+                ajouter_mot(_prenom);
                 
-                tableau_des_prenoms.push_back(prenom);
-                tableau_des_genres.push_back(genre[i]);
+                definir_genre(genre[i]);
                 
                 break;
             }

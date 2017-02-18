@@ -15,13 +15,13 @@
 using namespace std;
 
 
-Verbe::Verbe(string source, string sortie)
+Verbe::Verbe(string source, string sortie, ChampsLexicaux * champ_lexical) : Mot(champ_lexical)
 {
-    langue_source = source;
-    langue_sortie = sortie;
+    _langue_source = source;
+    _langue_sortie = sortie;
     
-    taille_verbe_source = 0;
-    taille_verbe_sortie = 0;
+    _taille_verbe_source = 0;
+    _taille_verbe_sortie = 0;
 }
 
 
@@ -29,7 +29,7 @@ Verbe::Verbe(string source, string sortie)
 
 int Verbe::recuperer_taille_verbe_sortie()
 {
-    return taille_verbe_sortie;
+    return _taille_verbe_sortie;
 }
 
 
@@ -37,23 +37,7 @@ int Verbe::recuperer_taille_verbe_sortie()
 
 int Verbe::recuperer_taille_verbe_source()
 {
-    return taille_verbe_source;
-}
-
-
-
-
-string Verbe::recuperer_champ_lexical()
-{
-    return champ_lexical_final;
-}
-
-
-
-
-string Verbe::recuperer_verbe()
-{
-    return forme_verbe_sortie;
+    return _taille_verbe_source;
 }
 
 
@@ -106,9 +90,9 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
     
     // Construction du verbe.
     
-    while (getline(iss, mot, '+'))
+    while (getline(iss, _mot, '+'))
     {
-        istringstream iss_bis(mot);
+        istringstream iss_bis(_mot);
         
         while (getline(iss_bis, mot_bis, '-'))
         {
@@ -134,9 +118,9 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
                 
                 position_pronom[langue] = position;
                 
-                if (compteur + position_pronom[langue_source] < tableau->size())
+                if (compteur + position_pronom[_langue_source] < tableau->size())
                 {
-                    construction_verbe += association[make_pair(langue, pronom[(* tableau)[compteur + position_pronom[langue_source]]])];
+                    construction_verbe += association[make_pair(langue, pronom[(* tableau)[compteur + position_pronom[_langue_source]]])];
                 }
             }
             
@@ -198,11 +182,11 @@ string Verbe::construction(string caracteristique, string langue, string temps, 
 
 // Détermine le verbe de la phrase.
 
-void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> tableau, vector <vector <string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux)
+void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> tableau, vector <vector <string>> structure_de_la_phrase)
 {
     // Création du sujet.
 
-    Sujet sujet(langue_source, langue_sortie);
+    Sujet sujet(_langue_source, _langue_sortie);
 
     vector <string> structure;
     
@@ -224,18 +208,17 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     
     int taille = 0;
     
-    taille_verbe_source = 0;
-    taille_verbe_sortie = 0;
+    _taille_verbe_source = 0;
+    _taille_verbe_sortie = 0;
     
-    forme_verbe_sortie = "";
-    
-    champ_lexical_final = "";
+    string champ_lexical,
+           phrase;
             
     ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
 
     while (!fichier_caracteristique.eof())
     {
-        fichier_caracteristique >> temps_verbe >> caracteristique["A"] >> caracteristique["F"];
+        fichier_caracteristique >> _temps_verbe >> caracteristique["A"] >> caracteristique["F"];
         
         // On teste les verbes de chaque groupe.
         
@@ -252,7 +235,7 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                 
                 // Construction du verbe.
                 
-                string forme_verbe_source = construction(caracteristique[langue_source], langue_source, temps_verbe, le_sujet, groupe_verbe, verbe[langue_source], marque_vb_irr[langue_source], &tableau, compteur);
+                string forme_verbe_source = construction(caracteristique[_langue_source], _langue_source, _temps_verbe, le_sujet, groupe_verbe, verbe[_langue_source], marque_vb_irr[_langue_source], &tableau, compteur);
                                                 
                 // On récupère la taille du verbe.
                 
@@ -270,17 +253,15 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                 // Si le verbe construit est identique à celui de la phrase, on construit le verbe dans la langue demandée.
                 // On vérifie également qu'il s'agit du plus grand verbe identifiable.
 
-                if (phrase == forme_verbe_source && taille > taille_verbe_source)
+                if (phrase == forme_verbe_source && taille > _taille_verbe_source)
                 {
-                    taille_verbe_source = taille;
+                    _taille_verbe_source = taille;
+                                        
+                    champ_lexical = _champ_lexical;
                     
-                    champs_lexicaux->incrementation_des_champs_lexicaux(champ_lexical);
+                    _forme_verbe_sortie = construction(caracteristique[_langue_sortie], _langue_sortie, _temps_verbe, le_sujet, groupe_verbe, verbe[_langue_sortie], marque_vb_irr[_langue_sortie], &tableau, compteur);
                     
-                    champ_lexical_final = champ_lexical;
-                    
-                    forme_verbe_sortie = construction(caracteristique[langue_sortie], langue_sortie, temps_verbe, le_sujet, groupe_verbe, verbe[langue_sortie], marque_vb_irr[langue_sortie], &tableau, compteur);
-                    
-                    taille_verbe_sortie = (int) count(forme_verbe_sortie.begin(), forme_verbe_sortie.end(), ' ') + 1;
+                    _taille_verbe_sortie = (int) count(_forme_verbe_sortie.begin(), _forme_verbe_sortie.end(), ' ') + 1;
                 }
                 
                 // Réinitialisation.
@@ -293,4 +274,8 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     }
     
     fichier_caracteristique.close();
+    
+    ajouter_mot(_forme_verbe_sortie);
+    
+    ajouter_champs_lexicaux(champ_lexical);
 }

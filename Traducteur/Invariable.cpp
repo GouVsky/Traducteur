@@ -12,28 +12,10 @@
 using namespace std;
 
 
-Invariable::Invariable(string source, string sortie)
+Invariable::Invariable(string source, string sortie, ChampsLexicaux * champs_lexicaux) : Mot(champs_lexicaux)
 {
-    langue_source = source;
-    langue_sortie = sortie;
-    
-    nombre_de_mots = 0;
-}
-
-
-
-
-int Invariable::recuperer_nombre_de_mots()
-{
-    return nombre_de_mots;
-}
-
-
-
-
-string Invariable::recuperer_mot()
-{
-    return invariable[langue_sortie];
+    _langue_source = source;
+    _langue_sortie = sortie;
 }
 
 
@@ -43,7 +25,7 @@ string Invariable::recuperer_mot()
 
 void Invariable::le_mot_est_invariable(string mot)
 {
-    nombre_de_mots = 0;
+    string mot_source;
     
     ifstream fichier_invariables(resourcePath() + "invariables.txt");
         
@@ -53,11 +35,16 @@ void Invariable::le_mot_est_invariable(string mot)
     {
         fichier_invariables >> invariable["A"] >> invariable["F"];
         
-        if (invariable[langue_source] == mot)
+        istringstream iss_langue_source(invariable[_langue_source]);
+        
+        while (getline(iss_langue_source, mot_source, '/'))
         {
-            nombre_de_mots++;
-            
-            break;
+            if (invariable[_langue_source] == mot)
+            {
+                ajouter_mot(invariable[_langue_sortie]);
+                
+                break;
+            }
         }
     }
     

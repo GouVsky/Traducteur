@@ -16,34 +16,32 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "Mot.hpp"
 #include "ChampsLexicaux.hpp"
 
-class Verbe
+class Verbe : public Mot
 {
     public :
     
-    Verbe(std::string source, std::string sortie);
+    Verbe(std::string source, std::string sortie, ChampsLexicaux * champ_lexical);
     int recuperer_taille_verbe_sortie();
     int recuperer_taille_verbe_source();
-    std::string recuperer_champ_lexical();
-    std::string recuperer_verbe();
     std::string le_verbe_est_irregulier(std::string verbe, std::string temps, std::string langue);
     std::string construction(std::string caracteristique, std::string langue, std::string temps_verbe, int sujet, int groupe_verbe, std::string verbe, std::string marque_vb_si_irregulier, std::vector <std::string> * tableau, int compteur);
-    void determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure_de_la_phrase, ChampsLexicaux * champs_lexicaux);
+    void determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure_de_la_phrase);
     
     private :
     
-    int taille_verbe_source,
-        taille_verbe_sortie;
+    int _taille_verbe_source,
+        _taille_verbe_sortie;
         
-    std::string mot,
-                phrase,
-                temps_verbe,
-                champ_lexical,
-                langue_source,
-                langue_sortie,
-                forme_verbe_sortie,
-                champ_lexical_final;
+    std::string _mot,
+                _temps_verbe,
+                _champ_lexical,
+                _langue_source,
+                _langue_sortie,
+                _forme_verbe_source,
+                _forme_verbe_sortie;
     
     std::map <std::string, std::string> caracteristique,
                                         verbe,

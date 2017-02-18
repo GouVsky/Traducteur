@@ -25,7 +25,8 @@ class Phrase
     
     Phrase(std::string source, std::string sortie, std::string texte);
     std::string recuperer_phrase();
-    void ajouter_le_champ_lexical(std::string champ_lexical, int numero);
+    void ajouter_le_champ_lexical(std::vector <std::vector <std::string>> champ_lexical, int nombre_de_champs_lexicaux, int numero_du_mot);
+    void ajouter_le_champ_lexical(std::string champ_lexical);
     void ajouter_le_type_sortie(std::string type);
     void ajouter_le_type_source(std::string type);
     void ajouter_le_mot_sortie(std::string mot);
@@ -42,13 +43,12 @@ class Phrase
                 _phrase_source,
                 _phrase_sortie;
     
-    bool presence_verbe;
+    bool _presence_verbe;
     
-    int indice_mot,
-        indice_sous_phrase;
+    int _indice_mot,
+        _indice_sous_phrase;
     
-    std::vector <std::string> t_final,
-                              t_structure;
+    std::vector <std::string> t_structure;
     
     std::vector <std::vector <std::vector <std::string>>> structure_du_texte_source,
                                                           structure_du_texte_sortie,

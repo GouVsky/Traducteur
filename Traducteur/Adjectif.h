@@ -15,25 +15,21 @@
 #include <stdio.h>
 #include <fstream>
 
+#include "Mot.hpp"
 #include "ChampsLexicaux.hpp"
 
-class Adjectif
+class Adjectif : public Mot
 {
     public :
     
-    Adjectif(std::string source, std::string sortie);
-    int recuperer_nombre_de_adjectifs();
-    std::string recuperer_champ_lexical();
-    std::string recuperer_adjectif();
-    void le_mot_est_un_adjectif(std::string mot, ChampsLexicaux * champs_lexicaux);
+    Adjectif(std::string source, std::string sortie, ChampsLexicaux * champs_lexicaux);
+    void le_mot_est_un_adjectif(std::string mot);
     
     private :
     
-    int nombre_de_adjectifs;
-    
-    std::string champ_lexical,
-                langue_source,
-                langue_sortie;
+    std::string _langue_source,
+                _langue_sortie,
+                _champs_lexicaux;
 
     std::map <std::string, std::string> adjectif;
 };
