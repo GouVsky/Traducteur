@@ -27,9 +27,14 @@ class Expression
     
     private :
     
-    std::map <std::string, std::string> expression;
-    std::string phrase, langue_source, langue_sortie;
-    int taille_expression_source, taille_expression_sortie;
+    std::string _expression,
+                _langue_source,
+                _langue_sortie;
+    
+    int _taille_expression_source,
+        _taille_expression_sortie;
+    
+    std::map <std::string, std::string> __expression;
 };
 
 #endif /* defined(__Traducteur_universel__expression__) */

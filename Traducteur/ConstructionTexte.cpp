@@ -40,7 +40,7 @@ void Texte::assembler_les_phrases()
     {
         for (int i = 0; i < _nombre_de_phrases; i++)
         {
-            _texte_traduit += _phrase[i].recuperer_phrase() + _ponctuation[i] + ' ';
+            _texte_traduit += __phrase[i].recuperer_phrase() + __ponctuation[i] + ' ';
         }
         
         // On efface le dernier espace.
@@ -59,19 +59,19 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
     string phrase_tmp = "";
     bool conjonction = false;
     
-    string cc_a[6] = {"but", "where", "so", "because", "when", "if"};
-    string cc_f[8] = {"mais", "où", "donc", "or", "ni", "car", "parce-que", "quand"};
+    vector <string> cc_a = {"but", "where", "so", "because", "when", "if"};
+    vector <string> cc_f = {"mais", "où", "donc", "or", "ni", "car", "parce-que", "quand"};
     
-    _conjonction_coordination["A"] = cc_a;
-    _conjonction_coordination["F"] = cc_f;
+    __conjonction_coordination["A"] = cc_a;
+    __conjonction_coordination["F"] = cc_f;
     
     for (int i = 0; i < tableau.size(); i++)
     {
         // On cherche si le mot est une conjonction de coordination ou non.
         
-        for (int j = sizeof(_conjonction_coordination[_langue_source]) / sizeof(* _conjonction_coordination[_langue_source]); j--;)
+        for (int j = 0; j < __conjonction_coordination[_langue_source].size(); j++)
         {
-            if (tableau[i] == _conjonction_coordination[_langue_source][j])
+            if (tableau[i] == __conjonction_coordination[_langue_source][j])
             {
                 conjonction = true;
                 
@@ -97,13 +97,13 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
             
             Phrase phrase(_langue_source, _langue_sortie, phrase_tmp);
             
-            _phrase.push_back(phrase);
+            __phrase.push_back(phrase);
             
             _nombre_de_phrases++;
             
             if (conjonction == true)
             {
-                _ponctuation.push_back(0);
+                __ponctuation.push_back(0);
             }
             
             conjonction = !conjonction;
@@ -146,7 +146,7 @@ void Texte::recherche_de_la_ponctuation(string t)
             
             // On ajoute la ponctuation.
             
-            _ponctuation.push_back(t[i]);
+            __ponctuation.push_back(t[i]);
             
             // S'il existe, et tant qu'il est présent,
             // on saute le caractère espace situé entre la ponctuation et la première lettre du mot suivant.
@@ -184,7 +184,7 @@ void Texte::construction_du_texte(string texte)
     
     for (int i = 0; i < _nombre_de_phrases; i++)
     {
-        phrases.push_back(thread(&Phrase::recherche_virgule, &_phrase[i]));
+        phrases.push_back(thread(&Phrase::recherche_virgule, &__phrase[i]));
     }
     
     for (int i = 0; i < _nombre_de_phrases; i++)
@@ -194,7 +194,7 @@ void Texte::construction_du_texte(string texte)
     
     for (int i = 0; i < _nombre_de_phrases; i++)
     {
-        _phrase[i].choix_des_mots_selon_champ_lexical();
+        __phrase[i].choix_des_mots_selon_champ_lexical();
     }
     
     assembler_les_phrases();

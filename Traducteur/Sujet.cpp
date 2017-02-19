@@ -19,7 +19,7 @@ Sujet::Sujet(vector <vector <string>> structure)
     {
         for (int j = 0; j < structure[i].size(); j++)
         {
-            _structure_phrase.push_back(structure[i][j]);
+            __structure_phrase.push_back(structure[i][j]);
         }
     }
 }
@@ -142,18 +142,18 @@ void Sujet::creation_du_sujet()
     // S'il s'agit d'une phrase composée, le sujet est compris entre la fin de la phrase précédente et le verbe (non inclus).
     // Sinon, il est compris entre le début et le verbe (non inclus).
         
-    for (int i = 0; i < _structure_phrase.size(); i++)
+    for (int i = 0; i < __structure_phrase.size(); i++)
     {
         // On recherche s'il y a la présence d'un verbe.
         
-        if (_structure_phrase[i].find("verbe") != -1)
+        if (__structure_phrase[i].find("verbe") != -1)
         {
             presence_verbe = true;
         }
         
         // S'il existe la conjonction "et", il peut s'agir soit de deux phrases distinctes, soit d'une seule.
         
-        if (_structure_phrase[i].find("conjonction_et") != -1)
+        if (__structure_phrase[i].find("conjonction_et") != -1)
         {
             i++;
             
@@ -162,9 +162,9 @@ void Sujet::creation_du_sujet()
             
             if (presence_verbe == true)
             {
-                for (int j = i; j < _structure_phrase.size(); j++)
+                for (int j = i; j < __structure_phrase.size(); j++)
                 {
-                    _structure_sujet.push_back(_structure_phrase[j]);
+                    __structure_sujet.push_back(__structure_phrase[j]);
                 }
             }
             
@@ -172,17 +172,17 @@ void Sujet::creation_du_sujet()
             
             else
             {
-                for (int j = 0; j < _structure_phrase.size(); j++)
+                for (int j = 0; j < __structure_phrase.size(); j++)
                 {
-                    _structure_sujet.push_back(_structure_phrase[j]);
+                    __structure_sujet.push_back(__structure_phrase[j]);
                 }
             }
             
-            transforme_groupe_nominal_sujet_en_pronom(_structure_sujet);
+            transforme_groupe_nominal_sujet_en_pronom(__structure_sujet);
         }
     }
     
     // Soit il n'y a pas de conjonction "et" dans la phrase, soit on arrive à la fin de "structure_de_la_phrase".
     
-    transforme_groupe_nominal_sujet_en_pronom(_structure_phrase);
+    transforme_groupe_nominal_sujet_en_pronom(__structure_phrase);
 }

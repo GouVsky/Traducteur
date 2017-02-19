@@ -20,7 +20,7 @@ Terminaison::Terminaison() {}
 
 string Terminaison::recuperer_ancienne_terminaison()
 {
-    return ancienne_terminaison;
+    return _ancienne_terminaison;
 }
 
 
@@ -30,7 +30,7 @@ string Terminaison::recuperer_ancienne_terminaison()
 
 string Terminaison::recuperer_nouvelle_terminaison()
 {
-    return nouvelle_terminaison;
+    return _nouvelle_terminaison;
 }
 
 
@@ -42,19 +42,19 @@ void Terminaison::nouvelle_terminaison_anglaise(int sujet, string temps, string 
 {
     if (temps == "present" || temps == "present_be+ing")
     {
-        nouvelle_terminaison = A[sujet];
+        _nouvelle_terminaison = __A[sujet];
     }
     
     else if (temps == "passe_compose" || temps == "imparfait" || temps == "passe_simple")
     {
         if (verbe[verbe.size() - 1] == 'e')
         {
-            nouvelle_terminaison = 'd';
+            _nouvelle_terminaison = 'd';
         }
         
         else
         {
-            nouvelle_terminaison = "ed";
+            _nouvelle_terminaison = "ed";
         }
     }
 }
@@ -68,16 +68,16 @@ void Terminaison::nouvelle_terminaison_troisieme_groupe(string verbe, string tem
 {
     if (temps_verbe == "present" || temps_verbe == "present_be+ing")
     {
-        groupe_3["present_ir_F"] = present_ir_F[sujet];
-        groupe_3["present_ire_F"] = present_ire_F[sujet];
-        groupe_3["present_dre_F"] = present_dre_F[sujet];
-        groupe_3["present_tir_F"] = present_tir_F[sujet];
-        groupe_3["present_oir_F"] = present_oir_F[sujet];
-        groupe_3["present_oire_F"] = present_oire_F[sujet];
-        groupe_3["present_evoir_F"] = present_evoir_F[sujet];
+        __groupe_3["present_ir_F"] = __present_ir_F[sujet];
+        __groupe_3["present_ire_F"] = __present_ire_F[sujet];
+        __groupe_3["present_dre_F"] = __present_dre_F[sujet];
+        __groupe_3["present_tir_F"] = __present_tir_F[sujet];
+        __groupe_3["present_oir_F"] = __present_oir_F[sujet];
+        __groupe_3["present_oire_F"] = __present_oire_F[sujet];
+        __groupe_3["present_evoir_F"] = __present_evoir_F[sujet];
     }
     
-    nouvelle_terminaison = groupe_3[temps_verbe + "_" + ancienne_terminaison + "_F"];
+    _nouvelle_terminaison = __groupe_3[temps_verbe + "_" + _ancienne_terminaison + "_F"];
 }
 
 
@@ -90,21 +90,21 @@ void Terminaison::nouvelle_terminaison_premier_ou_deuxieme_groupe(int groupe_ver
 {
     if (temps == "present" || temps == "present_be+ing")
     {
-        terminaisons["present_1_F"] = present_1_F[sujet];
-        terminaisons["present_2_F"] = present_2_F[sujet];
+        __terminaisons["present_1_F"] = __present_1_F[sujet];
+        __terminaisons["present_2_F"] = __present_2_F[sujet];
         
-        nouvelle_terminaison = terminaisons[temps + "_" + to_string(groupe_verbe) + "_F"];
+        _nouvelle_terminaison = __terminaisons[temps + "_" + to_string(groupe_verbe) + "_F"];
     }
     
     else
     {
-        terminaisons["passe_compose_F"] = "é";
-        terminaisons["futur_F"] = futur_F[sujet];
-        terminaisons["imparfait_F"] = imparfait_F[sujet];
-        terminaisons["conditionnel_F"] = conditionnel_F[sujet];
-        terminaisons["passe_simple_F"] = passe_simple_F[sujet];
+        __terminaisons["passe_compose_F"] = "é";
+        __terminaisons["futur_F"] = __futur_F[sujet];
+        __terminaisons["imparfait_F"] = __imparfait_F[sujet];
+        __terminaisons["conditionnel_F"] = __conditionnel_F[sujet];
+        __terminaisons["passe_simple_F"] = __passe_simple_F[sujet];
         
-        nouvelle_terminaison = terminaisons[temps + "_F"];
+        _nouvelle_terminaison = __terminaisons[temps + "_F"];
     }
 }
 
@@ -150,7 +150,7 @@ void Terminaison::ancienne_terminaison_troisieme_groupe(string verbe)
     
     for (int i = 0; i < NB_TERMINAISONS_GR_3; i++)
     {
-        string terminaison = terminaisons_groupe_3[i];
+        string terminaison = __terminaisons_groupe_3[i];
         
         // On s'assure que la terminaison sélectionnée n'est pas plus grande que le verbe.
         
@@ -164,7 +164,7 @@ void Terminaison::ancienne_terminaison_troisieme_groupe(string verbe)
             
             if (fin_du_verbe == terminaison && terminaison.size() > max)
             {                
-                ancienne_terminaison = terminaison;
+                _ancienne_terminaison = terminaison;
                 
                 max = terminaison.size();
             }
@@ -183,10 +183,10 @@ void Terminaison::determiner_ancienne_terminaison(string langue, string verbe, i
     {
         switch (groupe_verbe)
         {
-            case 1 : ancienne_terminaison = "er";
+            case 1 : _ancienne_terminaison = "er";
                 break;
                 
-            case 2 : ancienne_terminaison = "ir";
+            case 2 : _ancienne_terminaison = "ir";
                 break;
                 
             case 3 : ancienne_terminaison_troisieme_groupe(verbe);
@@ -198,6 +198,6 @@ void Terminaison::determiner_ancienne_terminaison(string langue, string verbe, i
     
     else
     {
-        ancienne_terminaison = "";
+        _ancienne_terminaison = "";
     }
 }

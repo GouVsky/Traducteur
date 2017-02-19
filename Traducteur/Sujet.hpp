@@ -28,8 +28,8 @@ class Sujet
     
     int _valeur;
     
-    std::vector <std::string> _structure_phrase,
-                              _structure_sujet;
+    std::vector <std::string> __structure_phrase,
+                              __structure_sujet;
 };
 
 #endif /* sujet_hpp */

@@ -33,15 +33,15 @@ void Invariable::le_mot_est_invariable(string mot)
     
     while (!fichier_invariables.eof())
     {
-        fichier_invariables >> invariable["A"] >> invariable["F"] >> _champs_lexicaux;
+        fichier_invariables >> __invariable["A"] >> __invariable["F"] >> _champs_lexicaux;
         
-        istringstream iss_langue_source(invariable[_langue_source]);
+        istringstream iss_langue_source(__invariable[_langue_source]);
         
         while (getline(iss_langue_source, mot_source, '/'))
         {
-            if (invariable[_langue_source] == mot)
+            if (__invariable[_langue_source] == mot)
             {
-                ajouter_mot(invariable[_langue_sortie]);
+                ajouter_mot(__invariable[_langue_sortie]);
                 
                 ajouter_champs_lexicaux(_champs_lexicaux);
                 

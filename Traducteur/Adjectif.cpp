@@ -31,17 +31,17 @@ void Adjectif::le_mot_est_un_adjectif(string mot)
     
     while (!fichier_adjectifs.eof())
     {
-        fichier_adjectifs >> adjectif["A"] >> adjectif["F"] >> _champs_lexicaux;
+        fichier_adjectifs >> __adjectif["A"] >> __adjectif["F"] >> _champs_lexicaux;
         
         // Si le mot possède plusieurs sens, on regarde lequel correspond.
         
-        istringstream iss_langue_source(adjectif[_langue_source]);
+        istringstream iss_langue_source(__adjectif[_langue_source]);
         
         while (getline(iss_langue_source, mot_source, '/'))
         {
-            if (adjectif[_langue_source] == mot)
+            if (__adjectif[_langue_source] == mot)
             {
-                ajouter_mot(adjectif[_langue_sortie]);
+                ajouter_mot(__adjectif[_langue_sortie]);
                 
                 ajouter_champs_lexicaux(_champs_lexicaux);
                 

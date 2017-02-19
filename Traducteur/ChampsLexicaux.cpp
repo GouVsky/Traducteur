@@ -15,7 +15,17 @@ using namespace std;
 
 ChampsLexicaux::ChampsLexicaux()
 {
-    tableau_des_champs_lexicaux.resize(liste_champs_lexicaux.size(), 0);
+    __tableau_des_champs_lexicaux.resize(__liste_champs_lexicaux.size(), 0);
+}
+
+
+
+
+// Récupération de la valeur des champs lexicaux.
+
+int ChampsLexicaux::recuperation_valeur_champ_lexical(string champ_lexical)
+{
+    return __tableau_des_champs_lexicaux[__liste_champs_lexicaux[champ_lexical]];
 }
 
 
@@ -25,15 +35,5 @@ ChampsLexicaux::ChampsLexicaux()
 
 void ChampsLexicaux::incrementation_des_champs_lexicaux(string champ_lexical)
 {
-    tableau_des_champs_lexicaux[liste_champs_lexicaux[champ_lexical]]++;
-}
-
-
-
-
-// Récupération de la valeur des champs lexicaux.
-
-int ChampsLexicaux::recuperation_tableau(string champ_lexical)
-{
-    return tableau_des_champs_lexicaux[liste_champs_lexicaux[champ_lexical]];
+    __tableau_des_champs_lexicaux[__liste_champs_lexicaux[champ_lexical]]++;
 }

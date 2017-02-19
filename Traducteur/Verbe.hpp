@@ -50,10 +50,10 @@ class Verbe : public Mot
                 _forme_verbe_source,
                 _forme_verbe_sortie;
     
-    std::map <std::string, std::string> _verbe,
-                                        _conjugaison,
-                                        _verbe_irregulier,
-                                        _irregulier_ou_non;
+    std::map <std::string, std::string> __verbe,
+                                        __irregulier,
+                                        __conjugaison,
+                                        __irregulier_ou_non;
 };
 
 #endif /* verbe_hpp */

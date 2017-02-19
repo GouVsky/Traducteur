@@ -36,11 +36,11 @@ class Mot
     
     int _nombre_de_mots;
     
-    std::vector <int> _nombre_de_champs_lexicaux;
+    std::vector <int> __nombre_de_champs_lexicaux;
     
-    std::vector <std::string> _tableau_mots;
+    std::vector <std::string> __tableau_mots;
     
-    std::vector <std::vector <std::string>> _tableau_champs_lexicaux;
+    std::vector <std::vector <std::string>> __tableau_champs_lexicaux;
 };
 
 #endif /* Mot_hpp */

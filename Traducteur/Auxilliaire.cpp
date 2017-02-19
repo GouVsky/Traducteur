@@ -11,7 +11,20 @@
 using namespace std;
 
 
-string Auxilliaire::construction_auxilliaire(int sujet, string langue, string auxilliaire, string temps)
+Auxilliaire::Auxilliaire() {}
+
+
+
+
+string Auxilliaire::recuperer_auxilliaire()
+{
+    return _auxilliaire;
+}
+
+
+
+
+void Auxilliaire::construction_auxilliaire(int sujet, string langue, string auxilliaire, string temps)
 {
     // Verbe "Aller".
     
@@ -30,5 +43,5 @@ string Auxilliaire::construction_auxilliaire(int sujet, string langue, string au
     conjugaison_auxilliaire["tableau_etre_present_F"] = tableau_etre_present_F[sujet];
     conjugaison_auxilliaire["tableau_etre_present_A"] = tableau_etre_present_A[sujet];
     
-    return conjugaison_auxilliaire["tableau_" + auxilliaire + "_" + temps + "_" + langue];
+    _auxilliaire = conjugaison_auxilliaire["tableau_" + auxilliaire + "_" + temps + "_" + langue];
 }

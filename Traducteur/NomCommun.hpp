@@ -38,7 +38,7 @@ class NomCommun : public Mot
     
     std::map <int, std::string> __genre;
     
-    std::map <std::string, std::string> _nom_commun;
+    std::map <std::string, std::string> __nom_commun;
 };
 
 #endif /* nomCommun_hpp */

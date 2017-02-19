@@ -58,11 +58,11 @@ void NomCommun::le_mot_est_un_nom_commun(string mot, int genre)
     
     while (!fichier_noms_communs.eof())
     {
-        fichier_noms_communs >> _nom_commun["A"] >> _nom_commun["F"] >> _champs_lexicaux;
+        fichier_noms_communs >> __nom_commun["A"] >> __nom_commun["F"] >> _champs_lexicaux;
         
         // Si le mot possède plusieurs sens, on regarde lequel correspond.
         
-        istringstream iss_langue_source(_nom_commun[_langue_source]);
+        istringstream iss_langue_source(__nom_commun[_langue_source]);
         
         while (getline(iss_langue_source, mot_source, '/'))
         {
@@ -72,10 +72,10 @@ void NomCommun::le_mot_est_un_nom_commun(string mot, int genre)
                 {
                     _nombre = "pluriel";
                     
-                    _nom_commun[_langue_sortie] += 's';
+                    __nom_commun[_langue_sortie] += 's';
                 }
                 
-                ajouter_mot(_nom_commun[_langue_sortie]);
+                ajouter_mot(__nom_commun[_langue_sortie]);
                 
                 _genre = __genre[genre];
                 

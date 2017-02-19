@@ -48,15 +48,15 @@ class Phrase
     int _indice_mot,
         _indice_sous_phrase;
     
-    std::vector <std::string> t_structure;
+    std::vector <std::string> __structure;
     
-    std::vector <std::vector <std::vector <std::string>>> structure_du_texte_source,
-                                                          structure_du_texte_sortie,
-                                                          tableau_contenant_significations_mot;
+    std::vector <std::vector <std::vector <std::string>>> __structure_du_texte_source,
+                                                          __structure_du_texte_sortie,
+                                                          __tableau_contenant_significations_mot;
     
-    std::vector <std::vector <std::vector <std::vector <std::string>>>> tableau_contenant_champs_lexicaux;
+    std::vector <std::vector <std::vector <std::vector <std::string>>>> __tableau_contenant_champs_lexicaux;
     
-    std::map <std::string, std::string *> pronom_personnel;
+    std::map <std::string, std::string *> __pronom_personnel;
 };
 
 #endif /* constructionPhrase_hpp */

@@ -30,7 +30,7 @@ class Invariable : public Mot
                 _langue_sortie,
                 _champs_lexicaux;
     
-    std::map <std::string, std::string> invariable;
+    std::map <std::string, std::string> __invariable;
 };
 
 #endif /* defined(__Traducteur_universel__motInvariable__) */

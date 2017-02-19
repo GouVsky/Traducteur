@@ -55,11 +55,11 @@ string Verbe::le_verbe_est_irregulier(string verbe, string langue)
     
     while (!fichier_verbes_irreguliers.eof())
     {
-        fichier_verbes_irreguliers >> _verbe_irregulier["infinitif"] >> _verbe_irregulier["passe_simple"] >> _verbe_irregulier["participe_passe"];
+        fichier_verbes_irreguliers >> __irregulier["infinitif"] >> __irregulier["passe_simple"] >> __verbe["participe_passe"];
 
-        if (_verbe_irregulier["infinitif"] == verbe)
+        if (__irregulier["infinitif"] == verbe)
         {
-            irregularite = _verbe_irregulier[_temps_verbe];
+            irregularite = __irregulier[_temps_verbe];
             
             break;
         }
@@ -71,7 +71,7 @@ string Verbe::le_verbe_est_irregulier(string verbe, string langue)
 }
 
 
-#include <iostream>
+
 
 // Construction du verbe en fonction du sujet, du temps et du groupe du verbe, et des caractéristiques propres à chaque langue.
 
@@ -82,7 +82,7 @@ string Verbe::construction(string langue, string verbe, vector <string> * tablea
            copie_verbe = verbe,
            mot_constituant_le_verbe;
     
-    istringstream iss(_conjugaison[langue]);
+    istringstream iss(__conjugaison[langue]);
     
     // Construction du verbe.
     
@@ -94,7 +94,7 @@ string Verbe::construction(string langue, string verbe, vector <string> * tablea
         {
             if (terminaison == "verbe_et_terminaison")
             {
-                if (_irregulier_ou_non[langue] == "oui")
+                if (__irregulier_ou_non[langue] == "oui")
                 {
                     construction_verbe += le_verbe_est_irregulier(verbe, langue);
                 }
@@ -135,7 +135,9 @@ string Verbe::construction(string langue, string verbe, vector <string> * tablea
             
             else if (terminaison == "avoir" || terminaison == "etre" || terminaison == "aller")
             {
-                construction_verbe += _auxilliaire.construction_auxilliaire(_sujet, langue, terminaison, _temps_verbe);
+                _auxilliaire.construction_auxilliaire(_sujet, langue, terminaison, _temps_verbe);
+                
+                construction_verbe += _auxilliaire.recuperer_auxilliaire();
             }
             
             else
@@ -175,7 +177,7 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
 
     while (!fichier_caracteristique.eof())
     {
-        fichier_caracteristique >> _temps_verbe >> _conjugaison["A"] >> _conjugaison["F"];
+        fichier_caracteristique >> _temps_verbe >> __conjugaison["A"] >> __conjugaison["F"];
         
         // On teste les verbes de chaque groupe.
         
@@ -185,11 +187,11 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
             
             while (!fichier_verbes.eof())
             {
-                fichier_verbes >> _verbe["A"] >> _verbe["F"] >> _irregulier_ou_non["A"] >> _irregulier_ou_non["F"] >> _champs_lexicaux;
+                fichier_verbes >> __verbe["A"] >> __verbe["F"] >> __irregulier_ou_non["A"] >> __irregulier_ou_non["F"] >> _champs_lexicaux;
                 
                 // Construction du verbe.
                 
-                istringstream iss_langue_source(_verbe[_langue_source]);
+                istringstream iss_langue_source(__verbe[_langue_source]);
                 
                 // On vérifie si le verbe possède plusieurs sens.
                 
@@ -218,7 +220,7 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                     {
                         // On stocke tous les sens possibles du verbe une fois celui-ci traduit.
                         
-                        istringstream iss_langue_source(_verbe[_langue_sortie]);
+                        istringstream iss_langue_source(__verbe[_langue_sortie]);
                         
                         while (getline(iss_langue_source, mot_source, '/'))
                         {

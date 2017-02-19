@@ -36,11 +36,11 @@ class Texte
                 _langue_sortie,
                 _texte_traduit;
     
-    std::vector <Phrase> _phrase;
+    std::vector <Phrase> __phrase;
     
-    std::vector <char> _ponctuation;
+    std::vector <char> __ponctuation;
     
-    std::map <std::string, std::string *> _conjonction_coordination;
+    std::map <std::string, std::vector <std::string>> __conjonction_coordination;
 };
 
 #endif /* ConstructionTexte_hpp */

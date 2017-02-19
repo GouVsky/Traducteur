@@ -33,7 +33,7 @@ Mot::Mot(ChampsLexicaux * champ_lexical)
 
 int Mot::recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(int numero_du_mot)
 {
-    return _nombre_de_champs_lexicaux[numero_du_mot];
+    return __nombre_de_champs_lexicaux[numero_du_mot];
 }
 
 
@@ -53,7 +53,7 @@ int Mot::recuperer_nombre_de_mots()
 
 vector <vector <string>> Mot::recuperer_champs_lexicaux()
 {
-    return _tableau_champs_lexicaux;
+    return __tableau_champs_lexicaux;
 }
 
 
@@ -63,7 +63,7 @@ vector <vector <string>> Mot::recuperer_champs_lexicaux()
 
 string Mot::recuperer_mot(int numero_du_mot)
 {
-    return _tableau_mots[numero_du_mot];
+    return __tableau_mots[numero_du_mot];
 }
 
 
@@ -80,9 +80,9 @@ void Mot::ajouter_champs_lexicaux(string champs_lexicaux)
     
     while (getline(flux, champ_lexical_du_flux, '/'))
     {
-        _tableau_champs_lexicaux.push_back(vector <string> ());
+        __tableau_champs_lexicaux.push_back(vector <string> ());
         
-        _nombre_de_champs_lexicaux.push_back(0);
+        __nombre_de_champs_lexicaux.push_back(0);
         
         istringstream isoler_champs_lexicaux(champ_lexical_du_flux);
 
@@ -92,9 +92,9 @@ void Mot::ajouter_champs_lexicaux(string champs_lexicaux)
             
             _champ_lexical->incrementation_des_champs_lexicaux(nieme_champ_lexical);
             
-            _tableau_champs_lexicaux[_tableau_champs_lexicaux.size() - 1].push_back(nieme_champ_lexical);
+            __tableau_champs_lexicaux[__tableau_champs_lexicaux.size() - 1].push_back(nieme_champ_lexical);
             
-            _nombre_de_champs_lexicaux[_nombre_de_champs_lexicaux.size() - 1]++;
+            __nombre_de_champs_lexicaux[__nombre_de_champs_lexicaux.size() - 1]++;
         }
     }
 }
@@ -116,7 +116,7 @@ void Mot::ajouter_mot(string mot)
         
         // On ajoute le mot correspondant.
         
-        _tableau_mots.push_back(mot_du_flux);
+        __tableau_mots.push_back(mot_du_flux);
     }
 }
 

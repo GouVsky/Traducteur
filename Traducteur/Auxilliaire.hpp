@@ -17,11 +17,13 @@ class Auxilliaire
 {
     public :
     
-    std::string construction_auxilliaire(int pronom, std::string langue, std::string auxilliaire, std::string temps);
+    Auxilliaire();
+    std::string recuperer_auxilliaire();
+    void construction_auxilliaire(int pronom, std::string langue, std::string auxilliaire, std::string temps);
     
     private :
     
-    std::map <std::string, std::string> conjugaison_auxilliaire;
+    std::string _auxilliaire;
     
     // Verbe "Aller".
     
@@ -39,6 +41,8 @@ class Auxilliaire
     
     const std::string tableau_etre_present_F[10] = {"suis", "es", "est", "est", "est", "sommes", "êtes", "sont", "sont", "être"};
     const std::string tableau_etre_present_A[10] = {"am", "are", "is", "is", "is", "are", "are", "are", "are", "be"};
+    
+    std::map <std::string, std::string> conjugaison_auxilliaire;
 };
 
 #endif /* auxilliaire_hpp */

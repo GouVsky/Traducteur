@@ -23,15 +23,14 @@ class NomPropre : public Mot
     
     NomPropre();
     std::string recuperer_genre();
-    void definir_genre(std::string genre);
-    void le_mot_est_un_nom_propre(std::string mot);
+    void le_mot_est_un_nom_propre(std::string mot, int genre);
     
     private :
     
     std::string _nom_propre,
                 _genre;
     
-    std::map <int, std::string> genre;
+    std::map <int, std::string> __genre;
 };
 
 #endif /* nomPropre_hpp */

@@ -31,7 +31,7 @@ class Adjectif : public Mot
                 _langue_sortie,
                 _champs_lexicaux;
 
-    std::map <std::string, std::string> adjectif;
+    std::map <std::string, std::string> __adjectif;
 };
 
 #endif /* defined(__Traducteur_universel__adjectif__) */
