@@ -8,8 +8,6 @@
 
 #include "Verbe.hpp"
 #include "Sujet.hpp"
-#include "Terminaison.hpp"
-#include "Auxilliaire.hpp"
 #include "ResourcePath.hpp"
 
 using namespace std;
@@ -73,23 +71,16 @@ string Verbe::le_verbe_est_irregulier(string verbe, string langue)
 }
 
 
-
+#include <iostream>
 
 // Construction du verbe en fonction du sujet, du temps et du groupe du verbe, et des caractéristiques propres à chaque langue.
 
-string Verbe::construction(string langue, string le_verbe, vector <string> * tableau, int compteur)
+string Verbe::construction(string langue, string verbe, vector <string> * tableau, int compteur)
 {
-    Auxilliaire auxilliaire;
-    Terminaison la_terminaison;
-    
-    int position = 0;
-        
     string terminaison,
            construction_verbe,
-           copie_verbe = le_verbe,
+           copie_verbe = verbe,
            mot_constituant_le_verbe;
-    
-    tuple <string, string> terminaisons;
     
     istringstream iss(_conjugaison[langue]);
     
@@ -105,14 +96,14 @@ string Verbe::construction(string langue, string le_verbe, vector <string> * tab
             {
                 if (_irregulier_ou_non[langue] == "oui")
                 {
-                    construction_verbe += le_verbe_est_irregulier(le_verbe, langue);
+                    construction_verbe += le_verbe_est_irregulier(verbe, langue);
                 }
                 
                 else
                 {
-                    terminaisons = la_terminaison.construction(_groupe_verbe, _temps_verbe, _sujet, langue, le_verbe);
+                    _terminaison.determiner_nouvelle_terminaison(langue, verbe, _temps_verbe, _sujet, _groupe_verbe);
                     
-                    construction_verbe += le_verbe + get <1> (terminaisons);
+                    construction_verbe += verbe + _terminaison.recuperer_nouvelle_terminaison();
                 }
             }
             
@@ -123,43 +114,35 @@ string Verbe::construction(string langue, string le_verbe, vector <string> * tab
             
             else if (terminaison == "verbe")
             {
-                construction_verbe += le_verbe;
+                construction_verbe += verbe;
             }
             
             else if (terminaison == "radical")
             {
-                // On calcule la terminaison puisque le radical est déterminé en fonction de celle-ci.
-                // Elle est différente pour les verbes français du troisième groupe.
+                _terminaison.determiner_ancienne_terminaison(langue, verbe, _groupe_verbe);
                 
-                terminaisons = la_terminaison.construction(_groupe_verbe, _temps_verbe, _sujet, langue, le_verbe);
-                
-                copie_verbe.erase(copie_verbe.size() - (get <0> (terminaisons).size()));
-                
+                copie_verbe.erase(copie_verbe.size() - _terminaison.recuperer_ancienne_terminaison().size());
+
                 construction_verbe += copie_verbe;
             }
             
             else if (terminaison == "terminaison")
             {
-                terminaisons = la_terminaison.construction(_groupe_verbe, _temps_verbe, _sujet, langue, le_verbe);
+                _terminaison.determiner_nouvelle_terminaison(langue, verbe, _temps_verbe, _sujet, _groupe_verbe);
                 
-                construction_verbe += get <1> (terminaisons);
+                construction_verbe += _terminaison.recuperer_nouvelle_terminaison();
             }
             
             else if (terminaison == "avoir" || terminaison == "etre" || terminaison == "aller")
             {
-                construction_verbe += auxilliaire.construction_auxilliaire(_sujet, langue, terminaison, _temps_verbe);
+                construction_verbe += _auxilliaire.construction_auxilliaire(_sujet, langue, terminaison, _temps_verbe);
             }
             
             else
             {
                 construction_verbe += terminaison; // To, will, would...
             }
-            
-            get <0> (terminaisons).clear();
-            get <1> (terminaisons).clear();
         }
-        
-        position++;
         
         construction_verbe += ' ';
     }

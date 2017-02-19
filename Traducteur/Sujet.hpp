@@ -30,8 +30,6 @@ class Sujet
     
     std::vector <std::string> _structure_phrase,
                               _structure_sujet;
-    
-    std::string pp[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
 };
 
 #endif /* sujet_hpp */

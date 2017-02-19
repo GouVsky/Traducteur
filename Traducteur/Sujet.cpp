@@ -55,6 +55,8 @@ void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
         nb_feminin = 0;
     
     bool presence_pronom = false;
+    
+    string pp[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
         
     for (int i = 0; i < tableau.size(); i++)
     {
@@ -104,7 +106,7 @@ void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
             definir_valeur(3);
         }
         
-        // Au moins deux noms féminins et aucun nom masculin.
+        // Au moins deux noms féminins.
         
         else if (nb_masculin == 0 && nb_feminin > 1)
         {

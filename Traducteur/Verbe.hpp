@@ -17,6 +17,8 @@
 #include <stdio.h>
 
 #include "Mot.hpp"
+#include "Terminaison.hpp"
+#include "Auxilliaire.hpp"
 #include "ChampsLexicaux.hpp"
 
 class Verbe : public Mot
@@ -31,6 +33,10 @@ class Verbe : public Mot
     void determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure);
     
     private :
+    
+    Auxilliaire _auxilliaire;
+    
+    Terminaison _terminaison;
     
     int _sujet,
         _groupe_verbe,

@@ -196,6 +196,12 @@ void Phrase::choix_des_mots_selon_champ_lexical()
 
 void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
 {
+    int nombre_de_verbes,
+        nombre_de_adjectifs,
+        nombre_de_noms_communs,
+        nombre_de_noms_propres,
+        nombre_de_mots_invariables;
+    
     bool p_personnel = false;
 
     for (int i = 0; i < phrase.size(); i++)
@@ -271,20 +277,23 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 // Nom commun masculin ou féminin.
                 
-                nom_commun.le_mot_est_un_nom_commun(phrase[i]);
-                
-                int nombre_de_noms_communs = nom_commun.recuperer_nombre_de_mots();
-                                
-                for (int j = 0; j < nombre_de_noms_communs; j++)
+                for (int j = 0; j < 2; j++)
                 {
-                    int nombre_de_champs_lexicaux = nom_commun.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
+                    nom_commun.le_mot_est_un_nom_commun(phrase[i], j);
                     
-                    ajouter_le_type_source(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
-                    ajouter_le_type_sortie(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
+                    nombre_de_noms_communs = nom_commun.recuperer_nombre_de_mots();
                     
-                    ajouter_le_mot_sortie(nom_commun.recuperer_mot(j));
-                    
-                    ajouter_le_champ_lexical(nom_commun.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, j);
+                    for (int k = 0; k < nombre_de_noms_communs; k++)
+                    {
+                        int nombre_de_champs_lexicaux = nom_commun.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(k);
+                        
+                        ajouter_le_type_source(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
+                        ajouter_le_type_sortie(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
+                        
+                        ajouter_le_mot_sortie(nom_commun.recuperer_mot(k));
+                        
+                        ajouter_le_champ_lexical(nom_commun.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, k);
+                    }
                 }
                 
                 
@@ -293,7 +302,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 nom_propre.le_mot_est_un_nom_propre(phrase[i]);
                 
-                int nombre_de_noms_propres = nom_propre.recuperer_nombre_de_mots();
+                nombre_de_noms_propres = nom_propre.recuperer_nombre_de_mots();
                 
                 for (int j = 0; j < nombre_de_noms_propres; j++)
                 {
@@ -311,7 +320,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 invariable.le_mot_est_invariable(phrase[i]);
                 
-                int nombre_de_mots_invariables = invariable.recuperer_nombre_de_mots();
+                nombre_de_mots_invariables = invariable.recuperer_nombre_de_mots();
                 
                 for (int j = 0; j < nombre_de_mots_invariables; j++)
                 {
@@ -348,7 +357,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 adjectif.le_mot_est_un_adjectif(phrase[i]);
                 
-                int nombre_de_adjectifs = adjectif.recuperer_nombre_de_mots();
+                nombre_de_adjectifs = adjectif.recuperer_nombre_de_mots();
                 
                 for (int j = 0; j < nombre_de_adjectifs; j++)
                 {
@@ -368,7 +377,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
 
                 verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, structure_du_texte_source[_indice_sous_phrase]);
                 
-                int nombre_de_verbes = verbe.recuperer_nombre_de_mots();
+                nombre_de_verbes = verbe.recuperer_nombre_de_mots();
                 
                 for (int j = 0; j < nombre_de_verbes; j++)
                 {

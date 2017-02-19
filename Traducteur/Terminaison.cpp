@@ -11,9 +11,26 @@
 using namespace std;
 
 
-Terminaison::Terminaison()
+Terminaison::Terminaison() {}
+
+
+
+
+// Retourne la nouvelle terminaison du verbe.
+
+string Terminaison::recuperer_ancienne_terminaison()
 {
-    
+    return ancienne_terminaison;
+}
+
+
+
+
+// Retourne l'ancienne terminaison du verbe.
+
+string Terminaison::recuperer_nouvelle_terminaison()
+{
+    return nouvelle_terminaison;
 }
 
 
@@ -21,7 +38,7 @@ Terminaison::Terminaison()
 
 // Les terminaisons anglaises.
 
-void Terminaison::terminaisons_anglaises(int sujet, string temps, string verbe)
+void Terminaison::nouvelle_terminaison_anglaise(int sujet, string temps, string verbe)
 {
     if (temps == "present" || temps == "present_be+ing")
     {
@@ -47,11 +64,9 @@ void Terminaison::terminaisons_anglaises(int sujet, string temps, string verbe)
 
 // Les terminaisons des verbes du troisième groupe.
 
-void Terminaison::troisieme_groupe(int sujet, string verbe, string temps)
+void Terminaison::nouvelle_terminaison_troisieme_groupe(string verbe, string temps_verbe, int sujet)
 {
-    size_t max = 0;
-    
-    if (temps == "present" || temps == "present_be+ing")
+    if (temps_verbe == "present" || temps_verbe == "present_be+ing")
     {
         groupe_3["present_ir_F"] = present_ir_F[sujet];
         groupe_3["present_ire_F"] = present_ire_F[sujet];
@@ -62,53 +77,17 @@ void Terminaison::troisieme_groupe(int sujet, string verbe, string temps)
         groupe_3["present_evoir_F"] = present_evoir_F[sujet];
     }
     
-    // Recherche des terminaisons.
-    // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchée est à la fin,
-    // et qu'elle doit être la plus grande possible.
-    
-    for (int i = 0; i < NB_TERMINAISONS_GR_3; i++)
-    {
-        string terminaison = terminaisons_groupe_3[i];
-        
-        // On s'assure que la terminaison sélectionnée n'est pas plus grande que le verbe.
-        
-        if (terminaison.size() < verbe.size())
-        {
-            string fin_du_verbe = verbe.substr(verbe.size() - terminaison.size());
-            
-            // On s'assure que la terminaison trouvée est la plus grande possible.
-            
-            if (fin_du_verbe == terminaison && terminaison.size() > max)
-            {
-                nouvelle_terminaison = groupe_3[temps + "_" + terminaison + "_F"];
-                
-                ancienne_terminaison = terminaison;
-                
-                max = terminaison.size();
-            }
-        }
-    }
+    nouvelle_terminaison = groupe_3[temps_verbe + "_" + ancienne_terminaison + "_F"];
 }
+
 
 
 
 
 // Les terminaisons des verbes du premier et deuxième groupe.
 
-void Terminaison::premier_et_deuxieme_groupe(int groupe_verbe, int sujet, string temps)
+void Terminaison::nouvelle_terminaison_premier_ou_deuxieme_groupe(int groupe_verbe, int sujet, string temps)
 {
-    switch (groupe_verbe)
-    {
-        case 1 : ancienne_terminaison = "er";
-            break;
-            
-        case 2 : ancienne_terminaison = "ir";
-            break;
-            
-        default:
-            break;
-    }
-    
     if (temps == "present" || temps == "present_be+ing")
     {
         terminaisons["present_1_F"] = present_1_F[sujet];
@@ -132,34 +111,93 @@ void Terminaison::premier_et_deuxieme_groupe(int groupe_verbe, int sujet, string
 
 
 
-// Construction de la terminaison selon la langue, le groupe et le temps du verbe.
+// Détermine la terminaison après conjugaison du verbe.
 
-tuple <string, string> Terminaison::construction(int groupe_verbe, string temps, int sujet, string langue, string verbe)
-{
-    nouvelle_terminaison = "";
-    ancienne_terminaison = "";
-    
-    // Le français.
-    
+void Terminaison::determiner_nouvelle_terminaison(string langue, string verbe, string temps_verbe, int sujet, int groupe_verbe)
+{    
     if (langue == "F")
     {
-        if (groupe_verbe == 1 || groupe_verbe == 2)
+        switch (groupe_verbe)
         {
-            premier_et_deuxieme_groupe(groupe_verbe, sujet, temps);
-        }
-        
-        else
-        {
-            troisieme_groupe(sujet, verbe, temps);
+            case 1 : nouvelle_terminaison_premier_ou_deuxieme_groupe(groupe_verbe, sujet, temps_verbe);
+                break;
+                
+            case 2 : nouvelle_terminaison_premier_ou_deuxieme_groupe(groupe_verbe, sujet, temps_verbe);
+                break;
+                
+            case 3 : nouvelle_terminaison_troisieme_groupe(verbe, temps_verbe, sujet);
+                break;
+                
+            default:
+                break;
         }
     }
-    
-    // L'anglais.
     
     else
     {
-        terminaisons_anglaises(sujet, temps, verbe);
+        nouvelle_terminaison_anglaise(sujet, temps_verbe, verbe);
+    }
+}
+
+
+
+
+// Les terminaisons des verbes du troisième groupe.
+
+void Terminaison::ancienne_terminaison_troisieme_groupe(string verbe)
+{
+    size_t max = 0;
+    
+    for (int i = 0; i < NB_TERMINAISONS_GR_3; i++)
+    {
+        string terminaison = terminaisons_groupe_3[i];
+        
+        // On s'assure que la terminaison sélectionnée n'est pas plus grande que le verbe.
+        
+        if (terminaison.size() < verbe.size())
+        {
+            // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchée est à la fin,
+            
+            string fin_du_verbe = verbe.substr(verbe.size() - terminaison.size());
+            
+            // On s'assure que la terminaison trouvée est la plus grande possible.
+            
+            if (fin_du_verbe == terminaison && terminaison.size() > max)
+            {                
+                ancienne_terminaison = terminaison;
+                
+                max = terminaison.size();
+            }
+        }
+    }
+}
+
+
+
+
+// Détermine la terminaison du groupe du verbe.
+
+void Terminaison::determiner_ancienne_terminaison(string langue, string verbe, int groupe_verbe)
+{
+    if (langue == "F")
+    {
+        switch (groupe_verbe)
+        {
+            case 1 : ancienne_terminaison = "er";
+                break;
+                
+            case 2 : ancienne_terminaison = "ir";
+                break;
+                
+            case 3 : ancienne_terminaison_troisieme_groupe(verbe);
+                
+            default:
+                break;
+        }
     }
     
-    return make_tuple(ancienne_terminaison, nouvelle_terminaison);
+    else
+    {
+        ancienne_terminaison = "";
+    }
 }

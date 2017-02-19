@@ -26,21 +26,19 @@ class NomCommun : public Mot
     NomCommun(std::string source, std::string sortie, ChampsLexicaux * champs_lexicaux);
     std::string recuperer_nombre();
     std::string recuperer_genre();
-    void definir_nombre(std::string nombre);
-    void definir_genre(std::string genre);
-    void le_mot_est_un_nom_commun(std::string mot);
+    void le_mot_est_un_nom_commun(std::string mot, int genre);
     
     private :
     
-    std::map <int, std::string> genre;
-    
-    std::map <std::string, std::string> nom;
-    
-    std::string _nombre,
-                _genre,
+    std::string _genre,
+                _nombre,
                 _langue_source,
                 _langue_sortie,
                 _champs_lexicaux;
+    
+    std::map <int, std::string> __genre;
+    
+    std::map <std::string, std::string> _nom_commun;
 };
 
 #endif /* nomCommun_hpp */
