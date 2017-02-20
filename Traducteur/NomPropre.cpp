@@ -29,26 +29,29 @@ string NomPropre::recuperer_genre()
 
 
 
-void NomPropre::le_mot_est_un_nom_propre(std::string mot, int genre)
+void NomPropre::le_mot_est_un_nom_propre(std::string mot)
 {
-    ifstream fichier_noms_propres(resourcePath() + "noms_propres_" + __genre[genre] + "s.txt");
-    
-    while (!fichier_noms_propres.eof())
+    for (int i = 0; i< 2; i++)
     {
-        fichier_noms_propres >> _nom_propre;
+        ifstream fichier_noms_propres(resourcePath() + "noms_propres_" + __genre[i] + "s.txt");
         
-        if (_nom_propre == mot)
+        while (!fichier_noms_propres.eof())
         {
-            _nom_propre[0] = toupper(_nom_propre[0]);
+            fichier_noms_propres >> _nom_propre;
             
-            ajouter_mot(_nom_propre);
-            
-            _genre = __genre[genre];
-            
-            break;
+            if (_nom_propre == mot)
+            {
+                _nom_propre[0] = toupper(_nom_propre[0]);
+                
+                ajouter_mot(_nom_propre);
+                
+                _genre = __genre[i];
+                
+                break;
+            }
         }
+        
+        fichier_noms_propres.close();
     }
-    
-    fichier_noms_propres.close();
 }
 

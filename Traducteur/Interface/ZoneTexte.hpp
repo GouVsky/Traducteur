@@ -24,7 +24,6 @@ class GZoneDeTexte
     public :
     
     GZoneDeTexte();
-    void creer_curseur();
     void easter_egg(sf::Text texte, std::string mot, int indice_ligne);
     void affichage_des_phrases(int indice_ligne);
     void justification_du_texte(std::string phrase, int indice);

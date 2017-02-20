@@ -222,7 +222,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
         int taille_source = expression.recuperer_taille_expression_source();
         int taille_sortie = expression.recuperer_taille_expression_sortie();
         
-        if (expression.recuperer_taille_expression_sortie() > 0)
+        if (expression.expression_existe())
         {
             ajouter_le_type_source("expression_" + to_string(taille_source));
             ajouter_le_type_sortie("expression_" + to_string(taille_sortie));
@@ -278,44 +278,38 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 // Nom commun masculin ou féminin.
                 
-                for (int j = 0; j < 2; j++)
+                nom_commun.le_mot_est_un_nom_commun(phrase[i]);
+                
+                nombre_de_noms_communs = nom_commun.recuperer_nombre_de_mots();
+                
+                for (int j = 0; j < nombre_de_noms_communs; j++)
                 {
-                    nom_commun.le_mot_est_un_nom_commun(phrase[i], j);
+                    int nombre_de_champs_lexicaux = nom_commun.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
                     
-                    nombre_de_noms_communs = nom_commun.recuperer_nombre_de_mots();
+                    ajouter_le_type_source(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
+                    ajouter_le_type_sortie(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
                     
-                    for (int k = 0; k < nombre_de_noms_communs; k++)
-                    {
-                        int nombre_de_champs_lexicaux = nom_commun.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(k);
-                        
-                        ajouter_le_type_source(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
-                        ajouter_le_type_sortie(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
-                        
-                        ajouter_le_mot_sortie(nom_commun.recuperer_mot(k));
-                        
-                        ajouter_le_champ_lexical(nom_commun.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, k);
-                    }
+                    ajouter_le_mot_sortie(nom_commun.recuperer_mot(j));
+                    
+                    ajouter_le_champ_lexical(nom_commun.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, j);
                 }
                 
                 
                 
                 // Nom propre masculin ou féminin.
                 
-                for (int j = 0; j < 2; j++)
+                nom_propre.le_mot_est_un_nom_propre(phrase[i]);
+                
+                nombre_de_noms_propres = nom_propre.recuperer_nombre_de_mots();
+                
+                for (int j = 0; j < nombre_de_noms_propres; j++)
                 {
-                    nom_propre.le_mot_est_un_nom_propre(phrase[i], j);
+                    ajouter_le_type_source(nom_propre.recuperer_genre() + "_singulier_1");
+                    ajouter_le_type_sortie(nom_propre.recuperer_genre() + "_singulier_1");
                     
-                    nombre_de_noms_propres = nom_propre.recuperer_nombre_de_mots();
+                    ajouter_le_mot_sortie(nom_propre.recuperer_mot(j));
                     
-                    for (int k = 0; k < nombre_de_noms_propres; k++)
-                    {
-                        ajouter_le_type_source(nom_propre.recuperer_genre() + "_singulier_1");
-                        ajouter_le_type_sortie(nom_propre.recuperer_genre() + "_singulier_1");
-                        
-                        ajouter_le_mot_sortie(nom_propre.recuperer_mot(k));
-                        
-                        ajouter_le_champ_lexical("-");
-                    }
+                    ajouter_le_champ_lexical("-");
                 }
                 
                 

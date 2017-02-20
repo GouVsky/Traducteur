@@ -145,16 +145,9 @@ void GChampDeTexte::traitement()
         
         else if (evenement->type == Event::TextEntered)
         {
-            // S'il s'agit de la touche "ENTREE", on effectue la traduction du texte.
-            
-            if(evenement->text.unicode == 10)
-            {
-                
-            }
-            
             // S'il s'agit de la touche "BACKSPACE", on efface le dernier caractère.
             
-            else if (evenement->text.unicode == 8)
+            if (evenement->text.unicode == 8)
             {
                 if (texte_source.size() > 0 && position_x_curseur > 0)
                 {

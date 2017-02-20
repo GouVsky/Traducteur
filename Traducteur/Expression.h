@@ -23,9 +23,12 @@ class Expression
     int recuperer_taille_expression_sortie();
     int recuperer_taille_expression_source();
     std::string recuperer_expression();
+    bool expression_existe();
     void determine_si_existe_une_expression_dans_la_phrase(int compteur, std::vector <std::string> phrase);
     
     private :
+    
+    bool _expression_existe;
     
     std::string _expression,
                 _langue_source,

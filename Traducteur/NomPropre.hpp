@@ -23,7 +23,7 @@ class NomPropre : public Mot
     
     NomPropre();
     std::string recuperer_genre();
-    void le_mot_est_un_nom_propre(std::string mot, int genre);
+    void le_mot_est_un_nom_propre(std::string mot);
     
     private :
     

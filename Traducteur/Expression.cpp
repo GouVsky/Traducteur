@@ -17,6 +17,8 @@ Expression::Expression(string source, string sortie)
     _langue_source = source;
     _langue_sortie = sortie;
     
+    _expression_existe = false;
+    
     _taille_expression_source = 0;
     _taille_expression_sortie = 0;
 }
@@ -49,6 +51,14 @@ int Expression::recuperer_taille_expression_source()
 string Expression::recuperer_expression()
 {
     return __expression[_langue_sortie];
+}
+
+
+
+
+bool Expression::expression_existe()
+{
+    return _expression_existe;
 }
 
 
@@ -90,6 +100,8 @@ void Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur,
                 _taille_expression_sortie = (int) count(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';') + 1;
                 
                 replace(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';', ' ');
+                
+                _expression_existe = true;
                 
                 break;
             }

@@ -48,43 +48,44 @@ string NomCommun::recuperer_genre()
 
 // Détermine si le mot est un nom commun masculin ou féminin.
 
-void NomCommun::le_mot_est_un_nom_commun(string mot, int genre)
+void NomCommun::le_mot_est_un_nom_commun(string mot)
 {
     string mot_source;
     
-    ifstream fichier_noms_communs(resourcePath() + "noms_" + __genre[genre] + "s.txt");
-    
-    // Est-ce un nom commun ?
-    
-    while (!fichier_noms_communs.eof())
+    for (int i = 0; i < 2; i++)
     {
-        fichier_noms_communs >> __nom_commun["A"] >> __nom_commun["F"] >> _champs_lexicaux;
+        ifstream fichier_noms_communs(resourcePath() + "noms_" + __genre[i] + "s.txt");
         
-        // Si le mot possède plusieurs sens, on regarde lequel correspond.
-        
-        istringstream iss_langue_source(__nom_commun[_langue_source]);
-        
-        while (getline(iss_langue_source, mot_source, '/'))
+        while (!fichier_noms_communs.eof())
         {
-            if (mot_source == mot || mot_source + 's' == mot)
+            fichier_noms_communs >> __nom_commun["A"] >> __nom_commun["F"] >> _champs_lexicaux;
+            
+            // Si le mot possède plusieurs sens, on regarde lequel correspond.
+            
+            istringstream iss_langue_source(__nom_commun[_langue_source]);
+            
+            while (getline(iss_langue_source, mot_source, '/'))
             {
-                if (mot_source + 's' == mot)
+                if (mot_source == mot || mot_source + 's' == mot)
                 {
-                    _nombre = "pluriel";
+                    if (mot_source + 's' == mot)
+                    {
+                        _nombre = "pluriel";
+                        
+                        __nom_commun[_langue_sortie] += 's';
+                    }
                     
-                    __nom_commun[_langue_sortie] += 's';
+                    ajouter_mot(__nom_commun[_langue_sortie]);
+                    
+                    _genre = __genre[i];
+                    
+                    ajouter_champs_lexicaux(_champs_lexicaux);
+                    
+                    break;
                 }
-                
-                ajouter_mot(__nom_commun[_langue_sortie]);
-                
-                _genre = __genre[genre];
-                
-                ajouter_champs_lexicaux(_champs_lexicaux);
-                
-                break;
             }
         }
+        
+        fichier_noms_communs.close();
     }
-    
-    fichier_noms_communs.close();
 }
