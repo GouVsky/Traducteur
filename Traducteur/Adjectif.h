@@ -23,6 +23,8 @@ class Adjectif : public Mot
     public :
     
     Adjectif(std::string source, std::string sortie, ChampsLexicaux * champs_lexicaux);
+    std::string accorder_pluriel(std::string adjectif);
+    std::string accorder_feminin(std::string adjectif);
     void le_mot_est_un_adjectif(std::string mot);
     
     private :

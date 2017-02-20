@@ -21,6 +21,39 @@ Adjectif::Adjectif(string source, string sortie, ChampsLexicaux * champs_lexicau
 
 
 
+// Accorde l'adjectif au pluriel.
+
+string Adjectif::accorder_pluriel(string adjectif)
+{
+    if (_langue_sortie == "F")
+    {
+        adjectif += 's';
+    }
+    
+    return adjectif;
+}
+
+
+
+
+// Accorde l'adjectif s'il est féminin.
+
+string Adjectif::accorder_feminin(string adjectif)
+{
+    if (_langue_sortie == "F")
+    {
+        if (adjectif[adjectif.size() - 1] != 'e')
+        {
+            adjectif += 'e';
+        }
+    }
+    
+    return adjectif;
+}
+
+
+
+
 // Détermine si le mot est adjectif.
 
 void Adjectif::le_mot_est_un_adjectif(string mot)

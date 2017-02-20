@@ -12,6 +12,20 @@
 using namespace std;
 
 
+NomCommun::NomCommun(string source, string sortie) : Mot()
+{
+    _langue_source = source;
+    _langue_sortie = sortie;
+    
+    _nombre = "singulier";
+    
+    __genre[0] = "masculin";
+    __genre[1] = "feminin";
+}
+
+
+
+
 NomCommun::NomCommun(string source, string sortie, ChampsLexicaux * champ_lexical) : Mot(champ_lexical)
 {
     _langue_source = source;
@@ -46,6 +60,48 @@ string NomCommun::recuperer_genre()
 
 
 
+// Accorde un mot s'il est au pluriel.
+
+string NomCommun::accorder_pluriel(string mot)
+{
+    if (_langue_sortie == "F")
+    {
+        if (mot[mot.size() - 1] != 's' && mot[mot.size() - 1] != 'x')
+        {
+            // Le mot se termine par 'al'.
+            
+            if (mot.find("al", mot.size() - 2) != -1)
+            {
+                mot.erase(mot.size() - 2);
+                
+                mot += "aux";
+            }
+            
+            // Le mot se termine par 'eau'.
+            
+            else if (mot.find("eau", mot.size() - 3) != -1)
+            {
+                mot += 'x';
+            }
+            
+            else
+            {
+                mot += 's';
+            }
+        }
+    }
+    
+    else if (_langue_sortie == "A")
+    {
+        mot += 's';
+    }
+    
+    return mot;
+}
+
+
+
+
 // Détermine si le mot est un nom commun masculin ou féminin.
 
 void NomCommun::le_mot_est_un_nom_commun(string mot)
@@ -71,8 +127,6 @@ void NomCommun::le_mot_est_un_nom_commun(string mot)
                     if (mot_source + 's' == mot)
                     {
                         _nombre = "pluriel";
-                        
-                        __nom_commun[_langue_sortie] += 's';
                     }
                     
                     ajouter_mot(__nom_commun[_langue_sortie]);

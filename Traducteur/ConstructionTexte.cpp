@@ -184,17 +184,12 @@ void Texte::construction_du_texte(string texte)
     
     for (int i = 0; i < _nombre_de_phrases; i++)
     {
-        phrases.push_back(thread(&Phrase::recherche_virgule, &__phrase[i]));
+        phrases.push_back(thread(&Phrase::construire_la_phrase, &__phrase[i]));
     }
     
     for (int i = 0; i < _nombre_de_phrases; i++)
     {
         phrases[i].join();
-    }
-    
-    for (int i = 0; i < _nombre_de_phrases; i++)
-    {
-        __phrase[i].choix_des_mots_selon_champ_lexical();
     }
     
     assembler_les_phrases();

@@ -16,6 +16,8 @@ Auxilliaire::Auxilliaire() {}
 
 
 
+// Retourne l'auxilliaire traduit.
+
 string Auxilliaire::recuperer_auxilliaire()
 {
     return _auxilliaire;
@@ -23,6 +25,8 @@ string Auxilliaire::recuperer_auxilliaire()
 
 
 
+
+// Détermine la traduction de l'auxilliaire.
 
 void Auxilliaire::construction_auxilliaire(int sujet, string langue, string auxilliaire, string temps)
 {

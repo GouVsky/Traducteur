@@ -33,6 +33,7 @@ class Phrase
     void choix_des_mots_selon_champ_lexical();
     void traduction_des_mots(std::vector <std::string> phrase, bool virgule);
     void recherche_virgule();
+    void construire_la_phrase();
     
     private :
     
@@ -48,7 +49,8 @@ class Phrase
     int _indice_mot,
         _indice_sous_phrase;
     
-    std::vector <std::string> __structure;
+    std::vector <std::string> __phrase,
+                              __structure;
     
     std::vector <std::vector <std::vector <std::string>>> __structure_du_texte_source,
                                                           __structure_du_texte_sortie,
@@ -56,7 +58,7 @@ class Phrase
     
     std::vector <std::vector <std::vector <std::vector <std::string>>>> __tableau_contenant_champs_lexicaux;
     
-    std::map <std::string, std::string *> __pronom_personnel;
+    std::map <std::string, std::vector <std::string>> __pronom_personnel;
 };
 
 #endif /* constructionPhrase_hpp */

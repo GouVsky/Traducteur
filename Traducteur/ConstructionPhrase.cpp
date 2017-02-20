@@ -13,6 +13,7 @@
 #include "NomCommun.hpp"
 #include "Invariable.h"
 #include "ChampsLexicaux.hpp"
+#include "AffinagePhrase.hpp"
 #include "ConstructionPhrase.hpp"
 
 using namespace std;
@@ -165,28 +166,15 @@ void Phrase::choix_des_mots_selon_champ_lexical()
             
             if (le_mot.size() > 0 && le_type.size() > 0)
             {
-                _phrase_sortie += le_mot + ' ';
+                __phrase.push_back(le_mot);
                 
-                // On ajoute la structure autant de fois que le nombre de mots qui composent la structure.
-                // Cela s'applique en particulier pour les expressions et les verbes.
-                
-                for (int k = le_type[le_type.size() - 1] - '0'; k--;)
-                {
-                    __structure.push_back(le_type);
-                }
+                __structure.push_back(le_type);
             }
             
             max = 0;
             le_mot = "";
             le_type = "";
         }
-    }
-    
-    // On efface le dernier espace.
-    
-    if (!_phrase_sortie.empty())
-    {
-        _phrase_sortie.erase(_phrase_sortie.size() - 1);
     }
 }
 
@@ -240,13 +228,13 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
         {
             // Pronom personnel.
             
-            string pp_a[9] = {"i", "you", "he", "she", "it", "we", "you", "they", "they"};
-            string pp_f[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+            vector <string> pp_a = {"i", "you", "he", "she", "it", "we", "you", "they"};
+            vector <string> pp_f = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
             
             __pronom_personnel["A"] = pp_a;
             __pronom_personnel["F"] = pp_f;
             
-            for (int j = 0; j < 9; j++)
+            for (int j = 0; j < __pronom_personnel[_langue_source].size(); j++)
             {
                 if (__pronom_personnel[_langue_source][j] == phrase[i])
                 {
@@ -490,4 +478,22 @@ void Phrase::recherche_virgule()
             phrase += _phrase_source[i];
         }
     }
+}
+
+
+
+
+void Phrase::construire_la_phrase()
+{
+    recherche_virgule();
+    
+    choix_des_mots_selon_champ_lexical();
+    
+    // Affinage de la phrase afin de la rendre grammaticalement correcte.
+    
+    Affinage affinage_phrase(_langue_source, _langue_sortie);
+    
+    affinage_phrase.affiner_phrases(__phrase, __structure);
+    
+    _phrase_sortie = affinage_phrase.recuperer_phrase_sortie();
 }

@@ -133,7 +133,7 @@ void Terminaison::determiner_nouvelle_terminaison(string langue, string verbe, s
         }
     }
     
-    else
+    else if (langue == "A")
     {
         nouvelle_terminaison_anglaise(sujet, temps_verbe, verbe);
     }
@@ -148,7 +148,7 @@ void Terminaison::ancienne_terminaison_troisieme_groupe(string verbe)
 {
     size_t max = 0;
     
-    for (int i = 0; i < NB_TERMINAISONS_GR_3; i++)
+    for (int i = 0; i < __terminaisons_groupe_3.size(); i++)
     {
         string terminaison = __terminaisons_groupe_3[i];
         
@@ -196,7 +196,7 @@ void Terminaison::determiner_ancienne_terminaison(string langue, string verbe, i
         }
     }
     
-    else
+    else if (langue == "A")
     {
         _ancienne_terminaison = "";
     }

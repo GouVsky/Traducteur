@@ -11,10 +11,8 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include <stdio.h>
-
-#define NB_TERMINAISONS 9
-#define NB_TERMINAISONS_GR_3 7
 
 
 class Terminaison
@@ -41,33 +39,33 @@ class Terminaison
     
     // Les terminaisons anglaises au présent.
     
-    std::string __A[NB_TERMINAISONS] = {"", "", "s", "s", "s", "", "", "", ""};
+    std::vector <std::string> __A = {"", "", "s", "s", "s", "", "", "", ""};
     
     
     
     // Les terminaisons françaises du premier et deuxième groupe à tous les temps.
     
-    std::string __futur_F[NB_TERMINAISONS] = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
-    std::string __present_1_F[NB_TERMINAISONS] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
-    std::string __passe_simple_F[NB_TERMINAISONS] = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
-    std::string __imparfait_F[NB_TERMINAISONS] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
-    std::string __present_2_F[NB_TERMINAISONS] = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
-    std::string __conditionnel_F[NB_TERMINAISONS] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    std::vector <std::string> __futur_F = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
+    std::vector <std::string> __present_1_F = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
+    std::vector <std::string> __passe_simple_F = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
+    std::vector <std::string> __imparfait_F = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    std::vector <std::string> __present_2_F = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
+    std::vector <std::string> __conditionnel_F = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
     
     
     // L'ensemble des terminaisons françaises du troisième groupe.
     
-    std::string __terminaisons_groupe_3[NB_TERMINAISONS_GR_3] = {"ir", "tir", "ire", "dre", "oir", "oire", "evoir"};
+    std::vector <std::string> __terminaisons_groupe_3 = {"ir", "tir", "ire", "dre", "oir", "oire", "evoir"};
     
     // Les terminaisons du troisième groupe au présent.
     
-    std::string __present_ir_F[NB_TERMINAISONS] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
-    std::string __present_tir_F[NB_TERMINAISONS] = {"s", "s", "t", "t", "t", "tons", "tez", "tent", "tent"};
-    std::string __present_ire_F[NB_TERMINAISONS] = {"s", "s", "t", "t", "t", "ions", "iez", "ient", "ient"};
-    std::string __present_dre_F[NB_TERMINAISONS] = {"ds", "ds", "d", "d", "d", "dons", "dez", "dent", "dent"};
-    std::string __present_oir_F[NB_TERMINAISONS] = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
-    std::string __present_oire_F[NB_TERMINAISONS] = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
-    std::string __present_evoir_F[NB_TERMINAISONS] = {"ois", "ois", "oit", "oit", "oit", "evons", "evez", "oivent", "oivent"};
+    std::vector <std::string> __present_ir_F = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
+    std::vector <std::string> __present_tir_F = {"s", "s", "t", "t", "t", "tons", "tez", "tent", "tent"};
+    std::vector <std::string> __present_ire_F = {"s", "s", "t", "t", "t", "ions", "iez", "ient", "ient"};
+    std::vector <std::string> __present_dre_F = {"ds", "ds", "d", "d", "d", "dons", "dez", "dent", "dent"};
+    std::vector <std::string> __present_oir_F = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
+    std::vector <std::string> __present_oire_F = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
+    std::vector <std::string> __present_evoir_F = {"ois", "ois", "oit", "oit", "oit", "evons", "evez", "oivent", "oivent"};
 };
 
 #endif /* terminaison_hpp */
