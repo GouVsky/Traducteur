@@ -63,18 +63,15 @@ RenderWindow * Fenetre::recuperer_fenetre()
 void Fenetre::affichage_des_elements()
 {
     champ_texte_source.afficher();
-    
-    Texte bob_le_bricoleur(langue_source, langue_sortie);
 
-    bob_le_bricoleur.construction_du_texte(champ_texte_source.recuperer_texte());
-
-    rendu.afficher(bob_le_bricoleur.recuperer_texte_traduit());
+    rendu.afficher(texte_traduit);
     
     bouton_F.definir_couleur(Color(255, 255, 255, alpha_F));
     bouton_A.definir_couleur(Color(255, 255, 255, alpha_A));
         
     langue_de_traduction.definir_couleur(Color(255, 255, 255, alpha_langue_traduction));
     
+    traduire.afficher();
     bouton_F.afficher();
     bouton_A.afficher();
     langue_de_traduction.afficher();
@@ -161,6 +158,15 @@ void Fenetre::gestion_des_boutons()
         langue_source = "A";
         langue_sortie = "F";
     }
+    
+    if (traduire.est_presse())
+    {
+        Texte bob_le_bricoleur(langue_source, langue_sortie);
+        
+        bob_le_bricoleur.construction_du_texte(champ_texte_source.recuperer_texte());
+        
+        texte_traduit = bob_le_bricoleur.recuperer_texte_traduit();
+    }
 }
 
 
@@ -170,18 +176,18 @@ void Fenetre::gestion_des_boutons()
 
 int Fenetre::creation_de_la_fenetre()
 {
-    fenetre.create(VideoMode(2080, 1030, 32), "", Style::Close);
+    fenetre.create(VideoMode(2080, 1060, 32), "", Style::Close);
         
     if(police.loadFromFile(resourcePath() + "GenR102.TTF") == false)
     {
         return EXIT_FAILURE;
     }
         
-    champ_texte_source.definir_taille(1005, 790);
+    champ_texte_source.definir_taille(1005, 760);
     champ_texte_source.definir_position(20, 200);
     champ_texte_source.definir_police(police);
     
-    rendu.definir_taille(1005, 790);
+    rendu.definir_taille(1005, 760);
     rendu.definir_position(1055, 200);
     rendu.definir_police(police);
     
@@ -198,6 +204,10 @@ int Fenetre::creation_de_la_fenetre()
     langue_de_traduction.definir_image("selection_langue.png");
     langue_de_traduction.definir_position(1480, 50);
     langue_de_traduction.redimensionner(0.6, 0.6);
+    
+    traduire.definir_image("traduire.png");
+    traduire.definir_position(503, 990);
+    traduire.redimensionner(0.06, 0.06);
         
     while (fenetre.isOpen())
     {

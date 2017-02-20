@@ -29,7 +29,7 @@ class Verbe : public Mot
     int recuperer_taille_verbe_sortie();
     int recuperer_taille_verbe_source();
     std::string le_verbe_est_irregulier(std::string verbe, std::string langue);
-    std::string construction(std::string langue, std::string verbe, std::vector <std::string> * tableau, int compteur);
+    std::string construction(std::string langue, std::string verbe, int compteur);
     void determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure);
     
     private :

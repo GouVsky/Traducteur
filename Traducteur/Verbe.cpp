@@ -75,7 +75,7 @@ string Verbe::le_verbe_est_irregulier(string verbe, string langue)
 
 // Construction du verbe en fonction du sujet, du temps et du groupe du verbe, et des caractéristiques propres à chaque langue.
 
-string Verbe::construction(string langue, string verbe, vector <string> * tableau, int compteur)
+string Verbe::construction(string langue, string verbe, int compteur)
 {
     string terminaison,
            construction_verbe,
@@ -172,10 +172,12 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     
     string mot_source,
            forme_verbe_tmp;
+    
+    bool verbe_trouve = false;
             
     ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
 
-    while (!fichier_caracteristique.eof())
+    while (!fichier_caracteristique.eof() && verbe_trouve == false)
     {
         fichier_caracteristique >> _temps_verbe >> __conjugaison["A"] >> __conjugaison["F"];
         
@@ -185,7 +187,7 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
         {
             ifstream fichier_verbes(resourcePath() + "verbes_" + to_string(_groupe_verbe) + ".txt");
             
-            while (!fichier_verbes.eof())
+            while (!fichier_verbes.eof() && verbe_trouve == false)
             {
                 fichier_verbes >> __verbe["A"] >> __verbe["F"] >> __irregulier_ou_non["A"] >> __irregulier_ou_non["F"] >> _champs_lexicaux;
                 
@@ -197,7 +199,7 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                 
                 while (getline(iss_langue_source, mot_source, '/'))
                 {
-                    _forme_verbe_source = construction(_langue_source, mot_source, &tableau, compteur);
+                    _forme_verbe_source = construction(_langue_source, mot_source, compteur);
                     
                     // On récupère la taille du verbe.
                     
@@ -224,11 +226,13 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                         
                         while (getline(iss_langue_source, mot_source, '/'))
                         {
-                            _forme_verbe_sortie = construction(_langue_sortie, mot_source, &tableau, compteur);
+                            _forme_verbe_sortie = construction(_langue_sortie, mot_source, compteur);
                             
                             _taille_verbe_sortie = (int) count(_forme_verbe_sortie.begin(), _forme_verbe_sortie.end(), ' ') + 1;
                             
                             ajouter_mot(_forme_verbe_sortie);
+                            
+                            verbe_trouve = true;
                         }
                         
                         ajouter_champs_lexicaux(_champs_lexicaux);

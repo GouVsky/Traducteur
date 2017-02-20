@@ -401,7 +401,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     i += verbe.recuperer_taille_verbe_source() - 1;
                 }
                 
-                
+
                 
                 // Le mot n'est pas répertorié dans la base de données.
                 

@@ -56,7 +56,6 @@ class Fenetre
     GBouton bouton_F,
             bouton_A,
             traduire,
-            suppression,
             langue_de_traduction;
     
     GChampDeTexte champ_texte_source;

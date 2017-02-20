@@ -24,6 +24,8 @@ Expression::Expression(string source, string sortie)
 
 
 
+// Retourne la taille de l'expression traduite.
+
 int Expression::recuperer_taille_expression_sortie()
 {
     return _taille_expression_sortie;
@@ -32,6 +34,8 @@ int Expression::recuperer_taille_expression_sortie()
 
 
 
+// Retourne la taille de l'expression source.
+
 int Expression::recuperer_taille_expression_source()
 {
     return _taille_expression_source;
@@ -39,6 +43,8 @@ int Expression::recuperer_taille_expression_source()
 
 
 
+
+// Retourne l'expression traduite.
 
 string Expression::recuperer_expression()
 {
