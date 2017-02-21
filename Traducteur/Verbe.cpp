@@ -77,7 +77,7 @@ string Verbe::le_verbe_est_irregulier(string verbe, string langue)
 
 string Verbe::construction(string langue, string verbe, int compteur)
 {
-    string terminaison,
+    string mot,
            construction_verbe,
            copie_verbe = verbe,
            mot_constituant_le_verbe;
@@ -90,9 +90,9 @@ string Verbe::construction(string langue, string verbe, int compteur)
     {
         istringstream iss_bis(mot_constituant_le_verbe);
         
-        while (getline(iss_bis, terminaison, '-'))
+        while (getline(iss_bis, mot, '-'))
         {
-            if (terminaison == "verbe_et_terminaison")
+            if (mot == "verbe_et_terminaison")
             {
                 if (__irregulier_ou_non[langue] == "oui")
                 {
@@ -107,17 +107,17 @@ string Verbe::construction(string langue, string verbe, int compteur)
                 }
             }
             
-            else if (terminaison == "ing")
+            else if (mot == "ing")
             {
-                construction_verbe += terminaison;
+                construction_verbe += mot;
             }
             
-            else if (terminaison == "verbe")
+            else if (mot == "verbe")
             {
                 construction_verbe += verbe;
             }
             
-            else if (terminaison == "radical")
+            else if (mot == "radical")
             {
                 _terminaison.determiner_ancienne_terminaison(langue, verbe, _groupe_verbe);
                 
@@ -126,23 +126,25 @@ string Verbe::construction(string langue, string verbe, int compteur)
                 construction_verbe += copie_verbe;
             }
             
-            else if (terminaison == "terminaison")
+            else if (mot == "terminaison")
             {
                 _terminaison.determiner_nouvelle_terminaison(langue, verbe, _temps_verbe, _sujet, _groupe_verbe);
                 
                 construction_verbe += _terminaison.recuperer_nouvelle_terminaison();
             }
             
-            else if (terminaison == "avoir" || terminaison == "etre" || terminaison == "aller")
+            else if (mot == "avoir" || mot == "etre" || mot == "aller")
             {
-                _auxilliaire.construction_auxilliaire(_sujet, langue, terminaison, _temps_verbe);
+                _auxilliaire.construction_auxilliaire(_sujet, langue, mot, _temps_verbe);
                 
                 construction_verbe += _auxilliaire.recuperer_auxilliaire();
             }
             
+            // To, will, would...
+            
             else
             {
-                construction_verbe += terminaison; // To, will, would...
+                construction_verbe += mot;
             }
         }
         

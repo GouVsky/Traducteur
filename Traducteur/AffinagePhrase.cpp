@@ -24,7 +24,9 @@ Affinage::Affinage(string sortie, vector <vector <string>> * phrases, vector <ve
 
 
 
-void Affinage::accorder_les_mots()
+// Accord des mots en fonction du genre et du nombre.
+
+void Affinage::accord_des_mots()
 {
     NomCommun nom_commun;
     
@@ -48,7 +50,24 @@ void Affinage::accorder_les_mots()
 
 
 
+// Réorganise la phrase pour respecter la grammaire de la langue.
+
+void Affinage::nouvelle_organisation()
+{
+    if (_langue_sortie == "F")
+    {
+        //
+    }
+}
+
+
+
+
+// On affine la phrase pour qu'elle soit le plus correcte grammaticalement.
+
 void Affinage::affiner_phrases()
 {
-    accorder_les_mots();
+    nouvelle_organisation();
+    
+    accord_des_mots();
 }

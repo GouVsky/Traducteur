@@ -45,8 +45,8 @@ class Terminaison
     
     // Les terminaisons françaises du premier et deuxième groupe à tous les temps.
     
-    std::vector <std::string> __futur_F = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
     std::vector <std::string> __present_1_F = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
+    std::vector <std::string> __futur_simple_F = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
     std::vector <std::string> __passe_simple_F = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
     std::vector <std::string> __imparfait_F = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
     std::vector <std::string> __present_2_F = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};

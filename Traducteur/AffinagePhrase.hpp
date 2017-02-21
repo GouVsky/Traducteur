@@ -19,7 +19,8 @@ class Affinage
     public :
     
     Affinage(std::string sortie, std::vector <std::vector <std::string>> * phrases, std::vector <std::vector <std::string>> * structure);
-    void accorder_les_mots();
+    void accord_des_mots();
+    void nouvelle_organisation();
     void affiner_phrases();
     
     private :

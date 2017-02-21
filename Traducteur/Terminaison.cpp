@@ -99,8 +99,8 @@ void Terminaison::nouvelle_terminaison_premier_ou_deuxieme_groupe(int groupe_ver
     else
     {
         __terminaisons["passe_compose_F"] = "é";
-        __terminaisons["futur_F"] = __futur_F[sujet];
         __terminaisons["imparfait_F"] = __imparfait_F[sujet];
+        __terminaisons["futur_simple_F"] = __futur_simple_F[sujet];
         __terminaisons["conditionnel_F"] = __conditionnel_F[sujet];
         __terminaisons["passe_simple_F"] = __passe_simple_F[sujet];
         

@@ -484,9 +484,9 @@ void Phrase::construire_la_phrase()
     
     // Affinage de la phrase afin de la rendre grammaticalement correcte.
     
-    Affinage affinage_phrase(_langue_sortie, &__phrase, &__structure);
+    Affinage phrase(_langue_sortie, &__phrase, &__structure);
     
-    affinage_phrase.affiner_phrases();
+    phrase.affiner_phrases();
     
     // Construction de la phrase finale.
     
