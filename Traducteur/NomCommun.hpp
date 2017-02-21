@@ -27,11 +27,11 @@ class NomCommun : public Mot
     NomCommun(std::string source, std::string sortie, ChampsLexicaux * champs_lexicaux);
     std::string recuperer_nombre();
     std::string recuperer_genre();
-    std::string accorder_pluriel(std::string mot);
+    void accorder_pluriel(std::string * mot, std::string langue);
     void le_mot_est_un_nom_commun(std::string mot);
     
     private :
-    
+        
     std::string _genre,
                 _nombre,
                 _langue_source,

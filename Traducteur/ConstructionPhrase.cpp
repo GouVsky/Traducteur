@@ -116,17 +116,18 @@ void Phrase::ajouter_le_mot_sortie(string mot)
 
 void Phrase::choix_des_mots_selon_champ_lexical()
 {
-    string le_mot,
-           le_type;
-    
     int max = 0,
-        max_valeur_champ_lexical = 0,
-        valeur_champ_lexical = 0;
+        valeur_champ_lexical = 0,
+        max_valeur_champ_lexical = 0;
     
     for (int i = 0; i < __tableau_contenant_champs_lexicaux.size(); i++)
     {
         for (int j = 0; j < __tableau_contenant_champs_lexicaux[i].size(); j++)
         {
+            __phrase.push_back(vector <string> (0));
+            
+            __structure.push_back(vector <string> (0));
+            
             for (int k = 0; k < __tableau_contenant_champs_lexicaux[i][j].size(); k++)
             {
                 for (int l = 0; l < __tableau_contenant_champs_lexicaux[i][j][k].size(); l++)
@@ -148,32 +149,24 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                 {
                     max = max_valeur_champ_lexical;
                     
-                    le_type = __structure_du_texte_sortie[i][j][k];
-                    le_mot = __tableau_contenant_significations_mot[i][j][k];
+                    __phrase[__phrase.size() - 1].clear();
+                    __phrase[__phrase.size() - 1].push_back(__tableau_contenant_significations_mot[i][j][k]);
+                    
+                    __structure[__structure.size() - 1].clear();
+                    __structure[__structure.size() - 1].push_back(__structure_du_texte_sortie[i][j][k]);
                 }
                 
                 else if (max_valeur_champ_lexical == max)
                 {
-                    le_type += '/' + __structure_du_texte_sortie[i][j][k];
-                    le_mot += '/' + __tableau_contenant_significations_mot[i][j][k];
+                    __phrase[__phrase.size() - 1].push_back(__tableau_contenant_significations_mot[i][j][k]);
+                    
+                    __structure[__structure.size() - 1].push_back(__structure_du_texte_sortie[i][j][k]);
                 }
                 
                 max_valeur_champ_lexical = 0;
             }
 
-            // Au final, on ne garde que la traduction dont le champ lexical est majoritaire.
-            // C'est-à-dire celle qui correspond au contexte.
-            
-            if (le_mot.size() > 0 && le_type.size() > 0)
-            {
-                __phrase.push_back(le_mot);
-                
-                __structure.push_back(le_type);
-            }
-            
             max = 0;
-            le_mot = "";
-            le_type = "";
         }
     }
 }

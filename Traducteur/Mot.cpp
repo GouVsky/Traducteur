@@ -104,11 +104,11 @@ void Mot::ajouter_champs_lexicaux(string champs_lexicaux)
 
 // Ajoute tous les sens d'un mot.
 
-void Mot::ajouter_mot(string mot)
+void Mot::ajouter_mot(string mots)
 {
     string mot_du_flux;
     
-    istringstream flux(mot);
+    istringstream flux(mots);
     
     while (getline(flux, mot_du_flux, '/'))
     {

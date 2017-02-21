@@ -20,7 +20,7 @@ class Affinage
     
     Affinage(std::string source, std::string sortie);
     std::string recuperer_phrase_sortie();
-    void affiner_phrases(std::vector <std::string> phrase, std::vector <std::string> structure);
+    void affiner_phrases(std::vector <std::vector <std::string>> phrase, std::vector <std::vector <std::string>> structure);
     
     private :
     

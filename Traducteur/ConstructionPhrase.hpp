@@ -49,9 +49,9 @@ class Phrase
     int _indice_mot,
         _indice_sous_phrase;
     
-    std::vector <std::string> __phrase,
-                              __structure;
-    
+    std::vector <std::vector <std::string>> __phrase,
+                                            __structure;
+
     std::vector <std::vector <std::vector <std::string>>> __structure_du_texte_source,
                                                           __structure_du_texte_sortie,
                                                           __tableau_contenant_significations_mot;

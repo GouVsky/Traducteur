@@ -29,26 +29,30 @@ string Affinage::recuperer_phrase_sortie()
 
 
 
-void Affinage::affiner_phrases(vector <string> phrases, vector <string> structure)
+void Affinage::affiner_phrases(vector <vector <string>> phrases, vector <vector <string>> structure)
 {
     NomCommun nom_commun(_langue_source, _langue_sortie);
     
-    for (int i = 0; i < structure.size(); i++)
-    {
-        if (structure[i].find("masculin_pluriel") != -1)
-        {
-            phrases[i] = nom_commun.accorder_pluriel(phrases[i]);
-        }
-        
-        else if (_langue_sortie == "F")
-        {
-            // Adjectifs.
-        }
-    }
-    
     for (int i = 0; i < phrases.size(); i++)
     {
-        _phrase_sortie += phrases[i] + ' ';
+        for (int j = 0; j < phrases[i].size(); j++)
+        {
+            if (structure[i][j].find("masculin_pluriel") != -1)
+            {
+                nom_commun.accorder_pluriel(&phrases[i][j], _langue_sortie);
+            }
+            
+            else if (structure[i][j].find("feminin_pluriel") != -1)
+            {
+                nom_commun.accorder_pluriel(&phrases[i][j], _langue_sortie);
+            }
+            
+            _phrase_sortie += phrases[i][j] + '/';
+        }
+        
+        _phrase_sortie.erase(_phrase_sortie.size() - 1);
+        
+        _phrase_sortie += ' ';
     }
     
     _phrase_sortie.erase(_phrase_sortie.size() - 1);

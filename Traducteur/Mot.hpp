@@ -28,7 +28,7 @@ class Mot
     std::vector <std::vector <std::string>> recuperer_champs_lexicaux();
     std::string recuperer_mot(int numero_du_mot);
     void ajouter_champs_lexicaux(std::string champ_lexicaux);
-    void ajouter_mot(std::string mot);
+    void ajouter_mot(std::string mots);
     
     private :
     
