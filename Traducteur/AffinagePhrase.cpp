@@ -12,48 +12,43 @@
 using namespace std;
 
 
-Affinage::Affinage(string source, string sortie)
+Affinage::Affinage(string sortie, vector <vector <string>> * phrases, vector <vector <string>> * structure)
 {
-    _langue_source = source;
     _langue_sortie = sortie;
-}
-
-
-
-
-string Affinage::recuperer_phrase_sortie()
-{
-    return _phrase_sortie;
-}
-
-
-
-
-void Affinage::affiner_phrases(vector <vector <string>> phrases, vector <vector <string>> structure)
-{
-    NomCommun nom_commun(_langue_source, _langue_sortie);
     
-    for (int i = 0; i < phrases.size(); i++)
+    __phrases = phrases;
+    
+    __structure = structure;
+}
+
+
+
+
+void Affinage::accorder_les_mots()
+{
+    NomCommun nom_commun;
+    
+    for (int i = 0; i < __phrases->size(); i++)
     {
-        for (int j = 0; j < phrases[i].size(); j++)
+        for (int j = 0; j < (* __phrases)[i].size(); j++)
         {
-            if (structure[i][j].find("masculin_pluriel") != -1)
+            if ((* __structure)[i][j].find("masculin_pluriel") != -1)
             {
-                nom_commun.accorder_pluriel(&phrases[i][j], _langue_sortie);
+                nom_commun.accorder_pluriel(&(*__phrases)[i][j], _langue_sortie);
             }
             
-            else if (structure[i][j].find("feminin_pluriel") != -1)
+            else if ((* __structure)[i][j].find("feminin_pluriel") != -1)
             {
-                nom_commun.accorder_pluriel(&phrases[i][j], _langue_sortie);
+                nom_commun.accorder_pluriel(&(* __phrases)[i][j], _langue_sortie);
             }
-            
-            _phrase_sortie += phrases[i][j] + '/';
         }
-        
-        _phrase_sortie.erase(_phrase_sortie.size() - 1);
-        
-        _phrase_sortie += ' ';
     }
-    
-    _phrase_sortie.erase(_phrase_sortie.size() - 1);
+}
+
+
+
+
+void Affinage::affiner_phrases()
+{
+    accorder_les_mots();
 }

@@ -18,15 +18,16 @@ class Affinage
 {
     public :
     
-    Affinage(std::string source, std::string sortie);
-    std::string recuperer_phrase_sortie();
-    void affiner_phrases(std::vector <std::vector <std::string>> phrase, std::vector <std::vector <std::string>> structure);
+    Affinage(std::string sortie, std::vector <std::vector <std::string>> * phrases, std::vector <std::vector <std::string>> * structure);
+    void accorder_les_mots();
+    void affiner_phrases();
     
     private :
     
-    std::string _phrase_sortie,
-                _langue_source,
-                _langue_sortie;
+    std::string _langue_sortie;
+    
+    std::vector <std::vector <std::string>> * __phrases,
+                                            * __structure;
 };
 
 #endif /* AffinagePhrase_hpp */

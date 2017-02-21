@@ -116,7 +116,7 @@ void Phrase::ajouter_le_mot_sortie(string mot)
 
 void Phrase::choix_des_mots_selon_champ_lexical()
 {
-    int max = 0,
+    int max = -1,
         valeur_champ_lexical = 0,
         max_valeur_champ_lexical = 0;
     
@@ -145,7 +145,7 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                 // Puis, entre toutes les significations, on choisit la signification dont le champ lexical associé est le plus répandu.
                 // Si plusieurs valeurs sont identiques, on les affiche toutes.
                 
-                if (max_valeur_champ_lexical > max || max_valeur_champ_lexical == 0)
+                if (max_valeur_champ_lexical > max)
                 {
                     max = max_valeur_champ_lexical;
                     
@@ -162,11 +162,11 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                     
                     __structure[__structure.size() - 1].push_back(__structure_du_texte_sortie[i][j][k]);
                 }
-                
+
                 max_valeur_champ_lexical = 0;
             }
 
-            max = 0;
+            max = -1;
         }
     }
 }
@@ -484,9 +484,23 @@ void Phrase::construire_la_phrase()
     
     // Affinage de la phrase afin de la rendre grammaticalement correcte.
     
-    Affinage affinage_phrase(_langue_source, _langue_sortie);
+    Affinage affinage_phrase(_langue_sortie, &__phrase, &__structure);
     
-    affinage_phrase.affiner_phrases(__phrase, __structure);
+    affinage_phrase.affiner_phrases();
     
-    _phrase_sortie = affinage_phrase.recuperer_phrase_sortie();
+    // Construction de la phrase finale.
+    
+    for (int i = 0; i < __phrase.size(); i++)
+    {
+        for (int j = 0; j < __phrase[i].size(); j++)
+        {
+            _phrase_sortie += __phrase[i][j] + '/';
+        }
+        
+        _phrase_sortie.erase(_phrase_sortie.size() - 1);
+        
+        _phrase_sortie += ' ';
+    }
+    
+    _phrase_sortie.erase(_phrase_sortie.size() - 1);
 }

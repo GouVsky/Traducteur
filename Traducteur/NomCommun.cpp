@@ -12,6 +12,17 @@
 using namespace std;
 
 
+NomCommun::NomCommun() : Mot()
+{
+    _nombre = "singulier";
+    
+    __genre[0] = "masculin";
+    __genre[1] = "feminin";
+}
+
+
+
+
 NomCommun::NomCommun(string source, string sortie) : Mot()
 {
     _langue_source = source;
@@ -140,8 +151,6 @@ void NomCommun::le_mot_est_un_nom_commun(string mot)
                     if (nom_commun_au_pluriel == true)
                     {
                         _nombre = "pluriel";
-                        
-                        //accorder_pluriel(&__nom_commun[_langue_sortie], _langue_sortie);
                     }
                     
                     ajouter_mot(__nom_commun[_langue_sortie]);
