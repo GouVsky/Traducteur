@@ -35,5 +35,8 @@ int ChampsLexicaux::recuperation_valeur_champ_lexical(string champ_lexical)
 
 void ChampsLexicaux::incrementation_des_champs_lexicaux(string champ_lexical)
 {
-    __tableau_des_champs_lexicaux[__liste_champs_lexicaux[champ_lexical]]++;
+    if (champ_lexical != "-")
+    {
+        __tableau_des_champs_lexicaux[__liste_champs_lexicaux[champ_lexical]]++;
+    }
 }
