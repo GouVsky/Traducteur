@@ -31,10 +31,6 @@ class GTexteDeRendu : public GZoneDeTexte
     void afficher(std::string texte);
     
     private :
-    
-    GTexte _texte;
-    
-    sf::RenderTexture texture;
 };
 
 #endif /* renduTexte_hpp */

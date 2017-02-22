@@ -32,11 +32,11 @@ class GZoneDeTexte
     
     protected :
     
+    GTexte _texte;
+    
     sf::Sprite sprite;
     sf::RectangleShape contours;
     sf::RenderTexture texture;
-    
-    GTexte _texte;
     
     int position_x,
         position_y,

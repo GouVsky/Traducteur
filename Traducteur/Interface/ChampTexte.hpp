@@ -34,7 +34,7 @@ class GChampDeTexte : public GZoneDeTexte
     private :
     
     GCurseur curseur;
-        
+    
     int position_x_curseur,
         position_y_curseur;
     

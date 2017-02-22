@@ -47,7 +47,6 @@ void GTexteDeRendu::afficher(string texte)
 {
     Fenetre fenetre;
     
-    texture.create(largeur, hauteur);
     texture.clear(Color::White);
     
     _texte.afficher_texte(&texture, texte);

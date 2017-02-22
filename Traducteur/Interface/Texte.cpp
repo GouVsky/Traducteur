@@ -15,6 +15,9 @@ using namespace sf;
 using namespace std;
 
 
+double GTexte::numero_de_couleur = 0;
+
+
 GTexte::GTexte()
 {
     _nombre_de_phrases = 0;
@@ -25,10 +28,12 @@ GTexte::GTexte()
 
 
 
-// Affiche un easter egg.
+// Affichage de chaque ligne.
 
-/*void GZoneDeTexte::easter_egg(Text texte, string mot, int indice_ligne)
+void GTexte::affichage_des_phrases()
 {
+    Color couleur[7];
+    
     couleur[0] = Color::Color(160, 0, 155);
     couleur[1] = Color::Color(4, 42, 200);
     couleur[2] = Color::Color(0, 140, 255);
@@ -37,46 +42,6 @@ GTexte::GTexte()
     couleur[5] = Color::Color(236, 135, 0);
     couleur[6] = Color::Red;
     
-    
-    size_t position = mot.find("[rainbow]");
-    
-    // Si le mot "[rainbow]" n'est pas un mot à part,
-    // Il faut l'isoler pour qu'il puisse être coloré.
-    
-    texte.setString(mot.substr(0, position));
-    texte.setPosition(DEBUT_TEXTE + taille_phrase, 200 + indice_ligne * 45);
-    texture->draw(texte);
-    
-    taille = texte.getLocalBounds().width;
-    
-    // On colore le mot "[rainbow]".
-    
-    texte.setString(mot.substr(position, 9));
-    texte.setColor(couleur[(int) numero_couleur % 7]);
-    texte.setPosition(DEBUT_TEXTE + taille_phrase + taille, 200 + indice_ligne * 45);
-    texture->draw(texte);
-    
-    taille += texte.getLocalBounds().width;
-    
-    // Le reste du mot (s'il n'y avait pas d'espace avec [rainbow]).
-    
-    texte.setColor(Color::Black);
-    texte.setString(mot.substr(position + 9));
-    texte.setPosition(DEBUT_TEXTE + taille_phrase + taille, 200 + indice_ligne * 45);
-    texture->draw(texte);
-    
-    taille += texte.getLocalBounds().width;
-    
-    numero_couleur += 0.5;
-}*/
-
-
-
-
-// Affichage de chaque ligne.
-
-void GTexte::affichage_des_phrases()
-{
     // Affichage des mots.
     
     for (int i = 0; i < _nombre_de_phrases; i++)
@@ -92,12 +57,19 @@ void GTexte::affichage_des_phrases()
             _texte.setColor(Color::Black);
             _texte.setString(__phrases_justifiees[i][j]);
             _texte.setPosition(DEBUT_TEXTE + taille_phrase, 20 + i * 45);
+
+            if (__phrases_justifiees[i][j] == "[rainbow]")
+            {
+                _texte.setColor(couleur[(int) numero_de_couleur % 7]);
+            }
             
             _texture->draw(_texte);
             
             taille = _texte.getLocalBounds().width;
             
             taille_phrase += taille;
+            
+            numero_de_couleur += 0.1;
         }
     }
 }
@@ -141,6 +113,14 @@ void GTexte::justification_du_texte()
         while (getline(iss, mot, ' '))
         {
             __phrases_justifiees[i].push_back(mot + ' ');
+        }
+        
+        if (i < _nombre_de_phrases - 1)
+        {
+            for (int j = 1; j < nb_espace_a_ajouter; j++)
+            {
+                __phrases_justifiees[i][j % __phrases_justifiees[i].size()] += ' ';
+            }
         }
     }
 }

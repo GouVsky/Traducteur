@@ -35,19 +35,6 @@ string GChampDeTexte::recuperer_texte()
 
 
 
-// Création d'un curseur.
-
-/*void GChampDeTexte::creer_curseur()
-{
-    curseur.definir_taille(3, 50);
-    curseur.definir_couleur(Color::Black);
-    curseur.definir_position(position_x_curseur, position_y_curseur, tableau, parametres_curseur);
-    curseur.afficher(&texture);
-}
-
-*/
-
-
 // Récupère ce qui est entré par l'utilisateur.
 
 void GChampDeTexte::traitement()
@@ -82,32 +69,6 @@ void GChampDeTexte::traitement()
                 
                 pclose(copier_coller);
             }
-            
-            /*else if (evenement->key.code == Keyboard::Up)
-            {
-                parametres_curseur[0] = 0;
-                parametres_curseur[1] = -1;
-                parametres_curseur[2] = 0;
-                parametres_curseur[3] = -1;
-                
-                if (position_y_curseur > 0)
-                {
-                    position_y_curseur--;
-                }
-            }
-            
-            else if (evenement->key.code == Keyboard::Down)
-            {
-                parametres_curseur[0] = 1;
-                parametres_curseur[1] = 0;
-                parametres_curseur[2] = (int) tableau.size() - 1;
-                parametres_curseur[3] = 1;
-                
-                if (position_y_curseur < tableau.size() - 1)
-                {
-                    position_y_curseur++;
-                }
-            }*/
             
             else if (evenement->key.code == Keyboard::Left)
             {
@@ -175,14 +136,11 @@ void GChampDeTexte::afficher()
 {
     Fenetre fenetre;
     
-    texture.create(largeur, hauteur);
     texture.clear(Color::White);
     
     traitement();
     
     _texte.afficher_texte(&texture, texte_source);
-        
-    //creer_curseur();
     
     texture.display();
         

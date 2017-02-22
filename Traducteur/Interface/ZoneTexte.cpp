@@ -6,7 +6,6 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "Fenetre.hpp"
 #include "ZoneTexte.hpp"
 
 using namespace sf;
@@ -58,4 +57,6 @@ void GZoneDeTexte::definir_taille(int l, int h)
     largeur = l;
     
     hauteur = h;
+    
+    texture.create(largeur, hauteur);
 }

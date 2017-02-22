@@ -45,7 +45,7 @@ Event * Fenetre::recuperer_evenement()
         
         return &queue[element_dans_la_queue - 1];
     }
-    
+        
     return nullptr;
 }
 

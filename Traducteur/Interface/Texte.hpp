@@ -25,7 +25,6 @@ class GTexte
     public :
     
     GTexte();
-    //void easter_egg();
     void affichage_des_phrases();
     void justification_du_texte();
     void texte_multilignes();
@@ -38,6 +37,8 @@ class GTexte
     sf::RenderTexture * _texture;
     
     int _nombre_de_phrases;
+    
+    static double numero_de_couleur;
     
     std::string _texte_source;
     
