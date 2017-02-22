@@ -29,16 +29,13 @@ class Fenetre
     static sf::Event * recuperer_evenement();
     static sf::RenderWindow * recuperer_fenetre();
     void affichage_des_elements();
-    //void chargement_du_texte();
     void gestion_des_boutons();
     int creation_de_la_fenetre();
     
     private :
     
-    sf::Font police;
     sf::Texture texture;
     sf::Event evenement;
-    sf::Sprite chargement;
     static sf::RenderWindow fenetre;
     
     static std::vector <sf::Event> queue;

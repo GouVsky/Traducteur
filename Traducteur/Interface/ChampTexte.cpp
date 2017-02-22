@@ -25,21 +25,6 @@ GChampDeTexte::GChampDeTexte() : GZoneDeTexte()
 
 
 
-// Récupère la taille du texte entré dans le champ de texte.
-
-int GChampDeTexte::recuperer_taille_texte()
-{
-    Text texte;
-    
-    texte.setString(texte_source);
-    texte.setFont(police);
-    
-    return texte.getLocalBounds().width;
-}
-
-
-
-
 // Récupère le texte entré dans le champ de texte.
 
 string GChampDeTexte::recuperer_texte()
@@ -52,7 +37,7 @@ string GChampDeTexte::recuperer_texte()
 
 // Création d'un curseur.
 
-void GChampDeTexte::creer_curseur()
+/*void GChampDeTexte::creer_curseur()
 {
     curseur.definir_taille(3, 50);
     curseur.definir_couleur(Color::Black);
@@ -60,7 +45,7 @@ void GChampDeTexte::creer_curseur()
     curseur.afficher(&texture);
 }
 
-
+*/
 
 
 // Récupère ce qui est entré par l'utilisateur.
@@ -98,7 +83,7 @@ void GChampDeTexte::traitement()
                 pclose(copier_coller);
             }
             
-            else if (evenement->key.code == Keyboard::Up)
+            /*else if (evenement->key.code == Keyboard::Up)
             {
                 parametres_curseur[0] = 0;
                 parametres_curseur[1] = -1;
@@ -122,7 +107,7 @@ void GChampDeTexte::traitement()
                 {
                     position_y_curseur++;
                 }
-            }
+            }*/
             
             else if (evenement->key.code == Keyboard::Left)
             {
@@ -165,8 +150,6 @@ void GChampDeTexte::traitement()
             }
         }
     }
-    
-    traitement_des_phrases(texte_source, &texture);
 }
 
 
@@ -193,14 +176,13 @@ void GChampDeTexte::afficher()
     Fenetre fenetre;
     
     texture.create(largeur, hauteur);
-    
     texture.clear(Color::White);
     
     traitement();
     
-    definir_contours();
-    
-    creer_curseur();
+    _texte.afficher_texte(&texture, texte_source);
+        
+    //creer_curseur();
     
     texture.display();
         
@@ -208,5 +190,5 @@ void GChampDeTexte::afficher()
     sprite.setPosition(position_x, position_y);
     
     (fenetre.recuperer_fenetre())->draw(sprite);
-    (fenetre.recuperer_fenetre())->draw(contour);
+    (fenetre.recuperer_fenetre())->draw(contours);
 }

@@ -25,7 +25,6 @@ class GChampDeTexte : public GZoneDeTexte
     public :
     
     GChampDeTexte();
-    int recuperer_taille_texte();
     std::string recuperer_texte();
     void creer_curseur();
     void traitement();
@@ -35,11 +34,11 @@ class GChampDeTexte : public GZoneDeTexte
     private :
     
     GCurseur curseur;
-    
-    sf::RenderTexture texture;
-    
+        
     int position_x_curseur,
         position_y_curseur;
+    
+    std::string texte_source;
     
     std::vector <int> parametres_curseur;
 };

@@ -15,6 +15,7 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "Texte.hpp"
 #include "ZoneTexte.hpp"
 
 #include <SFML/Window.hpp>
@@ -30,6 +31,8 @@ class GTexteDeRendu : public GZoneDeTexte
     void afficher(std::string texte);
     
     private :
+    
+    GTexte _texte;
     
     sf::RenderTexture texture;
 };
