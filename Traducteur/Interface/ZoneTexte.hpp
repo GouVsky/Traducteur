@@ -35,8 +35,8 @@ class GZoneDeTexte
     GTexte _texte;
     
     sf::Sprite sprite;
-    sf::RectangleShape contours;
     sf::RenderTexture texture;
+    sf::RectangleShape contours;
     
     int position_x,
         position_y,

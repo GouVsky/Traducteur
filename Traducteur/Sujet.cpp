@@ -37,16 +37,6 @@ int Sujet::recuperer_valeur()
 
 
 
-// Associe le sujet du verbe à un chiffre.
-
-void Sujet::definir_valeur(int valeur)
-{
-    _valeur = valeur;
-}
-
-
-
-
 // Simplification du sujet en pronom personnel.
 
 void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
@@ -56,26 +46,24 @@ void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
     
     bool presence_pronom = false;
     
-    string pp[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+    vector <string> pp = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
         
     for (int i = 0; i < tableau.size(); i++)
     {
         // Le sujet est un pronom personnel.
         
-        for (int j = 8; j--;)
+        for (int j = 0; j < pp.size(); j++)
         {
             if (tableau[i] == "pronom_" + pp[j] + "_1")
             {
-                definir_valeur(j);
+                _valeur = j;
                 
                 presence_pronom = true;
                 
                 break;
             }
         }
-        
-        // Le sujet est un groupe nominal.
-        
+                
         if (tableau[i].find("feminin_pluriel") != -1)
         {
             nb_feminin += 2;
@@ -103,28 +91,28 @@ void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
         
         if (nb_masculin == 0 && nb_feminin == 1)
         {
-            definir_valeur(3);
+            _valeur = 3;
         }
         
         // Au moins deux noms féminins.
         
         else if (nb_masculin == 0 && nb_feminin > 1)
         {
-            definir_valeur(8);
+            _valeur = 8;
         }
         
         // Un nom masculin.
         
         else if (nb_masculin == 1 && nb_feminin == 0)
         {
-            definir_valeur(2);
+            _valeur = 2;
         }
         
         // Au moins un nom masculin et un nom féminin ou au moins deux noms masculins.
         
         else if ((nb_masculin > 0 && nb_feminin > 0) || (nb_masculin > 1 && nb_feminin == 0))
         {
-            definir_valeur(7);
+            _valeur = 7;
         }
     }
 }
@@ -137,7 +125,6 @@ void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
 void Sujet::creation_du_sujet()
 {
     bool presence_verbe = false;
-    
     
     // S'il s'agit d'une phrase composée, le sujet est compris entre la fin de la phrase précédente et le verbe (non inclus).
     // Sinon, il est compris entre le début et le verbe (non inclus).
@@ -153,16 +140,14 @@ void Sujet::creation_du_sujet()
         
         // S'il existe la conjonction "et", il peut s'agir soit de deux phrases distinctes, soit d'une seule.
         
-        if (__structure_phrase[i].find("conjonction_et") != -1)
+        else if (__structure_phrase[i].find("conjonction_et") != -1)
         {
-            i++;
-            
-            // S'il y a un verbe dans la phrase, à gauche du "et", alors il s'agit de deux phrases distinctes.
+            // S'il y a un verbe à gauche du "et", alors il s'agit de deux phrases distinctes.
             // Le sujet de la première phrase n'est pas pris en compte puisqu'il a déjà été traduit.
             
             if (presence_verbe == true)
             {
-                for (int j = i; j < __structure_phrase.size(); j++)
+                for (int j = i + 1; j < __structure_phrase.size(); j++)
                 {
                     __structure_sujet.push_back(__structure_phrase[j]);
                 }
@@ -179,10 +164,13 @@ void Sujet::creation_du_sujet()
             }
             
             transforme_groupe_nominal_sujet_en_pronom(__structure_sujet);
+            
+            break;
+        }
+        
+        else if (i == __structure_phrase.size() - 1)
+        {
+            transforme_groupe_nominal_sujet_en_pronom(__structure_phrase);
         }
     }
-    
-    // Soit il n'y a pas de conjonction "et" dans la phrase, soit on arrive à la fin de "structure_de_la_phrase".
-    
-    transforme_groupe_nominal_sujet_en_pronom(__structure_phrase);
 }

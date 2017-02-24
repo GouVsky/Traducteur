@@ -20,7 +20,6 @@ class Sujet
     
     Sujet(std::vector <std::vector <std::string>> structure);
     int recuperer_valeur();
-    void definir_valeur(int valeur);
     void transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> structure);
     void creation_du_sujet();
     
