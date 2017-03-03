@@ -14,6 +14,7 @@
 #include <string>
 #include <stdio.h>
 
+
 class ChampsLexicaux
 {
     public :
@@ -24,19 +25,7 @@ class ChampsLexicaux
     
     private :
     
-    std::vector <int> __tableau_des_champs_lexicaux;
-
-    std::map <std::string, int> __liste_champs_lexicaux = {{"MER", 0},
-                                                           {"NOM", 1},
-                                                           {"CORPS", 2},
-                                                           {"RESEAU", 3},
-                                                           {"MUSIQUE", 4},
-                                                           {"MOBILIER", 5},
-                                                           {"DISTANCE", 6},
-                                                           {"PRINTEMPS", 7},
-                                                           {"TU_ES_UN_SORCIER_HARRY", 8},
-                                                           {"NATURE", 9},
-                                                           {"FOURNITURE", 10}};
+    std::map <std::string, int> __liste_champs_lexicaux;
 };
 
 #endif /* champsLexicaux_hpp */

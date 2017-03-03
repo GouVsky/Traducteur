@@ -12,7 +12,7 @@
 using namespace std;
 
 
-Invariable::Invariable(string source, string sortie, ChampsLexicaux * champs_lexicaux) : Mot(champs_lexicaux)
+Invariable::Invariable(string source, string sortie) : Mot()
 {
     _langue_source = source;
     _langue_sortie = sortie;

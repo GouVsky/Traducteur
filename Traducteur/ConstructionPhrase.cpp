@@ -35,16 +35,6 @@ Phrase::Phrase(string source, string sortie, string texte)
 
 
 
-// Retourne le texte traduite.
-
-string Phrase::recuperer_phrase()
-{
-    return _phrase_sortie;
-}
-
-
-
-
 // Stocke les différents champs lexicaux associés au mot sélectionné.
 
 void Phrase::ajouter_le_champ_lexical(vector <vector <string>> champs_lexicaux, int nombre_de_champs_lexicaux, int numero_du_mot)
@@ -56,6 +46,8 @@ void Phrase::ajouter_le_champ_lexical(vector <vector <string>> champs_lexicaux, 
     for (int j = 0; j < nombre_de_champs_lexicaux; j++)
     {
         __tableau_contenant_champs_lexicaux[_indice_sous_phrase][_indice_mot][numero_du_mot].push_back(champs_lexicaux[numero_du_mot][j]);
+        
+        __champ_lexical.incrementation_des_champs_lexicaux(champs_lexicaux[numero_du_mot][j]);
     }
 }
 
@@ -71,6 +63,8 @@ void Phrase::ajouter_le_champ_lexical(string champ_lexical)
     __tableau_contenant_champs_lexicaux[_indice_sous_phrase][_indice_mot].push_back(vector <string> ());
     
     __tableau_contenant_champs_lexicaux[_indice_sous_phrase][_indice_mot][0].push_back(champ_lexical);
+    
+    __champ_lexical.incrementation_des_champs_lexicaux(champ_lexical);
 }
 
 
@@ -134,8 +128,8 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                 {
                     // On récupère la plus grande valeur parmi tous les champs lexicaux associés à une significations du mot.
                     
-                    valeur_champ_lexical = champ_lexical.recuperation_valeur_champ_lexical(__tableau_contenant_champs_lexicaux[i][j][k][l]);
-                    
+                    valeur_champ_lexical = __champ_lexical.recuperation_valeur_champ_lexical(__tableau_contenant_champs_lexicaux[i][j][k][l]);
+                                        
                     if (valeur_champ_lexical > max_valeur_champ_lexical)
                     {
                         max_valeur_champ_lexical = valeur_champ_lexical;
@@ -189,11 +183,11 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
     for (int i = 0; i < phrase.size(); i++)
     {
         NomPropre nom_propre;
+        Verbe verbe(_langue_source, _langue_sortie);
+        Adjectif adjectif(_langue_source, _langue_sortie);
+        NomCommun nom_commun(_langue_source, _langue_sortie);
+        Invariable invariable(_langue_source, _langue_sortie);
         Expression expression(_langue_source, _langue_sortie);
-        Verbe verbe(_langue_source, _langue_sortie, &champ_lexical);
-        Adjectif adjectif(_langue_source, _langue_sortie, &champ_lexical);
-        NomCommun nom_commun(_langue_source, _langue_sortie, &champ_lexical);
-        Invariable invariable(_langue_source, _langue_sortie, &champ_lexical);
 
         
         // Expression.

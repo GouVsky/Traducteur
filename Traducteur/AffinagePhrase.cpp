@@ -36,12 +36,12 @@ void Affinage::accord_des_mots()
         {
             if ((* __structure)[i][j].find("masculin_pluriel") != -1)
             {
-                nom_commun.accorder_pluriel(&(*__phrases)[i][j], _langue_sortie);
+                nom_commun.accorder_pluriel((*__phrases)[i][j], _langue_sortie);
             }
             
             else if ((* __structure)[i][j].find("feminin_pluriel") != -1)
             {
-                nom_commun.accorder_pluriel(&(* __phrases)[i][j], _langue_sortie);
+                nom_commun.accorder_pluriel((*__phrases)[i][j], _langue_sortie);
             }
         }
     }

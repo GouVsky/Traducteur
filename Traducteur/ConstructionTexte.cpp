@@ -22,16 +22,6 @@ Texte::Texte(string source, string sortie)
 
 
 
-// Retourne le texte traduit.
-
-string Texte::recuperer_texte_traduit()
-{
-    return _texte_traduit;
-}
-
-
-
-
 // Assemble les phrases traduites.
 
 void Texte::assembler_les_phrases()

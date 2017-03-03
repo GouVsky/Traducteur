@@ -25,7 +25,7 @@ class GChampDeTexte : public GZoneDeTexte
     public :
     
     GChampDeTexte();
-    std::string recuperer_texte();
+    std::string recuperer_texte() { return texte_source + '\0'; };
     void traitement();
     void effacer_contenu();
     void afficher();

@@ -23,8 +23,6 @@ GTexteDeRendu::GTexteDeRendu() : GZoneDeTexte() {}
 
 void GTexteDeRendu::afficher()
 {
-    Fenetre fenetre;
-    
     texture.create(largeur, hauteur);
     
     texture.clear(Color::White);
@@ -34,8 +32,8 @@ void GTexteDeRendu::afficher()
     sprite.setTexture(texture.getTexture());
     sprite.setPosition(position_x, position_y);
     
-    (fenetre.recuperer_fenetre())->draw(sprite);
-    (fenetre.recuperer_fenetre())->draw(contours);
+    Fenetre::recuperer_fenetre()->draw(sprite);
+    Fenetre::recuperer_fenetre()->draw(contours);
 }
 
 
@@ -44,9 +42,7 @@ void GTexteDeRendu::afficher()
 // Affichage dans texte dans la zone de rendu.
 
 void GTexteDeRendu::afficher(string texte)
-{
-    Fenetre fenetre;
-    
+{    
     texture.clear(Color::White);
     
     _texte.afficher_texte(&texture, texte);
@@ -56,6 +52,6 @@ void GTexteDeRendu::afficher(string texte)
     sprite.setTexture(texture.getTexture());
     sprite.setPosition(position_x, position_y);
     
-    (fenetre.recuperer_fenetre())->draw(sprite);
-    (fenetre.recuperer_fenetre())->draw(contours);
+    Fenetre::recuperer_fenetre()->draw(sprite);
+    Fenetre::recuperer_fenetre()->draw(contours);
 }

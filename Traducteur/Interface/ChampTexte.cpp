@@ -25,16 +25,6 @@ GChampDeTexte::GChampDeTexte() : GZoneDeTexte()
 
 
 
-// Récupère le texte entré dans le champ de texte.
-
-string GChampDeTexte::recuperer_texte()
-{
-    return texte_source + '\0';
-}
-
-
-
-
 // Récupère ce qui est entré par l'utilisateur.
 
 void GChampDeTexte::traitement()
@@ -134,8 +124,6 @@ void GChampDeTexte::effacer_contenu()
 
 void GChampDeTexte::afficher()
 {
-    Fenetre fenetre;
-    
     texture.clear(Color::White);
     
     traitement();
@@ -147,6 +135,6 @@ void GChampDeTexte::afficher()
     sprite.setTexture(texture.getTexture());
     sprite.setPosition(position_x, position_y);
     
-    (fenetre.recuperer_fenetre())->draw(sprite);
-    (fenetre.recuperer_fenetre())->draw(contours);
+    Fenetre::recuperer_fenetre()->draw(sprite);
+    Fenetre::recuperer_fenetre()->draw(contours);
 }

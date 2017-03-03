@@ -12,7 +12,7 @@
 using namespace std;
 
 
-Adjectif::Adjectif(string source, string sortie, ChampsLexicaux * champs_lexicaux) : Mot(champs_lexicaux)
+Adjectif::Adjectif(string source, string sortie) : Mot()
 {
     _langue_source = source;
     _langue_sortie = sortie;

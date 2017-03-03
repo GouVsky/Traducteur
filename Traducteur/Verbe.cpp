@@ -13,33 +13,13 @@
 using namespace std;
 
 
-Verbe::Verbe(string source, string sortie, ChampsLexicaux * champ_lexical) : Mot(champ_lexical)
+Verbe::Verbe(string source, string sortie) : Mot()
 {
     _langue_source = source;
     _langue_sortie = sortie;
     
     _taille_verbe_source = 0;
     _taille_verbe_sortie = 0;
-}
-
-
-
-
-// Retourne la taille du verbe traduit.
-
-int Verbe::recuperer_taille_verbe_sortie()
-{
-    return _taille_verbe_sortie;
-}
-
-
-
-
-// Retourne la taille du verbe source.
-
-int Verbe::recuperer_taille_verbe_source()
-{
-    return _taille_verbe_source;
 }
 
 

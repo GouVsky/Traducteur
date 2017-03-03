@@ -17,7 +17,6 @@
 #include <stdio.h>
 
 #include "Mot.hpp"
-#include "ChampsLexicaux.hpp"
 
 class NomCommun : public Mot
 {
@@ -25,10 +24,9 @@ class NomCommun : public Mot
     
     NomCommun();
     NomCommun(std::string source, std::string sortie);
-    NomCommun(std::string source, std::string sortie, ChampsLexicaux * champs_lexicaux);
-    std::string recuperer_nombre();
-    std::string recuperer_genre();
-    void accorder_pluriel(std::string * mot, std::string langue);
+    std::string recuperer_nombre() { return _nombre; };
+    std::string recuperer_genre() { return _genre; };
+    void accorder_pluriel(std::string & mot, std::string langue);
     void le_mot_est_un_nom_commun(std::string mot);
     
     private :

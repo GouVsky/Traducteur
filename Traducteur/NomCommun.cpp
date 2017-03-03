@@ -37,74 +37,40 @@ NomCommun::NomCommun(string source, string sortie) : Mot()
 
 
 
-NomCommun::NomCommun(string source, string sortie, ChampsLexicaux * champ_lexical) : Mot(champ_lexical)
-{
-    _langue_source = source;
-    _langue_sortie = sortie;
-    
-    _nombre = "singulier";
-    
-    __genre[0] = "masculin";
-    __genre[1] = "feminin";
-}
-
-
-
-
-// Retourne le nombre du mot du mot demandé.
-
-string NomCommun::recuperer_nombre()
-{
-    return _nombre;
-}
-
-
-
-
-// Retourne le genre du mot demandé.
-
-string NomCommun::recuperer_genre()
-{
-    return _genre;
-}
-
-
-
-
 // Accorde un mot s'il est au pluriel.
 
-void NomCommun::accorder_pluriel(string * mot, string langue)
+void NomCommun::accorder_pluriel(string & mot, string langue)
 {
     if (langue == "F")
     {
-        if ((* mot)[mot->size() - 1] != 's' &&(* mot)[mot->size() - 1] != 'x')
+        if (mot[mot.size() - 1] != 's' && mot[mot.size() - 1] != 'x')
         {
             // Le mot se termine par 'al'.
             
-            if (mot->find("al", mot->size() - 2) != -1)
+            if (mot.find("al", mot.size() - 2) != -1)
             {
-                mot->erase(mot->size() - 2);
+                mot.erase(mot.size() - 2);
                 
-                * mot += "aux";
+                mot += "aux";
             }
             
             // Le mot se termine par 'eau'.
             
-            else if (mot->find("eau", mot->size() - 3) != -1)
+            else if (mot.find("eau", mot.size() - 3) != -1)
             {
-                * mot += 'x';
+                mot += 'x';
             }
             
             else
             {
-                * mot += 's';
+                mot += 's';
             }
         }
     }
     
     else if (langue == "A")
     {
-        * mot += 's';
+        mot += 's';
     }
 }
 
@@ -139,7 +105,7 @@ void NomCommun::le_mot_est_un_nom_commun(string mot)
                 
                 if (mot_lu_dans_le_fichier != mot)
                 {
-                    accorder_pluriel(&mot_lu_dans_le_fichier, _langue_source);
+                    accorder_pluriel(mot_lu_dans_le_fichier, _langue_source);
                     
                     nom_commun_au_pluriel = true;
                 }

@@ -47,7 +47,7 @@ void Terminaison::nouvelle_terminaison_anglaise(int sujet, string temps, string 
     
     else if (temps == "passe_compose" || temps == "imparfait" || temps == "passe_simple")
     {
-        _nouvelle_terminaison = (verbe[verbe.size() - 1] == 'e') ? "e" : "ed";
+        _nouvelle_terminaison = (verbe[verbe.size() - 1] == 'e') ? "d" : "ed";
     }
 }
 

@@ -15,13 +15,12 @@
 #include <stdio.h>
 
 #include "Mot.hpp"
-#include "ChampsLexicaux.hpp"
 
 class Invariable : public Mot
 {
     public :
     
-    Invariable(std::string source, std::string sortie, ChampsLexicaux * champs_lexicaux);
+    Invariable(std::string source, std::string sortie);
     void le_mot_est_invariable(std::string mot);
     
     private :
