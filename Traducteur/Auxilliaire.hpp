@@ -18,7 +18,7 @@ class Auxilliaire
     public :
     
     Auxilliaire();
-    std::string recuperer_auxilliaire();
+    std::string recuperer_auxilliaire() { return _auxilliaire; };
     void construction_auxilliaire(int pronom, std::string langue, std::string auxilliaire, std::string temps);
     
     private :

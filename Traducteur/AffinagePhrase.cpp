@@ -12,7 +12,7 @@
 using namespace std;
 
 
-Affinage::Affinage(string sortie, vector <vector <string>> * phrases, vector <vector <string>> * structure)
+Affinage::Affinage(string sortie, vector <vector <string>> & phrases, vector <vector <string>> & structure)
 {
     _langue_sortie = sortie;
     
@@ -30,18 +30,18 @@ void Affinage::accord_des_mots()
 {
     NomCommun nom_commun;
     
-    for (int i = 0; i < __phrases->size(); i++)
+    for (int i = 0; i < __phrases.size(); i++)
     {
-        for (int j = 0; j < (* __phrases)[i].size(); j++)
+        for (int j = 0; j < __phrases[i].size(); j++)
         {
-            if ((* __structure)[i][j].find("masculin_pluriel") != -1)
+            if (__structure[i][j].find("masculin_pluriel") != -1)
             {
-                nom_commun.accorder_pluriel((*__phrases)[i][j], _langue_sortie);
+                nom_commun.accorder_pluriel(__phrases[i][j], _langue_sortie);
             }
             
-            else if ((* __structure)[i][j].find("feminin_pluriel") != -1)
+            else if (__structure[i][j].find("feminin_pluriel") != -1)
             {
-                nom_commun.accorder_pluriel((*__phrases)[i][j], _langue_sortie);
+                nom_commun.accorder_pluriel(__phrases[i][j], _langue_sortie);
             }
         }
     }

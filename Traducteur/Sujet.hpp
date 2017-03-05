@@ -19,7 +19,7 @@ class Sujet
     public :
     
     Sujet(std::vector <std::vector <std::string>> structure);
-    int recuperer_valeur();
+    int recuperer_valeur() { return _valeur; };
     void transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> structure);
     void creation_du_sujet();
     

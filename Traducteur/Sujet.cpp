@@ -27,16 +27,6 @@ Sujet::Sujet(vector <vector <string>> structure)
 
 
 
-// Retourne le chiffre associé au sujet du verbe.
-
-int Sujet::recuperer_valeur()
-{
-    return _valeur;
-}
-
-
-
-
 // Simplification du sujet en pronom personnel.
 
 void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
@@ -46,15 +36,15 @@ void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
     
     bool presence_pronom = false;
     
-    vector <string> pp = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+    vector <string> pronoms_personnels = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
         
     for (int i = 0; i < tableau.size(); i++)
     {
         // Le sujet est un pronom personnel.
         
-        for (int j = 0; j < pp.size(); j++)
+        for (int j = 0; j < pronoms_personnels.size(); j++)
         {
-            if (tableau[i] == "pronom_" + pp[j] + "_1")
+            if (tableau[i] == "pronom_" + pronoms_personnels[j] + "_1")
             {
                 _valeur = j;
                 

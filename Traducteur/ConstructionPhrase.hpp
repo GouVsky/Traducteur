@@ -57,8 +57,6 @@ class Phrase
                                                           __tableau_contenant_significations_mot;
     
     std::vector <std::vector <std::vector <std::vector <std::string>>>> __tableau_contenant_champs_lexicaux;
-    
-    std::map <std::string, std::vector <std::string>> __pronom_personnel;
 };
 
 #endif /* constructionPhrase_hpp */

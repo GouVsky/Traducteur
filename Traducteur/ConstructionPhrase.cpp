@@ -14,6 +14,7 @@
 #include "Invariable.h"
 #include "ChampsLexicaux.hpp"
 #include "AffinagePhrase.hpp"
+#include "PronomPersonnel.hpp"
 #include "ConstructionPhrase.hpp"
 
 using namespace std;
@@ -188,6 +189,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
         NomCommun nom_commun(_langue_source, _langue_sortie);
         Invariable invariable(_langue_source, _langue_sortie);
         Expression expression(_langue_source, _langue_sortie);
+        PronomPersonnel pronom_personnel(_langue_source, _langue_sortie);
 
         
         // Expression.
@@ -215,32 +217,19 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
         {
             // Pronom personnel.
             
-            vector <string> pp_a = {"i", "you", "he", "she", "it", "we", "you", "they"};
-            vector <string> pp_f = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+            pronom_personnel.le_mot_est_un_pronom_personnel(phrase[i]);
             
-            __pronom_personnel["A"] = pp_a;
-            __pronom_personnel["F"] = pp_f;
-            
-            for (int j = 0; j < __pronom_personnel[_langue_source].size(); j++)
+            if (pronom_personnel.pronom_existe())
             {
-                if (__pronom_personnel[_langue_source][j] == phrase[i])
-                {
-                    p_personnel = true;
-                    
-                    ajouter_le_type_source("pronom_" + __pronom_personnel["F"][j] + "_1");
-                    ajouter_le_type_sortie("pronom_" + __pronom_personnel["F"][j] + "_1");
-                    
-                    ajouter_le_mot_sortie(__pronom_personnel[_langue_sortie][j]);
-                    
-                    ajouter_le_champ_lexical("-");
-                    
-                    break;
-                }
+                ajouter_le_type_source("pronom_" + pronom_personnel.recuperer_pronom_personnel_generique() + "_1");
+                ajouter_le_type_sortie("pronom_" + pronom_personnel.recuperer_pronom_personnel_generique() + "_1");
+                
+                ajouter_le_mot_sortie(pronom_personnel.recuperer_pronom_personnel());
+                
+                ajouter_le_champ_lexical("-");
             }
-
-            // Le mot n'est pas un pronom.
             
-            if (p_personnel == false)
+            else
             {
                 // Lecture de tous les fichiers.
                 // Un mot peut avoir plusieurs significations de natures différentes.
@@ -347,16 +336,16 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 
                 // Verbe.
-
+                
                 verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, __structure_du_texte_source[_indice_sous_phrase]);
                 
                 nombre_de_verbes = verbe.recuperer_nombre_de_mots();
                 
                 for (int j = 0; j < nombre_de_verbes; j++)
                 {
-                    int nombre_de_champs_lexicaux = verbe.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
-                    
                     _presence_verbe = true;
+                    
+                    int nombre_de_champs_lexicaux = verbe.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
                     
                     ajouter_le_type_source("verbe_" + to_string(verbe.recuperer_taille_verbe_source()));
                     ajouter_le_type_sortie("verbe_" + to_string(verbe.recuperer_taille_verbe_sortie()));
@@ -370,7 +359,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     i += verbe.recuperer_taille_verbe_source() - 1;
                 }
                 
-
+                
                 
                 // Le mot n'est pas répertorié dans la base de données.
                 
@@ -478,7 +467,7 @@ void Phrase::construire_la_phrase()
     
     // Affinage de la phrase afin de la rendre grammaticalement correcte.
     
-    Affinage phrase(_langue_sortie, &__phrase, &__structure);
+    Affinage phrase(_langue_sortie, __phrase, __structure);
     
     phrase.affiner_phrases();
     

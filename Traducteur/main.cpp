@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#include "fenetre.hpp"
+#include "Fenetre.hpp"
 
 using namespace std;
 
 
-int main(int, char const**)
+int main(int argc, const char * argv[])
 {
     Fenetre tryba;
     

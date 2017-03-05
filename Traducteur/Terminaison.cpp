@@ -16,26 +16,6 @@ Terminaison::Terminaison() {}
 
 
 
-// Retourne la nouvelle terminaison du verbe.
-
-string Terminaison::recuperer_ancienne_terminaison()
-{
-    return _ancienne_terminaison;
-}
-
-
-
-
-// Retourne l'ancienne terminaison du verbe.
-
-string Terminaison::recuperer_nouvelle_terminaison()
-{
-    return _nouvelle_terminaison;
-}
-
-
-
-
 // Les terminaisons anglaises.
 
 void Terminaison::nouvelle_terminaison_anglaise(int sujet, string temps, string verbe)
