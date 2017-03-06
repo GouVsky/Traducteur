@@ -13,6 +13,7 @@
 #include <vector>
 #include <sstream>
 #include <stdio.h>
+#include <codecvt>
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

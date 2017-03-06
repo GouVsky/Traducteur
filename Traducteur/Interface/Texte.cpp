@@ -52,10 +52,14 @@ void GTexte::affichage_des_phrases()
         {
             int taille = 0;
             
+            wstring_convert <codecvt_utf8_utf16 <wchar_t>> convertisseur;
+            
+            wstring w_phrase = convertisseur.from_bytes(__phrases_justifiees[i][j]);
+            
             _texte.setFont(_police);
+            _texte.setString(w_phrase);
             _texte.setCharacterSize(37);
             _texte.setColor(Color::Black);
-            _texte.setString(__phrases_justifiees[i][j]);
             _texte.setPosition(DEBUT_TEXTE + taille_phrase, 20 + i * 45);
 
             if (__phrases_justifiees[i][j] == "[rainbow]")

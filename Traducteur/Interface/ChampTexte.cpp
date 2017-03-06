@@ -29,6 +29,8 @@ GChampDeTexte::GChampDeTexte() : GZoneDeTexte()
 
 void GChampDeTexte::traitement()
 {
+    locale::global(locale(""));
+
     Fenetre fenetre;
 
     Event * evenement = fenetre.recuperer_evenement();
@@ -47,13 +49,13 @@ void GChampDeTexte::traitement()
                 {
                     if (fgets(buffer, 1000, copier_coller) != NULL)
                     {
-                        texte_source.insert(position_x_curseur, buffer);
+                        texte.insert(position_x_curseur, buffer);
                         
-                        position_x_curseur = (int) texte_source.size();
+                        position_x_curseur = (int) texte.getSize();
                     }
                 }
                 
-                texte_source.erase(position_x_curseur - 1, 1);
+                texte.erase(position_x_curseur - 1, 1);
                 
                 position_x_curseur--;
                 
@@ -70,7 +72,7 @@ void GChampDeTexte::traitement()
             
             else if (evenement->key.code == Keyboard::Right)
             {
-                if(position_x_curseur < texte_source.size())
+                if(position_x_curseur < texte.getSize())
                 {
                     position_x_curseur++;
                 }
@@ -85,9 +87,9 @@ void GChampDeTexte::traitement()
             
             if (evenement->text.unicode == 8)
             {
-                if (texte_source.size() > 0 && position_x_curseur > 0)
+                if (texte.getSize() > 0 && position_x_curseur > 0)
                 {
-                    texte_source.erase(position_x_curseur - 1, 1);
+                    texte.erase(position_x_curseur - 1, 1);
                     
                     position_x_curseur--;
                 }
@@ -95,12 +97,16 @@ void GChampDeTexte::traitement()
             
             else
             {
-                texte_source.insert(position_x_curseur, 1, static_cast <char> (evenement->text.unicode));
+                texte.insert(position_x_curseur, static_cast <char> (evenement->text.unicode));
                 
                 position_x_curseur++;
             }
         }
     }
+    
+    texte_source = "";
+    
+    Utf32::toUtf8(texte.begin(), texte.end(), back_inserter(texte_source));
 }
 
 
@@ -111,9 +117,9 @@ void GChampDeTexte::traitement()
 void GChampDeTexte::effacer_contenu()
 {
     texte_source = "";
-    
+ 
     position_x_curseur = 0;
-    
+ 
     position_y_curseur = 0;
 }
 

@@ -11,6 +11,7 @@
 
 #include <string>
 #include <vector>
+#include <locale>
 #include <stdio.h>
 
 #include "Curseur.hpp"
@@ -38,6 +39,8 @@ class GChampDeTexte : public GZoneDeTexte
         position_y_curseur;
     
     std::string texte_source;
+    
+    sf::String texte;
     
     std::vector <int> parametres_curseur;
 };
