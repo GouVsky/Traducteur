@@ -1,12 +1,12 @@
-present verbe-terminaison radical-terminaison
-present etre+verbe-ing radical-terminaison
-imparfait etre+verbe radical-terminaison
+present radical-terminaison radical-terminaison
+present être+verbe-ing radical-terminaison
+imparfait être+verbe radical-terminaison
 passe_habitude used+to+verbe radical-terminaison
 passe_compose avoir+verbe_et_terminaison avoir+radical-terminaison
 passe_simple verbe_et_terminaison radical-terminaison
 futur_simple will+verbe verbe-terminaison
-futur_proche etre+going+to+verbe aller+verbe
+futur_proche être+going+to+verbe aller+verbe
 conditionnel would+verbe verbe-terminaison
-passive etre+verbe-terminaison etre+radical-terminaison
+passive être+verbe-terminaison être+radical-terminaison
 plus_que_parfait avoir+verbe_et_terminaison avoir+radical-terminaison
 infinitif to+verbe verbe

@@ -181,6 +181,7 @@ match match -
 mayor maire -
 men hommes -
 message message -
+milk lait -
 million million -
 mirror miroir MOBILIER
 missile missile -

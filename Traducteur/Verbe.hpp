@@ -18,7 +18,7 @@
 
 #include "Mot.hpp"
 #include "Terminaison.hpp"
-#include "Auxilliaire.hpp"
+#include "Auxiliaire.hpp"
 #include "ChampsLexicaux.hpp"
 
 class Verbe : public Mot
@@ -34,7 +34,7 @@ class Verbe : public Mot
     
     private :
     
-    Auxilliaire _auxilliaire;
+    Auxiliaire _auxiliaire;
     
     Terminaison _terminaison;
     
@@ -49,6 +49,8 @@ class Verbe : public Mot
                 _champs_lexicaux,
                 _forme_verbe_source,
                 _forme_verbe_sortie;
+    
+    std::map <int, std::string> __type_verbe;
     
     std::map <std::string, std::string> __verbe,
                                         __irregulier,

@@ -20,6 +20,9 @@ Verbe::Verbe(string source, string sortie) : Mot()
     
     _taille_verbe_source = 0;
     _taille_verbe_sortie = 0;
+    
+    __type_verbe[0] = "attributifs";
+    __type_verbe[1] = "actions";
 }
 
 
@@ -115,9 +118,9 @@ string Verbe::construction(string langue, string verbe, int compteur)
             
             else if (mot == "avoir" || mot == "etre" || mot == "aller")
             {
-                _auxilliaire.construction_auxilliaire(_sujet, langue, mot, _temps_verbe);
+                _auxiliaire.construction_auxiliaire(_sujet, langue, mot, _temps_verbe);
                 
-                construction_verbe += _auxilliaire.recuperer_auxilliaire();
+                construction_verbe += _auxiliaire.recuperer_auxiliaire();
             }
             
             // To, will, would...
@@ -163,15 +166,13 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
     {
         fichier_caracteristique >> _temps_verbe >> __conjugaison["A"] >> __conjugaison["F"];
         
-        // On teste les verbes de chaque groupe.
-        
-        for (_groupe_verbe = 1; _groupe_verbe <= 3; _groupe_verbe++)
+        for (int i = 0; i < 2; i++)
         {
-            ifstream fichier_verbes(resourcePath() + "verbes_" + to_string(_groupe_verbe) + ".txt");
+            ifstream fichier_verbes(resourcePath() + "verbes_" + __type_verbe[i] + ".txt");
             
             while (!fichier_verbes.eof() && verbe_trouve == false)
             {
-                fichier_verbes >> __verbe["A"] >> __verbe["F"] >> __irregulier_ou_non["A"] >> __irregulier_ou_non["F"] >> _champs_lexicaux;
+                fichier_verbes >> __verbe["A"] >> __verbe["F"] >> __irregulier_ou_non["A"] >> __irregulier_ou_non["F"] >> _champs_lexicaux >> _groupe_verbe;
                 
                 // Construction du verbe.
                 

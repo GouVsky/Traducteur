@@ -6,6 +6,7 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
+#include "Auxiliaire.hpp"
 #include "Terminaison.hpp"
 
 using namespace std;
@@ -91,6 +92,14 @@ void Terminaison::determiner_nouvelle_terminaison(string langue, string verbe, s
     {
         switch (groupe_verbe)
         {
+            case 0 :
+            {
+                Auxiliaire auxiliaire;
+                auxiliaire.construction_auxiliaire(sujet, langue, verbe, temps_verbe);
+                _nouvelle_terminaison = auxiliaire.recuperer_auxiliaire();
+            }
+                break;
+                
             case 1 : nouvelle_terminaison_premier_ou_deuxieme_groupe(groupe_verbe, sujet, temps_verbe);
                 break;
                 
@@ -107,7 +116,19 @@ void Terminaison::determiner_nouvelle_terminaison(string langue, string verbe, s
     
     else if (langue == "A")
     {
-        nouvelle_terminaison_anglaise(sujet, temps_verbe, verbe);
+        switch (groupe_verbe)
+        {
+            case 0 :
+            {
+                Auxiliaire auxiliaire;
+                auxiliaire.construction_auxiliaire(sujet, langue, verbe, temps_verbe);
+                _nouvelle_terminaison = auxiliaire.recuperer_auxiliaire();
+            }
+                break;
+                
+            default : nouvelle_terminaison_anglaise(sujet, temps_verbe, verbe);
+                break;
+        }
     }
 }
 
@@ -155,6 +176,9 @@ void Terminaison::determiner_ancienne_terminaison(string langue, string verbe, i
     {
         switch (groupe_verbe)
         {
+            case 0 : _ancienne_terminaison = verbe;
+                break;
+                
             case 1 : _ancienne_terminaison = "er";
                 break;
                 
@@ -170,6 +194,13 @@ void Terminaison::determiner_ancienne_terminaison(string langue, string verbe, i
     
     else if (langue == "A")
     {
-        _ancienne_terminaison = "";
+        switch (groupe_verbe)
+        {
+            case 0 : _ancienne_terminaison = verbe;
+                break;
+                
+            default : _ancienne_terminaison = "";
+                break;
+        }
     }
 }
