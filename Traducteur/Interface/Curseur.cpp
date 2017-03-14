@@ -14,58 +14,33 @@ using namespace std;
 
 GCurseur::GCurseur()
 {
-    largeur = 0;
-    hauteur = 0;
+    _largeur = 3;
+    _hauteur = 50;
     
-    position_x = 30;
-    position_y = 20;
+    _position_x = 0;
+    _position_y = 0;
     
-    couleur = Color::Black;
+    _couleur = Color::Black;
 }
 
 
 
 
-// Calcul de la position du curseur.
+// Modifie l'ordonnée du curseur.
 
-void GCurseur::calcul_de_la_position(vector <string> tableau, vector <int> parametres)
+void GCurseur::modifier_position_y(int y)
 {
-    int temporaire = position_x;
-    
-    for (int i = 0; i < tableau.size(); i++)
-    {
-        if (temporaire <= tableau[i].size() && i != parametres[2])
-        {
-            size_t debut_phrase = tableau[i + parametres[0]].substr(0, temporaire).size();
-            
-            size_t fin_phrase = tableau[i + parametres[1]].substr(temporaire).size();
-            
-            position_x += parametres[3] * (debut_phrase + fin_phrase);
-            
-            break;
-        }
-        
-        else
-        {
-            temporaire -= tableau[i].size();
-        }
-    }
+    _position_y += y;
 }
 
 
 
 
-int GCurseur::recuperer_position_y()
+// Modifie l'abscisse du curseur.
+
+void GCurseur::modifier_position_x(int x)
 {
-    return position_y;
-}
-
-
-
-
-int GCurseur::recuperer_position_x()
-{
-    return position_x;
+    _position_x += x;
 }
 
 
@@ -73,15 +48,9 @@ int GCurseur::recuperer_position_x()
 
 // Définie la position du curseur selon où l'on se situe dans la phrase.
 
-void GCurseur::definir_position(int x, int y, vector <string> tableau, vector <int> parametres)
+void GCurseur::definir_position()
 {
-    position_x = 30 + x;
-    
-    position_y += y * 45;
-        
-    calcul_de_la_position(tableau, parametres);
-    
-    curseur.setPosition(Vector2f(position_x, position_y));
+    _curseur.setPosition(Vector2f(_position_x + 30, _position_y * 45 + 20));
 }
 
 
@@ -89,11 +58,9 @@ void GCurseur::definir_position(int x, int y, vector <string> tableau, vector <i
 
 // Définie la couleur du curseur.
 
-void GCurseur::definir_couleur(Color c)
+void GCurseur::definir_couleur()
 {
-    couleur = c;
-    
-    curseur.setFillColor(couleur);
+    _curseur.setFillColor(_couleur);
 }
 
 
@@ -101,13 +68,9 @@ void GCurseur::definir_couleur(Color c)
 
 // Définie la taille du curseur.
 
-void GCurseur::definir_taille(int l, int h)
+void GCurseur::definir_taille()
 {
-    largeur = l;
-    
-    hauteur = h;
-    
-    curseur.setSize(Vector2f(largeur, hauteur));
+    _curseur.setSize(Vector2f(_largeur, _hauteur));
 }
 
 
@@ -117,5 +80,9 @@ void GCurseur::definir_taille(int l, int h)
 
 void GCurseur::afficher(RenderTexture * texture)
 {
-    texture->draw(curseur);
+    definir_taille();
+    definir_couleur();
+    definir_position();
+    
+    texture->draw(_curseur);
 }

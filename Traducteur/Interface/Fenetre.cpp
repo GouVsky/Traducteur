@@ -63,12 +63,12 @@ RenderWindow * Fenetre::recuperer_fenetre()
 void Fenetre::affichage_des_elements()
 {
     champ_texte_source.afficher();
-
+    
     rendu.afficher(texte_traduit);
     
     bouton_F.definir_couleur(Color(255, 255, 255, alpha_F));
     bouton_A.definir_couleur(Color(255, 255, 255, alpha_A));
-        
+    
     langue_de_traduction.definir_couleur(Color(255, 255, 255, alpha_langue_traduction));
     
     traduire.afficher();

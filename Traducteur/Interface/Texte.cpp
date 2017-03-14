@@ -20,8 +20,6 @@ double GTexte::numero_de_couleur = 0;
 
 GTexte::GTexte()
 {
-    _nombre_de_phrases = 0;
-    
     _police.loadFromFile(resourcePath() + "GenR102.TTF");
 }
 
@@ -32,16 +30,6 @@ GTexte::GTexte()
 
 void GTexte::affichage_des_phrases()
 {
-    Color couleur[7];
-    
-    couleur[0] = Color::Color(160, 0, 155);
-    couleur[1] = Color::Color(4, 42, 200);
-    couleur[2] = Color::Color(0, 140, 255);
-    couleur[3] = Color::Color(0, 200, 0);
-    couleur[4] = Color::Color(240, 230, 10);
-    couleur[5] = Color::Color(236, 135, 0);
-    couleur[6] = Color::Red;
-    
     // Affichage des mots.
     
     for (int i = 0; i < _nombre_de_phrases; i++)
@@ -62,8 +50,20 @@ void GTexte::affichage_des_phrases()
             _texte.setColor(Color::Black);
             _texte.setPosition(DEBUT_TEXTE + taille_phrase, 20 + i * 45);
 
+            // Easter egg !
+            
             if (__phrases_justifiees[i][j] == "[rainbow]")
             {
+                Color couleur[7];
+                
+                couleur[0] = Color::Color(160, 0, 155);
+                couleur[1] = Color::Color(4, 42, 200);
+                couleur[2] = Color::Color(0, 140, 255);
+                couleur[3] = Color::Color(0, 200, 0);
+                couleur[4] = Color::Color(240, 230, 10);
+                couleur[5] = Color::Color(236, 135, 0);
+                couleur[6] = Color::Red;
+                
                 _texte.setColor(couleur[(int) numero_de_couleur % 7]);
             }
             
@@ -186,9 +186,9 @@ void GTexte::texte_multilignes()
 
 
 
-void GTexte::afficher_texte(RenderTexture * texture, string texte)
+void GTexte::afficher_texte(RenderTexture & texture, string texte)
 {
-    _texture = texture;
+    _texture = &texture;
     
     _texte_source = texte;
     

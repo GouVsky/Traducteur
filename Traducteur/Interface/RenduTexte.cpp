@@ -45,7 +45,7 @@ void GTexteDeRendu::afficher(string texte)
 {    
     texture.clear(Color::White);
     
-    _texte.afficher_texte(&texture, texte);
+    _texte.afficher_texte(texture, texte);
         
     texture.display();
     

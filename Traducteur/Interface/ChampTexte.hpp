@@ -33,16 +33,11 @@ class GChampDeTexte : public GZoneDeTexte
     
     private :
     
-    GCurseur curseur;
-    
-    int position_x_curseur,
-        position_y_curseur;
-    
-    std::string texte_source;
+    GCurseur _curseur;
     
     sf::String texte;
     
-    std::vector <int> parametres_curseur;
+    std::string texte_source;
 };
 
 #endif /* champTexte_hpp */

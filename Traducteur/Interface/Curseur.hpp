@@ -20,23 +20,25 @@ class GCurseur
     public :
     
     GCurseur();
-    void calcul_de_la_position(std::vector <std::string> tableau, std::vector <int> parametres);
-    int recuperer_position_y();
-    int recuperer_position_x();
-    void definir_position(int x, int y, std::vector <std::string> tableau, std::vector <int> parametres);
-    void definir_couleur(sf::Color c);
-    void definir_taille(int l, int h);
+    int recuperer_position_y() { return _position_y; };
+    int recuperer_position_x() { return _position_x; };
+    void modifier_position_y(int y);
+    void modifier_position_x(int x);
+    void definir_position();
+    void definir_couleur();
+    void definir_taille();
     void afficher(sf::RenderTexture * texture);
     
     private :
 
-    int position_x,
-        position_y,
-        largeur,
-        hauteur;
+    int _largeur,
+        _hauteur,
+        _position_x,
+        _position_y;
     
-    sf::Color couleur;
-    sf::RectangleShape curseur;
+    sf::Color _couleur;
+    
+    sf::RectangleShape _curseur;
 };
 
 #endif /* curseur_hpp */

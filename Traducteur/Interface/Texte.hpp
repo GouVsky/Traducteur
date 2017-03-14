@@ -26,10 +26,11 @@ class GTexte
     public :
     
     GTexte();
+    int recuperer_nombre_de_phrases() { return _nombre_de_phrases; };
     void affichage_des_phrases();
     void justification_du_texte();
     void texte_multilignes();
-    void afficher_texte(sf::RenderTexture * texture, std::string texte);
+    void afficher_texte(sf::RenderTexture & texture, std::string texte);
     
     private :
     

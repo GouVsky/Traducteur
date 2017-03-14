@@ -13,14 +13,7 @@ using namespace sf;
 using namespace std;
 
 
-GChampDeTexte::GChampDeTexte() : GZoneDeTexte()
-{
-    position_x_curseur = 0;
-    
-    position_y_curseur = 0;
-    
-    parametres_curseur.resize(4, 0);
-}
+GChampDeTexte::GChampDeTexte() : GZoneDeTexte() {}
 
 
 
@@ -31,9 +24,7 @@ void GChampDeTexte::traitement()
 {
     locale::global(locale(""));
 
-    Fenetre fenetre;
-
-    Event * evenement = fenetre.recuperer_evenement();
+    Event * evenement = Fenetre::recuperer_evenement();
     
     if (evenement != nullptr)
     {
@@ -49,32 +40,46 @@ void GChampDeTexte::traitement()
                 {
                     if (fgets(buffer, 1000, copier_coller) != NULL)
                     {
-                        texte.insert(position_x_curseur, buffer);
+                        texte.insert(_curseur.recuperer_position_x(), buffer);
                         
-                        position_x_curseur = (int) texte.getSize();
+                        _curseur.modifier_position_x((int) texte.getSize() - 1);
                     }
                 }
                 
-                texte.erase(position_x_curseur - 1, 1);
-                
-                position_x_curseur--;
+                texte.erase(_curseur.recuperer_position_x(), 1);
                 
                 pclose(copier_coller);
             }
             
             else if (evenement->key.code == Keyboard::Left)
             {
-                if(position_x_curseur > 0)
+                if(_curseur.recuperer_position_x() > 0)
                 {
-                    position_x_curseur--;
+                    _curseur.modifier_position_x(-1);
                 }
             }
             
             else if (evenement->key.code == Keyboard::Right)
             {
-                if(position_x_curseur < texte.getSize())
+                if(_curseur.recuperer_position_x() < texte.getSize())
                 {
-                    position_x_curseur++;
+                    _curseur.modifier_position_x(1);
+                }
+            }
+            
+            else if (evenement->key.code == Keyboard::Up)
+            {
+                if(_curseur.recuperer_position_y() > 0)
+                {
+                    _curseur.modifier_position_y(-1);
+                }
+            }
+            
+            else if (evenement->key.code == Keyboard::Down)
+            {
+                if(_curseur.recuperer_position_y() < _texte.recuperer_nombre_de_phrases() - 1)
+                {
+                    _curseur.modifier_position_y(1);
                 }
             }
         }
@@ -87,19 +92,19 @@ void GChampDeTexte::traitement()
             
             if (evenement->text.unicode == 8)
             {
-                if (texte.getSize() > 0 && position_x_curseur > 0)
+                if (texte.getSize() > 0 && _curseur.recuperer_position_x() > 0)
                 {
-                    texte.erase(position_x_curseur - 1, 1);
+                    texte.erase(_curseur.recuperer_position_x() - 1, 1);
                     
-                    position_x_curseur--;
+                    _curseur.modifier_position_x(-1);
                 }
             }
             
             else
             {
-                texte.insert(position_x_curseur, static_cast <char> (evenement->text.unicode));
+                texte.insert(_curseur.recuperer_position_x(), static_cast <char> (evenement->text.unicode));
                 
-                position_x_curseur++;
+                _curseur.modifier_position_x(1);
             }
         }
     }
@@ -118,9 +123,9 @@ void GChampDeTexte::effacer_contenu()
 {
     texte_source = "";
  
-    position_x_curseur = 0;
+    _curseur.modifier_position_x(0);
  
-    position_y_curseur = 0;
+    _curseur.modifier_position_y(0);
 }
 
 
@@ -134,7 +139,9 @@ void GChampDeTexte::afficher()
     
     traitement();
     
-    _texte.afficher_texte(&texture, texte_source);
+    _texte.afficher_texte(texture, texte_source);
+    
+    _curseur.afficher(&texture);
     
     texture.display();
         
