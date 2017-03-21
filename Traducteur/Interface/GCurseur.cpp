@@ -28,7 +28,7 @@ GCurseur::GCurseur()
 
 // Modifie l'ordonnée du curseur.
 
-void GCurseur::modifier_position_y(int y)
+void GCurseur::setPositionY(int y)
 {
     _position_y += y;
 }
@@ -38,7 +38,7 @@ void GCurseur::modifier_position_y(int y)
 
 // Modifie l'abscisse du curseur.
 
-void GCurseur::modifier_position_x(int x)
+void GCurseur::setPositionX(int x)
 {
     _position_x += x;
 }
@@ -48,7 +48,7 @@ void GCurseur::modifier_position_x(int x)
 
 // Définie la position du curseur selon où l'on se situe dans la phrase.
 
-void GCurseur::definir_position()
+void GCurseur::setPosition()
 {
     _curseur.setPosition(Vector2f(_position_x + 30, _position_y * 45 + 20));
 }
@@ -58,7 +58,7 @@ void GCurseur::definir_position()
 
 // Définie la couleur du curseur.
 
-void GCurseur::definir_couleur()
+void GCurseur::setColor()
 {
     _curseur.setFillColor(_couleur);
 }
@@ -68,7 +68,7 @@ void GCurseur::definir_couleur()
 
 // Définie la taille du curseur.
 
-void GCurseur::definir_taille()
+void GCurseur::setSize()
 {
     _curseur.setSize(Vector2f(_largeur, _hauteur));
 }
@@ -78,11 +78,11 @@ void GCurseur::definir_taille()
 
 // Affichage du curseur.
 
-void GCurseur::afficher(RenderTexture * texture)
+void GCurseur::display(RenderTexture * texture)
 {
-    definir_taille();
-    definir_couleur();
-    definir_position();
+    setSize();
+    setColor();
+    setPosition();
     
     texture->draw(_curseur);
 }

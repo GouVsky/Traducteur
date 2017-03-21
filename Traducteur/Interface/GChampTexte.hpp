@@ -26,13 +26,14 @@ class GChampDeTexte : public GZoneDeTexte
     public :
     
     GChampDeTexte();
-    std::string recuperer_texte() { return texte_source + '\0'; };
-    void traitement();
-    void effacer_contenu();
-    void afficher();
+    std::string getText() { return texte_source + '\0'; };
+    void deleteContent();
+    void display();
     
     private :
     
+    void treatment();
+
     GCurseur _curseur;
     
     sf::String texte;

@@ -20,7 +20,7 @@ GChampDeTexte::GChampDeTexte() : GZoneDeTexte() {}
 
 // Récupère ce qui est entré par l'utilisateur.
 
-void GChampDeTexte::traitement()
+void GChampDeTexte::treatment()
 {
     locale::global(locale(""));
 
@@ -40,46 +40,46 @@ void GChampDeTexte::traitement()
                 {
                     if (fgets(buffer, 1000, copier_coller) != NULL)
                     {
-                        texte.insert(_curseur.recuperer_position_x(), buffer);
+                        texte.insert(_curseur.getPositionX(), buffer);
                         
-                        _curseur.modifier_position_x((int) texte.getSize() - 1);
+                        _curseur.setPositionX((int) texte.getSize() - 1);
                     }
                 }
                 
-                texte.erase(_curseur.recuperer_position_x(), 1);
+                texte.erase(_curseur.getPositionX(), 1);
                 
                 pclose(copier_coller);
             }
             
             else if (evenement->key.code == Keyboard::Left)
             {
-                if(_curseur.recuperer_position_x() > 0)
+                if(_curseur.getPositionX() > 0)
                 {
-                    _curseur.modifier_position_x(-1);
+                    _curseur.setPositionX(-1);
                 }
             }
             
             else if (evenement->key.code == Keyboard::Right)
             {
-                if(_curseur.recuperer_position_x() < texte.getSize())
+                if(_curseur.getPositionX() < texte.getSize())
                 {
-                    _curseur.modifier_position_x(1);
+                    _curseur.setPositionX(1);
                 }
             }
             
             else if (evenement->key.code == Keyboard::Up)
             {
-                if(_curseur.recuperer_position_y() > 0)
+                if(_curseur.getPostionY() > 0)
                 {
-                    _curseur.modifier_position_y(-1);
+                    _curseur.setPositionY(-1);
                 }
             }
             
             else if (evenement->key.code == Keyboard::Down)
             {
-                if(_curseur.recuperer_position_y() < _texte.recuperer_nombre_de_phrases() - 1)
+                if(_curseur.getPostionY() < _texte.getNumberOfSentences() - 1)
                 {
-                    _curseur.modifier_position_y(1);
+                    _curseur.setPositionY(1);
                 }
             }
         }
@@ -92,19 +92,19 @@ void GChampDeTexte::traitement()
             
             if (evenement->text.unicode == 8)
             {
-                if (texte.getSize() > 0 && _curseur.recuperer_position_x() > 0)
+                if (texte.getSize() > 0 && _curseur.getPositionX() > 0)
                 {
-                    texte.erase(_curseur.recuperer_position_x() - 1, 1);
+                    texte.erase(_curseur.getPositionX() - 1, 1);
                     
-                    _curseur.modifier_position_x(-1);
+                    _curseur.setPositionX(-1);
                 }
             }
             
             else
             {
-                texte.insert(_curseur.recuperer_position_x(), static_cast <char> (evenement->text.unicode));
+                texte.insert(_curseur.getPositionX(), static_cast <char> (evenement->text.unicode));
                 
-                _curseur.modifier_position_x(1);
+                _curseur.setPositionX(1);
             }
         }
     }
@@ -119,13 +119,13 @@ void GChampDeTexte::traitement()
 
 // Efface le contenu du champ de texte.
 
-void GChampDeTexte::effacer_contenu()
+void GChampDeTexte::deleteContent()
 {
     texte_source = "";
  
-    _curseur.modifier_position_x(0);
+    _curseur.setPositionX(0);
  
-    _curseur.modifier_position_y(0);
+    _curseur.setPositionY(0);
 }
 
 
@@ -133,15 +133,15 @@ void GChampDeTexte::effacer_contenu()
 
 // Affichage du champ de texte.
 
-void GChampDeTexte::afficher()
+void GChampDeTexte::display()
 {
     texture.clear(Color::White);
     
-    traitement();
+    treatment();
     
-    _texte.afficher_texte(texture, texte_source);
+    _texte.displayText(texture, texte_source);
     
-    _curseur.afficher(&texture);
+    _curseur.display(&texture);
     
     texture.display();
         

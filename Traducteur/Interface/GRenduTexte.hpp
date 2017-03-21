@@ -27,8 +27,8 @@ class GTexteDeRendu : public GZoneDeTexte
     public :
     
     GTexteDeRendu();
-    void afficher();
-    void afficher(std::string texte);
+    void display();
+    void display(std::string texte);
     
     private :
 };

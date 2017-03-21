@@ -21,7 +21,7 @@ GTexteDeRendu::GTexteDeRendu() : GZoneDeTexte() {}
 
 // Affichage de la zone de rendu.
 
-void GTexteDeRendu::afficher()
+void GTexteDeRendu::display()
 {
     texture.create(largeur, hauteur);
     
@@ -41,11 +41,11 @@ void GTexteDeRendu::afficher()
 
 // Affichage dans texte dans la zone de rendu.
 
-void GTexteDeRendu::afficher(string texte)
+void GTexteDeRendu::display(string texte)
 {    
     texture.clear(Color::White);
     
-    _texte.afficher_texte(texture, texte);
+    _texte.displayText(texture, texte);
         
     texture.display();
     

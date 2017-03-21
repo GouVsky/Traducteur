@@ -23,10 +23,10 @@ class GBouton : public GImage
     
     GBouton();
     GBouton(std::string);
-    void definir_image(std::string);
-    bool est_survole();
-    bool est_presse();
-    void definir_couleur(sf::Color c);
+    void setImage(std::string);
+    bool isHovered();
+    bool isPressed();
+    void setColor(sf::Color c);
     
     private :
     

@@ -21,13 +21,13 @@ class GImage
     
     GImage();
     GImage(std::string nom_image);
-    void afficher();
-    void modifier_rotation(float angle);
-    void definir_origine(int x, int y);
-    void redimensionner(float c_x, float c_y);
-    void rogner_image(int x, int y, int l, int h);
-    void definir_taille(int l, int h);
-    void definir_position(int x, int y);
+    void display();
+    void setRotation(float angle);
+    void setOrigin(int x, int y);
+    void resize(float c_x, float c_y);
+    void setROI(int x, int y, int l, int h);
+    void setSize(int l, int h);
+    void setPosition(int x, int y);
     
     protected :
     

@@ -26,13 +26,16 @@ GZoneDeTexte::GZoneDeTexte()
 
 // Définie le contour de la zone de texte.
 
-void GZoneDeTexte::definir_contours_visibles()
+void GZoneDeTexte::setVisibleContours(bool choice)
 {
-    contours.setSize(Vector2f(largeur, hauteur));
-    contours.setPosition(position_x, position_y);
-    contours.setOutlineColor(Color::Black);
-    contours.setOutlineThickness(2);
-    contours.setFillColor(Color(255, 255, 255, 0));
+    if (choice)
+    {
+        contours.setSize(Vector2f(largeur, hauteur));
+        contours.setPosition(position_x, position_y);
+        contours.setOutlineColor(Color::Black);
+        contours.setOutlineThickness(2);
+        contours.setFillColor(Color(255, 255, 255, 0));
+    }
 }
 
 
@@ -40,7 +43,7 @@ void GZoneDeTexte::definir_contours_visibles()
 
 // Définie la position de la zone de texte.
 
-void GZoneDeTexte::definir_position(int x, int y)
+void GZoneDeTexte::setPosition(int x, int y)
 {
     position_x = x;
     
@@ -52,7 +55,7 @@ void GZoneDeTexte::definir_position(int x, int y)
 
 // Définie la taille de la zone de texte.
 
-void GZoneDeTexte::definir_taille(int l, int h)
+void GZoneDeTexte::setSize(int l, int h)
 {
     largeur = l;
     

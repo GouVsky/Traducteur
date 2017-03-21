@@ -66,7 +66,7 @@ GImage::GImage(string nom_fichier)
 
 // Affiche l'image.
 
-void GImage::afficher()
+void GImage::display()
 {
     (GFenetre::getWindow())->draw(image);
 }
@@ -76,7 +76,7 @@ void GImage::afficher()
 
 // Modifie la rotation de l'image.
 
-void GImage::modifier_rotation(float angle)
+void GImage::setRotation(float angle)
 {
     angle_de_rotation = angle;
     
@@ -88,7 +88,7 @@ void GImage::modifier_rotation(float angle)
 
 // Définie l'origine de l'image.
 
-void GImage::definir_origine(int x, int y)
+void GImage::setOrigin(int x, int y)
 {
     origine_x = x;
     
@@ -102,7 +102,7 @@ void GImage::definir_origine(int x, int y)
 
 // Redimensionne l'image.
 
-void GImage::redimensionner(float c_x, float c_y)
+void GImage::resize(float c_x, float c_y)
 {
     coefficient_x = c_x;
     
@@ -116,7 +116,7 @@ void GImage::redimensionner(float c_x, float c_y)
 
 // Rogne l'image.
 
-void GImage::rogner_image(int x, int y, int l, int h)
+void GImage::setROI(int x, int y, int l, int h)
 {
     position_x_rognage = x;
     
@@ -134,7 +134,7 @@ void GImage::rogner_image(int x, int y, int l, int h)
 
 // Définie la taille de l'image.
 
-void GImage::definir_taille(int l, int h)
+void GImage::setSize(int l, int h)
 {
     largeur = l;
     
@@ -148,7 +148,7 @@ void GImage::definir_taille(int l, int h)
 
 // Définie la position de l'image.
 
-void GImage::definir_position(int x, int y)
+void GImage::setPosition(int x, int y)
 {
     position_x = x;
     

@@ -23,19 +23,19 @@ Fenetre::Fenetre()
 
 void Fenetre::affichage_des_elements()
 {
-    champ_texte_source.afficher();
+    champ_texte_source.display();
     
-    rendu.afficher(texte_traduit);
+    rendu.display(texte_traduit);
     
-    bouton_F.definir_couleur(Color(255, 255, 255, alpha_F));
-    bouton_A.definir_couleur(Color(255, 255, 255, alpha_A));
+    bouton_F.setColor(Color(255, 255, 255, alpha_F));
+    bouton_A.setColor(Color(255, 255, 255, alpha_A));
     
-    langue_de_traduction.definir_couleur(Color(255, 255, 255, alpha_langue_traduction));
+    langue_de_traduction.setColor(Color(255, 255, 255, alpha_langue_traduction));
     
-    traduire.afficher();
-    bouton_F.afficher();
-    bouton_A.afficher();
-    langue_de_traduction.afficher();
+    traduire.display();
+    bouton_F.display();
+    bouton_A.display();
+    langue_de_traduction.display();
 }
 
 
@@ -45,13 +45,13 @@ void Fenetre::gestion_des_boutons()
 {
     // La langue choisie est le français.
     
-    if (bouton_F.est_presse())
+    if (bouton_F.isPressed())
     {
         alpha_F = 255;
         alpha_A = 100;
         
         alpha_langue_traduction = 255;
-        langue_de_traduction.rogner_image(219, 0, 216, 146);
+        langue_de_traduction.setROI(219, 0, 216, 146);
         
         langue_source = "F";
         langue_sortie = "A";
@@ -59,23 +59,23 @@ void Fenetre::gestion_des_boutons()
     
     // La langue choisie est l'anglais.
     
-    else if (bouton_A.est_presse())
+    else if (bouton_A.isPressed())
     {
         alpha_F = 100;
         alpha_A = 255;
         
         alpha_langue_traduction = 255;
-        langue_de_traduction.rogner_image(0, 0, 219, 146);
+        langue_de_traduction.setROI(0, 0, 219, 146);
         
         langue_source = "A";
         langue_sortie = "F";
     }
     
-    if (traduire.est_presse())
+    if (traduire.isPressed())
     {
         Texte bob_le_bricoleur(langue_source, langue_sortie);
         
-        bob_le_bricoleur.construction_du_texte(champ_texte_source.recuperer_texte());
+        bob_le_bricoleur.construction_du_texte(champ_texte_source.getText());
         
         texte_traduit = bob_le_bricoleur.recuperer_texte_traduit();
     }
@@ -90,31 +90,31 @@ int Fenetre::creation_de_la_fenetre()
 {
     fenetre.create(2080, 1060);
     
-    champ_texte_source.definir_taille(1005, 760);
-    champ_texte_source.definir_position(20, 200);
-    champ_texte_source.definir_contours_visibles();
+    champ_texte_source.setSize(1005, 760);
+    champ_texte_source.setPosition(20, 200);
+    champ_texte_source.setVisibleContours();
     
-    rendu.definir_taille(1005, 760);
-    rendu.definir_position(1055, 200);
-    rendu.definir_contours_visibles();
+    rendu.setSize(1005, 760);
+    rendu.setPosition(1055, 200);
+    rendu.setVisibleContours();
     
-    bouton_F.definir_image("selection_langue.png");
-    bouton_F.definir_position(600, 50);
-    bouton_F.redimensionner(0.6, 0.6);
-    bouton_F.rogner_image(0, 0, 219, 146);
+    bouton_F.setImage("selection_langue.png");
+    bouton_F.setPosition(600, 50);
+    bouton_F.resize(0.6, 0.6);
+    bouton_F.setROI(0, 0, 219, 146);
     
-    bouton_A.definir_image("selection_langue.png");
-    bouton_A.definir_position(300, 50);
-    bouton_A.redimensionner(0.6, 0.6);
-    bouton_A.rogner_image(219, 0, 216, 146);
+    bouton_A.setImage("selection_langue.png");
+    bouton_A.setPosition(300, 50);
+    bouton_A.resize(0.6, 0.6);
+    bouton_A.setROI(219, 0, 216, 146);
     
-    langue_de_traduction.definir_image("selection_langue.png");
-    langue_de_traduction.definir_position(1480, 50);
-    langue_de_traduction.redimensionner(0.6, 0.6);
+    langue_de_traduction.setImage("selection_langue.png");
+    langue_de_traduction.setPosition(1480, 50);
+    langue_de_traduction.resize(0.6, 0.6);
     
-    traduire.definir_image("traduire.png");
-    traduire.definir_position(503, 990);
-    traduire.redimensionner(0.06, 0.06);
+    traduire.setImage("traduire.png");
+    traduire.setPosition(503, 990);
+    traduire.resize(0.06, 0.06);
     
     while (fenetre.isOpen())
     {

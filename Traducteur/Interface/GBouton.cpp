@@ -26,7 +26,7 @@ GBouton::GBouton(string nom_fichier) : GImage(nom_fichier) {}
 
 // Définie une image en tant que bouton.
 
-void GBouton::definir_image(string nom_fichier)
+void GBouton::setImage(string nom_fichier)
 {
     texture.loadFromFile(resourcePath() + nom_fichier);
     
@@ -38,7 +38,7 @@ void GBouton::definir_image(string nom_fichier)
 
 // Indique si le bouton est survolé par l'utilisateur.
 
-bool GBouton::est_survole()
+bool GBouton::isHovered()
 {
     if(image.getGlobalBounds().contains(Mouse::getPosition(* (GFenetre::getWindow())).x,
                                         Mouse::getPosition(* (GFenetre::getWindow())).y))
@@ -54,9 +54,9 @@ bool GBouton::est_survole()
 
 // Indique si le bouton a été pressé par l'utilisateur.
 
-bool GBouton::est_presse()
+bool GBouton::isPressed()
 {
-    if(est_survole() && Mouse::isButtonPressed(Mouse::Left))
+    if(isHovered() && Mouse::isButtonPressed(Mouse::Left))
     {
         return true;
     }
@@ -69,7 +69,7 @@ bool GBouton::est_presse()
 
 // Définie la couleur du bouton.
 
-void GBouton::definir_couleur(Color c)
+void GBouton::setColor(Color c)
 {
     couleur = c;
     

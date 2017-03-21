@@ -20,14 +20,14 @@ class GCurseur
     public :
     
     GCurseur();
-    int recuperer_position_y() { return _position_y; };
-    int recuperer_position_x() { return _position_x; };
-    void modifier_position_y(int y);
-    void modifier_position_x(int x);
-    void definir_position();
-    void definir_couleur();
-    void definir_taille();
-    void afficher(sf::RenderTexture * texture);
+    int getPostionY() { return _position_y; };
+    int getPositionX() { return _position_x; };
+    void setPositionY(int y);
+    void setPositionX(int x);
+    void setPosition();
+    void setColor();
+    void setSize();
+    void display(sf::RenderTexture * texture);
     
     private :
 

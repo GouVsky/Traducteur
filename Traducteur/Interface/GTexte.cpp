@@ -29,7 +29,7 @@ GTexte::GTexte()
 
 // Affichage de chaque ligne.
 
-void GTexte::affichage_des_phrases()
+void GTexte::displaySentences()
 {
     // Affichage des mots.
     
@@ -84,7 +84,7 @@ void GTexte::affichage_des_phrases()
 
 // Justification du texte.
 
-void GTexte::justification_du_texte()
+void GTexte::justifyText()
 {
     string mot;
     
@@ -135,7 +135,7 @@ void GTexte::justification_du_texte()
 
 // Construction d'un texte affiché sur plusieurs lignes.
 
-void GTexte::texte_multilignes()
+void GTexte::textOnDifferentLines()
 {
     string ligne = "";
     
@@ -187,15 +187,15 @@ void GTexte::texte_multilignes()
 
 
 
-void GTexte::afficher_texte(RenderTexture & texture, string texte)
+void GTexte::displayText(RenderTexture & texture, string texte)
 {
     _texture = &texture;
     
     _texte_source = texte;
     
-    texte_multilignes();
+    textOnDifferentLines();
     
-    justification_du_texte();
+    justifyText();
     
-    affichage_des_phrases();
+    displaySentences();
 }

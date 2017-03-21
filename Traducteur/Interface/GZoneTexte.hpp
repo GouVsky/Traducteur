@@ -26,9 +26,9 @@ class GZoneDeTexte
     public :
     
     GZoneDeTexte();
-    void definir_contours_visibles();
-    void definir_position(int x, int y);
-    void definir_taille(int l, int h);
+    void setVisibleContours(bool choice = true);
+    void setPosition(int x, int y);
+    void setSize(int l, int h);
     
     protected :
     
