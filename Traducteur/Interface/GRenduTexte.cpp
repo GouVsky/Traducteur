@@ -6,8 +6,8 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "Fenetre.hpp"
-#include "RenduTexte.hpp"
+#include "GFenetre.hpp"
+#include "GRenduTexte.hpp"
 
 
 using namespace sf;
@@ -32,8 +32,8 @@ void GTexteDeRendu::afficher()
     sprite.setTexture(texture.getTexture());
     sprite.setPosition(position_x, position_y);
     
-    Fenetre::recuperer_fenetre()->draw(sprite);
-    Fenetre::recuperer_fenetre()->draw(contours);
+    GFenetre::getWindow()->draw(sprite);
+    GFenetre::getWindow()->draw(contours);
 }
 
 
@@ -52,6 +52,6 @@ void GTexteDeRendu::afficher(string texte)
     sprite.setTexture(texture.getTexture());
     sprite.setPosition(position_x, position_y);
     
-    Fenetre::recuperer_fenetre()->draw(sprite);
-    Fenetre::recuperer_fenetre()->draw(contours);
+    GFenetre::getWindow()->draw(sprite);
+    GFenetre::getWindow()->draw(contours);
 }

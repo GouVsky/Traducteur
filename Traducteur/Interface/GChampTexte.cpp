@@ -6,8 +6,8 @@
 //  Copyright © 2016 Grégoire. All rights reserved.
 //
 
-#include "Fenetre.hpp"
-#include "ChampTexte.hpp"
+#include "GFenetre.hpp"
+#include "GChampTexte.hpp"
 
 using namespace sf;
 using namespace std;
@@ -24,7 +24,7 @@ void GChampDeTexte::traitement()
 {
     locale::global(locale(""));
 
-    Event * evenement = Fenetre::recuperer_evenement();
+    Event * evenement = GFenetre::getEvent();
     
     if (evenement != nullptr)
     {
@@ -148,6 +148,6 @@ void GChampDeTexte::afficher()
     sprite.setTexture(texture.getTexture());
     sprite.setPosition(position_x, position_y);
     
-    Fenetre::recuperer_fenetre()->draw(sprite);
-    Fenetre::recuperer_fenetre()->draw(contours);
+    GFenetre::getWindow()->draw(sprite);
+    GFenetre::getWindow()->draw(contours);
 }

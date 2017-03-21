@@ -15,8 +15,8 @@
 #include <sstream>
 #include <stdio.h>
 
-#include "Texte.hpp"
-#include "ZoneTexte.hpp"
+#include "GTexte.hpp"
+#include "GZoneTexte.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

@@ -1,60 +1,21 @@
 //
-//  fenetre.cpp
+//  CreationFenetre.cpp
 //  Traducteur
 //
-//  Created by Grégoire on 05/02/2017.
+//  Created by Grégoire on 21/03/2017.
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-
-#include "Image.hpp"
-#include "Fenetre.hpp"
-#include "ResourcePath.hpp"
-#include "ConstructionTexte.hpp"
-#include "ConstructionPhrase.hpp"
+#include "CreationFenetre.hpp"
 
 using namespace sf;
 using namespace std;
 
 
-RenderWindow Fenetre::fenetre;
-
-vector <Event> Fenetre::queue;
-
-int Fenetre::element_dans_la_queue = 0;
-
-
-// Initialisation des différents éléments.
-
 Fenetre::Fenetre()
 {
     langue_source = "";
     langue_sortie = "";
-}
-
-
-
-
-// On récupère les évènements stockés dans une queue.
-
-Event * Fenetre::recuperer_evenement()
-{
-    if (queue.size() > element_dans_la_queue)
-    {
-        element_dans_la_queue++;
-        
-        return &queue[element_dans_la_queue - 1];
-    }
-        
-    return nullptr;
-}
-
-
-
-
-RenderWindow * Fenetre::recuperer_fenetre()
-{
-    return &fenetre;
 }
 
 
@@ -127,8 +88,8 @@ void Fenetre::gestion_des_boutons()
 
 int Fenetre::creation_de_la_fenetre()
 {
-    fenetre.create(VideoMode(2080, 1060, 32), "", Style::Close);
-        
+    fenetre.create(2080, 1060);
+    
     champ_texte_source.definir_taille(1005, 760);
     champ_texte_source.definir_position(20, 200);
     champ_texte_source.definir_contours_visibles();
@@ -154,11 +115,11 @@ int Fenetre::creation_de_la_fenetre()
     traduire.definir_image("traduire.png");
     traduire.definir_position(503, 990);
     traduire.redimensionner(0.06, 0.06);
-        
+    
     while (fenetre.isOpen())
     {
-        fenetre.clear(Color::White);
-
+        fenetre.clear();
+        
         while (fenetre.pollEvent(evenement))
         {
             // On ferme la fenêtre en pressant la croix ou en appuyant sur "ECHAP".
@@ -166,13 +127,6 @@ int Fenetre::creation_de_la_fenetre()
             if(evenement.type == Event::Closed || (evenement.type == Event::KeyPressed && evenement.key.code == Keyboard::Escape))
             {
                 fenetre.close();
-            }
-            
-            // Le stockage des évènements permettra de gérer certains cas dans des champs de texte.
-            
-            else
-            {
-                queue.push_back(evenement);
             }
         }
         

@@ -6,8 +6,8 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "Image.hpp"
-#include "Fenetre.hpp"
+#include "GImage.hpp"
+#include "GFenetre.hpp"
 #include "ResourcePath.hpp"
 
 using namespace sf;
@@ -68,9 +68,7 @@ GImage::GImage(string nom_fichier)
 
 void GImage::afficher()
 {
-    Fenetre fenetre;
-    
-    (fenetre.recuperer_fenetre())->draw(image);
+    (GFenetre::getWindow())->draw(image);
 }
 
 

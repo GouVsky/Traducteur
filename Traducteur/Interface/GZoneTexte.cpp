@@ -6,7 +6,7 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "ZoneTexte.hpp"
+#include "GZoneTexte.hpp"
 
 using namespace sf;
 using namespace std;

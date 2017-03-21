@@ -18,7 +18,7 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#include "Texte.hpp"
+#include "GTexte.hpp"
 
 
 class GZoneDeTexte

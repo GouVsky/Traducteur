@@ -6,8 +6,8 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "Bouton.hpp"
-#include "Fenetre.hpp"
+#include "GBouton.hpp"
+#include "GFenetre.hpp"
 #include "ResourcePath.hpp"
 
 using namespace sf;
@@ -40,10 +40,8 @@ void GBouton::definir_image(string nom_fichier)
 
 bool GBouton::est_survole()
 {
-    Fenetre fenetre;
-    
-    if(image.getGlobalBounds().contains(Mouse::getPosition(* (fenetre.recuperer_fenetre())).x,
-                                        Mouse::getPosition(* (fenetre.recuperer_fenetre())).y))
+    if(image.getGlobalBounds().contains(Mouse::getPosition(* (GFenetre::getWindow())).x,
+                                        Mouse::getPosition(* (GFenetre::getWindow())).y))
     {
         return true;
     }

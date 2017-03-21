@@ -12,7 +12,7 @@
 #include <string>
 #include <stdio.h>
 
-#include "Image.hpp"
+#include "GImage.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

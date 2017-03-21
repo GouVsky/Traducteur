@@ -1,22 +1,24 @@
 //
-//  fenetre.hpp
+//  CreationFenetre.hpp
 //  Traducteur
 //
-//  Created by Grégoire on 05/02/2017.
+//  Created by Grégoire on 21/03/2017.
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#ifndef fenetre_hpp
-#define fenetre_hpp
+#ifndef CreationFenetre_hpp
+#define CreationFenetre_hpp
 
-#include <thread>
 #include <string>
 #include <stdio.h>
 
-#include "Bouton.hpp"
-#include "ZoneTexte.hpp"
-#include "ChampTexte.hpp"
-#include "RenduTexte.hpp"
+#include "GBouton.hpp"
+#include "GFenetre.hpp"
+#include "GZoneTexte.hpp"
+#include "GChampTexte.hpp"
+#include "GRenduTexte.hpp"
+#include "ConstructionTexte.hpp"
+#include "ConstructionPhrase.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
@@ -27,21 +29,11 @@ class Fenetre
     public :
     
     Fenetre();
-    static sf::Event * recuperer_evenement();
-    static sf::RenderWindow * recuperer_fenetre();
     void affichage_des_elements();
     void gestion_des_boutons();
     int creation_de_la_fenetre();
     
     private :
-    
-    sf::Texture texture;
-    sf::Event evenement;
-    static sf::RenderWindow fenetre;
-    
-    static std::vector <sf::Event> queue;
-        
-    static int element_dans_la_queue;
     
     int alpha_F = 120,
         alpha_A = 120,
@@ -50,6 +42,10 @@ class Fenetre
     std::string langue_source,
                 langue_sortie,
                 texte_traduit;
+    
+    sf::Event evenement;
+    
+    GFenetre fenetre;
     
     GBouton bouton_F,
             bouton_A,
@@ -61,4 +57,5 @@ class Fenetre
     GTexteDeRendu rendu;
 };
 
-#endif /* fenetre_hpp */
+
+#endif /* CreationFenetre_hpp */

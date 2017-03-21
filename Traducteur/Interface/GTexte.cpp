@@ -6,8 +6,9 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "Texte.hpp"
+#include "GTexte.hpp"
 #include "ResourcePath.hpp"
+
 #include <iostream>
 
 

@@ -14,8 +14,8 @@
 #include <locale>
 #include <stdio.h>
 
-#include "Curseur.hpp"
-#include "ZoneTexte.hpp"
+#include "GCurseur.hpp"
+#include "GZoneTexte.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>

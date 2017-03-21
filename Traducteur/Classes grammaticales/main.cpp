@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#include "Fenetre.hpp"
+#include "CreationFenetre.hpp"
 
 using namespace std;
 
