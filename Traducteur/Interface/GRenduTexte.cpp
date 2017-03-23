@@ -23,14 +23,14 @@ GTexteDeRendu::GTexteDeRendu() : GZoneDeTexte() {}
 
 void GTexteDeRendu::display()
 {
-    texture.create(largeur, hauteur);
+    texture.create(getWidth(), getHeight());
     
     texture.clear(Color::White);
             
     texture.display();
     
     sprite.setTexture(texture.getTexture());
-    sprite.setPosition(position_x, position_y);
+    sprite.setPosition(_position_x, _position_y);
     
     GFenetre::getWindow()->draw(sprite);
     GFenetre::getWindow()->draw(contours);
@@ -45,12 +45,12 @@ void GTexteDeRendu::display(string texte)
 {    
     texture.clear(Color::White);
     
-    _texte.displayText(texture, texte);
+    _text.displayText(texture, texte);
         
     texture.display();
     
     sprite.setTexture(texture.getTexture());
-    sprite.setPosition(position_x, position_y);
+    sprite.setPosition(_position_x, _position_y);
     
     GFenetre::getWindow()->draw(sprite);
     GFenetre::getWindow()->draw(contours);

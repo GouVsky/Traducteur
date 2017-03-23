@@ -18,14 +18,14 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
-#define DEBUT_TEXTE 30
-#define FIN_TEXTE 1000 - 50
 
 class GTexte
 {
     public :
     
     GTexte();
+    void setFont(sf::Font font);
+    void setSize(int size);
     int getNumberOfSentences() { return _nombre_de_phrases; };
     void displayText(sf::RenderTexture & texture, std::string texte);
     
@@ -36,10 +36,13 @@ class GTexte
     void textOnDifferentLines();
     
     sf::Text _texte;
+    
     sf::Font _police;
+    
     sf::RenderTexture * _texture;
     
-    int _nombre_de_phrases;
+    int _taille_police,
+        _nombre_de_phrases;
     
     static double numero_de_couleur;
     

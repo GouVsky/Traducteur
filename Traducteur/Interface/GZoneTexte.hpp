@@ -15,10 +15,10 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "GTexte.hpp"
+
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-
-#include "GTexte.hpp"
 
 
 class GZoneDeTexte
@@ -26,22 +26,30 @@ class GZoneDeTexte
     public :
     
     GZoneDeTexte();
+    void setFont(sf::Font font);
+    void setTextSize(int size);
     void setVisibleContours(bool choice = true);
     void setPosition(int x, int y);
-    void setSize(int l, int h);
+    int getHeight() { return _height; };
+    int getWidth() { return _width; };
+    void setHeight(int height);
+    void setWidth(int width);
+    void setSize(int width, int height);
     
     protected :
     
-    GTexte _texte;
+    int _position_x,
+        _position_y,
+        _width,
+        _height;
+    
+    GTexte _text;
     
     sf::Sprite sprite;
-    sf::RenderTexture texture;
-    sf::RectangleShape contours;
     
-    int position_x,
-        position_y,
-        largeur,
-        hauteur;
+    sf::RenderTexture texture;
+    
+    sf::RectangleShape contours;
 };
 
 #endif /* zoneTexte_hpp */

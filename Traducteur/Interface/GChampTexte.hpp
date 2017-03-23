@@ -33,7 +33,7 @@ class GChampDeTexte : public GZoneDeTexte
     private :
     
     void treatment();
-
+        
     GCurseur _curseur;
     
     sf::String texte;

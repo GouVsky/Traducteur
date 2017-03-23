@@ -258,7 +258,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     ajouter_le_champ_lexical(nom_commun.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, j);
                 }
                 
-                
+
                 
                 // Nom propre masculin ou féminin.
                 
@@ -334,7 +334,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 }
                 
                 
-                
+
                 // Verbe.
                 
                 verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, __structure_du_texte_source[_indice_sous_phrase]);
@@ -426,9 +426,9 @@ void Phrase::recherche_virgule()
             __tableau_contenant_champs_lexicaux.push_back(vector <vector <vector <string>>> ());
             
             // Traduction des phrases.
-            
+
             traduction_des_mots(tableau, virgule);
-                        
+            
             // S'il y a un verbe dans le morceau de phrase, on considère qu'elle est indépendante du reste.
 
             if (_presence_verbe == true)

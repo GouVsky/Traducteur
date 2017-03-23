@@ -14,11 +14,27 @@ using namespace std;
 
 GZoneDeTexte::GZoneDeTexte()
 {    
-    largeur = 0;
-    hauteur = 0;
+    _width = 0;
+    _height = 0;
     
-    position_x = 0;
-    position_y = 0;
+    _position_x = 0;
+    _position_y = 0;
+}
+
+
+
+
+void GZoneDeTexte::setFont(Font font)
+{
+    _text.setFont(font);
+}
+
+
+
+
+void GZoneDeTexte::setTextSize(int size)
+{
+    _text.setSize(size);
 }
 
 
@@ -30,8 +46,8 @@ void GZoneDeTexte::setVisibleContours(bool choice)
 {
     if (choice)
     {
-        contours.setSize(Vector2f(largeur, hauteur));
-        contours.setPosition(position_x, position_y);
+        contours.setSize(Vector2f(_width, _height));
+        contours.setPosition(_position_x, _position_y);
         contours.setOutlineColor(Color::Black);
         contours.setOutlineThickness(2);
         contours.setFillColor(Color(255, 255, 255, 0));
@@ -45,9 +61,25 @@ void GZoneDeTexte::setVisibleContours(bool choice)
 
 void GZoneDeTexte::setPosition(int x, int y)
 {
-    position_x = x;
+    _position_x = x;
     
-    position_y = y;
+    _position_y = y;
+}
+
+
+
+
+void GZoneDeTexte::setHeight(int height)
+{
+    _height = height;
+}
+
+
+
+
+void GZoneDeTexte::setWidth(int width)
+{
+    _width = width;
 }
 
 
@@ -55,11 +87,11 @@ void GZoneDeTexte::setPosition(int x, int y)
 
 // Définie la taille de la zone de texte.
 
-void GZoneDeTexte::setSize(int l, int h)
+void GZoneDeTexte::setSize(int width, int height)
 {
-    largeur = l;
+    _width = width;
     
-    hauteur = h;
+    _height = height;
     
-    texture.create(largeur, hauteur);
+    texture.create(_width, _height);
 }

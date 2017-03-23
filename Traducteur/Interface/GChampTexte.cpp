@@ -77,7 +77,7 @@ void GChampDeTexte::treatment()
             
             else if (evenement->key.code == Keyboard::Down)
             {
-                if(_curseur.getPostionY() < _texte.getNumberOfSentences() - 1)
+                if(_curseur.getPostionY() < _text.getNumberOfSentences() - 1)
                 {
                     _curseur.setPositionY(1);
                 }
@@ -139,14 +139,14 @@ void GChampDeTexte::display()
     
     treatment();
     
-    _texte.displayText(texture, texte_source);
+    _text.displayText(texture, texte_source);
     
     _curseur.display(&texture);
     
     texture.display();
-        
+    
     sprite.setTexture(texture.getTexture());
-    sprite.setPosition(position_x, position_y);
+    sprite.setPosition(_position_x, _position_y);
     
     GFenetre::getWindow()->draw(sprite);
     GFenetre::getWindow()->draw(contours);

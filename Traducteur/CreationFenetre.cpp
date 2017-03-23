@@ -114,7 +114,7 @@ int Fenetre::creation_de_la_fenetre()
     
     traduire.setImage("traduire.png");
     traduire.setPosition(503, 990);
-    traduire.resize(0.06, 0.06);
+    traduire.resize(0.15, 0.15);
     
     while (fenetre.isOpen())
     {

@@ -7,9 +7,8 @@
 //
 
 #include "GTexte.hpp"
+#include "GZoneTexte.hpp"
 #include "ResourcePath.hpp"
-
-#include <iostream>
 
 
 using namespace sf;
@@ -22,6 +21,30 @@ double GTexte::numero_de_couleur = 0;
 GTexte::GTexte()
 {
     _police.loadFromFile(resourcePath() + "GenR102.TTF");
+    
+    _taille_police = 37;
+    
+    // Initialisation du texte.
+    
+    _texte.setFont(_police);
+    
+    _texte.setCharacterSize(_taille_police);
+}
+
+
+
+
+void GTexte::setFont(Font font)
+{
+    _police = font;
+}
+
+
+
+
+void GTexte::setSize(int size)
+{
+    _taille_police = size;
 }
 
 
@@ -45,11 +68,9 @@ void GTexte::displaySentences()
             
             wstring w_phrase = convertisseur.from_bytes(__phrases_justifiees[i][j]);
             
-            _texte.setFont(_police);
             _texte.setString(w_phrase);
-            _texte.setCharacterSize(37);
             _texte.setColor(Color::Black);
-            _texte.setPosition(DEBUT_TEXTE + taille_phrase, 20 + i * 45);
+            _texte.setPosition(30 + taille_phrase, 20 + i * 45);
 
             // Easter egg !
             
@@ -96,17 +117,17 @@ void GTexte::justifyText()
     {
         __phrases_justifiees.push_back(vector <string> (0));
         
-        Text ligne(__phrases[i], _police, 37);
+        Text ligne(__phrases[i], _police, _taille_police);
         
         // On calcule la marge comprise entre la fin de la phrase et le seuil.
         // On récupère la taille en pixel du caractère espace.
         // Et on en déduit le nombre d'espace à ajouter.
         
-        if (ligne.getLocalBounds().width > 0 && ligne.getLocalBounds().width < FIN_TEXTE)
+        if (ligne.getLocalBounds().width > 0 && ligne.getLocalBounds().width < 1000 - 50)
         {
-            Text espace(' ', _police, 37);
+            Text espace(' ', _police, _taille_police);
             
-            int difference = FIN_TEXTE - ligne.getLocalBounds().width;
+            int difference = 1000 - 50 - ligne.getLocalBounds().width;
             
             nb_espace_a_ajouter = difference / (espace.getLocalBounds().width);
         }
@@ -146,12 +167,10 @@ void GTexte::textOnDifferentLines()
     for (int i = 0; i < _texte_source.size(); i++)
     {
         _texte.setString(ligne);
-        _texte.setFont(_police);
-        _texte.setCharacterSize(37);
         
         // Si la taille du texte dépasse un certain seuil, on l'affiche sur plusieurs lignes.
 
-        if(_texte.getLocalBounds().width > FIN_TEXTE)
+        if(_texte.getLocalBounds().width > 1000 - 50)
         {
             // On cherche le dernier espace.
             // On vérifie également que ce n'est pas le dernier caractère de la ligne,
