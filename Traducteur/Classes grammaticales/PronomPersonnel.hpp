@@ -19,9 +19,9 @@ class PronomPersonnel
     public :
     
     PronomPersonnel(std::string source, std::string sortie);
-    bool pronom_existe() { return _pronom_existe; };
-    std::string recuperer_pronom_personnel_generique() { return _pronom_personnel_generique; };
-    std::string recuperer_pronom_personnel() { return _pronom_personnel_traduit; };
+    bool pronom_existe() const { return _pronom_existe; };
+    std::string recuperer_pronom_personnel_generique() const { return _pronom_personnel_generique; };
+    std::string recuperer_pronom_personnel() const { return _pronom_personnel_traduit; };
     void le_mot_est_un_pronom_personnel(std::string mot);
     
     private :

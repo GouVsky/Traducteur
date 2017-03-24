@@ -22,10 +22,10 @@ class Mot
     public :
     
     Mot();
-    int recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(int numero_du_mot) { return __nombre_de_champs_lexicaux[numero_du_mot]; };
-    int recuperer_nombre_de_mots() { return _nombre_de_mots; };
-    std::vector <std::vector <std::string>> recuperer_champs_lexicaux() { return __tableau_champs_lexicaux; };
-    std::string recuperer_mot(int numero_du_mot) { return __tableau_mots[numero_du_mot]; };
+    int recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(int numero_du_mot) const { return __nombre_de_champs_lexicaux[numero_du_mot]; };
+    int recuperer_nombre_de_mots() const { return _nombre_de_mots; };
+    std::vector <std::vector <std::string>> recuperer_champs_lexicaux() const { return __tableau_champs_lexicaux; };
+    std::string recuperer_mot(int numero_du_mot) const { return __tableau_mots[numero_du_mot]; };
     void ajouter_champs_lexicaux(std::string champ_lexicaux);
     void ajouter_mot(std::string mots);
     

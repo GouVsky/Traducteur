@@ -22,7 +22,7 @@ class Texte
     public :
     
     Texte(std::string source, std::string sortie);
-    std::string recuperer_texte_traduit() { return _texte_traduit; };
+    std::string recuperer_texte_traduit() const { return _texte_traduit; };
     void assembler_les_phrases();
     void recherche_conjonction_coordination(std::vector <std::string> tableau);
     void recherche_de_la_ponctuation(std::string texte);

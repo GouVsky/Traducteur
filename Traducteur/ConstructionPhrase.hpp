@@ -24,7 +24,7 @@ class Phrase
     public :
     
     Phrase(std::string source, std::string sortie, std::string texte);
-    std::string recuperer_phrase() { return _phrase_sortie; };
+    std::string recuperer_phrase() const { return _phrase_sortie; };
     void ajouter_le_champ_lexical(std::vector <std::vector <std::string>> champ_lexical, int nombre_de_champs_lexicaux, int numero_du_mot);
     void ajouter_le_champ_lexical(std::string champ_lexical);
     void ajouter_le_type_sortie(std::string type);

@@ -15,7 +15,7 @@ here;is;the;high;point;of;the;night c’est;le;clou;de;la;soirée
 here;you;are tiens
 hold;on attends
 how;boring quel;ennui
-hurry;up;dépêche;toi
+hurry;up; dépêche;toi
 in;a;nutshell pour;résumer
 in;short pour;faire;court
 it’s;brand;new c’est;flambant;neuf
@@ -23,9 +23,9 @@ it’s;bullshit c’est;de;la;merde
 it’s;easy;as;a;pie c’est;simple;comme;bonjour
 it’s;far;fetched c’est;tiré;par;les;cheveux
 it’s;none;of;your;business ce;ne;sont;pas;tes;oignons
-it’pouring il;tombe;des;cordes
+it’s;pouring il;tombe;des;cordes
 it’s;raining;dogs;and;cats il;pleut;des;cordes
-it’s;the devil’s;own;work c’est;la;croix;et;la;bannière
+it’s;the;devil’s;own;work c’est;la;croix;et;la;bannière
 keep;cool on;se;calme
 leave;me;alone fous;moi;la;paix
 let’s;go en;avant

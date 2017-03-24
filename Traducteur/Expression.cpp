@@ -35,10 +35,10 @@ void Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur,
     while (!monFichierExpressions.eof())
     {
         monFichierExpressions >> __expression["A"] >> __expression["F"];
-                
+        
         // Si le premier mot de l'expression ne correspond pas au mot de la phrase, cela ne sert à rien de continuer.
         
-        if (__expression[_langue_source].substr(0, tableau[compteur].size()) == tableau[compteur])
+        if (__expression[_langue_source].substr(0, tableau[compteur].size()).size() == tableau[compteur].size())
         {
             // On relève les nombre de mots qui composent l'expression.
             
@@ -54,10 +54,10 @@ void Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur,
             }
 
             _expression.erase(_expression.size() - 1);
-
+            
             // On compare.
             
-            if (__expression[_langue_source] == _expression)
+            if (_expression == __expression[_langue_source])
             {
                 _taille_expression_sortie = (int) count(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';') + 1;
                 

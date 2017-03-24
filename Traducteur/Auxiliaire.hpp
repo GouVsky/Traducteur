@@ -19,7 +19,7 @@ class Auxiliaire
     public :
     
     Auxiliaire();
-    std::string recuperer_auxiliaire() { return _auxiliaire; };
+    std::string recuperer_auxiliaire() const { return _auxiliaire; };
     void construction_auxiliaire(int pronom, std::string langue, std::string auxiliaire, std::string temps);
     
     private :

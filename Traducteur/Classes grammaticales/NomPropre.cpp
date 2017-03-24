@@ -21,14 +21,6 @@ NomPropre::NomPropre() : Mot()
 
 
 
-string NomPropre::recuperer_genre()
-{
-    return _genre;
-}
-
-
-
-
 void NomPropre::le_mot_est_un_nom_propre(string mot)
 {
     for (int i = 0; i< 2; i++)
