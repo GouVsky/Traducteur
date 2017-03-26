@@ -41,9 +41,9 @@ void Invariable::le_mot_est_invariable(string mot)
         {
             if (__invariable[_langue_source] == mot)
             {
-                ajouter_mot(__invariable[_langue_sortie]);
+                //ajouter_mot(__invariable[_langue_sortie]);
                 
-                ajouter_champs_lexicaux(_champs_lexicaux);
+                //ajouter_champs_lexicaux(_champs_lexicaux);
                 
                 break;
             }

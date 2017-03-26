@@ -19,12 +19,16 @@ class PronomPersonnel
     public :
     
     PronomPersonnel(std::string source, std::string sortie);
-    bool pronom_existe() const { return _pronom_existe; };
-    std::string recuperer_pronom_personnel_generique() const { return _pronom_personnel_generique; };
+    bool est_un_pronom_generique(std::string mot);
+    bool existe() const { return _pronom_existe; };
+    int recuperer_valeur() const { return _valeur; };
+    std::string recuperer_forme_generique() const { return _pronom_personnel_generique; };
     std::string recuperer_pronom_personnel() const { return _pronom_personnel_traduit; };
     void le_mot_est_un_pronom_personnel(std::string mot);
     
     private :
+    
+    int _valeur;
     
     bool _pronom_existe;
     
@@ -34,7 +38,8 @@ class PronomPersonnel
                 _pronom_personnel_generique;
     
     std::vector <std::string> __pronoms_personnels_sujets_F,
-                              __pronoms_personnels_sujets_A;
+                              __pronoms_personnels_sujets_A,
+                              __pronoms_personnels_generiques;
     
     std::map <std::string, std::vector <std::string>> __pronoms_personnels_sujets;
 };

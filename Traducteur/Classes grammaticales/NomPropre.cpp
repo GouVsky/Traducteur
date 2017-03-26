@@ -35,7 +35,7 @@ void NomPropre::le_mot_est_un_nom_propre(string mot)
             {
                 _nom_propre[0] = toupper(_nom_propre[0]);
                 
-                ajouter_mot(_nom_propre);
+                //ajouter_mot(_nom_propre);
                 
                 _genre = __genre[i];
                 

@@ -26,11 +26,12 @@ class Verbe : public Mot
     public :
     
     Verbe(std::string source, std::string sortie);
+    std::string recuperer_type() const { return "Verbe"; };
     int recuperer_taille_verbe_sortie() const { return _taille_verbe_sortie; };
     int recuperer_taille_verbe_source() const { return _taille_verbe_source; };
     std::string le_verbe_est_irregulier(std::string verbe, std::string langue);
     std::string construction(std::string langue, std::string verbe, int compteur);
-    void determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> tableau, std::vector <std::vector <std::string>> structure);
+    void determine_si_existe_un_verbe_dans_la_phrase(int compteur, std::vector <std::string> & phrases, std::vector <Mot> & mots);
     
     private :
     
@@ -55,7 +56,7 @@ class Verbe : public Mot
     std::map <std::string, std::string> __verbe,
                                         __irregulier,
                                         __conjugaison,
-                                        __irregulier_ou_non;
+                                        __irregularite;
 };
 
 #endif /* verbe_hpp */

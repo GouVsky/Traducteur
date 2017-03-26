@@ -36,77 +36,6 @@ Phrase::Phrase(string source, string sortie, string texte)
 
 
 
-// Stocke les différents champs lexicaux associés au mot sélectionné.
-
-void Phrase::ajouter_le_champ_lexical(vector <vector <string>> champs_lexicaux, int nombre_de_champs_lexicaux, int numero_du_mot)
-{
-    __tableau_contenant_champs_lexicaux[_indice_sous_phrase].push_back(vector <vector <string>> ());
-    
-    __tableau_contenant_champs_lexicaux[_indice_sous_phrase][_indice_mot].push_back(vector <string> ());
-    
-    for (int j = 0; j < nombre_de_champs_lexicaux; j++)
-    {
-        __tableau_contenant_champs_lexicaux[_indice_sous_phrase][_indice_mot][numero_du_mot].push_back(champs_lexicaux[numero_du_mot][j]);
-        
-        __champ_lexical.incrementation_des_champs_lexicaux(champs_lexicaux[numero_du_mot][j]);
-    }
-}
-
-
-
-
-// Stocke le champ lexical associé au mot.
-
-void Phrase::ajouter_le_champ_lexical(string champ_lexical)
-{
-    __tableau_contenant_champs_lexicaux[_indice_sous_phrase].push_back(vector <vector <string>> ());
-    
-    __tableau_contenant_champs_lexicaux[_indice_sous_phrase][_indice_mot].push_back(vector <string> ());
-    
-    __tableau_contenant_champs_lexicaux[_indice_sous_phrase][_indice_mot][0].push_back(champ_lexical);
-    
-    __champ_lexical.incrementation_des_champs_lexicaux(champ_lexical);
-}
-
-
-
-
-// Stocke le type du mot traduit.
-
-void Phrase::ajouter_le_type_sortie(string type)
-{
-    __structure_du_texte_sortie[_indice_sous_phrase].push_back(vector <string> ());
-    
-    __structure_du_texte_sortie[_indice_sous_phrase][_indice_mot].push_back(type);
-}
-
-
-
-
-// Stocke le type du mot d'origine.
-
-void Phrase::ajouter_le_type_source(string type)
-{
-    __structure_du_texte_source[_indice_sous_phrase].push_back(vector <string> ());
-    
-    __structure_du_texte_source[_indice_sous_phrase][_indice_mot].push_back(type);
-}
-
-
-
-
-// Stocke le mot traduit.
-
-void Phrase::ajouter_le_mot_sortie(string mot)
-{
-    __tableau_contenant_significations_mot[_indice_sous_phrase].push_back(vector <string> ());
-    
-    __tableau_contenant_significations_mot[_indice_sous_phrase][_indice_mot].push_back(mot);
-}
-
-
-
-
 // Choix du mot approprié s'il possède plusieurs sens possibles.
 
 void Phrase::choix_des_mots_selon_champ_lexical()
@@ -115,22 +44,29 @@ void Phrase::choix_des_mots_selon_champ_lexical()
         valeur_champ_lexical = 0,
         max_valeur_champ_lexical = 0;
     
-    for (int i = 0; i < __tableau_contenant_champs_lexicaux.size(); i++)
+    
+    for (int i = 0; i < __mots.size(); i++)
     {
-        for (int j = 0; j < __tableau_contenant_champs_lexicaux[i].size(); j++)
+        for (int j = 0; j < __mots[i].size(); j++)
         {
             __phrase.push_back(vector <string> (0));
             
-            __structure.push_back(vector <string> (0));
+            // Pour tous les sens d'un mot.
             
-            for (int k = 0; k < __tableau_contenant_champs_lexicaux[i][j].size(); k++)
+            int nombre_de_sens = __mots[i][j].recuperer_nombre_de_sens_sortie();
+            
+            for (int k = 0; k < nombre_de_sens; k++)
             {
-                for (int l = 0; l < __tableau_contenant_champs_lexicaux[i][j][k].size(); l++)
+                // Pour tous les champs lexicaux d'un sens.
+                
+                int nombre_de_champs_lexicaux = __mots[i][j].recuperer_nombre_de_champs_lexicaux(k);
+                
+                for (int l = 0; l < nombre_de_champs_lexicaux; l++)
                 {
-                    // On récupère la plus grande valeur parmi tous les champs lexicaux associés à une significations du mot.
+                    // On récupère la plus grande valeur parmi tous les champs lexicaux associés à un sens du mot.
                     
-                    valeur_champ_lexical = __champ_lexical.recuperation_valeur_champ_lexical(__tableau_contenant_champs_lexicaux[i][j][k][l]);
-                                        
+                    valeur_champ_lexical = __champ_lexical.recuperation_valeur_champ_lexical(__mots[i][j].recuperer_champs_lexicaux(k)[l]);
+                    
                     if (valeur_champ_lexical > max_valeur_champ_lexical)
                     {
                         max_valeur_champ_lexical = valeur_champ_lexical;
@@ -139,28 +75,23 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                 
                 // Puis, entre toutes les significations, on choisit la signification dont le champ lexical associé est le plus répandu.
                 // Si plusieurs valeurs sont identiques, on les affiche toutes.
-                
+
                 if (max_valeur_champ_lexical > max)
                 {
                     max = max_valeur_champ_lexical;
                     
                     __phrase[__phrase.size() - 1].clear();
-                    __phrase[__phrase.size() - 1].push_back(__tableau_contenant_significations_mot[i][j][k]);
-                    
-                    __structure[__structure.size() - 1].clear();
-                    __structure[__structure.size() - 1].push_back(__structure_du_texte_sortie[i][j][k]);
+                    __phrase[__phrase.size() - 1].push_back(__mots[i][j].recuperer_sens_sortie(k));
                 }
                 
                 else if (max_valeur_champ_lexical == max)
                 {
-                    __phrase[__phrase.size() - 1].push_back(__tableau_contenant_significations_mot[i][j][k]);
-                    
-                    __structure[__structure.size() - 1].push_back(__structure_du_texte_sortie[i][j][k]);
+                    __phrase[__phrase.size() - 1].push_back(__mots[i][j].recuperer_sens_sortie(k));
                 }
-
+                
                 max_valeur_champ_lexical = 0;
             }
-
+            
             max = -1;
         }
     }
@@ -191,10 +122,10 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
         Expression expression(_langue_source, _langue_sortie);
         PronomPersonnel pronom_personnel(_langue_source, _langue_sortie);
 
-        
+
         // Expression.
         
-        expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
+        /*expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
         
         int taille_source = expression.recuperer_taille_expression_source();
         int taille_sortie = expression.recuperer_taille_expression_sortie();
@@ -214,19 +145,14 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
         }
         
         else
-        {
+        {*/
             // Pronom personnel.
             
             pronom_personnel.le_mot_est_un_pronom_personnel(phrase[i]);
             
-            if (pronom_personnel.pronom_existe())
+            if (pronom_personnel.existe())
             {
-                ajouter_le_type_source("pronom_" + pronom_personnel.recuperer_pronom_personnel_generique() + "_1");
-                ajouter_le_type_sortie("pronom_" + pronom_personnel.recuperer_pronom_personnel_generique() + "_1");
-                
-                ajouter_le_mot_sortie(pronom_personnel.recuperer_pronom_personnel());
-                
-                ajouter_le_champ_lexical("-");
+                //__mots[_indice_sous_phrase].push_back(pronom_personnel);
             }
             
             else
@@ -238,42 +164,40 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 //      - On l'ajoute dans un tableau contenant les mots traduits.
                 //      - On ajoute son champ lexical dans un autre tableau.
                 
-                
+
                 
                 // Nom commun masculin ou féminin.
                 
                 nom_commun.le_mot_est_un_nom_commun(phrase[i]);
                 
-                nombre_de_noms_communs = nom_commun.recuperer_nombre_de_mots();
-                
-                for (int j = 0; j < nombre_de_noms_communs; j++)
+                nombre_de_noms_communs = nom_commun.recuperer_nombre_de_sens_sortie();
+                                                
+                if (nombre_de_noms_communs > 0)
                 {
-                    int nombre_de_champs_lexicaux = nom_commun.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
-                    
-                    ajouter_le_type_source(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
-                    ajouter_le_type_sortie(nom_commun.recuperer_genre() + '_' + nom_commun.recuperer_nombre() + "_1");
-                    
-                    ajouter_le_mot_sortie(nom_commun.recuperer_mot(j));
-                    
-                    ajouter_le_champ_lexical(nom_commun.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, j);
+                    __mots[_indice_sous_phrase].push_back(nom_commun);
+                                        
+                    for (int j = 0; j < nombre_de_noms_communs; j++)
+                    {
+                        __champ_lexical.incrementation_des_champs_lexicaux(nom_commun.recuperer_champs_lexicaux(j));
+                    }
                 }
                 
-
+                
                 
                 // Nom propre masculin ou féminin.
                 
-                nom_propre.le_mot_est_un_nom_propre(phrase[i]);
+                /*nom_propre.le_mot_est_un_nom_propre(phrase[i]);
                 
                 nombre_de_noms_propres = nom_propre.recuperer_nombre_de_mots();
                 
-                for (int j = 0; j < nombre_de_noms_propres; j++)
+                if (nombre_de_noms_propres > 0)
                 {
-                    ajouter_le_type_source(nom_propre.recuperer_genre() + "_singulier_1");
-                    ajouter_le_type_sortie(nom_propre.recuperer_genre() + "_singulier_1");
+                    __mots[_indice_sous_phrase].push_back(nom_propre);
                     
-                    ajouter_le_mot_sortie(nom_propre.recuperer_mot(j));
-                    
-                    ajouter_le_champ_lexical("-");
+                    for (int j = 0; j < nombre_de_noms_propres; j++)
+                    {
+                        __champ_lexical.incrementation_des_champs_lexicaux(nom_propre.recuperer_champs_lexicaux()[j]);
+                    }
                 }
                 
                 
@@ -284,33 +208,14 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 nombre_de_mots_invariables = invariable.recuperer_nombre_de_mots();
                 
-                for (int j = 0; j < nombre_de_mots_invariables; j++)
+                if (nombre_de_mots_invariables > 0)
                 {
-                    int nombre_de_champ_lexicaux = invariable.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
+                    __mots[_indice_sous_phrase].push_back(invariable);
                     
-                    string mot_invariable = invariable.recuperer_mot(j);
-                    
-                    // La conjonction "et" est un cas spécial :
-                    // - Elle peut être utilisée comme conjonction de coordination entre deux phrase.
-                    // - Ou pour former un sujet complexe.
-                    
-                    // (Se reporter à la classe "Sujet")
-                    
-                    if (mot_invariable == "and" || mot_invariable == "et")
+                    for (int j = 0; j < nombre_de_mots_invariables; j++)
                     {
-                        ajouter_le_type_source("conjonction_et_1");
-                        ajouter_le_type_sortie("conjonction_et_1");
+                        __champ_lexical.incrementation_des_champs_lexicaux(invariable.recuperer_champs_lexicaux()[j]);
                     }
-                    
-                    else
-                    {
-                        ajouter_le_type_source("invariable_1");
-                        ajouter_le_type_sortie("invariable_1");
-                    }
-                    
-                    ajouter_le_mot_sortie(mot_invariable);
-                    
-                    ajouter_le_champ_lexical(invariable.recuperer_champs_lexicaux(), nombre_de_champ_lexicaux, j);
                 }
                 
                 
@@ -321,45 +226,36 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 nombre_de_adjectifs = adjectif.recuperer_nombre_de_mots();
                 
-                for (int j = 0; j < nombre_de_adjectifs; j++)
+                if (nombre_de_adjectifs > 0)
                 {
-                    int nombre_de_champs_lexicaux = adjectif.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
+                    __mots[_indice_sous_phrase].push_back(adjectif);
                     
-                    ajouter_le_type_source("adjectif_1");
-                    ajouter_le_type_sortie("adjectif_1");
-                    
-                    ajouter_le_mot_sortie(adjectif.recuperer_mot(j));
-                    
-                    ajouter_le_champ_lexical(adjectif.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, j);
+                    for (int j = 0; j < nombre_de_mots_invariables; j++)
+                    {
+                        __champ_lexical.incrementation_des_champs_lexicaux(adjectif.recuperer_champs_lexicaux()[j]);
+                    }
                 }
                 
                 
-
+                
                 // Verbe.
                 
-                verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, __structure_du_texte_source[_indice_sous_phrase]);
+                verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, __mots[_indice_sous_phrase]);
                 
                 nombre_de_verbes = verbe.recuperer_nombre_de_mots();
                 
-                for (int j = 0; j < nombre_de_verbes; j++)
+                if (nombre_de_verbes > 0)
                 {
-                    _presence_verbe = true;
+                    __mots[_indice_sous_phrase].push_back(verbe);
                     
-                    int nombre_de_champs_lexicaux = verbe.recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(j);
-                    
-                    ajouter_le_type_source("verbe_" + to_string(verbe.recuperer_taille_verbe_source()));
-                    ajouter_le_type_sortie("verbe_" + to_string(verbe.recuperer_taille_verbe_sortie()));
-                    
-                    ajouter_le_mot_sortie(verbe.recuperer_mot(j));
-                    
-                    ajouter_le_champ_lexical(verbe.recuperer_champs_lexicaux(), nombre_de_champs_lexicaux, j);
-                    
-                    // On passe les termes qui composent le verbe.
+                    for (int j = 0; j < nombre_de_verbes; j++)
+                    {
+                        __champ_lexical.incrementation_des_champs_lexicaux(verbe.recuperer_champs_lexicaux()[j]);
+                    }
                     
                     i += verbe.recuperer_taille_verbe_source() - 1;
                 }
-                
-                
+
                 
                 // Le mot n'est pas répertorié dans la base de données.
                 
@@ -369,15 +265,10 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     && nombre_de_adjectifs == 0
                     && nombre_de_verbes == 0)
                 {
-                    ajouter_le_type_source("inconnu_1");
-                    ajouter_le_type_sortie("inconnu_1");
-                    
-                    ajouter_le_mot_sortie(phrase[i]);
-                    
-                    ajouter_le_champ_lexical("-");
-                }
+                   //
+                }*/
             }
-        }
+        //}
         
         p_personnel = false;
 
@@ -419,11 +310,7 @@ void Phrase::recherche_virgule()
                 tableau.push_back(mot);
             }
             
-            __structure_du_texte_source.push_back(vector <vector <string>> ());
-            __structure_du_texte_sortie.push_back(vector <vector <string>> ());
-            
-            __tableau_contenant_significations_mot.push_back(vector <vector <string>> ());
-            __tableau_contenant_champs_lexicaux.push_back(vector <vector <vector <string>>> ());
+            __mots.push_back(vector <Mot> ());
             
             // Traduction des phrases.
 
@@ -467,9 +354,9 @@ void Phrase::construire_la_phrase()
     
     // Affinage de la phrase afin de la rendre grammaticalement correcte.
     
-    Affinage phrase(_langue_sortie, __phrase, __structure);
+    /*Affinage phrase(_langue_sortie, __phrase, __structure);
     
-    phrase.affiner_phrases();
+    phrase.affiner_phrases();*/
     
     // Construction de la phrase finale.
     

@@ -37,7 +37,7 @@ void Terminaison::nouvelle_terminaison_anglaise(int sujet, string temps, string 
 
 // Les terminaisons des verbes du troisième groupe.
 
-void Terminaison::nouvelle_terminaison_troisieme_groupe(string verbe, string temps_verbe, int sujet)
+void Terminaison::nouvelle_terminaison_francaise_troisieme_groupe(string verbe, string temps_verbe, int sujet)
 {
     if (temps_verbe == "present" || temps_verbe == "present_be+ing")
     {
@@ -59,7 +59,7 @@ void Terminaison::nouvelle_terminaison_troisieme_groupe(string verbe, string tem
 
 // Les terminaisons des verbes du premier et deuxième groupe.
 
-void Terminaison::nouvelle_terminaison_premier_ou_deuxieme_groupe(int groupe_verbe, int sujet, string temps)
+void Terminaison::nouvelle_terminaison_francaise_premier_ou_deuxieme_groupe(int groupe_verbe, int sujet, string temps)
 {
     if (temps == "present" || temps == "present_be+ing")
     {
@@ -100,13 +100,13 @@ void Terminaison::determiner_nouvelle_terminaison(string langue, string verbe, s
             }
                 break;
                 
-            case 1 : nouvelle_terminaison_premier_ou_deuxieme_groupe(groupe_verbe, sujet, temps_verbe);
+            case 1 : nouvelle_terminaison_francaise_premier_ou_deuxieme_groupe(groupe_verbe, sujet, temps_verbe);
                 break;
                 
-            case 2 : nouvelle_terminaison_premier_ou_deuxieme_groupe(groupe_verbe, sujet, temps_verbe);
+            case 2 : nouvelle_terminaison_francaise_premier_ou_deuxieme_groupe(groupe_verbe, sujet, temps_verbe);
                 break;
                 
-            case 3 : nouvelle_terminaison_troisieme_groupe(verbe, temps_verbe, sujet);
+            case 3 : nouvelle_terminaison_francaise_troisieme_groupe(verbe, temps_verbe, sujet);
                 break;
                 
             default:

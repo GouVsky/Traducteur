@@ -23,8 +23,8 @@ class Terminaison
     std::string recuperer_ancienne_terminaison() const { return _ancienne_terminaison; };
     std::string recuperer_nouvelle_terminaison() const { return _nouvelle_terminaison; };
     void nouvelle_terminaison_anglaise(int sujet, std::string temps, std::string verbe);
-    void nouvelle_terminaison_troisieme_groupe(std::string verbe, std::string temps_verbe, int sujet);
-    void nouvelle_terminaison_premier_ou_deuxieme_groupe(int groupe_verbe, int sujet, std::string temps);
+    void nouvelle_terminaison_francaise_troisieme_groupe(std::string verbe, std::string temps_verbe, int sujet);
+    void nouvelle_terminaison_francaise_premier_ou_deuxieme_groupe(int groupe_verbe, int sujet, std::string temps);
     void determiner_nouvelle_terminaison(std::string langue, std::string verbe, std::string temps_verbe, int sujet, int groupe_verbe);
     void ancienne_terminaison_troisieme_groupe(std::string verbe);
     void determiner_ancienne_terminaison(std::string langue, std::string verbe, int groupe_verbe);

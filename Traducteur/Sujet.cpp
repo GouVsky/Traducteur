@@ -7,21 +7,19 @@
 //
 
 #include "Sujet.hpp"
+#include "PronomPersonnel.hpp"
 
 using namespace std;
 
 
-Sujet::Sujet(vector <vector <string>> structure)
+Sujet::Sujet(string source, string sortie, vector <Mot> & mots)
 {
-    _valeur = 4;
+    _langue_source = source;
+    _langue_sortie = sortie;
     
-    for (int i = 0; i < structure.size(); i++)
-    {
-        for (int j = 0; j < structure[i].size(); j++)
-        {
-            __structure_phrase.push_back(structure[i][j]);
-        }
-    }
+    __mots = mots;
+    
+    _valeur = 4;
 }
 
 
@@ -29,84 +27,73 @@ Sujet::Sujet(vector <vector <string>> structure)
 
 // Simplification du sujet en pronom personnel.
 
-void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
+/*void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
 {
     int nb_masculin = 0,
         nb_feminin = 0;
     
-    bool presence_pronom = false;
-    
-    vector <string> pronoms_personnels = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+    PronomPersonnel pronom("F", _langue_sortie);
         
     for (int i = 0; i < tableau.size(); i++)
     {
         // Le sujet est un pronom personnel.
-        
-        for (int j = 0; j < pronoms_personnels.size(); j++)
+                
+        if (pronom.est_un_pronom_generique(tableau[i]))
         {
-            if (tableau[i] == "pronom_" + pronoms_personnels[j] + "_1")
-            {
-                _valeur = j;
-                
-                presence_pronom = true;
-                
-                break;
-            }
+            _valeur = pronom.recuperer_valeur();
         }
-                
-        if (tableau[i].find("feminin_pluriel") != -1)
+        
+        
+        if (tableau[i] == "feminin_pluriel")
         {
             nb_feminin += 2;
         }
         
-        else if (tableau[i].find("feminin_singulier") != -1)
+        else if (tableau[i] == "feminin_singulier")
         {
             nb_feminin++;
         }
         
-        else if (tableau[i].find("masculin_pluriel") != -1)
+        else if (tableau[i] == "masculin_pluriel")
         {
             nb_masculin += 2;
         }
         
-        else if (tableau[i].find("masculin_singulier") != -1)
+        else if (tableau[i] == "masculin_singulier")
         {
             nb_masculin++;
         }
     }
     
-    if (presence_pronom == false)
+    // Un nom feminin.
+    
+    if (nb_masculin == 0 && nb_feminin == 1)
     {
-        // Un nom feminin.
-        
-        if (nb_masculin == 0 && nb_feminin == 1)
-        {
-            _valeur = 3;
-        }
-        
-        // Au moins deux noms féminins.
-        
-        else if (nb_masculin == 0 && nb_feminin > 1)
-        {
-            _valeur = 8;
-        }
-        
-        // Un nom masculin.
-        
-        else if (nb_masculin == 1 && nb_feminin == 0)
-        {
-            _valeur = 2;
-        }
-        
-        // Au moins un nom masculin et un nom féminin ou au moins deux noms masculins.
-        
-        else if ((nb_masculin > 0 && nb_feminin > 0) || (nb_masculin > 1 && nb_feminin == 0))
-        {
-            _valeur = 7;
-        }
+        _valeur = 3;
+    }
+    
+    // Au moins deux noms féminins.
+    
+    else if (nb_masculin == 0 && nb_feminin > 1)
+    {
+        _valeur = 8;
+    }
+    
+    // Un nom masculin.
+    
+    else if (nb_masculin == 1 && nb_feminin == 0)
+    {
+        _valeur = 2;
+    }
+    
+    // Au moins un nom masculin et un nom féminin ou au moins deux noms masculins.
+    
+    else if ((nb_masculin > 0 && nb_feminin > 0) || (nb_masculin > 1 && nb_feminin == 0))
+    {
+        _valeur = 7;
     }
 }
-
+*/
 
 
 
@@ -114,32 +101,33 @@ void Sujet::transforme_groupe_nominal_sujet_en_pronom(vector <string> tableau)
 
 void Sujet::creation_du_sujet()
 {
-    bool presence_verbe = false;
+    /*bool presence_verbe = false;
     
     // S'il s'agit d'une phrase composée, le sujet est compris entre la fin de la phrase précédente et le verbe (non inclus).
     // Sinon, il est compris entre le début et le verbe (non inclus).
         
-    for (int i = 0; i < __structure_phrase.size(); i++)
+    for (int i = 0; i < __mots.size(); i++)
     {
         // On recherche s'il y a la présence d'un verbe.
         
-        if (__structure_phrase[i].find("verbe") != -1)
+        if (__mots[i].recuperer_type() == "Verbe")
         {
             presence_verbe = true;
         }
         
         // S'il existe la conjonction "et", il peut s'agir soit de deux phrases distinctes, soit d'une seule.
         
-        else if (__structure_phrase[i].find("conjonction_et") != -1)
+        //else if (__structure_phrase[i].find("conjonction_et") != -1)
+        else
         {
             // S'il y a un verbe à gauche du "et", alors il s'agit de deux phrases distinctes.
             // Le sujet de la première phrase n'est pas pris en compte puisqu'il a déjà été traduit.
             
             if (presence_verbe == true)
             {
-                for (int j = i + 1; j < __structure_phrase.size(); j++)
+                for (int j = i + 1; j < __mots.size(); j++)
                 {
-                    __structure_sujet.push_back(__structure_phrase[j]);
+                    __structure_sujet.push_back(__mots[i]);
                 }
             }
             
@@ -162,5 +150,5 @@ void Sujet::creation_du_sujet()
         {
             transforme_groupe_nominal_sujet_en_pronom(__structure_phrase);
         }
-    }
+    }*/
 }

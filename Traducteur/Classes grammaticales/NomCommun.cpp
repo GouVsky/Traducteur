@@ -16,6 +16,8 @@ NomCommun::NomCommun() : Mot()
 {
     _nombre = "singulier";
     
+    _genre = "masculin";
+    
     __genre[0] = "masculin";
     __genre[1] = "feminin";
 }
@@ -29,6 +31,8 @@ NomCommun::NomCommun(string source, string sortie) : Mot()
     _langue_sortie = sortie;
     
     _nombre = "singulier";
+    
+    _genre = "masculin";
     
     __genre[0] = "masculin";
     __genre[1] = "feminin";
@@ -74,7 +78,7 @@ void NomCommun::accorder_pluriel(string & mot, string langue)
     }
 }
 
-
+#include <iostream>
 
 
 // Détermine si le mot est un nom commun masculin ou féminin.
@@ -96,35 +100,37 @@ void NomCommun::le_mot_est_un_nom_commun(string mot)
             bool nom_commun_au_pluriel = false;
 
             // Si le mot possède plusieurs sens, on regarde lequel correspond.
+
+            definir_les_differents_sens_source(__nom_commun[_langue_source]);
             
-            istringstream iss_langue_source(__nom_commun[_langue_source]);
+            int nombre_de_sens = recuperer_nombre_de_sens_source();
             
-            while (getline(iss_langue_source, mot_lu_dans_le_fichier, '/'))
+            for (int j = 0; j < nombre_de_sens; j++)
             {
-                // Si le mot du dictionnaire est différent de celui de la phrase, on l'accorde au pluriel.
+                string sens = recuperer_sens_source(j);
                 
-                if (mot_lu_dans_le_fichier != mot)
+                if (mot != sens)
                 {
                     accorder_pluriel(mot_lu_dans_le_fichier, _langue_source);
                     
                     nom_commun_au_pluriel = true;
                 }
-                                
-                // Le mot peut être au singulier ou au pluriel.
                 
-                if (mot_lu_dans_le_fichier == mot)
+                // Le mot peut être au singulier ou au pluriel.
+                                
+                if (mot == sens)
                 {
                     if (nom_commun_au_pluriel == true)
                     {
                         _nombre = "pluriel";
                     }
                     
-                    ajouter_mot(__nom_commun[_langue_sortie]);
+                    definir_les_differents_sens_sortie(__nom_commun[_langue_sortie]);
+                    
+                    definir_les_differents_champs_lexicaux(_champs_lexicaux);
                     
                     _genre = __genre[i];
-                    
-                    ajouter_champs_lexicaux(_champs_lexicaux);
-                    
+                                        
                     nom_commun_trouve = true;
                     
                     break;

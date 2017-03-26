@@ -74,9 +74,9 @@ void Adjectif::le_mot_est_un_adjectif(string mot)
         {
             if (__adjectif[_langue_source] == mot)
             {
-                ajouter_mot(__adjectif[_langue_sortie]);
+                //ajouter_mot(__adjectif[_langue_sortie]);
                 
-                ajouter_champs_lexicaux(_champs_lexicaux);
+                //ajouter_champs_lexicaux(_champs_lexicaux);
                 
                 break;
             }

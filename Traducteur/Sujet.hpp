@@ -14,21 +14,27 @@
 #include <stdio.h>
 #include <fstream>
 
+#include "Mot.hpp"
+
 class Sujet
 {
     public :
     
-    Sujet(std::vector <std::vector <std::string>> structure);
+    Sujet(std::string source, std::string sortie, std::vector <Mot> & mots);
     int recuperer_valeur() const { return _valeur; };
-    void transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> structure);
+    void transforme_groupe_nominal_sujet_en_pronom();
     void creation_du_sujet();
     
     private :
     
     int _valeur;
     
-    std::vector <std::string> __structure_phrase,
-                              __structure_sujet;
+    std::string _langue_source,
+                _langue_sortie;
+    
+    std::vector <Mot> __mots;
+    
+    std::vector <std::string> __structure_sujet;
 };
 
 #endif /* sujet_hpp */

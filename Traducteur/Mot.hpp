@@ -22,22 +22,28 @@ class Mot
     public :
     
     Mot();
-    int recuperer_nombre_de_champs_lexicaux_pour_chaque_mot(int numero_du_mot) const { return __nombre_de_champs_lexicaux[numero_du_mot]; };
-    int recuperer_nombre_de_mots() const { return _nombre_de_mots; };
-    std::vector <std::vector <std::string>> recuperer_champs_lexicaux() const { return __tableau_champs_lexicaux; };
-    std::string recuperer_mot(int numero_du_mot) const { return __tableau_mots[numero_du_mot]; };
-    void ajouter_champs_lexicaux(std::string champ_lexicaux);
-    void ajouter_mot(std::string mots);
+    virtual std::string recuperer_type() const { return "Mot"; };
+    int recuperer_nombre_de_champs_lexicaux(int numero_du_sens) const { return __nombre_de_champs_lexicaux[numero_du_sens]; };
+    std::vector <std::string> recuperer_champs_lexicaux(int numero_du_sens) const { return __champs_lexicaux[numero_du_sens]; };
+    int recuperer_nombre_de_sens_sortie() const { return _nombre_de_sens_sortie; };
+    int recuperer_nombre_de_sens_source() const { return _nombre_de_sens_source; };
+    std::string recuperer_sens_sortie(int numero_sens) const { return __sens_sortie[numero_sens]; };
+    std::string recuperer_sens_source(int numero_sens) const { return __sens_source[numero_sens]; };
+    void definir_les_differents_champs_lexicaux(std::string ensemble_champ_lexicaux);
+    void definir_les_differents_sens_sortie(std::string ensemble_mots);
+    void definir_les_differents_sens_source(std::string ensemble_mots);
     
     private :
-        
-    int _nombre_de_mots;
+    
+    int _nombre_de_sens_source,
+        _nombre_de_sens_sortie;
     
     std::vector <int> __nombre_de_champs_lexicaux;
     
-    std::vector <std::string> __tableau_mots;
+    std::vector <std::string> __sens_source,
+                              __sens_sortie;
     
-    std::vector <std::vector <std::string>> __tableau_champs_lexicaux;
+    std::vector <std::vector <std::string>> __champs_lexicaux;
 };
 
 #endif /* Mot_hpp */

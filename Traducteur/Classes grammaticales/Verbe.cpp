@@ -77,7 +77,7 @@ string Verbe::construction(string langue, string verbe, int compteur)
         {
             if (mot == "verbe_et_terminaison")
             {
-                if (__irregulier_ou_non[langue] == "oui")
+                if (__irregularite[langue] == "o")
                 {
                     construction_verbe += le_verbe_est_irregulier(verbe, langue);
                 }
@@ -144,13 +144,13 @@ string Verbe::construction(string langue, string verbe, int compteur)
 
 // Détermine le verbe de la phrase.
 
-void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> tableau, vector <vector <string>> structure_de_la_phrase)
+void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <string> & phrases, vector <Mot> & mots)
 {
     // Création du sujet.
 
-    Sujet sujet(structure_de_la_phrase);
+    Sujet sujet(_langue_source, _langue_sortie, mots);
     
-    sujet.creation_du_sujet();
+    //sujet.creation_du_sujet();
     
     _sujet = sujet.recuperer_valeur();
     
@@ -172,7 +172,7 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
             
             while (!fichier_verbes.eof() && verbe_trouve == false)
             {
-                fichier_verbes >> __verbe["A"] >> __verbe["F"] >> __irregulier_ou_non["A"] >> __irregulier_ou_non["F"] >> _champs_lexicaux >> _groupe_verbe;
+                fichier_verbes >> __verbe["A"] >> __verbe["F"] >> __irregularite["A"] >> __irregularite["F"] >> _champs_lexicaux >> _groupe_verbe;
                 
                 // Construction du verbe.
                 
@@ -192,9 +192,9 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                     
                     forme_verbe_tmp = "";
                     
-                    for (int i = 0; i < min(_taille_verbe_source, (int) tableau.size() - compteur); i++)
+                    for (int i = 0; i < min(_taille_verbe_source, (int) phrases.size() - compteur); i++)
                     {
-                        forme_verbe_tmp += tableau[compteur + i] + ' ';
+                        forme_verbe_tmp += phrases[compteur + i] + ' ';
                     }
                     
                     forme_verbe_tmp.erase(forme_verbe_tmp.size() - 1);
@@ -213,12 +213,12 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                             
                             _taille_verbe_sortie = (int) count(_forme_verbe_sortie.begin(), _forme_verbe_sortie.end(), ' ') + 1;
                             
-                            ajouter_mot(_forme_verbe_sortie);
+                            //ajouter_mot(_forme_verbe_sortie);
                             
                             verbe_trouve = true;
                         }
                         
-                        ajouter_champs_lexicaux(_champs_lexicaux);
+                        //ajouter_champs_lexicaux(_champs_lexicaux);
                         
                         break;
                     }
