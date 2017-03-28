@@ -20,7 +20,6 @@ class Expression
     public :
     
     Expression(std::string source, std::string sortie);
-    int recuperer_taille_expression_sortie() const { return _taille_expression_sortie; };
     int recuperer_taille_expression_source() const { return _taille_expression_source; };
     std::string recuperer_expression() { return __expression[_langue_sortie]; };
     bool expression_existe() const { return _expression_existe; };
@@ -34,8 +33,7 @@ class Expression
                 _langue_source,
                 _langue_sortie;
     
-    int _taille_expression_source,
-        _taille_expression_sortie;
+    int _taille_expression_source;
     
     std::map <std::string, std::string> __expression;
 };

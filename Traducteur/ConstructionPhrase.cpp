@@ -29,7 +29,6 @@ Phrase::Phrase(string source, string sortie, string texte)
     
     _presence_verbe = false;
     
-    _indice_mot = 0;
     _indice_sous_phrase = 0;
 }
 
@@ -60,12 +59,12 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                 // Pour tous les champs lexicaux d'un sens.
                 
                 int nombre_de_champs_lexicaux = __mots[i][j].recuperer_nombre_de_champs_lexicaux(k);
-                
+
                 for (int l = 0; l < nombre_de_champs_lexicaux; l++)
                 {
                     // On récupère la plus grande valeur parmi tous les champs lexicaux associés à un sens du mot.
                     
-                    valeur_champ_lexical = __champ_lexical.recuperation_valeur_champ_lexical(__mots[i][j].recuperer_champs_lexicaux(k)[l]);
+                    valeur_champ_lexical = __champ_lexical.recuperation_valeur_champ_lexical(__mots[i][j].recuperer_champs_lexicaux(k, l));
                     
                     if (valeur_champ_lexical > max_valeur_champ_lexical)
                     {
@@ -125,34 +124,26 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
 
         // Expression.
         
-        /*expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
-        
-        int taille_source = expression.recuperer_taille_expression_source();
-        int taille_sortie = expression.recuperer_taille_expression_sortie();
+        expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
         
         if (expression.expression_existe())
         {
-            ajouter_le_type_source("expression_" + to_string(taille_source));
-            ajouter_le_type_sortie("expression_" + to_string(taille_sortie));
+            __mots[_indice_sous_phrase].push_back((Mot) expression.recuperer_expression());
             
-            // On stocke l'expression.
+            // On passe l'expression.
             
-            ajouter_le_mot_sortie(expression.recuperer_expression());
-            
-            ajouter_le_champ_lexical("-");
-            
-            i += taille_source - 1;
+            i += expression.recuperer_taille_expression_source() - 1;
         }
         
         else
-        {*/
+        {
             // Pronom personnel.
             
             pronom_personnel.le_mot_est_un_pronom_personnel(phrase[i]);
             
             if (pronom_personnel.existe())
             {
-                //__mots[_indice_sous_phrase].push_back(pronom_personnel);
+                __mots[_indice_sous_phrase].push_back(pronom_personnel);
             }
             
             else
@@ -178,7 +169,10 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                                         
                     for (int j = 0; j < nombre_de_noms_communs; j++)
                     {
-                        __champ_lexical.incrementation_des_champs_lexicaux(nom_commun.recuperer_champs_lexicaux(j));
+                        for (int k = 0; k < nom_commun.recuperer_nombre_de_champs_lexicaux(j); k++)
+                        {
+                            __champ_lexical.incrementation_des_champs_lexicaux(nom_commun.recuperer_champs_lexicaux(j, k));
+                        }
                     }
                 }
                 
@@ -186,9 +180,9 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 // Nom propre masculin ou féminin.
                 
-                /*nom_propre.le_mot_est_un_nom_propre(phrase[i]);
+                nom_propre.le_mot_est_un_nom_propre(phrase[i]);
                 
-                nombre_de_noms_propres = nom_propre.recuperer_nombre_de_mots();
+                nombre_de_noms_propres = nom_propre.recuperer_nombre_de_sens_sortie();
                 
                 if (nombre_de_noms_propres > 0)
                 {
@@ -196,17 +190,20 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     
                     for (int j = 0; j < nombre_de_noms_propres; j++)
                     {
-                        __champ_lexical.incrementation_des_champs_lexicaux(nom_propre.recuperer_champs_lexicaux()[j]);
+                        for (int k = 0; k < nom_commun.recuperer_nombre_de_champs_lexicaux(j); k++)
+                        {
+                            __champ_lexical.incrementation_des_champs_lexicaux(nom_propre.recuperer_champs_lexicaux(j, k));
+                        }
                     }
                 }
                 
-                
+               
                 
                 // Mot invariable.
                 
                 invariable.le_mot_est_invariable(phrase[i]);
                 
-                nombre_de_mots_invariables = invariable.recuperer_nombre_de_mots();
+                nombre_de_mots_invariables = invariable.recuperer_nombre_de_sens_sortie();
                 
                 if (nombre_de_mots_invariables > 0)
                 {
@@ -214,7 +211,10 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     
                     for (int j = 0; j < nombre_de_mots_invariables; j++)
                     {
-                        __champ_lexical.incrementation_des_champs_lexicaux(invariable.recuperer_champs_lexicaux()[j]);
+                        for (int k = 0; k < invariable.recuperer_nombre_de_champs_lexicaux(j); k++)
+                        {
+                            __champ_lexical.incrementation_des_champs_lexicaux(invariable.recuperer_champs_lexicaux(j, k));
+                        }
                     }
                 }
                 
@@ -224,15 +224,18 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 adjectif.le_mot_est_un_adjectif(phrase[i]);
                 
-                nombre_de_adjectifs = adjectif.recuperer_nombre_de_mots();
+                nombre_de_adjectifs = adjectif.recuperer_nombre_de_sens_sortie();
                 
                 if (nombre_de_adjectifs > 0)
                 {
                     __mots[_indice_sous_phrase].push_back(adjectif);
                     
-                    for (int j = 0; j < nombre_de_mots_invariables; j++)
+                    for (int j = 0; j < nombre_de_adjectifs; j++)
                     {
-                        __champ_lexical.incrementation_des_champs_lexicaux(adjectif.recuperer_champs_lexicaux()[j]);
+                        for (int k = 0; k < adjectif.recuperer_nombre_de_champs_lexicaux(j); k++)
+                        {
+                            __champ_lexical.incrementation_des_champs_lexicaux(adjectif.recuperer_champs_lexicaux(j, k));
+                        }
                     }
                 }
                 
@@ -242,7 +245,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 
                 verbe.determine_si_existe_un_verbe_dans_la_phrase(i, phrase, __mots[_indice_sous_phrase]);
                 
-                nombre_de_verbes = verbe.recuperer_nombre_de_mots();
+                nombre_de_verbes = verbe.recuperer_nombre_de_sens_sortie();
                 
                 if (nombre_de_verbes > 0)
                 {
@@ -250,8 +253,13 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     
                     for (int j = 0; j < nombre_de_verbes; j++)
                     {
-                        __champ_lexical.incrementation_des_champs_lexicaux(verbe.recuperer_champs_lexicaux()[j]);
+                        for (int k = 0; k < verbe.recuperer_nombre_de_champs_lexicaux(j); k++)
+                        {
+                            __champ_lexical.incrementation_des_champs_lexicaux(verbe.recuperer_champs_lexicaux(j, k));
+                        }
                     }
+                    
+                    // On passe le verbe.
                     
                     i += verbe.recuperer_taille_verbe_source() - 1;
                 }
@@ -265,14 +273,12 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     && nombre_de_adjectifs == 0
                     && nombre_de_verbes == 0)
                 {
-                   //
-                }*/
+                    __mots[_indice_sous_phrase].push_back((Mot) phrase[i]);
+                }
             }
-        //}
+        }
         
         p_personnel = false;
-
-        _indice_mot++;
     }
 }
 
@@ -322,7 +328,6 @@ void Phrase::recherche_virgule()
             {
                 _presence_verbe = false;
                 
-                _indice_mot = 0;
                 _indice_sous_phrase++;
             }
             

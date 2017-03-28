@@ -19,7 +19,6 @@ Verbe::Verbe(string source, string sortie) : Mot()
     _langue_sortie = sortie;
     
     _taille_verbe_source = 0;
-    _taille_verbe_sortie = 0;
     
     __type_verbe[0] = "attributifs";
     __type_verbe[1] = "actions";
@@ -148,9 +147,9 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
 {
     // Création du sujet.
 
-    Sujet sujet(_langue_source, _langue_sortie, mots);
+    Sujet sujet(_langue_source, _langue_sortie);
     
-    //sujet.creation_du_sujet();
+    //sujet.creation_du_sujet(mots);
     
     _sujet = sujet.recuperer_valeur();
     
@@ -211,14 +210,12 @@ void Verbe::determine_si_existe_un_verbe_dans_la_phrase(int compteur, vector <st
                         {
                             _forme_verbe_sortie = construction(_langue_sortie, mot_source, compteur);
                             
-                            _taille_verbe_sortie = (int) count(_forme_verbe_sortie.begin(), _forme_verbe_sortie.end(), ' ') + 1;
-                            
-                            //ajouter_mot(_forme_verbe_sortie);
+                            definir_les_differents_sens_sortie(__verbe[_langue_sortie]);
                             
                             verbe_trouve = true;
                         }
                         
-                        //ajouter_champs_lexicaux(_champs_lexicaux);
+                        definir_les_differents_champs_lexicaux(_champs_lexicaux);
                         
                         break;
                     }

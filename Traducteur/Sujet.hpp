@@ -20,10 +20,10 @@ class Sujet
 {
     public :
     
-    Sujet(std::string source, std::string sortie, std::vector <Mot> & mots);
+    Sujet(std::string source, std::string sortie);
     int recuperer_valeur() const { return _valeur; };
-    void transforme_groupe_nominal_sujet_en_pronom();
-    void creation_du_sujet();
+    void transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> structure);
+    void creation_du_sujet(std::vector <Mot> & mots);
     
     private :
     
@@ -31,9 +31,7 @@ class Sujet
     
     std::string _langue_source,
                 _langue_sortie;
-    
-    std::vector <Mot> __mots;
-    
+        
     std::vector <std::string> __structure_sujet;
 };
 

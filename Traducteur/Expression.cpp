@@ -20,7 +20,6 @@ Expression::Expression(string source, string sortie)
     _expression_existe = false;
     
     _taille_expression_source = 0;
-    _taille_expression_sortie = 0;
 }
 
 
@@ -59,8 +58,6 @@ void Expression::determine_si_existe_une_expression_dans_la_phrase(int compteur,
             
             if (_expression == __expression[_langue_source])
             {
-                _taille_expression_sortie = (int) count(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';') + 1;
-                
                 replace(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';', ' ');
                 
                 _expression_existe = true;

@@ -22,9 +22,11 @@ class Mot
     public :
     
     Mot();
+    Mot(std::string mot);
+    void operator=(std::string mot);
     virtual std::string recuperer_type() const { return "Mot"; };
-    int recuperer_nombre_de_champs_lexicaux(int numero_du_sens) const { return __nombre_de_champs_lexicaux[numero_du_sens]; };
-    std::vector <std::string> recuperer_champs_lexicaux(int numero_du_sens) const { return __champs_lexicaux[numero_du_sens]; };
+    int recuperer_nombre_de_champs_lexicaux(int numero_du_sens) const;
+    std::string recuperer_champs_lexicaux(int numero_du_sens, int numero_champ_lexical) const;
     int recuperer_nombre_de_sens_sortie() const { return _nombre_de_sens_sortie; };
     int recuperer_nombre_de_sens_source() const { return _nombre_de_sens_source; };
     std::string recuperer_sens_sortie(int numero_sens) const { return __sens_sortie[numero_sens]; };

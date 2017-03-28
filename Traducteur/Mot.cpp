@@ -20,13 +20,65 @@ Mot::Mot()
 
 
 
+Mot::Mot(string mot)
+{
+    * this = mot;
+}
+
+
+
+
+void Mot::operator=(string mot)
+{
+    _nombre_de_sens_source = 1;
+    _nombre_de_sens_sortie = 1;
+    
+    __sens_sortie.push_back(mot);
+    
+    __champs_lexicaux.push_back(vector <string> ());
+    __champs_lexicaux[0].push_back("-");
+    
+    __nombre_de_champs_lexicaux.push_back(0);
+}
+
+
+
+
+int Mot::recuperer_nombre_de_champs_lexicaux(int numero_du_sens) const
+{
+    if (__nombre_de_champs_lexicaux.size() > 0)
+    {
+        return __nombre_de_champs_lexicaux[numero_du_sens];
+    }
+    
+    return 0;
+};
+
+
+
+
+std::string Mot::recuperer_champs_lexicaux(int numero_du_sens, int numero_champ_lexical) const
+{
+    if (__champs_lexicaux.size() > 0)
+    {
+        return __champs_lexicaux[numero_du_sens][numero_champ_lexical];
+    }
+    
+    return "-";
+};
+
+
+
 
 // Ajoute tous les champs lexicaux qu'un mot peut posséder.
 
 void Mot::definir_les_differents_champs_lexicaux(string ensemble_champ_lexicaux)
 {
     string champ_lexical_du_flux,
-    nieme_champ_lexical;
+           nieme_champ_lexical;
+    
+    
+    __champs_lexicaux.clear();
     
     istringstream flux(ensemble_champ_lexicaux);
     

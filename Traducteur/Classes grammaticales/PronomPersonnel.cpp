@@ -60,7 +60,7 @@ void PronomPersonnel::le_mot_est_un_pronom_personnel(string mot)
             
             _pronom_existe = true;
             
-            _pronom_personnel_traduit = __pronoms_personnels_sujets[_langue_sortie][i];
+            definir_les_differents_sens_sortie(__pronoms_personnels_sujets[_langue_sortie][i]);
             
             _pronom_personnel_generique = __pronoms_personnels_generiques[i];
             

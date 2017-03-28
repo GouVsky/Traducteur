@@ -42,8 +42,7 @@ class Phrase
     
     bool _presence_verbe;
     
-    int _indice_mot,
-        _indice_sous_phrase;
+    int _indice_sous_phrase;
     
     std::vector <std::vector <Mot>> __mots;
 

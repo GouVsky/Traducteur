@@ -31,19 +31,6 @@ ChampsLexicaux::ChampsLexicaux()
 
 
 
-void ChampsLexicaux::incrementation_des_champs_lexicaux(vector <string> champs_lexicaux)
-{
-    int nombre_de_champs_lexicaux = champs_lexicaux.size();
-    
-    for (int i = 0; i < nombre_de_champs_lexicaux; i++)
-    {
-        incrementation_des_champs_lexicaux(champs_lexicaux[i]);
-    }
-}
-
-
-
-
 // Incrémentation des différents champs lexicaux.
 
 void ChampsLexicaux::incrementation_des_champs_lexicaux(string champ_lexical)

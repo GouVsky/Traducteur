@@ -12,12 +12,10 @@
 using namespace std;
 
 
-Sujet::Sujet(string source, string sortie, vector <Mot> & mots)
+Sujet::Sujet(string source, string sortie)
 {
     _langue_source = source;
     _langue_sortie = sortie;
-    
-    __mots = mots;
     
     _valeur = 4;
 }
@@ -32,8 +30,6 @@ Sujet::Sujet(string source, string sortie, vector <Mot> & mots)
     int nb_masculin = 0,
         nb_feminin = 0;
     
-    PronomPersonnel pronom("F", _langue_sortie);
-        
     for (int i = 0; i < tableau.size(); i++)
     {
         // Le sujet est un pronom personnel.
@@ -44,22 +40,22 @@ Sujet::Sujet(string source, string sortie, vector <Mot> & mots)
         }
         
         
-        if (tableau[i] == "feminin_pluriel")
+        if (tableau[i] == "Nom_commun_feminin_pluriel")
         {
             nb_feminin += 2;
         }
         
-        else if (tableau[i] == "feminin_singulier")
+        else if (tableau[i] == "Nom_commun_feminin_singulier")
         {
             nb_feminin++;
         }
         
-        else if (tableau[i] == "masculin_pluriel")
+        else if (tableau[i] == "Nom_commun_masculin_pluriel")
         {
             nb_masculin += 2;
         }
         
-        else if (tableau[i] == "masculin_singulier")
+        else if (tableau[i] == "Nom_commun_masculin_singulier")
         {
             nb_masculin++;
         }
@@ -93,24 +89,24 @@ Sujet::Sujet(string source, string sortie, vector <Mot> & mots)
         _valeur = 7;
     }
 }
-*/
+
 
 
 
 // Création du sujet.
 
-void Sujet::creation_du_sujet()
+void Sujet::creation_du_sujet(vector <Mot> & mots)
 {
-    /*bool presence_verbe = false;
+    bool presence_verbe = false;
     
     // S'il s'agit d'une phrase composée, le sujet est compris entre la fin de la phrase précédente et le verbe (non inclus).
     // Sinon, il est compris entre le début et le verbe (non inclus).
         
-    for (int i = 0; i < __mots.size(); i++)
+    for (int i = 0; i < mots.size(); i++)
     {
         // On recherche s'il y a la présence d'un verbe.
         
-        if (__mots[i].recuperer_type() == "Verbe")
+        if (mots[i].recuperer_type() == "Verbe")
         {
             presence_verbe = true;
         }
@@ -125,9 +121,9 @@ void Sujet::creation_du_sujet()
             
             if (presence_verbe == true)
             {
-                for (int j = i + 1; j < __mots.size(); j++)
+                for (int j = i + 1; j < mots.size(); j++)
                 {
-                    __structure_sujet.push_back(__mots[i]);
+                    __structure_sujet.push_back(mots[i].recuperer_type());
                 }
             }
             
@@ -135,9 +131,9 @@ void Sujet::creation_du_sujet()
             
             else
             {
-                for (int j = 0; j < __structure_phrase.size(); j++)
+                for (int j = 0; j < mots.size(); j++)
                 {
-                    __structure_sujet.push_back(__structure_phrase[j]);
+                    __structure_sujet.push_back(mots[j].recuperer_type());
                 }
             }
             
@@ -145,10 +141,5 @@ void Sujet::creation_du_sujet()
             
             break;
         }
-        
-        else if (i == __structure_phrase.size() - 1)
-        {
-            transforme_groupe_nominal_sujet_en_pronom(__structure_phrase);
-        }
-    }*/
-}
+    }
+}*/

@@ -78,7 +78,7 @@ void NomCommun::accorder_pluriel(string & mot, string langue)
     }
 }
 
-#include <iostream>
+
 
 
 // Détermine si le mot est un nom commun masculin ou féminin.
