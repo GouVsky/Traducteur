@@ -21,7 +21,7 @@ using namespace std;
 
 
 Phrase::Phrase(string source, string sortie, string texte)
-{    
+{
     _langue_source = source;
     _langue_sortie = sortie;
     
@@ -40,8 +40,8 @@ Phrase::Phrase(string source, string sortie, string texte)
 void Phrase::choix_des_mots_selon_champ_lexical()
 {
     int max = -1,
-        valeur_champ_lexical = 0,
-        max_valeur_champ_lexical = 0;
+    valeur_champ_lexical = 0,
+    max_valeur_champ_lexical = 0;
     
     
     for (int i = 0; i < __mots.size(); i++)
@@ -59,7 +59,7 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                 // Pour tous les champs lexicaux d'un sens.
                 
                 int nombre_de_champs_lexicaux = __mots[i][j].recuperer_nombre_de_champs_lexicaux(k);
-
+                
                 for (int l = 0; l < nombre_de_champs_lexicaux; l++)
                 {
                     // On récupère la plus grande valeur parmi tous les champs lexicaux associés à un sens du mot.
@@ -74,7 +74,7 @@ void Phrase::choix_des_mots_selon_champ_lexical()
                 
                 // Puis, entre toutes les significations, on choisit la signification dont le champ lexical associé est le plus répandu.
                 // Si plusieurs valeurs sont identiques, on les affiche toutes.
-
+                
                 if (max_valeur_champ_lexical > max)
                 {
                     max = max_valeur_champ_lexical;
@@ -104,13 +104,13 @@ void Phrase::choix_des_mots_selon_champ_lexical()
 void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
 {
     int nombre_de_verbes,
-        nombre_de_adjectifs,
-        nombre_de_noms_communs,
-        nombre_de_noms_propres,
-        nombre_de_mots_invariables;
+    nombre_de_adjectifs,
+    nombre_de_noms_communs,
+    nombre_de_noms_propres,
+    nombre_de_mots_invariables;
     
     bool p_personnel = false;
-
+    
     for (int i = 0; i < phrase.size(); i++)
     {
         NomPropre nom_propre;
@@ -120,8 +120,8 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
         Invariable invariable(_langue_source, _langue_sortie);
         Expression expression(_langue_source, _langue_sortie);
         PronomPersonnel pronom_personnel(_langue_source, _langue_sortie);
-
-
+        
+        
         // Expression.
         
         expression.determine_si_existe_une_expression_dans_la_phrase(i, phrase);
@@ -155,18 +155,18 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                 //      - On l'ajoute dans un tableau contenant les mots traduits.
                 //      - On ajoute son champ lexical dans un autre tableau.
                 
-
+                
                 
                 // Nom commun masculin ou féminin.
                 
                 nom_commun.le_mot_est_un_nom_commun(phrase[i]);
                 
                 nombre_de_noms_communs = nom_commun.recuperer_nombre_de_sens_sortie();
-                                                
+                
                 if (nombre_de_noms_communs > 0)
                 {
                     __mots[_indice_sous_phrase].push_back(nom_commun);
-                                        
+                    
                     for (int j = 0; j < nombre_de_noms_communs; j++)
                     {
                         for (int k = 0; k < nom_commun.recuperer_nombre_de_champs_lexicaux(j); k++)
@@ -197,7 +197,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     }
                 }
                 
-               
+                
                 
                 // Mot invariable.
                 
@@ -263,7 +263,7 @@ void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
                     
                     i += verbe.recuperer_taille_verbe_source() - 1;
                 }
-
+                
                 
                 // Le mot n'est pas répertorié dans la base de données.
                 
@@ -319,11 +319,11 @@ void Phrase::recherche_virgule()
             __mots.push_back(vector <Mot> ());
             
             // Traduction des phrases.
-
+            
             traduction_des_mots(tableau, virgule);
             
             // S'il y a un verbe dans le morceau de phrase, on considère qu'elle est indépendante du reste.
-
+            
             if (_presence_verbe == true)
             {
                 _presence_verbe = false;
@@ -360,8 +360,8 @@ void Phrase::construire_la_phrase()
     // Affinage de la phrase afin de la rendre grammaticalement correcte.
     
     /*Affinage phrase(_langue_sortie, __phrase, __structure);
-    
-    phrase.affiner_phrases();*/
+     
+     phrase.affiner_phrases();*/
     
     // Construction de la phrase finale.
     

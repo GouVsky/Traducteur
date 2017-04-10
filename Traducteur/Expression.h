@@ -19,6 +19,7 @@ class Expression
 {
     public :
     
+    Expression();
     Expression(std::string source, std::string sortie);
     int recuperer_taille_expression_source() const { return _taille_expression_source; };
     std::string recuperer_expression() { return __expression[_langue_sortie]; };

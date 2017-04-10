@@ -12,6 +12,11 @@
 using namespace std;
 
 
+Invariable::Invariable() : Mot() {}
+
+
+
+
 Invariable::Invariable(string source, string sortie) : Mot()
 {
     _langue_source = source;

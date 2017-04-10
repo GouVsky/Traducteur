@@ -11,7 +11,20 @@
 using namespace std;
 
 
-PronomPersonnel::PronomPersonnel(string source, string sortie)
+PronomPersonnel::PronomPersonnel() : Mot()
+{
+    _pronom_existe = false;
+    
+    __pronoms_personnels_sujets_A = {"i", "you", "he", "she", "it", "we", "you", "they", "they"};
+    __pronoms_personnels_sujets_F = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+    
+    __pronoms_personnels_generiques = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+}
+
+
+
+
+PronomPersonnel::PronomPersonnel(string source, string sortie) : Mot()
 {
     _langue_source = source;
     _langue_sortie = sortie;

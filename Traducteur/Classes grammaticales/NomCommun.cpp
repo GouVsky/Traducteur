@@ -41,6 +41,20 @@ NomCommun::NomCommun(string source, string sortie) : Mot()
 
 
 
+NomCommun & NomCommun::operator=(NomCommun nom_commun)
+{
+    _genre = nom_commun._genre;
+    _nombre = nom_commun._nombre;
+    _langue_source = nom_commun._langue_source;
+    _langue_sortie = nom_commun._langue_sortie;
+    _champs_lexicaux = nom_commun._champs_lexicaux;
+    
+    Mot::operator=(nom_commun);
+}
+
+
+
+
 // Accorde un mot s'il est au pluriel.
 
 void NomCommun::accorder_pluriel(string & mot, string langue)

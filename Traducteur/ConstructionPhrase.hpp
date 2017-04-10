@@ -36,16 +36,16 @@ class Phrase
     ChampsLexicaux __champ_lexical;
     
     std::string _langue_source,
-                _langue_sortie,
-                _phrase_source,
-                _phrase_sortie;
+    _langue_sortie,
+    _phrase_source,
+    _phrase_sortie;
     
     bool _presence_verbe;
     
     int _indice_sous_phrase;
     
     std::vector <std::vector <Mot>> __mots;
-
+    
     std::vector <std::vector <std::string>> __phrase;
 };
 

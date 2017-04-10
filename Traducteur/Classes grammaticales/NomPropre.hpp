@@ -22,7 +22,6 @@ class NomPropre : public Mot
     public :
     
     NomPropre();
-    std::string recuperer_type() const { return "Nom_propre"; };
     std::string recuperer_genre() const { return _genre; };
     void le_mot_est_un_nom_propre(std::string mot);
     

@@ -20,8 +20,8 @@ class Invariable : public Mot
 {
     public :
     
+    Invariable();
     Invariable(std::string source, std::string sortie);
-    std::string recuperer_type() const { return "Invariable"; };
     void le_mot_est_invariable(std::string mot);
     
     private :

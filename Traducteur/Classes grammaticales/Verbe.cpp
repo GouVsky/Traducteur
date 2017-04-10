@@ -13,6 +13,17 @@
 using namespace std;
 
 
+Verbe::Verbe() : Mot()
+{
+    _taille_verbe_source = 0;
+    
+    __type_verbe[0] = "attributifs";
+    __type_verbe[1] = "actions";
+}
+
+
+
+
 Verbe::Verbe(string source, string sortie) : Mot()
 {
     _langue_source = source;

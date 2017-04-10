@@ -75,7 +75,7 @@ std::string Mot::recuperer_champs_lexicaux(int numero_du_sens, int numero_champ_
 void Mot::definir_les_differents_champs_lexicaux(string ensemble_champ_lexicaux)
 {
     string champ_lexical_du_flux,
-           nieme_champ_lexical;
+    nieme_champ_lexical;
     
     
     __champs_lexicaux.clear();

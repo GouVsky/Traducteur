@@ -12,6 +12,16 @@
 using namespace std;
 
 
+Expression::Expression()
+{
+    _expression_existe = false;
+    
+    _taille_expression_source = 0;
+}
+
+
+
+
 Expression::Expression(string source, string sortie)
 {
     _langue_source = source;

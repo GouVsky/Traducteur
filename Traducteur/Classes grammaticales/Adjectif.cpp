@@ -12,6 +12,11 @@
 using namespace std;
 
 
+Adjectif::Adjectif() : Mot() {}
+
+
+
+
 Adjectif::Adjectif(string source, string sortie) : Mot()
 {
     _langue_source = source;

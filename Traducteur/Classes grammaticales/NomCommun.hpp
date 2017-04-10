@@ -24,7 +24,7 @@ class NomCommun : public Mot
     
     NomCommun();
     NomCommun(std::string source, std::string sortie);
-    std::string recuperer_type() const { return "Nom_commun_" + _genre + "_" + _nombre; };
+    NomCommun & operator=(NomCommun nom_commun);
     std::string recuperer_nombre() const { return _nombre; };
     std::string recuperer_genre() const { return _genre; };
     void accorder_pluriel(std::string & mot, std::string langue);

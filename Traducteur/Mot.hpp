@@ -38,12 +38,12 @@ class Mot
     private :
     
     int _nombre_de_sens_source,
-        _nombre_de_sens_sortie;
+    _nombre_de_sens_sortie;
     
     std::vector <int> __nombre_de_champs_lexicaux;
     
     std::vector <std::string> __sens_source,
-                              __sens_sortie;
+    __sens_sortie;
     
     std::vector <std::vector <std::string>> __champs_lexicaux;
 };

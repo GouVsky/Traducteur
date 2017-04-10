@@ -20,6 +20,7 @@ class PronomPersonnel : public Mot
 {
     public :
     
+    PronomPersonnel();
     PronomPersonnel(std::string source, std::string sortie);
     bool est_un_pronom_generique(std::string mot);
     bool existe() const { return _pronom_existe; };

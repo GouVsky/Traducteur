@@ -25,8 +25,8 @@ class Verbe : public Mot
 {
     public :
     
+    Verbe();
     Verbe(std::string source, std::string sortie);
-    std::string recuperer_type() const { return "Verbe"; };
     int recuperer_taille_verbe_source() const { return _taille_verbe_source; };
     std::string le_verbe_est_irregulier(std::string verbe, std::string langue);
     std::string construction(std::string langue, std::string verbe, int compteur);

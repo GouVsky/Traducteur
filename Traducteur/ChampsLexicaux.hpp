@@ -20,7 +20,7 @@ class ChampsLexicaux
     public :
     
     ChampsLexicaux();
-    int recuperation_valeur_champ_lexical(std::string champ_lexical) { return __liste_champs_lexicaux[champ_lexical]; };
+    int recuperation_valeur_champ_lexical(std::string champ_lexical);
     void incrementation_des_champs_lexicaux(std::string champ_lexical);
     
     private :
