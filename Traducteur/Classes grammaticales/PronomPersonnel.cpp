@@ -11,7 +11,7 @@
 using namespace std;
 
 
-PronomPersonnel::PronomPersonnel() : Mot()
+PronomPersonnel::PronomPersonnel()
 {
     _pronom_existe = false;
     
@@ -24,7 +24,7 @@ PronomPersonnel::PronomPersonnel() : Mot()
 
 
 
-PronomPersonnel::PronomPersonnel(string source, string sortie) : Mot()
+PronomPersonnel::PronomPersonnel(string source, string sortie)
 {
     _langue_source = source;
     _langue_sortie = sortie;
@@ -60,7 +60,7 @@ bool PronomPersonnel::est_un_pronom_generique(string mot)
 
 // Détermine si le mot est un pronom personnel.
 
-void PronomPersonnel::le_mot_est_un_pronom_personnel(string mot)
+/*void PronomPersonnel::le_mot_est_un_pronom_personnel(string mot)
 {
     __pronoms_personnels_sujets["A"] = __pronoms_personnels_sujets_A;
     __pronoms_personnels_sujets["F"] = __pronoms_personnels_sujets_F;
@@ -80,4 +80,4 @@ void PronomPersonnel::le_mot_est_un_pronom_personnel(string mot)
             break;
         }
     }
-}
+}*/

@@ -7,43 +7,9 @@
 //
 
 #include "NomPropre.hpp"
-#include "ResourcePath.hpp"
-
-using namespace std;
 
 
-NomPropre::NomPropre() : Mot()
+NomPropre::NomPropre()
 {
-    __genre[0] = "masculin";
-    __genre[1] = "feminin";
+    _genre = "masculin";
 }
-
-
-
-
-void NomPropre::le_mot_est_un_nom_propre(string mot)
-{
-    for (int i = 0; i< 2; i++)
-    {
-        ifstream fichier_noms_propres(resourcePath() + "noms_propres_" + __genre[i] + "s.txt");
-        
-        while (!fichier_noms_propres.eof())
-        {
-            fichier_noms_propres >> _nom_propre;
-            
-            if (_nom_propre == mot)
-            {
-                _nom_propre[0] = toupper(_nom_propre[0]);
-                
-                definir_les_differents_sens_sortie(_nom_propre);
-                
-                _genre = __genre[i];
-                
-                break;
-            }
-        }
-        
-        fichier_noms_propres.close();
-    }
-}
-

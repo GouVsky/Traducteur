@@ -7,49 +7,15 @@
 //
 
 #include "NomCommun.hpp"
-#include "ResourcePath.hpp"
 
 using namespace std;
 
 
-NomCommun::NomCommun() : Mot()
+NomCommun::NomCommun()
 {
     _nombre = "singulier";
     
     _genre = "masculin";
-    
-    __genre[0] = "masculin";
-    __genre[1] = "feminin";
-}
-
-
-
-
-NomCommun::NomCommun(string source, string sortie) : Mot()
-{
-    _langue_source = source;
-    _langue_sortie = sortie;
-    
-    _nombre = "singulier";
-    
-    _genre = "masculin";
-    
-    __genre[0] = "masculin";
-    __genre[1] = "feminin";
-}
-
-
-
-
-NomCommun & NomCommun::operator=(NomCommun nom_commun)
-{
-    _genre = nom_commun._genre;
-    _nombre = nom_commun._nombre;
-    _langue_source = nom_commun._langue_source;
-    _langue_sortie = nom_commun._langue_sortie;
-    _champs_lexicaux = nom_commun._champs_lexicaux;
-    
-    Mot::operator=(nom_commun);
 }
 
 
@@ -89,69 +55,5 @@ void NomCommun::accorder_pluriel(string & mot, string langue)
     else if (langue == "A")
     {
         mot += 's';
-    }
-}
-
-
-
-
-// Détermine si le mot est un nom commun masculin ou féminin.
-
-void NomCommun::le_mot_est_un_nom_commun(string mot)
-{
-    string mot_lu_dans_le_fichier;
-    
-    for (int i = 0; i < 2; i++)
-    {
-        bool nom_commun_trouve = false;
-        
-        ifstream fichier_noms_communs(resourcePath() + "noms_" + __genre[i] + "s.txt");
-        
-        while (!fichier_noms_communs.eof() && nom_commun_trouve == false)
-        {
-            fichier_noms_communs >> __nom_commun["A"] >> __nom_commun["F"] >> _champs_lexicaux;
-            
-            bool nom_commun_au_pluriel = false;
-
-            // Si le mot possède plusieurs sens, on regarde lequel correspond.
-
-            definir_les_differents_sens_source(__nom_commun[_langue_source]);
-            
-            int nombre_de_sens = recuperer_nombre_de_sens_source();
-            
-            for (int j = 0; j < nombre_de_sens; j++)
-            {
-                string sens = recuperer_sens_source(j);
-                
-                if (mot != sens)
-                {
-                    accorder_pluriel(mot_lu_dans_le_fichier, _langue_source);
-                    
-                    nom_commun_au_pluriel = true;
-                }
-                
-                // Le mot peut être au singulier ou au pluriel.
-                                
-                if (mot == sens)
-                {
-                    if (nom_commun_au_pluriel == true)
-                    {
-                        _nombre = "pluriel";
-                    }
-                    
-                    definir_les_differents_sens_sortie(__nom_commun[_langue_sortie]);
-                    
-                    definir_les_differents_champs_lexicaux(_champs_lexicaux);
-                    
-                    _genre = __genre[i];
-                                        
-                    nom_commun_trouve = true;
-                    
-                    break;
-                }
-            }
-        }
-        
-        fichier_noms_communs.close();
     }
 }

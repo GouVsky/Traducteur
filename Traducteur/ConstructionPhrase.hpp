@@ -17,8 +17,25 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "Mot.hpp"
+#include "Parseur.hpp"
+#include "ParseurVerbe.hpp"
+
+#include "Groupe.hpp"
+#include "Famille.hpp"
+
+#include "Verbe.hpp"
+#include "Adjectif.h"
+#include "Invariable.h"
+#include "NomPropre.hpp"
+#include "NomCommun.hpp"
+#include "PronomPersonnel.hpp"
+
+#include "Expression.h"
+
+#include "AffinagePhrase.hpp"
+
 #include "ChampsLexicaux.hpp"
+
 
 class Phrase
 {
@@ -26,6 +43,7 @@ class Phrase
     
     Phrase(std::string source, std::string sortie, std::string texte);
     std::string recuperer_phrase() const { return _phrase_sortie; };
+    void incrementer_champ_lexical(Famille & famille);
     void choix_des_mots_selon_champ_lexical();
     void traduction_des_mots(std::vector <std::string> phrase, bool virgule);
     void recherche_virgule();
@@ -36,15 +54,15 @@ class Phrase
     ChampsLexicaux __champ_lexical;
     
     std::string _langue_source,
-    _langue_sortie,
-    _phrase_source,
-    _phrase_sortie;
+                _langue_sortie,
+                _phrase_source,
+                _phrase_sortie;
     
     bool _presence_verbe;
     
     int _indice_sous_phrase;
     
-    std::vector <std::vector <Mot>> __mots;
+    std::vector <std::vector <Groupe>> __mots;
     
     std::vector <std::vector <std::string>> __phrase;
 };

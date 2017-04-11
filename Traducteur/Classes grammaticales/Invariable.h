@@ -9,28 +9,13 @@
 #ifndef __Traducteur_universel__motInvariable__
 #define __Traducteur_universel__motInvariable__
 
-#include <map>
-#include <string>
-#include <fstream>
 #include <stdio.h>
 
-#include "Mot.hpp"
-
-class Invariable : public Mot
+class Invariable
 {
     public :
     
     Invariable();
-    Invariable(std::string source, std::string sortie);
-    void le_mot_est_invariable(std::string mot);
-    
-    private :
-    
-    std::string _langue_source,
-                _langue_sortie,
-                _champs_lexicaux;
-    
-    std::map <std::string, std::string> __invariable;
 };
 
-#endif /* defined(__Traducteur_universel__motInvariable__) */
+#endif

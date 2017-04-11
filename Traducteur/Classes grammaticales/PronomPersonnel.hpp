@@ -16,7 +16,7 @@
 
 #include "Mot.hpp"
 
-class PronomPersonnel : public Mot
+class PronomPersonnel
 {
     public :
     

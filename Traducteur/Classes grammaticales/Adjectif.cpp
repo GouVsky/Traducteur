@@ -12,25 +12,16 @@
 using namespace std;
 
 
-Adjectif::Adjectif() : Mot() {}
-
-
-
-
-Adjectif::Adjectif(string source, string sortie) : Mot()
-{
-    _langue_source = source;
-    _langue_sortie = sortie;
-}
+Adjectif::Adjectif() {}
 
 
 
 
 // Accorde l'adjectif au pluriel.
 
-string Adjectif::accorder_pluriel(string adjectif)
+string Adjectif::accorder_pluriel(string adjectif, string langue)
 {
-    if (_langue_sortie == "F")
+    if (langue == "F")
     {
         adjectif += 's';
     }
@@ -43,9 +34,9 @@ string Adjectif::accorder_pluriel(string adjectif)
 
 // Accorde l'adjectif s'il est féminin.
 
-string Adjectif::accorder_feminin(string adjectif)
+string Adjectif::accorder_feminin(string adjectif, string langue)
 {
-    if (_langue_sortie == "F")
+    if (langue == "F")
     {
         if (adjectif[adjectif.size() - 1] != 'e')
         {
@@ -54,37 +45,4 @@ string Adjectif::accorder_feminin(string adjectif)
     }
     
     return adjectif;
-}
-
-
-
-
-// Détermine si le mot est adjectif.
-
-void Adjectif::le_mot_est_un_adjectif(string mot)
-{
-    string mot_source;
-    
-    ifstream fichier_adjectifs(resourcePath() + "adjectifs.txt");
-    
-    while (!fichier_adjectifs.eof())
-    {
-        fichier_adjectifs >> __adjectif["A"] >> __adjectif["F"] >> _champs_lexicaux;
-        
-        // Si le mot possède plusieurs sens, on regarde lequel correspond.
-        
-        istringstream iss_langue_source(__adjectif[_langue_source]);
-        
-        while (getline(iss_langue_source, mot_source, '/'))
-        {
-            if (__adjectif[_langue_source] == mot)
-            {
-                definir_les_differents_sens_sortie(__adjectif[_langue_sortie]);
-                
-                definir_les_differents_champs_lexicaux(_champs_lexicaux);
-                
-                break;
-            }
-        }
-    }
 }

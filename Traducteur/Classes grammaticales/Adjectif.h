@@ -17,23 +17,13 @@
 
 #include "Mot.hpp"
 
-class Adjectif : public Mot
+class Adjectif
 {
     public :
     
     Adjectif();
-    Adjectif(std::string source, std::string sortie);
-    std::string accorder_pluriel(std::string adjectif);
-    std::string accorder_feminin(std::string adjectif);
-    void le_mot_est_un_adjectif(std::string mot);
-    
-    private :
-    
-    std::string _langue_source,
-                _langue_sortie,
-                _champs_lexicaux;
-
-    std::map <std::string, std::string> __adjectif;
+    std::string accorder_pluriel(std::string adjectif, std::string langue);
+    std::string accorder_feminin(std::string adjectif, std::string langue);
 };
 
 #endif /* defined(__Traducteur_universel__adjectif__) */
