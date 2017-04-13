@@ -12,7 +12,7 @@
 using namespace std;
 
 
-ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie)
+ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie) : __sujet(langue_source, langue_sortie)
 {
     _verbe_trouve = false;
     
@@ -52,9 +52,7 @@ string ParseurVerbe::recuperer_forme_irreguliere(string verbe, string langue)
 
 
 
-// Construction du verbe en fonction du sujet, du temps et du groupe du verbe, et des caractéristiques propres à chaque langue.
-
-string ParseurVerbe::construction_verbe(string langue, string verbe, int compteur)
+string ParseurVerbe::construire_verbe(string langue, string verbe)
 {
     string mot,
            construction_verbe,
@@ -71,22 +69,22 @@ string ParseurVerbe::construction_verbe(string langue, string verbe, int compteu
         
         while (getline(iss_bis, mot, '-'))
         {
-            if (mot == "verbe_et_terminaison")
+            /*if (mot == "verbe_et_terminaison")
             {
                 if (__irregularite[langue] == "o")
                 {
-                    construction_verbe += recuperer_forme_irreguliere(verbe, langue);
+                    construction_verbe += recuperer_forme_irreguliere(langue, verbe);
                 }
                 
                 else
                 {
-                    _terminaison.determiner_nouvelle_terminaison(langue, verbe, _temps_verbe, _sujet, _groupe);
+                    __terminaison.determiner_nouvelle_terminaison(langue, verbe, _temps_verbe, __sujet.recuperer_valeur(), _groupe);
                     
-                    construction_verbe += verbe + _terminaison.recuperer_nouvelle_terminaison();
+                    construction_verbe += verbe + __terminaison.recuperer_nouvelle_terminaison();
                 }
             }
             
-            else if (mot == "ing")
+            else*/ if (mot == "ing")
             {
                 construction_verbe += mot;
             }
@@ -98,25 +96,25 @@ string ParseurVerbe::construction_verbe(string langue, string verbe, int compteu
             
             else if (mot == "radical")
             {
-                _terminaison.determiner_ancienne_terminaison(langue, verbe, _groupe);
+                __terminaison.determiner_ancienne_terminaison(langue, verbe, _groupe);
                 
-                copie_verbe.erase(copie_verbe.size() - _terminaison.recuperer_ancienne_terminaison().size());
+                copie_verbe.erase(copie_verbe.size() - __terminaison.recuperer_ancienne_terminaison().size());
                 
                 construction_verbe += copie_verbe;
             }
             
             else if (mot == "terminaison")
             {
-                _terminaison.determiner_nouvelle_terminaison(langue, verbe, _temps_verbe, _sujet, _groupe);
+                __terminaison.determiner_nouvelle_terminaison(langue, verbe, _temps_verbe, __sujet.recuperer_valeur(), _groupe);
                 
-                construction_verbe += _terminaison.recuperer_nouvelle_terminaison();
+                construction_verbe += __terminaison.recuperer_nouvelle_terminaison();
             }
             
             else if (mot == "avoir" || mot == "etre" || mot == "aller")
             {
-                _auxiliaire.construction_auxiliaire(_sujet, langue, mot, _temps_verbe);
+                __auxiliaire.construction_auxiliaire(__sujet.recuperer_valeur(), langue, mot, _temps_verbe);
                 
-                construction_verbe += _auxiliaire.recuperer_auxiliaire();
+                construction_verbe += __auxiliaire.recuperer_auxiliaire();
             }
             
             // To, will, would...
@@ -138,32 +136,22 @@ string ParseurVerbe::construction_verbe(string langue, string verbe, int compteu
 
 
 
-// Détermine le verbe de la phrase.
-
-void ParseurVerbe::parser_fichier(int compteur, vector <string> & phrases)
+void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
 {
-    // Création du sujet.
-    
-    Sujet sujet(_langue_source, _langue_sortie);
-    
-    //sujet.creation_du_sujet(mots);
-    
-    _sujet = sujet.recuperer_valeur();
+    __verbes_sortie.clear();
+    __champs_lexicaux.clear();
     
     
-    string mot,
-           champ_lexical,
-           forme_verbe_tmp;
+    string verbe = "",
+           champ_lexical = "";
     
-    bool verbe_trouve = false;
+    ifstream fichier(resourcePath() + "caracteristique_langue.txt");
     
-    ifstream fichier_caracteristique(resourcePath() + "caracteristique_langue.txt");
-    
-    while (!fichier_caracteristique.eof() && !_verbe_trouve)
+    while (!fichier.eof() && !_verbe_trouve)
     {
-        fichier_caracteristique >> _temps_verbe >> __conjugaison["A"] >> __conjugaison["F"];
+        fichier >> _temps_verbe >> __conjugaison["A"] >> __conjugaison["F"];
         
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < __type_verbe.size(); i++)
         {
             ifstream fichier_verbes(resourcePath() + "verbes_" + __type_verbe[i] + ".txt");
             
@@ -171,40 +159,54 @@ void ParseurVerbe::parser_fichier(int compteur, vector <string> & phrases)
             {
                 fichier_verbes >> __verbe["A"] >> __verbe["F"] >> __irregularite["A"] >> __irregularite["F"] >> _champs_lexicaux >> _groupe;
                 
-                // Construction du verbe.
+                // On récupère l'ensemble des verbes source.
                 
-                istringstream flux_verbe_source(__verbe[_langue_source]);
+                istringstream flux_source(__verbe[_langue_source]);
                 
-                // On vérifie si le verbe possède plusieurs sens.
-                
-                while (getline(flux_verbe_source, mot, '/'))
+                while (getline(flux_source, verbe, '/'))
                 {
-                    _forme_verbe_source = construction_verbe(_langue_source, mot, compteur);
+                    _forme_verbe_source = construire_verbe(_langue_source, verbe);
                     
-                    int taille = (int) count(_forme_verbe_source.begin(), _forme_verbe_source.end(), ' ') + 1;
                     
-                    // On récupère le verbe de la phrase entrée par l'utilisateur.
+                    // Comparaison du verbe construit avec celui de la phrase.
                     
-                    forme_verbe_tmp = "";
-                    
-                    for (int i = 0; i < min(taille, (int) phrases.size() - compteur); i++)
-                    {
-                        forme_verbe_tmp += phrases[compteur + i] + ' ';
-                    }
+                    int compteur = 0;
 
-                    forme_verbe_tmp.erase(forme_verbe_tmp.size() - 1);
+                    int taille_verbe = (int) count(_forme_verbe_source.begin(), _forme_verbe_source.end(), ' ') + 1;
                     
-                    // On traduit le verbe s'il est identique à celui de la phrase.
+                    int nombre_groupe = groupes.size();
                     
-                    if (forme_verbe_tmp == _forme_verbe_source)
+                    string verbe_de_la_phrase = "";
+                    
+                    while (compteur < min(taille_verbe, nombre_groupe))
                     {
+                        verbe_de_la_phrase += groupes[nombre_groupe - 1 - compteur].recuperer_mot_source() + ' ';
+                        
+                        compteur++;
+                    }
+                    
+                    verbe_de_la_phrase += mot;
+                    
+
+                    // Le verbe construit est identique à celui entré par l'utilisateur.
+                    
+                    if (verbe_de_la_phrase == _forme_verbe_source)
+                    {
+                        // On supprime les groupes de mots qui font en fait partis du verbe.
+                        
+                        if (compteur > 0)
+                        {
+                            groupes.erase(groupes.begin() + compteur - 1);
+                        }
+                        
+                        
                         // Construction des verbes traduits.
                         
                         istringstream flux_verbe_sortie(__verbe[_langue_sortie]);
                         
-                        while (getline(flux_verbe_sortie, mot, '/'))
+                        while (getline(flux_verbe_sortie, verbe, '/'))
                         {
-                            __verbe_sortie.push_back(construction_verbe(_langue_sortie, mot, compteur));
+                            __verbes_sortie.push_back(construire_verbe(_langue_sortie, verbe));
                         }
                         
                         // On récupère les différents champs lexicaux.
@@ -227,5 +229,5 @@ void ParseurVerbe::parser_fichier(int compteur, vector <string> & phrases)
         }
     }
     
-    fichier_caracteristique.close();
+    fichier.close();
 }

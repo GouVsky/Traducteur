@@ -22,6 +22,8 @@ class Parseur
     public :
     
     Parseur(std::string source, std::string sortie);
+    int recuperer_nombre_fichiers() { return __fichiers.size(); };
+    std::string recuperer_fichier(int numero_fichier) { return __fichiers[numero_fichier]; };
     std::vector <std::string> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::vector <std::string> recuperer_sens_sortie() const { return __sens_sortie; };
     bool le_mot_est_present_dans_fichier() const { return _mot_trouve; };
@@ -40,6 +42,13 @@ class Parseur
                               __champs_lexicaux;
     
     std::map <std::string, std::string> __mots;
+    
+    std::vector <std::string> __fichiers = {"adjectifs.txt",
+                                            "invariables.txt",
+                                            "noms_feminins.txt",
+                                            "noms_masculins.txt",
+                                            "noms_propres_feminins.txt",
+                                            "noms_propres_masculins.txt"};;
 };
 
 #endif /* Parseur_hpp */

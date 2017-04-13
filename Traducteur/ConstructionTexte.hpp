@@ -29,9 +29,7 @@ class Texte
     void construction_du_texte(std::string texte);
     
     private :
-    
-    int _nombre_de_phrases;
-    
+        
     std::string _langue_source,
                 _langue_sortie,
                 _texte_traduit;

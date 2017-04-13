@@ -16,11 +16,6 @@
 #include <sstream>
 #include <stdio.h>
 
-#include "Mot.hpp"
-#include "Terminaison.hpp"
-#include "Auxiliaire.hpp"
-#include "ChampsLexicaux.hpp"
-
 class Verbe
 {
     public :

@@ -32,8 +32,6 @@
 
 #include "Expression.h"
 
-#include "AffinagePhrase.hpp"
-
 #include "ChampsLexicaux.hpp"
 
 
@@ -41,30 +39,30 @@ class Phrase
 {
     public :
     
-    Phrase(std::string source, std::string sortie, std::string texte);
-    std::string recuperer_phrase() const { return _phrase_sortie; };
-    void incrementer_champ_lexical(Famille & famille);
-    void choix_des_mots_selon_champ_lexical();
-    void traduction_des_mots(std::vector <std::string> phrase, bool virgule);
-    void recherche_virgule();
+    Phrase(std::string phrase, std::string langue_source, std::string langue_sortie);
+    std::string recuperer_phrase_traduite() const { return _phrase_sortie; };
+    void choix_des_mots_selon_les_champs_lexicaux(int numero_sous_phrase);
+    void incrementer_les_champs_lexicaux(Famille & famille);
+    Groupe traduction(std::string mot);
+    void construire_les_sous_phrases();
     void construire_la_phrase();
     
     private :
     
-    ChampsLexicaux __champ_lexical;
+    ChampsLexicaux __champs_lexicaux;
     
-    std::string _langue_source,
-                _langue_sortie,
-                _phrase_source,
-                _phrase_sortie;
+    std::string _phrase_source,
+                _phrase_sortie,
+                _langue_source,
+                _langue_sortie;
     
-    bool _presence_verbe;
+    std::vector <Groupe> __groupes;
     
-    int _indice_sous_phrase;
+    std::vector <std::string> __sous_phrases_sorties;
     
-    std::vector <std::vector <Groupe>> __mots;
+    // Chaque sous-phrase initiales contient un ensemble de groupes.
     
-    std::vector <std::vector <std::string>> __phrase;
+    std::vector <std::vector <Groupe>> __sous_phrases_sources;
 };
 
 #endif /* constructionPhrase_hpp */

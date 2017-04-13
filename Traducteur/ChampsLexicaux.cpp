@@ -40,7 +40,7 @@ int ChampsLexicaux::recuperation_valeur_champ_lexical(string champ_lexical)
     
     else
     {
-        return -1;
+        return 0;
     }
 };
 

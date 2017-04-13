@@ -15,28 +15,6 @@ Texte::Texte(string source, string sortie)
 {
     _langue_source = source;
     _langue_sortie = sortie;
-    
-    _nombre_de_phrases = 0;
-}
-
-
-
-
-// Assemble les phrases traduites.
-
-void Texte::assembler_les_phrases()
-{
-    if (_nombre_de_phrases > 0)
-    {
-        for (int i = 0; i < _nombre_de_phrases; i++)
-        {
-            _texte_traduit += __phrase[i].recuperer_phrase() + __ponctuation[i] + ' ';
-        }
-        
-        // On efface le dernier espace.
-        
-        _texte_traduit.erase(_texte_traduit.size() - 1);
-    }
 }
 
 
@@ -85,11 +63,9 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
             
             // Ajout d'une nouvelle phrase.
             
-            Phrase phrase(_langue_source, _langue_sortie, phrase_tmp);
+            Phrase phrase(phrase_tmp, _langue_source, _langue_sortie);
             
             __phrase.push_back(phrase);
-            
-            _nombre_de_phrases++;
             
             if (conjonction == true)
             {
@@ -172,15 +148,24 @@ void Texte::construction_du_texte(string texte)
     
     // Création d'un thread par phrase.
     
-    for (int i = 0; i < _nombre_de_phrases; i++)
+    int nombre_de_phrases = __phrase.size();
+    
+    for (int i = 0; i < nombre_de_phrases; i++)
     {
         phrases.push_back(thread(&Phrase::construire_la_phrase, &__phrase[i]));
     }
     
-    for (int i = 0; i < _nombre_de_phrases; i++)
+    for (int i = 0; i < nombre_de_phrases; i++)
     {
         phrases[i].join();
     }
     
-    assembler_les_phrases();
+    // On assemble les phrases.
+    
+    for (int i = 0; i < nombre_de_phrases; i++)
+    {
+        _texte_traduit += __phrase[i].recuperer_phrase_traduite() + __ponctuation[i] + ' ';
+    }
+        
+    _texte_traduit.erase(_texte_traduit.size() - 1);
 }

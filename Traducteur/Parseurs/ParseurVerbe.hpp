@@ -16,11 +16,14 @@
 #include <sstream>
 #include <stdio.h>
 
-#include "Terminaison.hpp"
+#include "Sujet.hpp"
 #include "Auxiliaire.hpp"
+#include "Terminaison.hpp"
+
 #include "ChampsLexicaux.hpp"
 
-#include "Sujet.hpp"
+#include "Groupe.hpp"
+
 
 
 class ParseurVerbe
@@ -29,29 +32,30 @@ class ParseurVerbe
     
     ParseurVerbe(std::string source, std::string sortie);
     std::vector <std::string> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
-    std::vector <std::string> recuperer_verbes_sortie() const { return __verbe_sortie; };
+    std::vector <std::string> recuperer_verbes_sortie() const { return __verbes_sortie; };
     bool le_verbe_est_present() const { return _verbe_trouve; };
-    std::string recuperer_forme_irreguliere(std::string verbe, std::string langue);
-    std::string construction_verbe(std::string langue, std::string verbe, int compteur);
-    void parser_fichier(int compteur, std::vector <std::string> & phrases);
+    std::string recuperer_forme_irreguliere(std::string langue, std::string verbe);
+    std::string construire_verbe(std::string langue, std::string verbe);
+    void parser_fichier(std::string mot, std::vector <Groupe> & groupes);
     
     private :
     
-    Auxiliaire _auxiliaire;
-    
-    Terminaison _terminaison;
-    
-    int _sujet,
-        _groupe;
+    Sujet __sujet;
+    Auxiliaire __auxiliaire;
+    Terminaison __terminaison;
     
     bool _verbe_trouve;
+    
+    int _groupe;
     
     std::string _temps_verbe,
                 _langue_source,
                 _langue_sortie,
                 _champs_lexicaux,
-                _forme_verbe_source,
-                _forme_verbe_sortie;
+                _forme_verbe_source;
+    
+    std::vector <std::string> __verbes_sortie,
+                              __champs_lexicaux;
     
     std::map <int, std::string> __type_verbe;
     
@@ -59,9 +63,6 @@ class ParseurVerbe
                                         __irregulier,
                                         __conjugaison,
                                         __irregularite;
-    
-    std::vector <std::string> __verbe_sortie,
-                              __champs_lexicaux;
 };
 
 #endif /* ParseurVerbe_hpp */

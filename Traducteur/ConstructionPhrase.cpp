@@ -11,22 +11,104 @@
 using namespace std;
 
 
-Phrase::Phrase(string source, string sortie, string texte)
+Phrase::Phrase(string phrase, string langue_source, string langue_sortie)
 {
-    _langue_source = source;
-    _langue_sortie = sortie;
-    
-    _phrase_source = texte;
-    
-    _presence_verbe = false;
-    
-    _indice_sous_phrase = 0;
+    _phrase_source = phrase;
+
+    _langue_source = langue_source;
+    _langue_sortie = langue_sortie;
 }
 
 
 
 
-void Phrase::incrementer_champ_lexical(Famille & famille)
+void Phrase::choix_des_mots_selon_les_champs_lexicaux(int numero_sous_phrase)
+{
+    int max = -1,
+        valeur_champ_lexical = -1,
+        max_valeur_champ_lexical = -1;
+    
+    int nombre_de_sens,
+        nombre_de_familles,
+        nombre_de_champs_lexicaux;
+    
+    string mots;
+    
+    
+    // Pour toutes les groupes.
+    
+    for (int i = 0; i < __sous_phrases_sources[numero_sous_phrase].size(); i++)
+    {
+        // Pour chaque famille.
+        
+        nombre_de_familles = __sous_phrases_sources[numero_sous_phrase][i].recuperer_nombre_de_familles();
+        
+        // Le mot est inconnu s'il n'y a pas de famille.
+        
+        if (nombre_de_familles == 0)
+        {
+            __sous_phrases_sorties.push_back(__sous_phrases_sources[numero_sous_phrase][i].recuperer_mot_source());
+        }
+        
+        for (int j = 0; j < nombre_de_familles; j++)
+        {
+            // Pour chaque sens.
+            
+            nombre_de_sens = __sous_phrases_sources[numero_sous_phrase][i].recuperer_famille(j).recuperer_nombre_de_sens_sortie();
+            
+            for (int k = 0; k < nombre_de_sens; k++)
+            {
+                Mot mot = __sous_phrases_sources[numero_sous_phrase][i].recuperer_famille(j).recuperer_sens_sortie(k);
+                
+                // Pour chaque champ lexical.
+                
+                nombre_de_champs_lexicaux = mot.recuperer_nombre_de_champs_lexicaux();
+                
+                for (int l = 0; l < nombre_de_champs_lexicaux; l++)
+                {
+                    string champ_lexical = mot.recuperer_champs_lexicaux(l);
+                    
+                    // On récupère la plus grande valeur parmi tous les champs lexicaux associés à un sens du mot.
+                    
+                    valeur_champ_lexical = __champs_lexicaux.recuperation_valeur_champ_lexical(champ_lexical);
+                    
+                    if (valeur_champ_lexical > max_valeur_champ_lexical)
+                    {
+                        max_valeur_champ_lexical = valeur_champ_lexical;
+                    }
+                }
+
+                // Puis, entre tous les sens, on choisit celui dont le champ lexical associé est le plus répandu.
+                // Si plusieurs valeurs sont identiques, on les affiche tous.
+                
+                if (max_valeur_champ_lexical > max)
+                {
+                    max = max_valeur_champ_lexical;
+                    
+                    mots = mot.recuperer_mot();
+                }
+                
+                else if (max_valeur_champ_lexical == max)
+                {
+                    mots += '/' + mot.recuperer_mot();
+                }
+                
+                max_valeur_champ_lexical = -1;
+            }
+        }
+        
+        __sous_phrases_sorties.push_back(mots);
+        
+        max = -1;
+        
+        mots = "";
+    }
+}
+
+
+
+
+void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
 {
     int nombre_de_sens = famille.recuperer_nombre_de_sens_sortie();
     
@@ -36,7 +118,7 @@ void Phrase::incrementer_champ_lexical(Famille & famille)
         
         for (int j = 0; j < nombre_de_champs_lexicaux_par_mot; j++)
         {
-            __champ_lexical.incrementation_des_champs_lexicaux(famille.recuperer_sens_sortie(i).recuperer_champs_lexicaux(j));
+            __champs_lexicaux.incrementation_des_champs_lexicaux(famille.recuperer_sens_sortie(i).recuperer_champs_lexicaux(j));
         }
     }
 }
@@ -44,241 +126,105 @@ void Phrase::incrementer_champ_lexical(Famille & famille)
 
 
 
-// Choix du mot approprié s'il possède plusieurs sens possibles.
-
-void Phrase::choix_des_mots_selon_champ_lexical()
+Groupe Phrase::traduction(string mot)
 {
-    int max = -1,
-        valeur_champ_lexical = 0,
-        max_valeur_champ_lexical = 0;
+    Groupe groupe(mot);
     
-    int nombre_de_familles,
-        nombre_de_sens,
-        nombre_de_champs_lexicaux;
+    Parseur parseur(_langue_source, _langue_sortie);
+    ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
     
     
-    // Pour toutes les sous-phrases.
+    int nombre_fichiers = parseur.recuperer_nombre_fichiers();
     
-    for (int i = 0; i < __mots.size(); i++)
+    
+    for (int i = 0; i < nombre_fichiers; i++)
     {
-        // Pour toutes les groupes.
+        parseur.parser_fichier(parseur.recuperer_fichier(i), mot);
 
-        for (int j = 0; j < __mots[i].size(); j++)
+        if (parseur.le_mot_est_present_dans_fichier())
         {
-            __phrase.push_back(vector <string> ());
-
+            // Création d'une nouvelle famille de mots.
             
-            // Pour chaque famille.
-
-            nombre_de_familles = __mots[i][j].recuperer_nombre_de_familles();
-            
-            // Le mot est inconnu s'il n'y a pas de famille.
-            
-            if (nombre_de_familles == 0)
-            {
-                __phrase[__phrase.size() - 1].push_back(__mots[i][j].recuperer_mot_source());
-            }
-            
-            for (int k = 0; k < nombre_de_familles; k++)
-            {
-                // Pour chaque sens.
-                
-                nombre_de_sens = __mots[i][j].recuperer_famille(k).recuperer_nombre_de_sens_sortie();
-                
-                for (int l = 0; l < nombre_de_sens; l++)
-                {
-                    Mot mot_tmp = __mots[i][j].recuperer_famille(k).recuperer_sens_sortie(l);
-                    
-                    // Pour chaque champ lexical.
-                    
-                    nombre_de_champs_lexicaux = mot_tmp.recuperer_nombre_de_champs_lexicaux();
-                    
-                    for (int m = 0; m < nombre_de_champs_lexicaux; m++)
-                    {
-                        string champ_lexical = mot_tmp.recuperer_champs_lexicaux(m);
-                        
-                        // On récupère la plus grande valeur parmi tous les champs lexicaux associés à un sens du mot.
-                        
-                        valeur_champ_lexical = __champ_lexical.recuperation_valeur_champ_lexical(champ_lexical);
-                        
-                        if (valeur_champ_lexical > max_valeur_champ_lexical)
-                        {
-                            max_valeur_champ_lexical = valeur_champ_lexical;
-                        }
-                    }
-                    
-                    // Puis, entre toutes les significations, on choisit la signification dont le champ lexical associé est le plus répandu.
-                    // Si plusieurs valeurs sont identiques, on les affiche toutes.
-                    
-                    if (max_valeur_champ_lexical > max)
-                    {
-                        max = max_valeur_champ_lexical;
-                        
-                        __phrase[__phrase.size() - 1].clear();
-                        __phrase[__phrase.size() - 1].push_back(mot_tmp.recuperer_mot());
-                    }
-                    
-                    else if (max_valeur_champ_lexical == max)
-                    {
-                        __phrase[__phrase.size() - 1].push_back(mot_tmp.recuperer_mot());
-                    }
-                    
-                    max_valeur_champ_lexical = -1;
-                }
-            }
-            
-            max = -1;
-        }
-    }
-}
-
-
-
-
-// Traduction des mots selon leur nature (noms, verbes, adjectifs, expressions...).
-
-void Phrase::traduction_des_mots(vector <string> phrase, bool virgule)
-{
-    vector <string> fichiers = {"adjectifs.txt",
-                                "invariables.txt",
-                                "noms_feminins.txt",
-                                "noms_masculins.txt",
-                                "noms_propres_feminins.txt",
-                                "noms_propres_masculins.txt"};
-    
-    
-    for (int i = 0; i < phrase.size(); i++)
-    {
-        Groupe groupe(phrase[i]);
-        
-        
-        Parseur parseur(_langue_source, _langue_sortie);
-        ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
-        
-
-        int nombre_fichiers = fichiers.size();
-        
-        for (int j = 0; j < nombre_fichiers; j++)
-        {
-            parseur.parser_fichier(fichiers[j], phrase[i]);
-            
-            if (parseur.le_mot_est_present_dans_fichier())
-            {                
-                // Création d'une nouvelle famille de mots.
-                
-                Famille famille;
-                
-                famille.definir_les_differents_sens_sortie(parseur.recuperer_sens_sortie());
-                
-                famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux());
-                
-                famille.definir_le_type(j);
-                
-                incrementer_champ_lexical(famille);
-                
-                // Ajout de la famille dans le groupe.
-                
-                groupe.ajouter_famille(famille);
-            }
-        }
-        
-        
-        // Le cas des verbes est plus complexe, on l'étudie à part.
-
-        parseur_verbe.parser_fichier(i, phrase);
-
-        if (parseur_verbe.le_verbe_est_present())
-        {
             Famille famille;
             
-            famille.definir_les_differents_sens_sortie(parseur_verbe.recuperer_verbes_sortie());
+            famille.definir_les_differents_sens_sortie(parseur.recuperer_sens_sortie());
             
-            famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux());
+            famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux());
             
-            famille.definir_le_type(6);
+            famille.definir_le_type(i);
             
-            incrementer_champ_lexical(famille);
+            incrementer_les_champs_lexicaux(famille);
             
             // Ajout de la famille dans le groupe.
             
             groupe.ajouter_famille(famille);
-            
-            // On saute le verbe.
-            
-            i += 0;
         }
-        
-        
-        // On ajoute le groupe.
-        
-        __mots[_indice_sous_phrase].push_back(groupe);
     }
+    
+    
+    
+    // On étudie le cas des verbes à part.
+    
+    parseur_verbe.parser_fichier(mot, __groupes);
+    
+    if (parseur_verbe.le_verbe_est_present())
+    {
+        // Création d'une nouvelle famille de mots.
+        
+        Famille famille;
+        
+        famille.definir_les_differents_sens_sortie(parseur_verbe.recuperer_verbes_sortie());
+        
+        famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux());
+        
+        incrementer_les_champs_lexicaux(famille);
+        
+        // Ajout de la famille dans le groupe.
+        
+        groupe.ajouter_famille(famille);
+    }
+    
+    return groupe;
 }
 
 
 
 
-// Recherche des virgules dans les phrases.
-
-void Phrase::recherche_virgule()
+void Phrase::construire_les_sous_phrases()
 {
-    bool virgule  = false;
-    vector <string> tableau;
-    string phrase = "", mot = "";
+    string mot,
+           phrase;
     
-    for (int i = 0; i < _phrase_source.size(); i++)
+    istringstream flux(_phrase_source);
+
+    while (getline(flux, phrase, ','))
     {
-        if (_phrase_source[i] == ',' || i == _phrase_source.size() - 1)
+        istringstream flux_traduction(phrase);
+        
+        while (getline(flux_traduction, mot, ' '))
         {
-            if (_phrase_source[i] != ',')
-            {
-                phrase += _phrase_source[i];
-            }
-            
-            else
-            {
-                virgule = true;
-            }
-            
-            // Séparation des mots.
-            
-            istringstream iss(phrase);
-            
-            while (getline(iss, mot, ' '))
-            {
-                tableau.push_back(mot);
-            }
-            
-            __mots.push_back(vector <Groupe> ());
-            
-            // Traduction des phrases.
-            
-            traduction_des_mots(tableau, virgule);
-            
-            // S'il y a un verbe dans le morceau de phrase, on considère qu'elle est indépendante du reste.
-            
-            if (_presence_verbe == true)
-            {
-                _presence_verbe = false;
-                
-                _indice_sous_phrase++;
-            }
-            
-            phrase = "";
-            virgule = false;
-            tableau.clear();
-            
-            while (_phrase_source[i + 1] == ' ')
-            {
-                i++;
-            }
+            __groupes.push_back(traduction(mot));
+        }
+        
+        // Si un verbe est présent dans un des groupes,
+        // On considère qu'il s'agit d'une sous-phrase.
+        
+        /* if (un verbe)
+        {
+            __sous_phrases.push_back(__groupes);
         }
         
         else
         {
-            phrase += _phrase_source[i];
-        }
+            
+        } */
+        
+        __sous_phrases_sources.push_back(__groupes);
+        
+        __groupes.clear();
     }
+
+    __sous_phrases_sources.push_back(__groupes);
 }
 
 
@@ -286,29 +232,19 @@ void Phrase::recherche_virgule()
 
 void Phrase::construire_la_phrase()
 {
-    recherche_virgule();
+    construire_les_sous_phrases();
     
-    choix_des_mots_selon_champ_lexical();
-    
-    // Affinage de la phrase afin de la rendre grammaticalement correcte.
-    
-    /*Affinage phrase(_langue_sortie, __phrase, __structure);
-     
-     phrase.affiner_phrases();*/
-    
-    // Construction de la phrase finale.
-    
-    for (int i = 0; i < __phrase.size(); i++)
+    for (int i = 0; i < __sous_phrases_sources.size(); i++)
     {
-        for (int j = 0; j < __phrase[i].size(); j++)
+        choix_des_mots_selon_les_champs_lexicaux(i);
+        
+        for (int j = 0; j < __sous_phrases_sorties.size(); j++)
         {
-            _phrase_sortie += __phrase[i][j] + '/';
+            _phrase_sortie += __sous_phrases_sorties[j] + ' ';
         }
         
-        _phrase_sortie.erase(_phrase_sortie.size() - 1);
-        
-        _phrase_sortie += ' ';
+        __sous_phrases_sorties.clear();
     }
-
+    
     _phrase_sortie.erase(_phrase_sortie.size() - 1);
 }

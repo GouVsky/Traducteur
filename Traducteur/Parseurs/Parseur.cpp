@@ -9,7 +9,6 @@
 #include "Parseur.hpp"
 #include "ResourcePath.hpp"
 
-
 using namespace std;
 
 
@@ -29,6 +28,7 @@ void Parseur::parser_fichier(string chemin_fichier, string mot_source)
     __sens_sortie.clear();
     __champs_lexicaux.clear();
     
+    string ligne;
     
     ifstream fichier(resourcePath() + chemin_fichier);
     

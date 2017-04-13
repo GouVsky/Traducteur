@@ -7,8 +7,6 @@
 //
 
 #include "Verbe.hpp"
-#include "Sujet.hpp"
-#include "ResourcePath.hpp"
 
 using namespace std;
 
