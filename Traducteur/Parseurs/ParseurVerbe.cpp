@@ -173,12 +173,15 @@ void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                     int compteur = 0;
 
                     int taille_verbe = (int) count(_forme_verbe_source.begin(), _forme_verbe_source.end(), ' ') + 1;
-                    
+
                     int nombre_groupe = groupes.size();
                     
                     string verbe_de_la_phrase = "";
                     
-                    while (compteur < min(taille_verbe, nombre_groupe))
+                    // On construit le verbe avec les mots précédents.
+                    // On ne prend pas en compte le mot en cours.
+                    
+                    while (compteur < min(taille_verbe - 1, nombre_groupe))
                     {
                         verbe_de_la_phrase += groupes[nombre_groupe - 1 - compteur].recuperer_mot_source() + ' ';
                         
