@@ -11,17 +11,7 @@
 using namespace std;
 
 
-Famille::Famille()
-{
-    _type = -1;
-}
-
-
-
-void Famille::definir_le_type(int type)
-{
-    _type = type;
-}
+Famille::Famille() {}
 
 
 
@@ -32,6 +22,16 @@ void Famille::definir_les_champs_lexicaux_des_mots(vector <string> champs_lexica
     {
         __sens_sortie[i].definir_les_differents_champs_lexicaux(champs_lexicaux[i]);
     }
+}
+
+
+
+
+void Famille::ajouter_sens_sortie(string mot)
+{
+    Mot sens_sortie(mot);
+    
+    __sens_sortie.push_back(mot);
 }
 
 

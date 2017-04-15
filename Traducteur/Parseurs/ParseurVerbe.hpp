@@ -63,6 +63,12 @@ class ParseurVerbe
                                         __irregulier,
                                         __conjugaison,
                                         __irregularite;
+    
+    
+    std::string _fichier_forme_verbe = "forme_verbe.txt";
+    
+    std::vector <std::string> __fichier_types_verbes = {"verbes_actions.txt",
+                                                        "verbes_attributifs.txt"};
 };
 
 #endif /* ParseurVerbe_hpp */

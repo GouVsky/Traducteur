@@ -15,16 +15,16 @@
 #include <fstream>
 #include <stdio.h>
 
-class Expression
+#include "Groupe.hpp"
+
+class ParseurExpression
 {
     public :
     
-    Expression();
-    Expression(std::string source, std::string sortie);
-    int recuperer_taille_expression_source() const { return _taille_expression_source; };
-    std::string recuperer_expression() { return __expression[_langue_sortie]; };
+    ParseurExpression(std::string source, std::string sortie);
+    std::string recuperer_expression() { return _expression; };
     bool expression_existe() const { return _expression_existe; };
-    void determine_si_existe_une_expression_dans_la_phrase(int compteur, std::vector <std::string> phrase);
+    void parser_fichier(std::string mot, std::vector <Groupe> & groupes);
     
     private :
     
@@ -33,10 +33,10 @@ class Expression
     std::string _expression,
                 _langue_source,
                 _langue_sortie;
-    
-    int _taille_expression_source;
-    
+        
     std::map <std::string, std::string> __expression;
+    
+    std::string _fichier = "expressions.txt";
 };
 
 #endif /* defined(__Traducteur_universel__expression__) */

@@ -27,7 +27,7 @@ Auxiliaire::Auxiliaire()
 
 void Auxiliaire::construction_auxiliaire(int sujet, string langue, string auxiliaire, string temps)
 {
-    if (auxiliaire == __auxiliaire_etre[langue])
+    if (auxiliaire == "être")
     {
         __conjugaison_auxiliaire["present_etre_A"] = __present_etre_A[sujet];
         __conjugaison_auxiliaire["present_etre_F"] = __present_etre_F[sujet];
@@ -35,7 +35,7 @@ void Auxiliaire::construction_auxiliaire(int sujet, string langue, string auxili
         _auxiliaire = __conjugaison_auxiliaire[temps + "_etre_" + langue];
     }
     
-    else if (auxiliaire == __auxiliaire_avoir[langue])
+    else if (auxiliaire == "avoir")
     {
         __conjugaison_auxiliaire["present_avoir_A"] = __present_avoir_A[sujet];
         __conjugaison_auxiliaire["present_avoir_F"] = __present_avoir_F[sujet];

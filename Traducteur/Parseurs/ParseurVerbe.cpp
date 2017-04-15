@@ -26,7 +26,7 @@ ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie) : __sujet
 
 
 
-string ParseurVerbe::recuperer_forme_irreguliere(string verbe, string langue)
+string ParseurVerbe::recuperer_forme_irreguliere(string langue, string verbe)
 {
     string irregularite;
     
@@ -69,7 +69,7 @@ string ParseurVerbe::construire_verbe(string langue, string verbe)
         
         while (getline(iss_bis, mot, '-'))
         {
-            /*if (mot == "verbe_et_terminaison")
+            if (mot == "verbe_et_terminaison")
             {
                 if (__irregularite[langue] == "o")
                 {
@@ -84,7 +84,7 @@ string ParseurVerbe::construire_verbe(string langue, string verbe)
                 }
             }
             
-            else*/ if (mot == "ing")
+            else if (mot == "ing")
             {
                 construction_verbe += mot;
             }
@@ -110,7 +110,7 @@ string ParseurVerbe::construire_verbe(string langue, string verbe)
                 construction_verbe += __terminaison.recuperer_nouvelle_terminaison();
             }
             
-            else if (mot == "avoir" || mot == "etre" || mot == "aller")
+            else if (mot == "avoir" || mot == "être" || mot == "aller")
             {
                 __auxiliaire.construction_auxiliaire(__sujet.recuperer_valeur(), langue, mot, _temps_verbe);
                 
@@ -145,7 +145,7 @@ void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
     string verbe = "",
            champ_lexical = "";
     
-    ifstream fichier(resourcePath() + "caracteristique_langue.txt");
+    ifstream fichier(resourcePath() + _fichier_forme_verbe);
     
     while (!fichier.eof() && !_verbe_trouve)
     {
@@ -153,7 +153,7 @@ void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
         
         for (int i = 0; i < __type_verbe.size(); i++)
         {
-            ifstream fichier_verbes(resourcePath() + "verbes_" + __type_verbe[i] + ".txt");
+            ifstream fichier_verbes(resourcePath() + __fichier_types_verbes[i]);
             
             while (!fichier_verbes.eof() && !_verbe_trouve)
             {
@@ -168,24 +168,25 @@ void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                     _forme_verbe_source = construire_verbe(_langue_source, verbe);
                     
                     
-                    // Comparaison du verbe construit avec celui de la phrase.
-                    
-                    int compteur = 0;
-
                     int taille_verbe = (int) count(_forme_verbe_source.begin(), _forme_verbe_source.end(), ' ') + 1;
-
+                    
                     int nombre_groupe = groupes.size();
                     
                     string verbe_de_la_phrase = "";
                     
-                    // On construit le verbe avec les mots précédents.
+                    // On construit l'expression avec les mots précédents.
                     // On ne prend pas en compte le mot en cours.
                     
-                    while (compteur < min(taille_verbe - 1, nombre_groupe))
+                    int indice = min(nombre_groupe - taille_verbe, nombre_groupe);
+                    
+                    if (indice <= 0)
                     {
-                        verbe_de_la_phrase += groupes[nombre_groupe - 1 - compteur].recuperer_mot_source() + ' ';
-                        
-                        compteur++;
+                        indice = 1;
+                    }
+                    
+                    for (int i = indice - 1; i < nombre_groupe; i++)
+                    {
+                        verbe_de_la_phrase += groupes[i].recuperer_mot_source() + ' ';
                     }
                     
                     verbe_de_la_phrase += mot;
@@ -197,10 +198,7 @@ void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                     {
                         // On supprime les groupes de mots qui font en fait partis du verbe.
                         
-                        if (compteur > 0)
-                        {
-                            groupes.erase(groupes.begin() + compteur - 1);
-                        }
+                        groupes.erase(groupes.begin() + indice - 1, groupes.end());
                         
                         
                         // Construction des verbes traduits.

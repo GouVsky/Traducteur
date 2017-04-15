@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <fstream>
 
-#include "Mot.hpp"
+#include "Groupe.hpp"
 
 class Sujet
 {
@@ -22,8 +22,8 @@ class Sujet
     
     Sujet(std::string source, std::string sortie);
     int recuperer_valeur() const { return _valeur; };
-    void transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> structure);
-    void creation_du_sujet(std::vector <Mot> & mots);
+    /*void transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> structure);
+    void creation_du_sujet(std::vector <Groupe> & groupes);*/
     
     private :
     

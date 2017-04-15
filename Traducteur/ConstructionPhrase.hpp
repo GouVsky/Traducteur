@@ -30,7 +30,7 @@
 #include "NomCommun.hpp"
 #include "PronomPersonnel.hpp"
 
-#include "Expression.h"
+#include "ParseurExpression.h"
 
 #include "ChampsLexicaux.hpp"
 

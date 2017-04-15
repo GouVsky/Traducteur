@@ -88,21 +88,21 @@ Sujet::Sujet(string source, string sortie)
     {
         _valeur = 7;
     }
-}
+}*/
 
 
 
 
 // Création du sujet.
 
-void Sujet::creation_du_sujet(vector <Mot> & mots)
+/*void Sujet::creation_du_sujet(vector <Groupe> & groupes)
 {
     bool presence_verbe = false;
     
     // S'il s'agit d'une phrase composée, le sujet est compris entre la fin de la phrase précédente et le verbe (non inclus).
     // Sinon, il est compris entre le début et le verbe (non inclus).
         
-    for (int i = 0; i < mots.size(); i++)
+    for (int i = 0; i < groupes.size(); i++)
     {
         // On recherche s'il y a la présence d'un verbe.
         
