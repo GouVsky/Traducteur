@@ -15,7 +15,7 @@ using namespace std;
 ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie) : __sujet(langue_source, langue_sortie)
 {
     _verbe_trouve = false;
-    
+
     _langue_source = langue_source;
     _langue_sortie = langue_sortie;
     
@@ -134,9 +134,9 @@ string ParseurVerbe::construire_verbe(string langue, string verbe)
 }
 
 
+#include <iostream>
 
-
-void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
+bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
 {
     __verbes_sortie.clear();
     __champs_lexicaux.clear();
@@ -174,31 +174,33 @@ void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                     
                     string verbe_de_la_phrase = "";
                     
+                    // Comparaison du verbe avec celui de la phrase.
+                    
                     // On construit l'expression avec les mots précédents.
                     // On ne prend pas en compte le mot en cours.
                     
-                    int indice = min(nombre_groupe - taille_verbe, nombre_groupe);
+                    int indice = nombre_groupe - taille_verbe + 1;
                     
-                    if (indice <= 0)
+                    if (indice < 0)
                     {
                         indice = 1;
                     }
                     
-                    for (int i = indice - 1; i < nombre_groupe; i++)
+                    for (int i = indice; i < nombre_groupe; i++)
                     {
                         verbe_de_la_phrase += groupes[i].recuperer_mot_source() + ' ';
                     }
                     
                     verbe_de_la_phrase += mot;
                     
-
+                    
                     // Le verbe construit est identique à celui entré par l'utilisateur.
                     
                     if (verbe_de_la_phrase == _forme_verbe_source)
                     {
                         // On supprime les groupes de mots qui font en fait partis du verbe.
                         
-                        groupes.erase(groupes.begin() + indice - 1, groupes.end());
+                        groupes.erase(groupes.begin() + indice, groupes.end());
                         
                         
                         // Construction des verbes traduits.
@@ -231,4 +233,6 @@ void ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
     }
     
     fichier.close();
+    
+    return _verbe_trouve;
 }

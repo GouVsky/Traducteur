@@ -6,7 +6,6 @@
 //  Copyright © 2016 Grégoire. All rights reserved.
 //
 
-#include "GFenetre.hpp"
 #include "GChampTexte.hpp"
 
 using namespace sf;

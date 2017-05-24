@@ -33,10 +33,9 @@ class ParseurVerbe
     ParseurVerbe(std::string source, std::string sortie);
     std::vector <std::string> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::vector <std::string> recuperer_verbes_sortie() const { return __verbes_sortie; };
-    bool le_verbe_est_present() const { return _verbe_trouve; };
     std::string recuperer_forme_irreguliere(std::string langue, std::string verbe);
     std::string construire_verbe(std::string langue, std::string verbe);
-    void parser_fichier(std::string mot, std::vector <Groupe> & groupes);
+    bool parser_fichier(std::string mot, std::vector <Groupe> & groupes);
     
     private :
     

@@ -30,7 +30,7 @@ class Mot
     private :
     
     std::string _mot;
-        
+    
     std::vector <std::string> __champs_lexicaux;
 };
 

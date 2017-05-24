@@ -26,8 +26,7 @@ class Parseur
     std::string recuperer_fichier(int numero_fichier) { return __fichiers[numero_fichier]; };
     std::vector <std::string> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::vector <std::string> recuperer_sens_sortie() const { return __sens_sortie; };
-    bool le_mot_est_present_dans_fichier() const { return _mot_trouve; };
-    void parser_fichier(std::string chemin_fichier, std::string mot_source);
+    bool parser_fichier(std::string chemin_fichier, std::string mot_source);
     
     private :
     

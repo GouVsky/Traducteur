@@ -16,6 +16,7 @@
 #include <stdio.h>
 
 #include "GTexte.hpp"
+#include "GFenetre.hpp"
 #include "GZoneTexte.hpp"
 
 #include <SFML/Window.hpp>

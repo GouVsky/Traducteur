@@ -7,8 +7,6 @@
 //
 
 #include "GTexte.hpp"
-#include "GZoneTexte.hpp"
-#include "ResourcePath.hpp"
 
 
 using namespace sf;

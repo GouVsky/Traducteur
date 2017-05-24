@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <codecvt>
 
+#include "ResourcePath.hpp"
+
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 

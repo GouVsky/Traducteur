@@ -21,7 +21,7 @@ Parseur::Parseur(string langue_source, string langue_sortie)
 
 
 
-void Parseur::parser_fichier(string chemin_fichier, string mot_source)
+bool Parseur::parser_fichier(string chemin_fichier, string mot_source)
 {
     _mot_trouve = false;
 
@@ -78,4 +78,6 @@ void Parseur::parser_fichier(string chemin_fichier, string mot_source)
     }
     
     fichier.close();
+    
+    return _mot_trouve;
 }

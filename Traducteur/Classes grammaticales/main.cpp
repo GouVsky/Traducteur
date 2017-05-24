@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, const char * argv[])
 {
     Fenetre tryba;
-    
+
     tryba.creation_de_la_fenetre();
     
     return 0;

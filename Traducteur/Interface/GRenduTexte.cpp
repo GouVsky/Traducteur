@@ -6,7 +6,6 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "GFenetre.hpp"
 #include "GRenduTexte.hpp"
 
 

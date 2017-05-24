@@ -14,8 +14,11 @@
 
 #include "GImage.hpp"
 
+#include "ResourcePath.hpp"
+
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+
 
 class GBouton : public GImage
 {

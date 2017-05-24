@@ -10,7 +10,6 @@
 #define champsLexicaux_hpp
 
 #include <map>
-#include <vector>
 #include <string>
 #include <stdio.h>
 

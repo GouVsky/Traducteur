@@ -14,6 +14,7 @@
 #include <locale>
 #include <stdio.h>
 
+#include "GFenetre.hpp"
 #include "GCurseur.hpp"
 #include "GZoneTexte.hpp"
 

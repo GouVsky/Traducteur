@@ -23,8 +23,7 @@ class ParseurExpression
     
     ParseurExpression(std::string source, std::string sortie);
     std::string recuperer_expression() { return _expression; };
-    bool expression_existe() const { return _expression_existe; };
-    void parser_fichier(std::string mot, std::vector <Groupe> & groupes);
+    bool parser_fichier(std::string mot, std::vector <Groupe> & groupes);
     
     private :
     

@@ -12,10 +12,7 @@
 #include <string>
 #include <stdio.h>
 
-#include "GBouton.hpp"
-#include "GZoneTexte.hpp"
-#include "GChampTexte.hpp"
-#include "GRenduTexte.hpp"
+#include "ResourcePath.hpp"
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
