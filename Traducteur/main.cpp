@@ -6,16 +6,35 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#include "Fenetre.hpp"
+#include <string>
+#include <iostream>
+
+#include "ConstructionTexte.hpp"
 
 using namespace std;
 
 
 int main(int argc, const char * argv[])
 {
-    Fenetre tryba;
+    string texte = "";
+
+    string langue_source = "A";
+    string langue_sortie = "F";
     
-    tryba.creation_de_la_fenetre();
+    
+    cout << "Entrer un texte à traduire :" << endl << endl;
+    
+    getline(cin, texte);
+    
+    texte += '\0';
+    
+    
+    Texte bob_le_bricoleur(langue_source, langue_sortie);
+
+    bob_le_bricoleur.construction_du_texte(texte);
+    
+    cout << endl << bob_le_bricoleur.recuperer_texte_traduit() << endl << endl << endl;
+    
     
     return 0;
 }

@@ -22,8 +22,7 @@ class Mot
     public :
     
     Mot(std::string mot);
-    int recuperer_nombre_de_champs_lexicaux() const { return __champs_lexicaux.size(); };
-    std::string recuperer_champs_lexicaux(int numero_champ_lexical) const { return __champs_lexicaux[numero_champ_lexical]; };
+    ChampsLexicaux recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::string recuperer_mot() const { return _mot; };
     void definir_les_differents_champs_lexicaux(std::string ensemble_champ_lexicaux);
     
@@ -31,7 +30,7 @@ class Mot
     
     std::string _mot;
     
-    std::vector <std::string> __champs_lexicaux;
+    ChampsLexicaux __champs_lexicaux;
 };
 
 #endif /* Mot_hpp */

@@ -7,7 +7,6 @@
 //
 
 #include "Parseur.hpp"
-#include "ResourcePath.hpp"
 
 using namespace std;
 
@@ -29,8 +28,8 @@ bool Parseur::parser_fichier(string chemin_fichier, string mot_source)
     __champs_lexicaux.clear();
     
     string ligne;
-    
-    ifstream fichier(resourcePath() + chemin_fichier);
+
+    ifstream fichier(chemin_fichier);
     
     while (!fichier.eof() && !_mot_trouve)
     {

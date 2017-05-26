@@ -7,7 +7,6 @@
 //
 
 #include "ParseurVerbe.hpp"
-#include "ResourcePath.hpp"
 
 using namespace std;
 
@@ -30,7 +29,7 @@ string ParseurVerbe::recuperer_forme_irreguliere(string langue, string verbe)
 {
     string irregularite;
     
-    ifstream fichier_verbes_irreguliers(resourcePath() + "verbes_irreguliers_" + langue + ".txt");
+    ifstream fichier_verbes_irreguliers("./Resources/Dictionnaire/verbes_irreguliers_" + langue + ".txt");
     
     while (!fichier_verbes_irreguliers.eof())
     {
@@ -134,7 +133,7 @@ string ParseurVerbe::construire_verbe(string langue, string verbe)
 }
 
 
-#include <iostream>
+
 
 bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
 {
@@ -145,7 +144,8 @@ bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
     string verbe = "",
            champ_lexical = "";
     
-    ifstream fichier(resourcePath() + _fichier_forme_verbe);
+    
+    ifstream fichier(_fichier_forme_verbe);
     
     while (!fichier.eof() && !_verbe_trouve)
     {
@@ -153,7 +153,7 @@ bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
         
         for (int i = 0; i < __type_verbe.size(); i++)
         {
-            ifstream fichier_verbes(resourcePath() + __fichier_types_verbes[i]);
+            ifstream fichier_verbes(__fichier_types_verbes[i]);
             
             while (!fichier_verbes.eof() && !_verbe_trouve)
             {
@@ -170,7 +170,7 @@ bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                     
                     int taille_verbe = (int) count(_forme_verbe_source.begin(), _forme_verbe_source.end(), ' ') + 1;
                     
-                    int nombre_groupe = groupes.size();
+                    size_t nombre_groupe = groupes.size();
                     
                     string verbe_de_la_phrase = "";
                     
@@ -179,14 +179,14 @@ bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                     // On construit l'expression avec les mots précédents.
                     // On ne prend pas en compte le mot en cours.
                     
-                    int indice = nombre_groupe - taille_verbe + 1;
+                    size_t indice = nombre_groupe - taille_verbe + 1;
                     
                     if (indice < 0)
                     {
                         indice = 1;
                     }
                     
-                    for (int i = indice; i < nombre_groupe; i++)
+                    for (size_t i = indice; i < nombre_groupe; i++)
                     {
                         verbe_de_la_phrase += groupes[i].recuperer_mot_source() + ' ';
                     }
@@ -231,7 +231,7 @@ bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
             fichier_verbes.close();
         }
     }
-    
+
     fichier.close();
     
     return _verbe_trouve;

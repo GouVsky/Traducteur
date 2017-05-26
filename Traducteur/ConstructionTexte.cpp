@@ -90,11 +90,11 @@ void Texte::recherche_de_la_ponctuation(string t)
     string mot = "", phrase = "";
 
     // On récupère le texte caractère par caractère.
-    
+
     for (int i = 0; i < t.size(); i++)
     {
         // On découpe le texte à chaque ponctuation.
-        
+
         if (t[i] == '.' || t[i] == '!' || t[i] == '?' || t[i] == ';' || t[i] == ':' || t[i] == '\0')
         {
             transform(phrase.begin(), phrase.end(), phrase.begin(), ::tolower);
@@ -107,9 +107,9 @@ void Texte::recherche_de_la_ponctuation(string t)
             {
                 tableau.push_back(mot);
             }
-            
+
             recherche_conjonction_coordination(tableau);
-            
+
             // On ajoute la ponctuation.
             
             __ponctuation.push_back(t[i]);
@@ -145,11 +145,11 @@ void Texte::construction_du_texte(string texte)
     vector <thread> phrases;
 
     recherche_de_la_ponctuation(texte);
-    
+
     // Création d'un thread par phrase.
     
-    int nombre_de_phrases = __phrase.size();
-    
+    size_t nombre_de_phrases = __phrase.size();
+
     for (int i = 0; i < nombre_de_phrases; i++)
     {
         phrases.push_back(thread(&Phrase::construire_la_phrase, &__phrase[i]));
@@ -159,13 +159,13 @@ void Texte::construction_du_texte(string texte)
     {
         phrases[i].join();
     }
-    
+
     // On assemble les phrases.
     
     for (int i = 0; i < nombre_de_phrases; i++)
     {
         _texte_traduit += __phrase[i].recuperer_phrase_traduite() + __ponctuation[i] + ' ';
     }
-        
+
     _texte_traduit.erase(_texte_traduit.size() - 1);
 }

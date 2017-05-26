@@ -16,23 +16,57 @@ ChampsLexicaux::ChampsLexicaux() {}
 
 
 
-int ChampsLexicaux::recuperation_valeur_champ_lexical(string champ_lexical)
+ChampsLexicaux & ChampsLexicaux::operator=(ChampsLexicaux champs_lexicaux)
 {
-    if (champ_lexical != "-")
+    __liste_champs_lexicaux = champs_lexicaux.__liste_champs_lexicaux;
+   
+    return * this;
+}
+
+
+
+
+ChampsLexicaux ChampsLexicaux::operator+(ChampsLexicaux champs_lexicaux)
+{
+    map <string, int>::iterator it;
+    
+    
+    for (it = champs_lexicaux.__liste_champs_lexicaux.begin(); it != champs_lexicaux.__liste_champs_lexicaux.end(); it++)
     {
-        return __liste_champs_lexicaux[champ_lexical];
+        __liste_champs_lexicaux[it->first] += it->second;
+    }
+
+    return * this;
+}
+
+
+
+
+int ChampsLexicaux::recuperation_valeur_plus_grand_champ_lexical_commun(ChampsLexicaux champs_lexicaux)
+{
+    int max_comparant = 0,
+        max_compare = 0;
+    
+    map <string, int>::iterator it;
+    
+
+    for (it = champs_lexicaux.__liste_champs_lexicaux.begin(); it != champs_lexicaux.__liste_champs_lexicaux.end(); it++)
+    {
+        if (it->second > max_comparant)
+        {
+            max_comparant = it->second;
+            
+            max_compare = __liste_champs_lexicaux[it->first];
+        }
     }
     
-    else
-    {
-        return 0;
-    }
-};
+    return max_compare;
+}
 
 
 
 
-void ChampsLexicaux::incrementation_des_champs_lexicaux(string champ_lexical)
+void ChampsLexicaux::incrementation_du_champ_lexical(string champ_lexical)
 {
     if (champ_lexical != "-")
     {

@@ -35,7 +35,7 @@ class ParseurExpression
         
     std::map <std::string, std::string> __expression;
     
-    std::string _fichier = "expressions.txt";
+    std::string _fichier = "./Resources/Dictionnaire/expressions.txt";
 };
 
 #endif /* defined(__Traducteur_universel__expression__) */

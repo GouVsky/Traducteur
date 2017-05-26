@@ -27,12 +27,10 @@ void Phrase::choix_des_mots_selon_les_champs_lexicaux(int numero_sous_phrase)
     string mots;
 
     int max = -1,
-        valeur_champ_lexical = -1,
-        max_valeur_champ_lexical = -1;
+        valeur_champ_lexical = -1;
     
-    int nombre_de_sens,
-        nombre_de_familles,
-        nombre_de_champs_lexicaux;
+    size_t nombre_de_sens,
+           nombre_de_familles;
     
     
     // Pour toutes les groupes d'une sous-phrase.
@@ -58,49 +56,24 @@ void Phrase::choix_des_mots_selon_les_champs_lexicaux(int numero_sous_phrase)
             
             for (int k = 0; k < nombre_de_sens; k++)
             {
-                Mot mot = __sous_phrases_sources[numero_sous_phrase][i].recuperer_famille(j).recuperer_sens_sortie(k);
+                Mot & mot = __sous_phrases_sources[numero_sous_phrase][i].recuperer_famille(j).recuperer_sens_sortie(k);
+
                 
-                // Pour chaque champ lexical.
+                // On récupère le champ lexical dominant de la phrase.
+                // On n'effectue pas cela entre tous les champs lexicaux, mais seulement entre ceux qui sont communs avec le mot.
                 
-                nombre_de_champs_lexicaux = mot.recuperer_nombre_de_champs_lexicaux();
+                valeur_champ_lexical = __champs_lexicaux.recuperation_valeur_plus_grand_champ_lexical_commun(mot.recuperer_champs_lexicaux());
                 
-                if (nombre_de_champs_lexicaux == 0)
+                if (valeur_champ_lexical > max)
                 {
+                    max = valeur_champ_lexical;
+                    
                     mots = mot.recuperer_mot();
                 }
                 
-                else
+                else if (valeur_champ_lexical == max)
                 {
-                    for (int l = 0; l < nombre_de_champs_lexicaux; l++)
-                    {
-                        string champ_lexical = mot.recuperer_champs_lexicaux(l);
-                        
-                        // On récupère la plus grande valeur parmi tous les champs lexicaux associés à un sens du mot.
-                        
-                        valeur_champ_lexical = __champs_lexicaux.recuperation_valeur_champ_lexical(champ_lexical);
-                        
-                        if (valeur_champ_lexical > max_valeur_champ_lexical)
-                        {
-                            max_valeur_champ_lexical = valeur_champ_lexical;
-                        }
-                    }
-                    
-                    // Puis, entre tous les sens, on choisit celui dont le champ lexical associé est le plus répandu.
-                    // Si plusieurs valeurs sont identiques, on les affiche tous.
-                    
-                    if (max_valeur_champ_lexical > max)
-                    {
-                        max = max_valeur_champ_lexical;
-                        
-                        mots = mot.recuperer_mot();
-                    }
-                    
-                    else if (max_valeur_champ_lexical == max)
-                    {
-                        mots += '/' + mot.recuperer_mot();
-                    }
-                    
-                    max_valeur_champ_lexical = -1;
+                    mots += '/' + mot.recuperer_mot();
                 }
             }
         }
@@ -118,16 +91,11 @@ void Phrase::choix_des_mots_selon_les_champs_lexicaux(int numero_sous_phrase)
 
 void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
 {
-    int nombre_de_sens = famille.recuperer_nombre_de_sens_sortie();
+    size_t nombre_de_sens = famille.recuperer_nombre_de_sens_sortie();
     
     for (int i = 0; i < nombre_de_sens; i++)
     {
-        int nombre_de_champs_lexicaux_par_mot = famille.recuperer_sens_sortie(i).recuperer_nombre_de_champs_lexicaux();
-        
-        for (int j = 0; j < nombre_de_champs_lexicaux_par_mot; j++)
-        {
-            __champs_lexicaux.incrementation_des_champs_lexicaux(famille.recuperer_sens_sortie(i).recuperer_champs_lexicaux(j));
-        }
+        __champs_lexicaux = __champs_lexicaux + famille.recuperer_sens_sortie(i).recuperer_champs_lexicaux();
     }
 }
 
@@ -137,7 +105,7 @@ void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
 Groupe Phrase::traduction(string mot)
 {
     Groupe groupe(mot);
-    
+
     
     // Initialisation des différents parseurs.
     
@@ -161,7 +129,7 @@ Groupe Phrase::traduction(string mot)
         
         groupe.ajouter_famille(famille);
     }
-    
+
     // On recherche s'il existe un pronom personnel.
 
     else if (pronom_personnel.le_mot_est_un_pronom_personnel(mot))
@@ -177,7 +145,7 @@ Groupe Phrase::traduction(string mot)
 
     else
     {
-        int nombre_fichiers = parseur.recuperer_nombre_fichiers();
+        size_t nombre_fichiers = parseur.recuperer_nombre_fichiers();
         
         
         for (int i = 0; i < nombre_fichiers; i++)
@@ -233,7 +201,7 @@ void Phrase::construire_les_sous_phrases()
         {
             __groupes.push_back(traduction(mot));
         }
-        
+
         // Si un verbe est présent dans un des groupes,
         // On considère qu'il s'agit d'une sous-phrase.
         
@@ -261,7 +229,7 @@ void Phrase::construire_les_sous_phrases()
 void Phrase::construire_la_phrase()
 {
     construire_les_sous_phrases();
-    
+
     for (int i = 0; i < __sous_phrases_sources.size(); i++)
     {
         choix_des_mots_selon_les_champs_lexicaux(i);

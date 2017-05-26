@@ -64,10 +64,10 @@ class ParseurVerbe
                                         __irregularite;
     
     
-    std::string _fichier_forme_verbe = "forme_verbe.txt";
+    std::string _fichier_forme_verbe = "./Resources/Dictionnaire/forme_verbe.txt";
     
-    std::vector <std::string> __fichier_types_verbes = {"verbes_actions.txt",
-                                                        "verbes_attributifs.txt"};
+    std::vector <std::string> __fichier_types_verbes = {"./Resources/Dictionnaire/verbes_actions.txt",
+                                                        "./Resources/Dictionnaire/verbes_attributifs.txt"};
 };
 
 #endif /* ParseurVerbe_hpp */

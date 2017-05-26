@@ -19,8 +19,11 @@ class ChampsLexicaux
     public :
     
     ChampsLexicaux();
-    int recuperation_valeur_champ_lexical(std::string champ_lexical);
-    void incrementation_des_champs_lexicaux(std::string champ_lexical);
+    ChampsLexicaux & operator=(ChampsLexicaux champs_lexicaux);
+    ChampsLexicaux operator+(ChampsLexicaux champs_lexicaux);
+    size_t recuperer_nombre_champs_lexicaux() const { return __liste_champs_lexicaux.size(); };
+    int recuperation_valeur_plus_grand_champ_lexical_commun(ChampsLexicaux champs_lexicaux);
+    void incrementation_du_champ_lexical(std::string champ_lexical);
     
     private :
     

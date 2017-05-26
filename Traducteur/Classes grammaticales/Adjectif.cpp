@@ -7,7 +7,6 @@
 //
 
 #include "Adjectif.h"
-#include "ResourcePath.hpp"
 
 using namespace std;
 

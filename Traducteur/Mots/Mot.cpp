@@ -29,6 +29,6 @@ void Mot::definir_les_differents_champs_lexicaux(string ensemble_champ_lexicaux)
     
     while (getline(flux, champ_lexical, '|'))
     {
-        __champs_lexicaux.push_back(champ_lexical);
+        __champs_lexicaux.incrementation_du_champ_lexical(champ_lexical);
     }
 }

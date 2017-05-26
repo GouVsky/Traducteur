@@ -22,7 +22,7 @@ class Parseur
     public :
     
     Parseur(std::string source, std::string sortie);
-    int recuperer_nombre_fichiers() { return __fichiers.size(); };
+    size_t recuperer_nombre_fichiers() { return __fichiers.size(); };
     std::string recuperer_fichier(int numero_fichier) { return __fichiers[numero_fichier]; };
     std::vector <std::string> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::vector <std::string> recuperer_sens_sortie() const { return __sens_sortie; };
@@ -42,12 +42,12 @@ class Parseur
     
     std::map <std::string, std::string> __mots;
     
-    std::vector <std::string> __fichiers = {"adjectifs.txt",
-                                            "invariables.txt",
-                                            "noms_feminins.txt",
-                                            "noms_masculins.txt",
-                                            "noms_propres_feminins.txt",
-                                            "noms_propres_masculins.txt"};;
+    std::vector <std::string> __fichiers = {"./Resources/Dictionnaire/adjectifs.txt",
+                                            "./Resources/Dictionnaire/invariables.txt",
+                                            "./Resources/Dictionnaire/noms_feminins.txt",
+                                            "./Resources/Dictionnaire/noms_masculins.txt",
+                                            "./Resources/Dictionnaire/noms_propres_feminins.txt",
+                                            "./Resources/Dictionnaire/noms_propres_masculins.txt"};;
 };
 
 #endif /* Parseur_hpp */
