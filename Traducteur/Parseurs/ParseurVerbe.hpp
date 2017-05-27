@@ -66,6 +66,8 @@ class ParseurVerbe
     
     std::string _fichier_forme_verbe = "./Resources/Dictionnaire/forme_verbe.txt";
     
+    std::string _fichier_verbes_irreguliers = "./Resources/Dictionnaire/verbes_irreguliers_";
+    
     std::vector <std::string> __fichier_types_verbes = {"./Resources/Dictionnaire/verbes_actions.txt",
                                                         "./Resources/Dictionnaire/verbes_attributifs.txt"};
 };

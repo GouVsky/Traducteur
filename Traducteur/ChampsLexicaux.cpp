@@ -42,10 +42,12 @@ ChampsLexicaux ChampsLexicaux::operator+(ChampsLexicaux champs_lexicaux)
 
 
 
-int ChampsLexicaux::recuperation_valeur_plus_grand_champ_lexical_commun(ChampsLexicaux champs_lexicaux)
+pair <int, string> ChampsLexicaux::recuperation_plus_grand_champ_lexical_commun(ChampsLexicaux champs_lexicaux)
 {
     int max_comparant = 0,
         max_compare = 0;
+    
+    string champ_lexical;
     
     map <string, int>::iterator it;
     
@@ -57,10 +59,12 @@ int ChampsLexicaux::recuperation_valeur_plus_grand_champ_lexical_commun(ChampsLe
             max_comparant = it->second;
             
             max_compare = __liste_champs_lexicaux[it->first];
+            
+            champ_lexical = it->second;
         }
     }
     
-    return max_compare;
+    return make_pair(max_compare, champ_lexical);
 }
 
 

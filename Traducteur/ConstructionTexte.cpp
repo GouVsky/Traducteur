@@ -24,14 +24,16 @@ Texte::Texte(string source, string sortie)
 
 void Texte::recherche_conjonction_coordination(vector <string> tableau)
 {
-    string phrase_tmp = "";
     bool conjonction = false;
+    
+    vector <string> mots_source;
     
     vector <string> cc_a = {"but", "where", "so", "because", "when", "if"};
     vector <string> cc_f = {"mais", "où", "donc", "or", "ni", "car", "parce-que", "quand"};
     
     __conjonction_coordination["A"] = cc_a;
     __conjonction_coordination["F"] = cc_f;
+    
     
     for (int i = 0; i < tableau.size(); i++)
     {
@@ -47,7 +49,8 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
             }
         }
         
-        phrase_tmp += tableau[i] + ' ';
+        mots_source.push_back(tableau[i]);
+        
         
         // Chaque portion de la phrase comprise entre :
         //
@@ -59,13 +62,12 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
         
         if (conjonction == true || i == (int) tableau.size() - 1)
         {
-            phrase_tmp.erase(phrase_tmp.size() - 1);
-            
             // Ajout d'une nouvelle phrase.
             
-            Phrase phrase(phrase_tmp, _langue_source, _langue_sortie);
+            Phrase phrase(mots_source, _langue_source, _langue_sortie);
             
             __phrase.push_back(phrase);
+            
             
             if (conjonction == true)
             {
@@ -73,8 +75,8 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
             }
             
             conjonction = !conjonction;
-            
-            phrase_tmp = "";
+                        
+            mots_source.clear();
         }
     }
 }
@@ -84,18 +86,21 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
 
 // Séparation du texte en plusieurs phrases selon la ponctuation.
 
-void Texte::recherche_de_la_ponctuation(string t)
+void Texte::recherche_de_la_ponctuation(string texte)
 {
     vector <string> tableau;
-    string mot = "", phrase = "";
+    
+    string mot = "",
+           phrase = "";
+    
 
     // On récupère le texte caractère par caractère.
 
-    for (int i = 0; i < t.size(); i++)
+    for (int i = 0; i < texte.size(); i++)
     {
         // On découpe le texte à chaque ponctuation.
 
-        if (t[i] == '.' || t[i] == '!' || t[i] == '?' || t[i] == ';' || t[i] == ':' || t[i] == '\0')
+        if (texte[i] == '.' || texte[i] == '!' || texte[i] == '?' || texte[i] == ';' || texte[i] == ':' || texte[i] == '\0')
         {
             transform(phrase.begin(), phrase.end(), phrase.begin(), ::tolower);
             
@@ -112,17 +117,16 @@ void Texte::recherche_de_la_ponctuation(string t)
 
             // On ajoute la ponctuation.
             
-            __ponctuation.push_back(t[i]);
+            __ponctuation.push_back(texte[i]);
             
             // S'il existe, et tant qu'il est présent,
             // on saute le caractère espace situé entre la ponctuation et la première lettre du mot suivant.
             
-            while (t[i + 1] == ' ')
+            while (texte[i + 1] == ' ')
             {
                 i++;
             }
             
-            // Réinitialisation.
             
             phrase = "";
             tableau.clear();
@@ -130,7 +134,7 @@ void Texte::recherche_de_la_ponctuation(string t)
         
         else
         {
-            phrase += t[i];
+            phrase += texte[i];
         }
     }
 }
@@ -143,12 +147,14 @@ void Texte::recherche_de_la_ponctuation(string t)
 void Texte::construction_du_texte(string texte)
 {
     vector <thread> phrases;
+    
 
     recherche_de_la_ponctuation(texte);
 
     // Création d'un thread par phrase.
     
     size_t nombre_de_phrases = __phrase.size();
+    
 
     for (int i = 0; i < nombre_de_phrases; i++)
     {

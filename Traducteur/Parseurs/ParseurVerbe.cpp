@@ -29,7 +29,7 @@ string ParseurVerbe::recuperer_forme_irreguliere(string langue, string verbe)
 {
     string irregularite;
     
-    ifstream fichier_verbes_irreguliers("./Resources/Dictionnaire/verbes_irreguliers_" + langue + ".txt");
+    ifstream fichier_verbes_irreguliers(_fichier_verbes_irreguliers + langue + ".txt");
     
     while (!fichier_verbes_irreguliers.eof())
     {
@@ -180,11 +180,6 @@ bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                     // On ne prend pas en compte le mot en cours.
                     
                     size_t indice = nombre_groupe - taille_verbe + 1;
-                    
-                    if (indice < 0)
-                    {
-                        indice = 1;
-                    }
                     
                     for (size_t i = indice; i < nombre_groupe; i++)
                     {

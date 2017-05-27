@@ -21,7 +21,7 @@ ParseurExpression::ParseurExpression(string source, string sortie)
 
 
 
-#include <iostream>
+
 // Détermine s'il existe une expression dans la phrase.
 
 bool ParseurExpression::parser_fichier(string mot, vector <Groupe> & groupes)
@@ -50,11 +50,6 @@ bool ParseurExpression::parser_fichier(string mot, vector <Groupe> & groupes)
             // On ne prend pas en compte le mot en cours.
             
             size_t indice = nombre_groupe - taille_expression + 1;
-            
-            if (indice < 0)
-            {
-                indice = 1;
-            }
 
             for (size_t i = indice; i < nombre_groupe; i++)
             {

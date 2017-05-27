@@ -13,7 +13,7 @@ using namespace std;
 
 
 Groupe::Groupe(string mot_source)
-{
+{    
     _mot_source = mot_source;
 }
 

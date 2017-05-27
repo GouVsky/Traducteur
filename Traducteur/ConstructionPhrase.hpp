@@ -39,9 +39,9 @@ class Phrase
 {
     public :
     
-    Phrase(std::string phrase, std::string langue_source, std::string langue_sortie);
+    Phrase(std::vector <std::string> mots_source, std::string langue_source, std::string langue_sortie);
     std::string recuperer_phrase_traduite() const { return _phrase_sortie; };
-    void choix_des_mots_selon_les_champs_lexicaux(int numero_sous_phrase);
+    void choix_des_mots_selon_les_champs_lexicaux(std::vector <Groupe> & groupe, int indice);
     void incrementer_les_champs_lexicaux(Famille & famille);
     Groupe traduction(std::string mot);
     void construire_les_sous_phrases();
@@ -51,16 +51,20 @@ class Phrase
     
     ChampsLexicaux __champs_lexicaux;
     
-    std::string _phrase_source,
-                _phrase_sortie,
+    std::string _phrase_sortie,
                 _langue_source,
                 _langue_sortie;
     
+    std::vector <std::string> __mots_source;
+    
+    
     std::vector <Groupe> __groupes;
     
-    std::vector <std::string> __sous_phrases_sorties;
+    std::vector <char> __ponctuation;
     
-    // Chaque sous-phrase initiales contient un ensemble de groupes.
+    std::vector <std::vector <Mot>> __sous_phrases_sorties;
+    
+    // Chaque sous-phrase contient un ensemble de groupes.
     
     std::vector <std::vector <Groupe>> __sous_phrases_sources;
 };

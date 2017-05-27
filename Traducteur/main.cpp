@@ -11,6 +11,11 @@
 
 #include "ConstructionTexte.hpp"
 
+
+#define ANGLAIS "A"
+#define FRANCAIS "F"
+
+
 using namespace std;
 
 
@@ -18,8 +23,8 @@ int main(int argc, const char * argv[])
 {
     string texte = "";
 
-    string langue_source = "A";
-    string langue_sortie = "F";
+    string langue_source = ANGLAIS;
+    string langue_sortie = FRANCAIS;
     
     
     cout << "Entrer un texte à traduire :" << endl << endl;
@@ -28,6 +33,8 @@ int main(int argc, const char * argv[])
     
     texte += '\0';
     
+    
+    // Traduction du texte.
     
     Texte bob_le_bricoleur(langue_source, langue_sortie);
 
