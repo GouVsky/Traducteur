@@ -16,6 +16,8 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "ParseurChampsLexicaux.hpp"
+
 
 class Parseur
 {
@@ -24,11 +26,13 @@ class Parseur
     Parseur(std::string source, std::string sortie);
     size_t recuperer_nombre_fichiers() { return __fichiers.size(); };
     std::string recuperer_fichier(int numero_fichier) { return __fichiers[numero_fichier]; };
-    std::vector <std::string> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
+    std::vector <ChampsLexicaux> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::vector <std::string> recuperer_sens_sortie() const { return __sens_sortie; };
     bool parser_fichier(std::string chemin_fichier, std::string mot_source);
     
     private :
+    
+    ParseurChampsLexicaux parseur_champs_lexicaux;
     
     bool _mot_trouve;
     
@@ -37,8 +41,9 @@ class Parseur
                 _langue_sortie,
                 _champs_lexicaux;
     
-    std::vector <std::string> __sens_sortie,
-                              __champs_lexicaux;
+    std::vector <std::string> __sens_sortie;
+    
+    std::vector <ChampsLexicaux> __champs_lexicaux;
     
     std::map <std::string, std::string> __mots;
     

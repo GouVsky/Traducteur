@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#include "ParseurExpression.h"
+#include "ParseurExpression.hpp"
 
 using namespace std;
 

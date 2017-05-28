@@ -16,7 +16,7 @@ Famille::Famille() {}
 
 
 
-void Famille::definir_les_champs_lexicaux_des_mots(vector <string> champs_lexicaux)
+void Famille::definir_les_champs_lexicaux_des_mots(vector <ChampsLexicaux> champs_lexicaux)
 {
     for (int i = 0; i < __sens_sortie.size(); i++)
     {

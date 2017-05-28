@@ -207,14 +207,7 @@ bool ParseurVerbe::parser_fichier(string mot, vector <Groupe> & groupes)
                             __verbes_sortie.push_back(construire_verbe(_langue_sortie, verbe));
                         }
                         
-                        // On récupère les différents champs lexicaux.
-                        
-                        istringstream flux_champs_lexicaux(_champs_lexicaux);
-                        
-                        while (getline(flux_champs_lexicaux, champ_lexical, '/'))
-                        {
-                            __champs_lexicaux.push_back(champ_lexical);
-                        }
+                        __champs_lexicaux = __parseur_champs_lexicaux.parser(_champs_lexicaux);
                         
                         _verbe_trouve = true;
                         

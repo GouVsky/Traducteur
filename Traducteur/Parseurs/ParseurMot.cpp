@@ -6,7 +6,7 @@
 //  Copyright © 2017 Grégoire. All rights reserved.
 //
 
-#include "Parseur.hpp"
+#include "ParseurMot.hpp"
 
 using namespace std;
 
@@ -60,15 +60,8 @@ bool Parseur::parser_fichier(string chemin_fichier, string mot_source)
                     __sens_sortie.push_back(mot);
                 }
                 
-                // On récupère les différents champs lexicaux.
-                
-                istringstream flux_champs_lexicaux(_champs_lexicaux);
-                
-                while (getline(flux_champs_lexicaux, champs_lexicaux, '/'))
-                {
-                    __champs_lexicaux.push_back(champs_lexicaux);
-                }
-                
+                __champs_lexicaux = parseur_champs_lexicaux.parser(_champs_lexicaux);
+                                
                 _mot_trouve = true;
                 
                 break;

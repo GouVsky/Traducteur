@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "Parseur.hpp"
+#include "ParseurMot.hpp"
 #include "ParseurVerbe.hpp"
 
 #include "Groupe.hpp"
@@ -30,7 +30,7 @@
 #include "NomCommun.hpp"
 #include "PronomPersonnel.hpp"
 
-#include "ParseurExpression.h"
+#include "ParseurExpression.hpp"
 
 #include "ChampsLexicaux.hpp"
 

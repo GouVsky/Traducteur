@@ -19,16 +19,7 @@ Mot::Mot(string mot)
 
 
 
-// Ajoute tous les champs lexicaux qu'un mot peut posséder.
-
-void Mot::definir_les_differents_champs_lexicaux(string ensemble_champ_lexicaux)
+void Mot::definir_les_differents_champs_lexicaux(ChampsLexicaux champs_lexicaux)
 {
-    string champ_lexical;
-    
-    istringstream flux(ensemble_champ_lexicaux);
-    
-    while (getline(flux, champ_lexical, '|'))
-    {
-        __champs_lexicaux.incrementation_du_champ_lexical(champ_lexical);
-    }
+    __champs_lexicaux = __champs_lexicaux + champs_lexicaux;
 }

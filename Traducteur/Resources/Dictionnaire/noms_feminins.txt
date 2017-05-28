@@ -131,6 +131,7 @@ lamp lampe -
 law loi -
 leaf/sheet feuille NATURE/FOURNITURE
 leg jambe -
+legend légende -
 library bibliothèque -
 light lumière -
 lightning foudre -

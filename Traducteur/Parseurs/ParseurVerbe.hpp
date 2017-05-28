@@ -20,9 +20,8 @@
 #include "Auxiliaire.hpp"
 #include "Terminaison.hpp"
 
-#include "ChampsLexicaux.hpp"
-
 #include "Groupe.hpp"
+#include "ParseurChampsLexicaux.hpp"
 
 
 
@@ -31,7 +30,7 @@ class ParseurVerbe
     public :
     
     ParseurVerbe(std::string source, std::string sortie);
-    std::vector <std::string> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
+    std::vector <ChampsLexicaux> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::vector <std::string> recuperer_verbes_sortie() const { return __verbes_sortie; };
     std::string recuperer_forme_irreguliere(std::string langue, std::string verbe);
     std::string construire_verbe(std::string langue, std::string verbe);
@@ -43,6 +42,8 @@ class ParseurVerbe
     Auxiliaire __auxiliaire;
     Terminaison __terminaison;
     
+    ParseurChampsLexicaux __parseur_champs_lexicaux;
+    
     bool _verbe_trouve;
     
     int _groupe;
@@ -53,8 +54,9 @@ class ParseurVerbe
                 _champs_lexicaux,
                 _forme_verbe_source;
     
-    std::vector <std::string> __verbes_sortie,
-                              __champs_lexicaux;
+    std::vector <std::string> __verbes_sortie;
+    
+    std::vector <ChampsLexicaux> __champs_lexicaux;
     
     std::map <int, std::string> __type_verbe;
     
