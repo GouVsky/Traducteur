@@ -34,6 +34,9 @@ class Parseur
     
     ParseurChampsLexicaux parseur_champs_lexicaux;
     
+    std::vector <ChampsLexicaux> __champs_lexicaux;
+
+    
     bool _mot_trouve;
     
     std::string _mot_source,
@@ -42,8 +45,6 @@ class Parseur
                 _champs_lexicaux;
     
     std::vector <std::string> __sens_sortie;
-    
-    std::vector <ChampsLexicaux> __champs_lexicaux;
     
     std::map <std::string, std::string> __mots;
     

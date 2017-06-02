@@ -16,6 +16,14 @@ Famille::Famille() {}
 
 
 
+void Famille::definir_le_type(string type)
+{
+    _type = type;
+}
+
+
+
+
 void Famille::definir_les_champs_lexicaux_des_mots(vector <ChampsLexicaux> champs_lexicaux)
 {
     for (int i = 0; i < __sens_sortie.size(); i++)
@@ -37,7 +45,7 @@ void Famille::ajouter_sens_sortie(string mot)
 
 
 
-void Famille::definir_les_differents_sens_sortie(vector <string> mots)
+void Famille::ajouter_sens_sortie(vector <string> mots)
 {
     for (int i = 0; i < mots.size(); i++)
     {

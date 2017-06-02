@@ -164,7 +164,7 @@ Groupe Phrase::traduction(string mot)
             {
                 Famille famille;
                 
-                famille.definir_les_differents_sens_sortie(parseur.recuperer_sens_sortie());
+                famille.ajouter_sens_sortie(parseur.recuperer_sens_sortie());
                 
                 famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux());
                 
@@ -180,7 +180,7 @@ Groupe Phrase::traduction(string mot)
         {
             Famille famille;
             
-            famille.definir_les_differents_sens_sortie(parseur_verbe.recuperer_verbes_sortie());
+            famille.ajouter_sens_sortie(parseur_verbe.recuperer_verbes_sortie());
             
             famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux());
             

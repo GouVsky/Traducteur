@@ -19,20 +19,14 @@
 
 #include "ParseurMot.hpp"
 #include "ParseurVerbe.hpp"
+#include "ParseurExpression.hpp"
 
 #include "Groupe.hpp"
 #include "Famille.hpp"
 
-#include "Verbe.hpp"
-#include "Adjectif.h"
-#include "Invariable.h"
-#include "NomPropre.hpp"
-#include "NomCommun.hpp"
-#include "PronomPersonnel.hpp"
-
-#include "ParseurExpression.hpp"
-
 #include "ChampsLexicaux.hpp"
+
+#include "PronomPersonnel.hpp"
 
 
 class Phrase

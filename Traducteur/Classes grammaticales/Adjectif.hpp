@@ -9,13 +9,8 @@
 #ifndef __Traducteur_universel__adjectif__
 #define __Traducteur_universel__adjectif__
 
-#include <map>
 #include <string>
-#include <vector>
 #include <stdio.h>
-#include <fstream>
-
-#include "Mot.hpp"
 
 class Adjectif
 {

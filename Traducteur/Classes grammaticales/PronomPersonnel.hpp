@@ -14,8 +14,6 @@
 #include <vector>
 #include <stdio.h>
 
-#include "Mot.hpp"
-
 class PronomPersonnel
 {
     public :

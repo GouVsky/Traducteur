@@ -11,13 +11,29 @@
 using namespace std;
 
 
-NomCommun::NomCommun()
+NomCommun::NomCommun() {}
+
+
+
+
+NomCommun::NomCommun(string genre, string nombre)
 {
-    _nombre = "singulier";
-    
-    _genre = "masculin";
+    _genre = genre;
+
+    _nombre = nombre;
 }
 
+
+
+
+NomCommun & NomCommun::operator=(NomCommun nom_commun)
+{
+    _genre = nom_commun._genre;
+    
+    _nombre = nom_commun._nombre;
+    
+    return * this;
+}
 
 
 

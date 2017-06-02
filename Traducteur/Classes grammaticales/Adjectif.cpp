@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#include "Adjectif.h"
+#include "Adjectif.hpp"
 
 using namespace std;
 

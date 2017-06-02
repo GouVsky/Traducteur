@@ -18,8 +18,10 @@ class NomCommun
     public :
     
     NomCommun();
-    std::string recuperer_nombre() const { return _nombre; };
+    NomCommun(std::string genre, std::string nombre);
+    NomCommun & operator=(NomCommun nom_commun);
     std::string recuperer_genre() const { return _genre; };
+    std::string recuperer_nombre() const { return _nombre; };
     void accorder_pluriel(std::string & mot, std::string langue);
     
     private :
