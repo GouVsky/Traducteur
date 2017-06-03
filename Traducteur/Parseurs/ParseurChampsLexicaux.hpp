@@ -22,11 +22,11 @@ class ParseurChampsLexicaux
     public :
     
     ParseurChampsLexicaux();
-    std::vector <ChampsLexicaux> parser(std::string champs_lexicaux);
+    std::vector <std::vector <ChampsLexicaux>> & parser(std::string champs_lexicaux);
     
     private :
     
-    std::vector <ChampsLexicaux> __champs_lexicaux;
+    std::vector <std::vector <ChampsLexicaux>> __champs_lexicaux;
 };
 
 #endif /* ParseurChampsLexicaux_hpp */

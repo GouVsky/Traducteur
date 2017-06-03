@@ -155,18 +155,19 @@ Groupe Phrase::traduction(string mot)
 
     else
     {
-        size_t nombre_fichiers = parseur.recuperer_nombre_fichiers();
-        
-        
-        for (int i = 0; i < nombre_fichiers; i++)
+        if (parseur.parser_fichier(mot))
         {
-            if (parseur.parser_fichier(parseur.recuperer_fichier(i), mot))
+            size_t nombre_types_differents = parseur.recuperer_types().size();
+            
+            for (int i = 0; i < nombre_types_differents; i++)
             {
                 Famille famille;
+
+                famille.ajouter_sens_sortie(parseur.recuperer_sens_sortie()[i]);
                 
-                famille.ajouter_sens_sortie(parseur.recuperer_sens_sortie());
+                famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux()[i]);
                 
-                famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux());
+                famille.definir_le_type(parseur.recuperer_types()[i]);
                 
                 incrementer_les_champs_lexicaux(famille);
                 
@@ -176,7 +177,7 @@ Groupe Phrase::traduction(string mot)
         
         // On étudie le cas des verbes à part.
         
-        if (parseur_verbe.parser_fichier(mot, __groupes))
+        /*if (parseur_verbe.parser_fichier(mot, __groupes))
         {
             Famille famille;
             
@@ -187,7 +188,7 @@ Groupe Phrase::traduction(string mot)
             incrementer_les_champs_lexicaux(famille);
             
             groupe.ajouter_famille(famille);
-        }
+        }*/
     }
     
     return groupe;

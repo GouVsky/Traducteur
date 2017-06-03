@@ -24,36 +24,33 @@ class Parseur
     public :
     
     Parseur(std::string source, std::string sortie);
-    size_t recuperer_nombre_fichiers() { return __fichiers.size(); };
-    std::string recuperer_fichier(int numero_fichier) { return __fichiers[numero_fichier]; };
-    std::vector <ChampsLexicaux> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
-    std::vector <std::string> recuperer_sens_sortie() const { return __sens_sortie; };
-    bool parser_fichier(std::string chemin_fichier, std::string mot_source);
+    std::vector <std::vector <std::string>> & recuperer_sens_sortie() { return __sens_sortie; };
+    std::vector <std::string> & recuperer_types() { return __types; };
+    std::vector <std::vector <ChampsLexicaux>> & recuperer_champs_lexicaux() { return __champs_lexicaux; };
+    bool parser_fichier(std::string mot_source);
     
     private :
     
-    ParseurChampsLexicaux parseur_champs_lexicaux;
-    
-    std::vector <ChampsLexicaux> __champs_lexicaux;
-
-    
     bool _mot_trouve;
     
-    std::string _mot_source,
+    std::string _types,
+                _mot_source,
                 _langue_source,
                 _langue_sortie,
                 _champs_lexicaux;
     
-    std::vector <std::string> __sens_sortie;
+    std::vector <std::string> __types;
+    
+    std::vector <std::vector <std::string>> __sens_sortie;
+    
+    std::string _fichier = "./Resources/Dictionnaire/mots.txt";
     
     std::map <std::string, std::string> __mots;
     
-    std::vector <std::string> __fichiers = {"./Resources/Dictionnaire/adjectifs.txt",
-                                            "./Resources/Dictionnaire/invariables.txt",
-                                            "./Resources/Dictionnaire/noms_feminins.txt",
-                                            "./Resources/Dictionnaire/noms_masculins.txt",
-                                            "./Resources/Dictionnaire/noms_propres_feminins.txt",
-                                            "./Resources/Dictionnaire/noms_propres_masculins.txt"};;
+    
+    ParseurChampsLexicaux parseur_champs_lexicaux;
+    
+    std::vector <std::vector <ChampsLexicaux>> __champs_lexicaux;
 };
 
 #endif /* Parseur_hpp */

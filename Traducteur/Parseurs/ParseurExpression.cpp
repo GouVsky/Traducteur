@@ -34,47 +34,41 @@ bool ParseurExpression::parser_fichier(string mot, vector <Groupe> & groupes)
         monFichierExpressions >> __expression["A"] >> __expression["F"];
 
 
-        // Si le premier mot de l'expression ne correspond pas au mot de la phrase, cela ne sert à rien de continuer.
+        int taille_expression = (int) count(__expression[_langue_source].begin(), __expression[_langue_source].end(), ';') + 1;
         
-        if (__expression[_langue_source].substr(0, mot.size()).size() == mot.size())
+        size_t nombre_groupe = groupes.size();
+        
+        string expression_de_la_phrase = "";
+        
+        // Comparaison de l'expression avec celle de la phrase.
+        
+        // On construit l'expression avec les mots précédents.
+        // On ne prend pas en compte le mot en cours.
+        
+        size_t indice = nombre_groupe - taille_expression + 1;
+        
+        for (size_t i = indice; i < nombre_groupe; i++)
         {
-            int taille_expression = (int) count(__expression[_langue_source].begin(), __expression[_langue_source].end(), ';') + 1;
+            expression_de_la_phrase += groupes[i].recuperer_mot_source() + ';';
+        }
+        
+        expression_de_la_phrase += mot;
+        
+        
+        if (expression_de_la_phrase == __expression[_langue_source])
+        {
+            // On supprime les groupes de mots qui font en fait partis de l'expression.
             
-            size_t nombre_groupe = groupes.size();
+            groupes.erase(groupes.begin() + indice, groupes.end());
             
-            string expression_de_la_phrase = "";
             
-            // Comparaison de l'expression avec celle de la phrase.
-
-            // On construit l'expression avec les mots précédents.
-            // On ne prend pas en compte le mot en cours.
+            replace(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';', ' ');
             
-            size_t indice = nombre_groupe - taille_expression + 1;
-
-            for (size_t i = indice; i < nombre_groupe; i++)
-            {
-                expression_de_la_phrase += groupes[i].recuperer_mot_source() + ';';
-            }
+            _expression = __expression[_langue_sortie];
             
-            expression_de_la_phrase += mot;
+            _expression_existe = true;
             
-            // On compare.
-
-            if (expression_de_la_phrase == __expression[_langue_source])
-            {
-                // On supprime les groupes de mots qui font en fait partis de l'expression.
-
-                groupes.erase(groupes.begin() + indice, groupes.end());
-                
-                
-                replace(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';', ' ');
-                
-                _expression = __expression[_langue_sortie];
-                
-                _expression_existe = true;
-                
-                break;
-            }
+            break;
         }
     }
 

@@ -48,11 +48,11 @@ class Famille
     
     struct Type_mot
     {
-        Verbe verbe();
-        Adjectif adjectif();
-        NomCommun nom_commun();
-        NomPropre nom_propre();
-        Invariable invariable();
+        Verbe * verbe;
+        Adjectif * adjectif;
+        NomCommun * nom_commun;
+        NomPropre * nom_propre;
+        Invariable * invariable;
         
     }__type_mot;
 };

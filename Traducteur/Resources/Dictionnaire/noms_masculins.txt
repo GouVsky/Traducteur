@@ -309,6 +309,7 @@ tiger tigre -
 time temps -
 tractor tracteur -
 train train -
+translator traducteur -
 transport transport -
 trap piège -
 tree arbre NATURE|PRINTEMPS

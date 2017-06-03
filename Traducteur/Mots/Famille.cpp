@@ -11,7 +11,14 @@
 using namespace std;
 
 
-Famille::Famille() {}
+Famille::Famille()
+{
+    __type_mot.verbe = nullptr;
+    __type_mot.adjectif = nullptr;
+    __type_mot.nom_commun = nullptr;
+    __type_mot.nom_propre = nullptr;
+    __type_mot.invariable = nullptr;
+}
 
 
 
@@ -19,6 +26,8 @@ Famille::Famille() {}
 void Famille::definir_le_type(string type)
 {
     _type = type;
+    
+    //
 }
 
 
