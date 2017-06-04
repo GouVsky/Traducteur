@@ -9,7 +9,6 @@
 #ifndef ParseurVerbe_hpp
 #define ParseurVerbe_hpp
 
-#include <map>
 #include <string>
 #include <vector>
 #include <fstream>
@@ -21,59 +20,46 @@
 #include "Terminaison.hpp"
 
 #include "Groupe.hpp"
-#include "ParseurChampsLexicaux.hpp"
+#include "Parseur.hpp"
 
 
-
-class ParseurVerbe
+class ParseurVerbe : public Parseur
 {
     public :
     
     ParseurVerbe(std::string source, std::string sortie);
-    std::vector <std::vector <ChampsLexicaux>> recuperer_champs_lexicaux() const { return __champs_lexicaux; };
-    std::vector <std::string> recuperer_verbes_sortie() const { return __verbes_sortie; };
     std::string recuperer_forme_irreguliere(std::string langue, std::string verbe);
     std::string construire_verbe(std::string langue, std::string verbe);
-    bool parser_fichier(std::string mot, std::vector <Groupe> & groupes);
+    bool chercher_verbe(std::string mot, std::vector <Groupe> & groupes);
     
     private :
     
     Sujet __sujet;
     Auxiliaire __auxiliaire;
     Terminaison __terminaison;
-    
-    
-    ParseurChampsLexicaux __parseur_champs_lexicaux;
-    
-    std::vector <std::vector <ChampsLexicaux>> __champs_lexicaux;
+  
+    int _groupe;
 
-    
     bool _verbe_trouve;
     
-    int _groupe;
-    
-    std::string _temps_verbe,
+    std::string _type,
+                _temps_verbe,
                 _langue_source,
                 _langue_sortie,
                 _champs_lexicaux,
                 _forme_verbe_source;
     
-    std::vector <std::string> __verbes_sortie;
-    
-    std::map <int, std::string> __type_verbe;
-    
     std::map <std::string, std::string> __verbe,
                                         __irregulier,
                                         __conjugaison,
                                         __irregularite;
+        
     
+    std::string __fichier_verbes = "./Resources/Dictionnaire/Verbes/verbes.txt";
     
-    std::string _fichier_forme_verbe = "./Resources/Dictionnaire/forme_verbe.txt";
+    std::string _fichier_forme_verbe = "./Resources/Dictionnaire/Verbes/forme_verbe.txt";
     
-    std::string _fichier_verbes_irreguliers = "./Resources/Dictionnaire/verbes_irreguliers_";
-    
-    std::vector <std::string> __fichier_types_verbes = {"./Resources/Dictionnaire/verbes_actions.txt",
-                                                        "./Resources/Dictionnaire/verbes_attributifs.txt"};
+    std::string _fichier_verbes_irreguliers = "./Resources/Dictionnaire/Verbes/verbes_irreguliers_";
 };
 
 #endif /* ParseurVerbe_hpp */

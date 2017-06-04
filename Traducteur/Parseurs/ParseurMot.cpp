@@ -11,7 +11,7 @@
 using namespace std;
 
 
-Parseur::Parseur(string langue_source, string langue_sortie)
+ParseurMot::ParseurMot(string langue_source, string langue_sortie) : Parseur()
 {
     _langue_source = langue_source;
     _langue_sortie = langue_sortie;
@@ -19,17 +19,13 @@ Parseur::Parseur(string langue_source, string langue_sortie)
 
 
 
-
-bool Parseur::parser_fichier(string mot_source)
+bool ParseurMot::chercher_mot(string mot_source)
 {
     _mot_trouve = false;
-
-    __types.clear();
-    __sens_sortie.clear();
-    __champs_lexicaux.clear();
     
     
-    string ligne;
+    string mot,
+           ligne;
 
     ifstream fichier(_fichier);
     
@@ -39,9 +35,7 @@ bool Parseur::parser_fichier(string mot_source)
         fichier >> __mots["A"] >> __mots["F"] >> _types >> _champs_lexicaux;
         
 
-        string mot,
-               famille,
-               champs_lexicaux;
+        string champs_lexicaux;
 
         // On récupère l'ensemble des mots sources.
         
@@ -56,40 +50,11 @@ bool Parseur::parser_fichier(string mot_source)
                 _mot_source = mot;
                 
                 
-                // On récupère l'ensemble des mots traduits.
-                // On commence par récupérer chaque famille.
+                parser_mots(__mots[_langue_sortie]);
                 
-                istringstream flux_famille(__mots[_langue_sortie]);
+                parser_types(_types);
                 
-                while (getline(flux_famille, famille, '|'))
-                {
-                    istringstream flux_sortie(famille);
-
-                    vector <string> sens;
-                    
-                    
-                    // On récupère chaque sens qu'un mot peut avoir.
-                    
-                    while (getline(flux_sortie, mot, '/'))
-                    {
-                        sens.push_back(mot);
-                    }
-                    
-                    __sens_sortie.push_back(sens);
-                }
-                
-                // On récupère le type de chaque sens.
-                
-                istringstream flux_type(_types);
-                
-                while (getline(flux_type, mot, '|'))
-                {
-                    __types.push_back(mot);
-                }
-                
-                // On récupère les différents champs lexicaux associés à un sens.
-                
-                __champs_lexicaux = parseur_champs_lexicaux.parser(_champs_lexicaux);
+                parser_champs_lexicaux(_champs_lexicaux);
                                 
                 _mot_trouve = true;
                 

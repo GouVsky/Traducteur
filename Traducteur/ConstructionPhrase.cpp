@@ -123,7 +123,7 @@ Groupe Phrase::traduction(string mot)
     
     PronomPersonnel pronom_personnel(_langue_source, _langue_sortie);
     
-    Parseur parseur(_langue_source, _langue_sortie);
+    ParseurMot parseur_mot(_langue_source, _langue_sortie);
     
     ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
 
@@ -155,19 +155,19 @@ Groupe Phrase::traduction(string mot)
 
     else
     {
-        if (parseur.parser_fichier(mot))
+        if (parseur_mot.chercher_mot(mot))
         {
-            size_t nombre_types_differents = parseur.recuperer_types().size();
+            size_t nombre_types_differents = parseur_mot.recuperer_types().size();
             
             for (int i = 0; i < nombre_types_differents; i++)
             {
                 Famille famille;
 
-                famille.ajouter_sens_sortie(parseur.recuperer_sens_sortie()[i]);
+                famille.ajouter_sens_sortie(parseur_mot.recuperer_mots()[i]);
                 
-                famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux()[i]);
+                famille.definir_les_champs_lexicaux_des_mots(parseur_mot.recuperer_champs_lexicaux()[i]);
                 
-                famille.definir_le_type(parseur.recuperer_types()[i]);
+                famille.definir_le_type(parseur_mot.recuperer_types()[i]);
                 
                 incrementer_les_champs_lexicaux(famille);
                 
@@ -177,18 +177,23 @@ Groupe Phrase::traduction(string mot)
         
         // On étudie le cas des verbes à part.
         
-        /*if (parseur_verbe.parser_fichier(mot, __groupes))
+        if (parseur_verbe.chercher_verbe(mot, __groupes))
         {
-            Famille famille;
+            size_t nombre_types_differents = parseur_verbe.recuperer_types().size();
             
-            famille.ajouter_sens_sortie(parseur_verbe.recuperer_verbes_sortie());
-            
-            famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux());
-            
-            incrementer_les_champs_lexicaux(famille);
-            
-            groupe.ajouter_famille(famille);
-        }*/
+            for (int i = 0; i < nombre_types_differents; i++)
+            {
+                Famille famille;
+                
+                famille.ajouter_sens_sortie(parseur_verbe.recuperer_mots()[i]);
+                
+                famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux()[i]);
+                
+                incrementer_les_champs_lexicaux(famille);
+                
+                groupe.ajouter_famille(famille);
+            }
+        }
     }
     
     return groupe;
