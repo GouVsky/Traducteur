@@ -24,8 +24,8 @@ class Parseur
     public :
     
     Parseur();
-    std::vector <std::vector <std::string>> & recuperer_mots() { return __mots; };
     std::vector <std::string> & recuperer_types() { return __types; };
+    std::vector <std::vector <std::string>> & recuperer_mots() { return __mots; };
     std::vector <std::vector <ChampsLexicaux>> & recuperer_champs_lexicaux() { return __champs_lexicaux; };
     void parser_champs_lexicaux(std::string champs_lexicaux);
     void parser_types(std::string types);

@@ -15,12 +15,7 @@
 #include <sstream>
 
 #include "Mot.hpp"
-#include "Verbe.hpp"
-#include "Adjectif.hpp"
-#include "NomPropre.hpp"
-#include "NomCommun.hpp"
-#include "Invariable.hpp"
-
+#include "Type.hpp"
 #include "ChampsLexicaux.hpp"
 
 
@@ -29,9 +24,10 @@ class Famille
     public :
     
     Famille();
+    Type & recuperer_type() { return __type; };
     size_t recuperer_nombre_de_sens_sortie() const { return __sens_sortie.size(); };
     Mot & recuperer_sens_sortie(int numero_sens) { return __sens_sortie[numero_sens]; };
-    void definir_le_type(std::string type);
+    void definir_le_type(std::string classe, std::string categorie, std::string propriete);
     void definir_les_champs_lexicaux_des_mots(std::vector <ChampsLexicaux> champs_lexicaux);
     void ajouter_sens_sortie(std::string mot);
     void ajouter_sens_sortie(std::vector <std::string> mots);
@@ -39,22 +35,8 @@ class Famille
     private :
     
     std::vector <Mot> __sens_sortie;
-
     
-    /* Une chaîne de caractères permet de définir le type de la famille,
-       et de retrouver la classe grammaticale associée. */
-    
-    std::string _type;
-    
-    struct Type_mot
-    {
-        Verbe * verbe;
-        Adjectif * adjectif;
-        NomCommun * nom_commun;
-        NomPropre * nom_propre;
-        Invariable * invariable;
-        
-    }__type_mot;
+    Type __type;
 };
 
 #endif /* Famille_hpp */

@@ -17,8 +17,8 @@ class Adjectif
     public :
     
     Adjectif();
-    std::string accorder_pluriel(std::string adjectif, std::string langue);
-    std::string accorder_feminin(std::string adjectif, std::string langue);
+    static std::string accorder_pluriel(std::string adjectif, std::string langue);
+    static std::string accorder_feminin(std::string adjectif, std::string langue);
 };
 
 #endif /* defined(__Traducteur_universel__adjectif__) */

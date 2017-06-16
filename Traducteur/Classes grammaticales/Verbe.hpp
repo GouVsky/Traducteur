@@ -21,15 +21,6 @@ class Verbe
     public :
     
     Verbe();
-    int recuperer_taille_verbe_sortie() const { return _taille_verbe_sortie; };
-    int recuperer_taille_verbe_source() const { return _taille_verbe_source; };
-    void definir_taille_verbe_sortie(int taille);
-    void definir_taille_verbe_source(int taille);
-    
-    private :
-    
-    int _taille_verbe_source,
-        _taille_verbe_sortie;
 };
 
 #endif /* verbe_hpp */

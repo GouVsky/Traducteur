@@ -120,9 +120,7 @@ Groupe Phrase::traduction(string mot)
     // Initialisation des différents parseurs.
     
     ParseurExpression parseur_expression(_langue_source, _langue_sortie);
-    
-    PronomPersonnel pronom_personnel(_langue_source, _langue_sortie);
-    
+        
     ParseurMot parseur_mot(_langue_source, _langue_sortie);
     
     ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
@@ -140,17 +138,6 @@ Groupe Phrase::traduction(string mot)
         groupe.ajouter_famille(famille);
     }
 
-    // On recherche s'il existe un pronom personnel.
-
-    else if (pronom_personnel.le_mot_est_un_pronom_personnel(mot))
-    {
-        Famille famille;
-        
-        famille.ajouter_sens_sortie(pronom_personnel.recuperer_pronom_personnel());
-        
-        groupe.ajouter_famille(famille);
-    }
-    
     // On recherche les différents mots.
 
     else
@@ -167,7 +154,7 @@ Groupe Phrase::traduction(string mot)
                 
                 famille.definir_les_champs_lexicaux_des_mots(parseur_mot.recuperer_champs_lexicaux()[i]);
                 
-                famille.definir_le_type(parseur_mot.recuperer_types()[i]);
+                //famille.definir_le_type(parseur_mot.recuperer_types()[i]);
                 
                 incrementer_les_champs_lexicaux(famille);
                 
@@ -210,8 +197,6 @@ void Phrase::construire_les_sous_phrases()
     
     for (int i = 0; i < __mots_source.size(); i++)
     {
-        char ponctuation = '\0';
-
         string mot = __mots_source[i];
         
         
@@ -220,8 +205,6 @@ void Phrase::construire_les_sous_phrases()
         if (mot[mot.size() - 1] == ',')
         {
             mot.erase(mot.size() - 1);
-            
-            ponctuation = ',';
         }
         
         __groupes.push_back(traduction(mot));

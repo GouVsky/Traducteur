@@ -7,7 +7,6 @@
 //
 
 #include "Sujet.hpp"
-#include "PronomPersonnel.hpp"
 
 using namespace std;
 
@@ -95,9 +94,17 @@ Sujet::Sujet(string source, string sortie)
 
 // Création du sujet.
 
-/*void Sujet::creation_du_sujet(vector <Groupe> & groupes)
+void Sujet::creation_du_sujet(vector <Groupe> & groupes)
 {
-    bool presence_verbe = false;
+    
+    
+    
+    
+    
+    
+    
+    
+  /*  bool presence_verbe = false;
     
     // S'il s'agit d'une phrase composée, le sujet est compris entre la fin de la phrase précédente et le verbe (non inclus).
     // Sinon, il est compris entre le début et le verbe (non inclus).
@@ -141,5 +148,5 @@ Sujet::Sujet(string source, string sortie)
             
             break;
         }
-    }
-}*/
+    }*/
+}

@@ -26,8 +26,6 @@
 
 #include "ChampsLexicaux.hpp"
 
-#include "PronomPersonnel.hpp"
-
 
 class Phrase
 {
