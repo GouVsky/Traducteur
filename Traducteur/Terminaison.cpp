@@ -95,7 +95,9 @@ void Terminaison::determiner_nouvelle_terminaison(string langue, string verbe, s
             case 0 :
             {
                 Auxiliaire auxiliaire;
+                
                 auxiliaire.construction_auxiliaire(sujet, langue, verbe, temps_verbe);
+                
                 _nouvelle_terminaison = auxiliaire.recuperer_auxiliaire();
             }
                 break;
@@ -121,7 +123,9 @@ void Terminaison::determiner_nouvelle_terminaison(string langue, string verbe, s
             case 0 :
             {
                 Auxiliaire auxiliaire;
+                
                 auxiliaire.construction_auxiliaire(sujet, langue, verbe, temps_verbe);
+                
                 _nouvelle_terminaison = auxiliaire.recuperer_auxiliaire();
             }
                 break;
@@ -145,6 +149,7 @@ void Terminaison::ancienne_terminaison_troisieme_groupe(string verbe)
     {
         string terminaison = __terminaisons_groupe_3[i];
         
+        
         // On s'assure que la terminaison sélectionnée n'est pas plus grande que le verbe.
         
         if (terminaison.size() < verbe.size())
@@ -152,6 +157,7 @@ void Terminaison::ancienne_terminaison_troisieme_groupe(string verbe)
             // Pour ajouter une sécurité, on précise que la chaîne de caractères recherchée est à la fin,
             
             string fin_du_verbe = verbe.substr(verbe.size() - terminaison.size());
+            
             
             // On s'assure que la terminaison trouvée est la plus grande possible.
             

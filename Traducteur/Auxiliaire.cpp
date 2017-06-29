@@ -11,14 +11,7 @@
 using namespace std;
 
 
-Auxiliaire::Auxiliaire()
-{
-    __auxiliaire_etre["A"] = "be";
-    __auxiliaire_etre["F"] = "être";
-    
-    __auxiliaire_avoir["A"] = "have";
-    __auxiliaire_avoir["F"] = "avoir";
-}
+Auxiliaire::Auxiliaire() {}
 
 
 

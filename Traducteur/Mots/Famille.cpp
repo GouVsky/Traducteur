@@ -39,22 +39,15 @@ void Famille::definir_les_champs_lexicaux_des_mots(vector <ChampsLexicaux> champ
 
 
 
-void Famille::ajouter_sens_sortie(string mot)
+void Famille::ajouter_sens_sortie(Mot mot)
 {
-    Mot sens_sortie(mot);
-    
     __sens_sortie.push_back(mot);
 }
 
 
 
 
-void Famille::ajouter_sens_sortie(vector <string> mots)
+void Famille::ajouter_sens_sortie(vector <Mot> mots)
 {
-    for (int i = 0; i < mots.size(); i++)
-    {
-        Mot sens_sortie(mots[i]);
-        
-        __sens_sortie.push_back(sens_sortie);
-    }
+    __sens_sortie = mots;
 }

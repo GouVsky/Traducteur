@@ -29,7 +29,7 @@ class Type
     private :
     
     /* Les chaîne de caractères permettent de définir le type exacte de la famille,
-       et de retrouver la classe grammaticale, la catégorie et la propriété qui lui sont associées. */
+       et de retrouver la classe grammaticale, la catégorie et les propriétés qui lui sont associées. */
     
     std::string _classe,
                 _categorie,

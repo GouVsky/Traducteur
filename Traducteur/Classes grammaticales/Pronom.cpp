@@ -11,6 +11,4 @@
 using namespace std;
 
 
-Pronom::Pronom()
-{
-}
+Pronom::Pronom() {}

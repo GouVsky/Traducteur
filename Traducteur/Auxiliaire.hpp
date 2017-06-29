@@ -26,9 +26,6 @@ class Auxiliaire
     
     std::string _auxiliaire;
     
-    std::map <std::string, std::string> __auxiliaire_etre,
-                                        __auxiliaire_avoir;
-    
     // Auxiliaires anglais.
     
     std::vector <std::string> __present_etre_A = {"am", "are", "is", "is", "is", "are", "are", "are", "are"};

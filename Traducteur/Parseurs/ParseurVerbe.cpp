@@ -11,7 +11,7 @@
 using namespace std;
 
 
-ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie) : Parseur(), __sujet(langue_source, langue_sortie)
+ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie) : Parseur(langue_source, langue_sortie), __sujet(langue_source, langue_sortie)
 {
     _verbe_trouve = false;
 
@@ -197,7 +197,7 @@ bool ParseurVerbe::chercher_verbe(string mot, vector <Groupe> & groupes)
                     {
                         for (int j = 0; j < recuperer_mots()[i].size(); j++)
                         {
-                            recuperer_mots()[i][j] = construire_verbe(_langue_sortie, recuperer_mots()[i][j]);
+                            //recuperer_mots()[i][j] = construire_verbe(_langue_sortie, recuperer_mots()[i][j]);
                         }
                     }
                     

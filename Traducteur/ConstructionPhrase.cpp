@@ -115,20 +115,13 @@ void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
 Groupe Phrase::traduction(string mot)
 {
     Groupe groupe(mot);
-
-    
-    // Initialisation des différents parseurs.
-    
-    ParseurExpression parseur_expression(_langue_source, _langue_sortie);
-        
-    ParseurMot parseur_mot(_langue_source, _langue_sortie);
-    
-    ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
-
     
     
     // On recherche s'il existe une expression.
     
+    ParseurExpression parseur_expression(_langue_source, _langue_sortie);
+    
+
     if (parseur_expression.parser_fichier(mot, __groupes))
     {
         Famille famille;
@@ -142,17 +135,20 @@ Groupe Phrase::traduction(string mot)
 
     else
     {
-        if (parseur_mot.chercher_mot(mot))
+        Parseur parseur(_langue_source, _langue_sortie);
+        
+
+        if (parseur.parser(mot))
         {
-            size_t nombre_types_differents = parseur_mot.recuperer_types().size();
+            size_t nombre_types_differents = parseur.recuperer_types().size();
             
             for (int i = 0; i < nombre_types_differents; i++)
             {
                 Famille famille;
 
-                famille.ajouter_sens_sortie(parseur_mot.recuperer_mots()[i]);
+                famille.ajouter_sens_sortie(parseur.recuperer_mots()[i]);
                 
-                famille.definir_les_champs_lexicaux_des_mots(parseur_mot.recuperer_champs_lexicaux()[i]);
+                famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux()[i]);
                 
                 //famille.definir_le_type(parseur_mot.recuperer_types()[i]);
                 
@@ -162,8 +158,11 @@ Groupe Phrase::traduction(string mot)
             }
         }
         
-        // On étudie le cas des verbes à part.
+        /*// On étudie le cas des verbes à part.
         
+        ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
+        
+
         if (parseur_verbe.chercher_verbe(mot, __groupes))
         {
             size_t nombre_types_differents = parseur_verbe.recuperer_types().size();
@@ -180,7 +179,7 @@ Groupe Phrase::traduction(string mot)
                 
                 groupe.ajouter_famille(famille);
             }
-        }
+        }*/
     }
     
     return groupe;

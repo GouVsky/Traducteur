@@ -11,7 +11,13 @@
 using namespace std;
 
 
-Parseur::Parseur() {}
+Parseur::Parseur(string langue_source, string langue_sortie)
+{
+    _langue_source = langue_source;
+    _langue_sortie = langue_sortie;
+    
+    _fichier = "./Resources/Dictionnaire/mots.txt";
+}
 
 
 
@@ -61,6 +67,7 @@ void Parseur::parser_champs_lexicaux(string champs_lexicaux)
 
 
 
+
 void Parseur::parser_types(string types)
 {
     string type;
@@ -75,6 +82,7 @@ void Parseur::parser_types(string types)
         __types.push_back(type);
     }
 }
+
 
 
 
@@ -93,16 +101,68 @@ void Parseur::parser_mots(string mots)
     {
         istringstream flux_sortie(famille);
         
-        vector <string> sens;
+        vector <Mot> sens;
         
         
         // On récupère chaque sens qu'un mot peut avoir.
         
         while (getline(flux_sortie, mot, '/'))
         {
-            sens.push_back(mot);
+            Mot nouveau_mot(mot);
+            
+            sens.push_back(nouveau_mot);
         }
         
         __mots.push_back(sens);
     }
+}
+
+
+
+
+bool Parseur::parser(string mot_a_trouver)
+{
+    string mot,
+           ligne;
+    
+    bool mot_trouve = false;
+    
+    
+    ifstream fichier(_fichier);
+    
+    
+    while (!fichier.eof() && !mot_trouve)
+    {
+        fichier >> __mots_fichier["A"] >> __mots_fichier["F"] >> _types >> _champs_lexicaux;
+        
+        
+        string champs_lexicaux;
+        
+        
+        // On récupère l'ensemble des mots sources.
+        
+        istringstream flux_source(__mots_fichier[_langue_source]);
+        
+        while (getline(flux_source, mot, '/'))
+        {
+            // Si le mot entré par l'utilisateur est trouvé dans le fichier.
+            
+            if (mot == mot_a_trouver)
+            {
+                parser_mots(__mots_fichier[_langue_sortie]);
+                
+                parser_types(_types);
+                
+                parser_champs_lexicaux(_champs_lexicaux);
+                
+                mot_trouve = true;
+                
+                break;
+            }
+        }
+    }
+    
+    fichier.close();
+    
+    return mot_trouve;
 }

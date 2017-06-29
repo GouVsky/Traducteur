@@ -17,7 +17,6 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "ParseurMot.hpp"
 #include "ParseurVerbe.hpp"
 #include "ParseurExpression.hpp"
 

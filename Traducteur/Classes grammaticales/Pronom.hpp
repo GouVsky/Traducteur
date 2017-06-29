@@ -9,9 +9,6 @@
 #ifndef Pronom_hpp
 #define Pronom_hpp
 
-#include <map>
-#include <string>
-#include <vector>
 #include <stdio.h>
 
 class Pronom

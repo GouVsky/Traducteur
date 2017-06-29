@@ -9,11 +9,6 @@
 #ifndef verbe_hpp
 #define verbe_hpp
 
-#include <map>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <sstream>
 #include <stdio.h>
 
 class Verbe
