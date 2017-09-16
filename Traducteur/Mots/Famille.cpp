@@ -16,13 +16,9 @@ Famille::Famille() {}
 
 
 
-void Famille::definir_le_type(string classe, string categorie, string propriete)
+void Famille::definir_type(Type type)
 {
-    __type.definir_classe(classe);
-    
-    __type.definir_categorie(categorie);
-    
-    __type.definir_propriete(propriete);
+    __type = type;
 }
 
 

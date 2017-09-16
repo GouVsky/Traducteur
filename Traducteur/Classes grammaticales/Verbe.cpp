@@ -8,7 +8,5 @@
 
 #include "Verbe.hpp"
 
-using namespace std;
-
 
 Verbe::Verbe() {}

@@ -193,13 +193,13 @@ bool ParseurVerbe::chercher_verbe(string mot, vector <Groupe> & groupes)
                     
                     parser_mots(__verbe[_langue_sortie]);
                     
-                    for (int i = 0; i < recuperer_mots().size(); i++)
+                   /* for (int i = 0; i < recuperer_mots().size(); i++)
                     {
-                        for (int j = 0; j < recuperer_mots()[i].size(); j++)
+                        for (int j = 0; j < recuperer_mots(i).size(); j++)
                         {
                             //recuperer_mots()[i][j] = construire_verbe(_langue_sortie, recuperer_mots()[i][j]);
                         }
-                    }
+                    }*/
                     
                     parser_types(_type);
                     

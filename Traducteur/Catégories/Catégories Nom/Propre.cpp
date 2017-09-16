@@ -8,8 +8,5 @@
 
 #include "Propre.hpp"
 
-using namespace std;
-
-
 
 Propre::Propre() : Nom() {}

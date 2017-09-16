@@ -27,7 +27,7 @@ class Famille
     Type & recuperer_type() { return __type; };
     size_t recuperer_nombre_de_sens_sortie() const { return __sens_sortie.size(); };
     Mot & recuperer_sens_sortie(int numero_sens) { return __sens_sortie[numero_sens]; };
-    void definir_le_type(std::string classe, std::string categorie, std::string propriete);
+    void definir_type(Type type);
     void definir_les_champs_lexicaux_des_mots(std::vector <ChampsLexicaux> champs_lexicaux);
     void ajouter_sens_sortie(Mot mot);
     void ajouter_sens_sortie(std::vector <Mot> mots);

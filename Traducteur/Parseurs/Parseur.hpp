@@ -17,6 +17,7 @@
 #include <stdio.h>
 
 #include "Mot.hpp"
+#include "Type.hpp"
 #include "ChampsLexicaux.hpp"
 
 
@@ -25,9 +26,12 @@ class Parseur
     public :
     
     Parseur(std::string source, std::string sortie);
-    std::vector <std::string> & recuperer_types() { return __types; };
-    std::vector <std::vector <Mot>> & recuperer_mots() { return __mots; };
-    std::vector <std::vector <ChampsLexicaux>> & recuperer_champs_lexicaux() { return __champs_lexicaux; };
+    size_t recuperer_nombre_types() const { return __types.size(); };
+    size_t recuperer_nombre_mots() const { return __mots.size(); };
+    size_t recuperer_nombre_champs_lexicaux() const { return __champs_lexicaux.size(); };
+    Type & recuperer_type(int indice) { return __types[indice]; };
+    std::vector <Mot> & recuperer_mots(int indice) { return __mots[indice]; };
+    std::vector <ChampsLexicaux> & recuperer_champs_lexicaux(int indice) { return __champs_lexicaux[indice]; };
     void parser_champs_lexicaux(std::string champs_lexicaux);
     void parser_types(std::string types);
     void parser_mots(std::string mots);
@@ -44,7 +48,7 @@ class Parseur
     std::map <std::string, std::string> __mots_fichier;
 
     
-    std::vector <std::string> __types;
+    std::vector <Type> __types;
     
     std::vector <std::vector <Mot>> __mots;
     

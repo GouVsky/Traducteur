@@ -70,16 +70,31 @@ void Parseur::parser_champs_lexicaux(string champs_lexicaux)
 
 void Parseur::parser_types(string types)
 {
-    string type;
+    string type_par_famille,
+           type;
     
     
     // On récupère le type de chaque sens.
     
-    istringstream flux_type(types);
+    istringstream flux_type_par_famille(types);
     
-    while (getline(flux_type, type, '|'))
+    while (getline(flux_type_par_famille, type_par_famille, '|'))
     {
-        __types.push_back(type);
+        istringstream flux_type(type_par_famille);
+        
+        vector <string> types;
+        
+        
+        // On récupère la classe, la catégorie ainsi que les propriétés.
+        
+        while (getline(flux_type, type, '_'))
+        {
+            types.push_back(type);
+        }
+        
+        Type nouveau_type(types[0], types[1], types[2]);
+        
+        __types.push_back(nouveau_type);
     }
 }
 

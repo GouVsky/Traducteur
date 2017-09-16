@@ -18,7 +18,6 @@
 #include <iostream>
 
 #include "ParseurVerbe.hpp"
-#include "ParseurExpression.hpp"
 
 #include "Groupe.hpp"
 #include "Famille.hpp"
@@ -30,10 +29,13 @@ class Phrase
 {
     public :
     
+    Phrase(std::string phrase_traduite, std::string langue_source, std::string langue_sortie);
     Phrase(std::vector <std::string> mots_source, std::string langue_source, std::string langue_sortie);
+    bool recuperer_etat() { return _traduite; };
     std::string recuperer_phrase_traduite() const { return _phrase_sortie; };
     void choix_des_mots_selon_les_champs_lexicaux(std::vector <Groupe> & groupe, int indice);
     void incrementer_les_champs_lexicaux(Famille & famille);
+    void changer_etat() { _traduite = !_traduite; };
     Groupe traduction(std::string mot);
     void construire_les_sous_phrases();
     void construire_la_phrase();
@@ -41,6 +43,9 @@ class Phrase
     private :
     
     ChampsLexicaux __champs_lexicaux;
+    
+    
+    bool _traduite;
     
     std::string _phrase_sortie,
                 _langue_source,

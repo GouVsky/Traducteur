@@ -8,7 +8,5 @@
 
 #include "Pronom.hpp"
 
-using namespace std;
-
 
 Pronom::Pronom() {}

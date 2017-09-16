@@ -18,13 +18,12 @@ class Type
     public :
     
     Type();
+    Type(std::string classe, std::string categorie, std::string propriete);
+    Type & operator=(Type type);
     std::string recuperer_type() const { return _classe + "_" + _categorie + "_" + _propriete; };
     std::string recuperer_classe() const { return _classe; };
     std::string recuperer_categorie() const { return _categorie; };
     std::string recuperer_propriete() const { return _propriete; };
-    void definir_classe(std::string classe);
-    void definir_categorie(std::string categorie);
-    void definir_propriete(std::string propriete);
     
     private :
     

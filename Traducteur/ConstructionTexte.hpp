@@ -24,8 +24,9 @@ class Texte
     Texte(std::string source, std::string sortie);
     std::string recuperer_texte_traduit() const { return _texte_traduit; };
     void assembler_les_phrases();
+    bool recherche_expression(std::vector <std::string> tableau);
     void recherche_conjonction_coordination(std::vector <std::string> tableau);
-    void recherche_de_la_ponctuation(std::string texte);
+    void decouper_en_phrases(std::string texte);
     void construction_du_texte(std::string texte);
     
     private :
@@ -38,6 +39,8 @@ class Texte
     
     std::vector <char> __ponctuation;
     
+    std::map <std::string, std::string> __expression;
+
     std::map <std::string, std::vector <std::string>> __conjonction_coordination;
 };
 

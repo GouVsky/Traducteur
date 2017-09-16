@@ -8,7 +8,5 @@
 
 #include "Nom.hpp"
 
-using namespace std;
-
 
 Nom::Nom() {}

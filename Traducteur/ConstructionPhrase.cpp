@@ -11,8 +11,23 @@
 using namespace std;
 
 
+Phrase::Phrase(string phrase_traduite, string langue_source, string langue_sortie)
+{
+    _traduite = true;
+    
+    _phrase_sortie = phrase_traduite;
+    
+    _langue_source = langue_source;
+    _langue_sortie = langue_sortie;
+}
+
+
+
+
 Phrase::Phrase(vector <string> mots_source, string langue_source, string langue_sortie)
 {
+    _traduite = false;
+    
     __mots_source = mots_source;
     
     _langue_source = langue_source;
@@ -117,70 +132,51 @@ Groupe Phrase::traduction(string mot)
     Groupe groupe(mot);
     
     
-    // On recherche s'il existe une expression.
+    Parseur parseur(_langue_source, _langue_sortie);
     
-    ParseurExpression parseur_expression(_langue_source, _langue_sortie);
-    
-
-    if (parseur_expression.parser_fichier(mot, __groupes))
+    if (parseur.parser(mot))
     {
-        Famille famille;
+        size_t nombre_types_differents = parseur.recuperer_nombre_types();
         
-        famille.ajouter_sens_sortie(parseur_expression.recuperer_expression());
-        
-        groupe.ajouter_famille(famille);
-    }
-
-    // On recherche les différents mots.
-
-    else
-    {
-        Parseur parseur(_langue_source, _langue_sortie);
-        
-
-        if (parseur.parser(mot))
+        for (int i = 0; i < nombre_types_differents; i++)
         {
-            size_t nombre_types_differents = parseur.recuperer_types().size();
+            Famille famille;
             
-            for (int i = 0; i < nombre_types_differents; i++)
-            {
-                Famille famille;
-
-                famille.ajouter_sens_sortie(parseur.recuperer_mots()[i]);
-                
-                famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux()[i]);
-                
-                //famille.definir_le_type(parseur_mot.recuperer_types()[i]);
-                
-                incrementer_les_champs_lexicaux(famille);
-                
-                groupe.ajouter_famille(famille);
-            }
+            famille.definir_type(parseur.recuperer_type(i));
+            
+            famille.ajouter_sens_sortie(parseur.recuperer_mots(i));
+            
+            famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux(i));
+            
+            
+            incrementer_les_champs_lexicaux(famille);
+            
+            groupe.ajouter_famille(famille);
         }
-        
-        /*// On étudie le cas des verbes à part.
-        
-        ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
-        
-
-        if (parseur_verbe.chercher_verbe(mot, __groupes))
-        {
-            size_t nombre_types_differents = parseur_verbe.recuperer_types().size();
-            
-            for (int i = 0; i < nombre_types_differents; i++)
-            {
-                Famille famille;
-                
-                famille.ajouter_sens_sortie(parseur_verbe.recuperer_mots()[i]);
-                
-                famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux()[i]);
-                
-                incrementer_les_champs_lexicaux(famille);
-                
-                groupe.ajouter_famille(famille);
-            }
-        }*/
     }
+    
+    /*// On étudie le cas des verbes à part.
+     
+     ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
+     
+     
+     if (parseur_verbe.chercher_verbe(mot, __groupes))
+     {
+        size_t nombre_types_differents = parseur_verbe.recuperer_types().size();
+     
+        for (int i = 0; i < nombre_types_differents; i++)
+        {
+            Famille famille;
+     
+            famille.ajouter_sens_sortie(parseur_verbe.recuperer_mots()[i]);
+     
+            famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux()[i]);
+     
+            incrementer_les_champs_lexicaux(famille);
+     
+            groupe.ajouter_famille(famille);
+        }
+     }*/
     
     return groupe;
 }
@@ -217,22 +213,25 @@ void Phrase::construire_les_sous_phrases()
 
 void Phrase::construire_la_phrase()
 {
-    construire_les_sous_phrases();
-
-    for (int i = 0; i < __sous_phrases_sources.size(); i++)
+    if (!_traduite)
     {
-        choix_des_mots_selon_les_champs_lexicaux(__sous_phrases_sources[i], i);
-    }
-    
-    // Construction de la phrase finale traduite.
-    
-    for (int i = 0; i < __sous_phrases_sorties.size(); i++)
-    {
-        for (int j = 0; j < __sous_phrases_sorties[i].size(); j++)
+        construire_les_sous_phrases();
+        
+        for (int i = 0; i < __sous_phrases_sources.size(); i++)
         {
-            _phrase_sortie += __sous_phrases_sorties[i][j].recuperer_mot() + ' ';
+            choix_des_mots_selon_les_champs_lexicaux(__sous_phrases_sources[i], i);
         }
+        
+        // Construction de la phrase finale traduite.
+        
+        for (int i = 0; i < __sous_phrases_sorties.size(); i++)
+        {
+            for (int j = 0; j < __sous_phrases_sorties[i].size(); j++)
+            {
+                _phrase_sortie += __sous_phrases_sorties[i][j].recuperer_mot() + ' ';
+            }
+        }
+        
+        _phrase_sortie.erase(_phrase_sortie.size() - 1);
     }
-    
-    _phrase_sortie.erase(_phrase_sortie.size() - 1);
 }

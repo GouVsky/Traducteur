@@ -16,23 +16,25 @@ Type::Type() {}
 
 
 
-void Type::definir_classe(string classe)
+Type::Type(string classe, string categorie, string propriete)
 {
     _classe = classe;
-}
 
-
-
-
-void Type::definir_categorie(string categorie)
-{
     _categorie = categorie;
+
+    _propriete = propriete;
 }
 
 
 
 
-void Type::definir_propriete(string propriete)
+Type & Type::operator=(Type type)
 {
-    _propriete = propriete;
+    _classe = type._classe;
+    
+    _categorie = type._categorie;
+    
+    _propriete = type._propriete;
+    
+    return * this;
 }

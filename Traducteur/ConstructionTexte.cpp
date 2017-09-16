@@ -84,11 +84,57 @@ void Texte::recherche_conjonction_coordination(vector <string> tableau)
 
 
 
+bool Texte::recherche_expression(vector <string> mots)
+{
+    bool expression = false;
+    
+    ifstream monFichierExpressions("./Resources/Dictionnaire/expressions.txt");
+    
+    
+    while (!monFichierExpressions.eof())
+    {
+        monFichierExpressions >> __expression["A"] >> __expression["F"];
+        
+        
+        int taille_expression = (int) count(__expression[_langue_source].begin(), __expression[_langue_source].end(), ';');
+        
+        string expression_de_la_phrase;
+        
+        // Comparaison de l'expression avec celle de la phrase.
+        
+        for (int i = 0; i < min(taille_expression, (int) (mots.size())); i++)
+        {
+            expression_de_la_phrase += mots[i] + ';';
+        }
+        
+        
+        if (expression_de_la_phrase == __expression[_langue_source])
+        {
+            expression = true;
+            
+            replace(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';', ' ');
+            
+            Phrase phrase(__expression[_langue_sortie], _langue_source, _langue_sortie);
+            
+            __phrase.push_back(phrase);
+            
+            break;
+        }
+    }
+    
+    monFichierExpressions.close();
+    
+    return expression;
+}
+
+
+
+
 // Séparation du texte en plusieurs phrases selon la ponctuation.
 
-void Texte::recherche_de_la_ponctuation(string texte)
+void Texte::decouper_en_phrases(string texte)
 {
-    vector <string> tableau;
+    vector <string> mots;
     
     string mot = "",
            phrase = "";
@@ -110,11 +156,14 @@ void Texte::recherche_de_la_ponctuation(string texte)
             
             while (getline(iss, mot, ' '))
             {
-                tableau.push_back(mot);
+                mots.push_back(mot);
             }
 
-            recherche_conjonction_coordination(tableau);
-
+            if (!recherche_expression(mots))
+            {
+                recherche_conjonction_coordination(mots);
+            }
+            
             // On ajoute la ponctuation.
             
             __ponctuation.push_back(texte[i]);
@@ -129,7 +178,7 @@ void Texte::recherche_de_la_ponctuation(string texte)
             
             
             phrase = "";
-            tableau.clear();
+            mots.clear();
         }
         
         else
@@ -149,7 +198,7 @@ void Texte::construction_du_texte(string texte)
     vector <thread> phrases;
     
 
-    recherche_de_la_ponctuation(texte);
+    decouper_en_phrases(texte);
 
     // Création d'un thread par phrase.
     
