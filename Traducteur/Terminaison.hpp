@@ -39,33 +39,33 @@ class Terminaison
     
     // Les terminaisons anglaises au présent.
     
-    std::vector <std::string> __A = {"", "", "s", "s", "s", "", "", "", ""};
+    std::vector <std::string> __A;
     
     
     
     // Les terminaisons françaises du premier et deuxième groupe à tous les temps.
     
-    std::vector <std::string> __present_1_F = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
-    std::vector <std::string> __futur_simple_F = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
-    std::vector <std::string> __passe_simple_F = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
-    std::vector <std::string> __imparfait_F = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
-    std::vector <std::string> __present_2_F = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
-    std::vector <std::string> __conditionnel_F = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    std::vector <std::string> __present_1_F,
+                              __futur_simple_F,
+                              __passe_simple_F,
+                              __imparfait_F,
+                              __present_2_F,
+                              __conditionnel_F;
     
     
     // L'ensemble des terminaisons françaises du troisième groupe.
     
-    std::vector <std::string> __terminaisons_groupe_3 = {"ir", "tir", "ire", "dre", "oir", "oire", "evoir"};
+    std::vector <std::string> __terminaisons_groupe_3;
     
     // Les terminaisons du troisième groupe au présent.
     
-    std::vector <std::string> __present_ir_F = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
-    std::vector <std::string> __present_tir_F = {"s", "s", "t", "t", "t", "tons", "tez", "tent", "tent"};
-    std::vector <std::string> __present_ire_F = {"s", "s", "t", "t", "t", "ions", "iez", "ient", "ient"};
-    std::vector <std::string> __present_dre_F = {"ds", "ds", "d", "d", "d", "dons", "dez", "dent", "dent"};
-    std::vector <std::string> __present_oir_F = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
-    std::vector <std::string> __present_oire_F = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
-    std::vector <std::string> __present_evoir_F = {"ois", "ois", "oit", "oit", "oit", "evons", "evez", "oivent", "oivent"};
+    std::vector <std::string> __present_ir_F,
+                              __present_tir_F,
+                              __present_ire_F,
+                              __present_dre_F,
+                              __present_oir_F,
+                              __present_oire_F,
+                              __present_evoir_F;
 };
 
 #endif /* terminaison_hpp */

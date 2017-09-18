@@ -16,13 +16,9 @@ Type::Type() {}
 
 
 
-Type::Type(string classe, string categorie, string propriete)
+Type::Type(vector <string> type)
 {
-    _classe = classe;
-
-    _categorie = categorie;
-
-    _propriete = propriete;
+    __type = type;
 }
 
 
@@ -30,11 +26,7 @@ Type::Type(string classe, string categorie, string propriete)
 
 Type & Type::operator=(Type type)
 {
-    _classe = type._classe;
-    
-    _categorie = type._categorie;
-    
-    _propriete = type._propriete;
+    __type = type.__type;
     
     return * this;
 }

@@ -132,51 +132,31 @@ Groupe Phrase::traduction(string mot)
     Groupe groupe(mot);
     
     
-    Parseur parseur(_langue_source, _langue_sortie);
+    size_t nombre_types_differents = 0;
     
-    if (parseur.parser(mot))
+    Parseur parseur(_langue_source, _langue_sortie, "./Resources/Dictionnaire/mots.txt");
+    
+    
+    if (parseur.parser(mot, __groupes))
     {
-        size_t nombre_types_differents = parseur.recuperer_nombre_types();
-        
-        for (int i = 0; i < nombre_types_differents; i++)
-        {
-            Famille famille;
-            
-            famille.definir_type(parseur.recuperer_type(i));
-            
-            famille.ajouter_sens_sortie(parseur.recuperer_mots(i));
-            
-            famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux(i));
-            
-            
-            incrementer_les_champs_lexicaux(famille);
-            
-            groupe.ajouter_famille(famille);
-        }
+        nombre_types_differents = parseur.recuperer_nombre_types();
     }
     
-    /*// On étudie le cas des verbes à part.
-     
-     ParseurVerbe parseur_verbe(_langue_source, _langue_sortie);
-     
-     
-     if (parseur_verbe.chercher_verbe(mot, __groupes))
-     {
-        size_t nombre_types_differents = parseur_verbe.recuperer_types().size();
-     
-        for (int i = 0; i < nombre_types_differents; i++)
-        {
-            Famille famille;
-     
-            famille.ajouter_sens_sortie(parseur_verbe.recuperer_mots()[i]);
-     
-            famille.definir_les_champs_lexicaux_des_mots(parseur_verbe.recuperer_champs_lexicaux()[i]);
-     
-            incrementer_les_champs_lexicaux(famille);
-     
-            groupe.ajouter_famille(famille);
-        }
-     }*/
+    for (int i = 0; i < nombre_types_differents; i++)
+    {
+        Famille famille;
+        
+        famille.definir_type(parseur.recuperer_type(i));
+        
+        famille.ajouter_sens_sortie(parseur.recuperer_mots(i));
+        
+        famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux(i));
+        
+        
+        incrementer_les_champs_lexicaux(famille);
+        
+        groupe.ajouter_famille(famille);
+    }
     
     return groupe;
 }

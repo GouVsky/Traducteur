@@ -17,7 +17,7 @@
 #include <stdio.h>
 #include <iostream>
 
-#include "ParseurVerbe.hpp"
+#include "Parseur.hpp"
 
 #include "Groupe.hpp"
 #include "Famille.hpp"

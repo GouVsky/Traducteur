@@ -22,17 +22,21 @@ class Sujet
     
     Sujet(std::string source, std::string sortie);
     int recuperer_valeur() const { return _valeur; };
-    /*void transforme_groupe_nominal_sujet_en_pronom(std::vector <std::string> structure);*/
-    void creation_du_sujet(std::vector <Groupe> & groupes);
+    void rechercher_le_sujet(std::vector <Groupe> & groupes);
     
     private :
+    
+    void transformer_le_sujet(int masculin, int feminin);
+
     
     int _valeur;
     
     std::string _langue_source,
                 _langue_sortie;
-        
+    
     std::vector <std::string> __structure_sujet;
+    
+    enum Pronom{JE, TU, IL, ELLE, NEUTRE, NOUS, VOUS, ILS, ELLES};
 };
 
 #endif /* sujet_hpp */

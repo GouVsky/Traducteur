@@ -12,7 +12,27 @@
 using namespace std;
 
 
-Terminaison::Terminaison() {}
+Terminaison::Terminaison()
+{
+    __A = {"", "", "s", "s", "s", "", "", "", ""};
+    
+    __present_1_F = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
+    __futur_simple_F = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
+    __passe_simple_F = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
+    __imparfait_F = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    __present_2_F = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
+    __conditionnel_F = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
+    
+    __terminaisons_groupe_3 = {"ir", "tir", "ire", "dre", "oir", "oire", "evoir"};
+    
+    __present_ir_F = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
+    __present_tir_F = {"s", "s", "t", "t", "t", "tons", "tez", "tent", "tent"};
+    __present_ire_F = {"s", "s", "t", "t", "t", "ions", "iez", "ient", "ient"};
+    __present_dre_F = {"ds", "ds", "d", "d", "d", "dons", "dez", "dent", "dent"};
+    __present_oir_F = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
+    __present_oire_F = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
+    __present_evoir_F = {"ois", "ois", "oit", "oit", "oit", "evons", "evez", "oivent", "oivent"};
+}
 
 
 
