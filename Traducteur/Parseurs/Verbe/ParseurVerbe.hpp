@@ -45,7 +45,7 @@ class ParseurVerbe
     
     ParseurFormeVerbe __parseur_forme;
     
-        
+    
     std::string _langue_source,
                 _langue_sortie,
                 _fichier_formes,

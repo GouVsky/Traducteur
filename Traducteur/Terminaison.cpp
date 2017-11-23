@@ -17,7 +17,6 @@ Terminaison::Terminaison()
     // Présent.
 
     __terminaisons["A"]["PRE"] = {"", "", "s", "s", "s", "", "", "", ""};
-    __terminaisons["A"]["ING"] = {"", "", "", "", "", "", "", "", ""};
     
     __terminaisons["F"]["PREer"] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
     __terminaisons["F"]["PREir"] = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
@@ -56,16 +55,13 @@ Terminaison::Terminaison()
 
 void Terminaison::determiner_nouvelle_terminaison(string langue, string temps, int sujet, int groupe)
 {
-    string temps_verbe = temps;
-    
-    
     // Ajout du chiffre 3 pour différencier un cas spécifique du troisième groupe français.
     // Ce cas concerne une terminaison identique à celle du deuxième groupe.
     
-    temps_verbe.append((groupe == 3 && langue == "F") ? "3" : "");
+    string groupe_verbe = (groupe == 3 && langue == "F") ? "3" : "";
     
     
-    _nouvelle_terminaison = __terminaisons[langue][temps_verbe + _ancienne_terminaison][sujet];
+    _nouvelle_terminaison = __terminaisons[langue][temps + groupe_verbe + _ancienne_terminaison][sujet];
 }
 
 

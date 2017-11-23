@@ -146,12 +146,12 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
     
     ifstream fichier(_fichier);
     
-    
+
     while (!fichier.eof() && !trouve)
     {
         fichier >> __mots_fichier["A"] >> __mots_fichier["F"] >> _types >> _champs_lexicaux;
         
-        
+
         // On récupère l'ensemble des mots sources.
 
         parser_mots(__mots_fichier[_langue_source], __mots_sources);

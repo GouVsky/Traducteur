@@ -24,7 +24,7 @@ class Type
     std::string type();
     std::string classe() const { return __type[0]; };
     std::string categorie() const { return __type[1]; };
-    std::string propriete() const { return __type[2]; };
+    std::string propriete() { return (__type.size() == 3) ? __type[2] : ""; };
     
     private :
     
