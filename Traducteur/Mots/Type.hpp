@@ -21,14 +21,14 @@ class Type
     Type();
     Type(std::vector <std::string> type);
     Type & operator=(Type type);
-    std::string type() const { return __type[0] + "_" + __type[1] + "_" + __type[2]; };
+    std::string type();
     std::string classe() const { return __type[0]; };
     std::string categorie() const { return __type[1]; };
     std::string propriete() const { return __type[2]; };
     
     private :
     
-    /* Les chaîne de caractères permettent de définir le type exacte de la famille,
+    /* Les chaînes de caractères permettent de définir le type exacte de la famille,
        et de retrouver la classe grammaticale, la catégorie et les propriétés qui lui sont associées. */
     
     std::vector <std::string> __type;

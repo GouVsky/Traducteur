@@ -8,5 +8,20 @@
 
 #include "Verbe.hpp"
 
+using namespace std;
+
 
 Verbe::Verbe() {}
+
+
+
+
+
+string Verbe::recuperer_forme_verbe_irregulier(string langue, string temps, int sujet)
+{
+    transform(langue.begin(), langue.end(), langue.begin(), ::tolower);
+    
+    string fichier = "./Resources/Dictionnaire/Verbes/Irreguliers/" + langue;
+    
+    return 0;
+}

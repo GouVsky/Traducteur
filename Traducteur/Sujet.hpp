@@ -20,7 +20,7 @@ class Sujet
 {
     public :
     
-    Sujet(std::string source, std::string sortie);
+    Sujet();
     int recuperer_valeur() const { return _valeur; };
     void rechercher_le_sujet(std::vector <Groupe> & groupes);
     
@@ -30,9 +30,6 @@ class Sujet
 
     
     int _valeur;
-    
-    std::string _langue_source,
-                _langue_sortie;
     
     std::vector <std::string> __structure_sujet;
     

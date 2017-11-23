@@ -15,40 +15,47 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "Etre.hpp"
+#include "Avoir.hpp"
 #include "Sujet.hpp"
-#include "Auxiliaire.hpp"
 #include "Terminaison.hpp"
 
 #include "Mot.hpp"
 #include "Groupe.hpp"
+
+#include "Type.hpp"
+
+#include "ParseurFormeVerbe.hpp"
 
 
 class ParseurVerbe
 {
     public :
     
-    ParseurVerbe(std::string source, std::string sortie, std::string fichier_formes);
-    //std::string recuperer_forme_irreguliere(std::string langue, std::string verbe);
+    ParseurVerbe(std::string source, std::string sortie, std::string fichier_formes, Type type);
     std::string construire_verbe(std::string langue, std::string verbe);
     bool parser(std::string mot, std::vector <Mot> & verbes, std::vector <Groupe> & groupes, std::vector <std::vector <Mot>> & verbes_sorties);
     
     private :
     
+    Etre __etre;
+    Avoir __avoir;
     Sujet __sujet;
-    Auxiliaire __auxiliaire;
     Terminaison __terminaison;
     
+    ParseurFormeVerbe __parseur_forme;
     
-    int _groupe = 1;
-    
-    std::string _temps_verbe,
-                _langue_source,
+        
+    std::string _langue_source,
                 _langue_sortie,
+                _fichier_formes,
                 _forme_verbe_source,
-                _forme_verbe_sortie,
-                _fichier_formes;
+                _forme_verbe_sortie;
     
-    std::map <std::string, std::string> __conjugaison;
+    std::map <std::string, int> __groupe;
+    
+    std::map <std::string, std::string> __temps,
+                                        __forme;
 };
 
 #endif /* ParseurVerbe_hpp */

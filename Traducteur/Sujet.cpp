@@ -11,11 +11,8 @@
 using namespace std;
 
 
-Sujet::Sujet(string source, string sortie)
+Sujet::Sujet()
 {
-    _langue_source = source;
-    _langue_sortie = sortie;
-    
     _valeur = NEUTRE;
 }
 
@@ -66,6 +63,7 @@ void Sujet::rechercher_le_sujet(vector <Groupe> & groupes)
     for (int i = 0; i < groupes.size(); i++)
     {
         size_t nombre_familles = groupes[i].recuperer_nombre_de_familles();
+        
         
         for (int j = 0; j < nombre_familles; j++)
         {

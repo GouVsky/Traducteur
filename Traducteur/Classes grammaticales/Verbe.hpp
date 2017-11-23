@@ -9,13 +9,17 @@
 #ifndef verbe_hpp
 #define verbe_hpp
 
+#include <string>
+#include <vector>
 #include <stdio.h>
+
 
 class Verbe
 {
     public :
     
     Verbe();
+    static std::string recuperer_forme_verbe_irregulier(std::string langue, std::string temps, int sujet);
 };
 
 #endif /* verbe_hpp */
