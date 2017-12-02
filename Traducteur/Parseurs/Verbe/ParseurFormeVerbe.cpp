@@ -11,25 +11,31 @@
 using namespace std;
 
 
-ParseurFormeVerbe::ParseurFormeVerbe() {}
-
-
-
-
-void ParseurFormeVerbe::parser(string forme_verbe)
+ParseurFormeVerbe::ParseurFormeVerbe(string langue_source, string langue_sortie, string fichier)
 {
-    __forme_decoupee.clear();
+    _fichier = fichier;
     
+    _langue_source = langue_source;
+    _langue_sortie = langue_sortie;
+}
+
+
+
+
+vector <string> ParseurFormeVerbe::recuperer_composants_forme(string forme)
+{
     string composant_distinct,
            structure_du_composant;
     
+    vector <string> forme_decoupee;
     
-    istringstream forme(forme_verbe);
+    
+    istringstream forme_verbe(forme);
     
     // On récupère chaque composant distinct du verbe.
     // Il s'agit de tous les mots séparés par un espace.
     
-    while (getline(forme, composant_distinct, '+'))
+    while (getline(forme_verbe, composant_distinct, '+'))
     {
         // On récupère la structure de chaque composant.
         // Ces différentes structures sont composées des radicaux, des terminaisons, etc.
@@ -38,16 +44,48 @@ void ParseurFormeVerbe::parser(string forme_verbe)
         
         while (getline(structure, structure_du_composant, '-'))
         {
-            __forme_decoupee.push_back(structure_du_composant);
+            forme_decoupee.push_back(structure_du_composant);
         }
         
-        __forme_decoupee.push_back(" ");
+        forme_decoupee.push_back(" ");
     }
     
     // On supprime le dernier espace ajouté.
     
-    if (__forme_decoupee[__forme_decoupee.size() - 1] == " ")
+    if (forme_decoupee[forme_decoupee.size() - 1] == " ")
     {
-        __forme_decoupee.pop_back();
+        forme_decoupee.pop_back();
     }
+    
+    return forme_decoupee;
+}
+
+
+
+
+void ParseurFormeVerbe::parser()
+{
+    ifstream fichier_formes(_fichier);
+    
+    
+    map <string, string> temps,
+                         forme;
+    
+    
+    while (!fichier_formes.eof())
+    {
+        fichier_formes >> temps[_langue_source] >> temps[_langue_sortie] >> forme[_langue_source] >> forme[_langue_sortie];
+        
+        
+        __temps[_langue_source].push_back(temps[_langue_source]);
+        
+        __formes_decoupees[_langue_source].push_back(recuperer_composants_forme(forme[_langue_source]));
+
+        
+        __temps[_langue_sortie].push_back(temps[_langue_sortie]);
+
+        __formes_decoupees[_langue_sortie].push_back(recuperer_composants_forme(forme[_langue_sortie]));
+    }
+    
+    fichier_formes.close();
 }

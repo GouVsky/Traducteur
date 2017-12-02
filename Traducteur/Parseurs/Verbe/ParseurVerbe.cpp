@@ -11,12 +11,10 @@
 using namespace std;
 
 
-ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie, string fichier_formes, Type type) : __etre(langue_source, langue_sortie), __avoir(langue_source, langue_sortie)
+ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie, Type type) : __parseur_forme(langue_source, langue_sortie, "./Resources/Dictionnaire/Verbes/formes.txt"), __etre(langue_source, langue_sortie), __avoir(langue_source, langue_sortie)
 {
     _langue_source = langue_source;
     _langue_sortie = langue_sortie;
-    
-    _fichier_formes = fichier_formes;
     
     
     // On récupère les groupes des verbes dans chaque langue.
@@ -28,25 +26,17 @@ ParseurVerbe::ParseurVerbe(string langue_source, string langue_sortie, string fi
 
 
 
-string ParseurVerbe::construire_verbe(string langue, string verbe)
+string ParseurVerbe::construire_verbe(string langue, string verbe, vector <string> & formes, string temps)
 {
     string construction_verbe,
            sauvegarde = verbe;
     
-    
-    __parseur_forme.parser(__forme[langue]);
-    
-
-    string temps = __temps[langue];
-
-    vector <string> forme = __parseur_forme.recuperer_forme();
-    
 
     // On récupère chaque partie qui compose la forme du verbe.
 
-    for (int i = 0; i < forme.size(); i++)
+    for (int i = 0; i < formes.size(); i++)
     {
-        string partie_forme = forme[i];
+        string partie_forme = formes[i];
         
         
         if (partie_forme == "verbe")
@@ -99,8 +89,9 @@ bool ParseurVerbe::parser(string mot, vector <Mot> & verbes, vector <Groupe> & g
     __sujet.rechercher_le_sujet(groupes);
 
     
-    string sauvegarde_temps,
-           sauvegarde_forme;
+    string sauvegarde_temps;
+    
+    vector <string> sauvegarde_forme;
 
     bool trouve = false;
     
@@ -112,50 +103,50 @@ bool ParseurVerbe::parser(string mot, vector <Mot> & verbes, vector <Groupe> & g
     size_t nombre_verbes = verbes.size();
     
     
-    ifstream fichier_formes(_fichier_formes);
+    __parseur_forme.parser();
     
 
-    while (!fichier_formes.eof())
+    size_t nombre_formes = __parseur_forme.recuperer_formes(_langue_source).size();
+    
+    
+    // Pour tous les sens possibles, on teste lequel correspond à celui de la phrase.
+    
+    for (int i = 0; i < nombre_verbes; i++)
     {
-        fichier_formes >> __temps[_langue_source] >> __temps[_langue_sortie] >> __forme[_langue_source] >> __forme[_langue_sortie];
-        
-        
-        // Pour tous les sens possibles, on teste lequel correspond à celui de la phrase.
-        
-        for (int i = 0; i < nombre_verbes; i++)
+        for (int j = 0; j < nombre_formes; j++)
         {
             string verbe_dans_phrase;
             
-            string verbe = construire_verbe(_langue_source, verbes[i].recuperer_mot());
+            string verbe = construire_verbe(_langue_source, verbes[i].recuperer_mot(), __parseur_forme.recuperer_formes(_langue_source)[j], __parseur_forme.recuperer_temps(_langue_source)[j]);
             
             size_t taille = count(verbe.begin(), verbe.end(), ' ') + 1;
             
-
+            
             // Comparaison du verbe avec celui de la phrase.
             // On construit le verbe avec les mots précédents et le mot actuel.
             
             size_t indice = nombre_groupes - taille + 1;
             
             
-            for (size_t i = indice; i < nombre_groupes; i++)
+            for (size_t k = indice; k < nombre_groupes; k++)
             {
-                verbe_dans_phrase += groupes[i].recuperer_mot_source() + ' ';
+                verbe_dans_phrase += groupes[k].recuperer_mot_source() + ' ';
             }
             
             verbe_dans_phrase += mot;
             
-
+            
             // On récupère toujours la forme du verbe la plus grande.
-
+            
             if (verbe_dans_phrase == verbe && taille > taille_max)
             {
                 taille_max = taille;
                 
                 indice_final = indice;
                 
-                sauvegarde_temps = __temps[_langue_sortie];
+                sauvegarde_forme = __parseur_forme.recuperer_formes(_langue_sortie)[j];
                 
-                sauvegarde_forme = __forme[_langue_sortie];
+                sauvegarde_temps = __parseur_forme.recuperer_temps(_langue_sortie)[j];
                 
                 trouve = true;
             }
@@ -164,34 +155,21 @@ bool ParseurVerbe::parser(string mot, vector <Mot> & verbes, vector <Groupe> & g
     
     if (trouve)
     {
-        // On charge les sauvegardes.
-        
-        __temps[_langue_sortie] = sauvegarde_temps;
-        
-        __forme[_langue_sortie] = sauvegarde_forme;
-        
-        
         // On supprime les groupes de mots qui font en fait partis du verbe.
         
         groupes.erase(groupes.begin() + indice_final, groupes.end());
         
         
-        size_t nombre_verbes_sorties = verbes_sorties.size();
-        
-        
         // On conjugue tous les sens du verbe source.
         
-        for (int j = 0; j < nombre_verbes_sorties; j++)
+        for (int j = 0; j < verbes_sorties.size(); j++)
         {
             for (int k = 0; k < verbes_sorties[j].size(); k++)
             {
-                verbes_sorties[j][k].recuperer_mot() = construire_verbe(_langue_sortie, verbes_sorties[j][k].recuperer_mot());
+                verbes_sorties[j][k].recuperer_mot() = construire_verbe(_langue_sortie, verbes_sorties[j][k].recuperer_mot(), sauvegarde_forme, sauvegarde_temps);
             }
         }
     }
-    
-    
-    fichier_formes.close();
     
     return trouve;
 }

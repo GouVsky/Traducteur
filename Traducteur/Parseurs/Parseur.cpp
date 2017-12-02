@@ -180,7 +180,7 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
                         parser_mots(__mots_fichier[_langue_sortie], __mots_sorties);
                         
                         
-                        ParseurVerbe parseur_verbe(_langue_source, _langue_sortie, "./Resources/Dictionnaire/Verbes/formes.txt", __types[i]);
+                        ParseurVerbe parseur_verbe(_langue_source, _langue_sortie, __types[i]);
                         
                         
                         if (parseur_verbe.parser(mot_a_trouver, __mots_sources[j], groupes, __mots_sorties))

@@ -32,8 +32,8 @@ class ParseurVerbe
 {
     public :
     
-    ParseurVerbe(std::string source, std::string sortie, std::string fichier_formes, Type type);
-    std::string construire_verbe(std::string langue, std::string verbe);
+    ParseurVerbe(std::string source, std::string sortie, Type type);
+    std::string construire_verbe(std::string langue, std::string verbe, std::vector <std::string> & formes, std::string temps);
     bool parser(std::string mot, std::vector <Mot> & verbes, std::vector <Groupe> & groupes, std::vector <std::vector <Mot>> & verbes_sorties);
     
     private :
@@ -48,7 +48,6 @@ class ParseurVerbe
     
     std::string _langue_source,
                 _langue_sortie,
-                _fichier_formes,
                 _forme_verbe_source,
                 _forme_verbe_sortie;
     

@@ -31,7 +31,7 @@ Terminaison::Terminaison()
     
     // Futur.
     
-    __terminaisons["F"]["FUSer"] = {"ai", "as", "a", "a", "a", "ons", "ez", "ont", "ont"};
+    __terminaisons["F"]["FUSer"] = {"erai", "eras", "era", "era", "era", "erons", "erez", "eront", "eront"};
     __terminaisons["F"]["FUSir"] = __terminaisons["F"]["FUSer"];
     
     
@@ -59,8 +59,8 @@ void Terminaison::determiner_nouvelle_terminaison(string langue, string temps, i
     // Ce cas concerne une terminaison identique à celle du deuxième groupe.
     
     string groupe_verbe = (groupe == 3 && langue == "F") ? "3" : "";
-    
-    
+
+
     _nouvelle_terminaison = __terminaisons[langue][temps + groupe_verbe + _ancienne_terminaison][sujet];
 }
 
