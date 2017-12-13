@@ -11,6 +11,7 @@
 
 #include <map>
 #include <string>
+#include <vector>
 #include <stdio.h>
 
 
@@ -19,13 +20,16 @@ class ChampsLexicaux
     public :
     
     ChampsLexicaux();
+    ChampsLexicaux(std::vector <std::string> champs_lexicaux);
     ChampsLexicaux & operator=(ChampsLexicaux champs_lexicaux);
     ChampsLexicaux operator+(ChampsLexicaux champs_lexicaux);
     size_t recuperer_nombre_champs_lexicaux() const { return __liste_champs_lexicaux.size(); };
     std::pair <int, std::string> recuperation_plus_grand_champ_lexical_commun(ChampsLexicaux champs_lexicaux);
-    void incrementation_du_champ_lexical(std::string champ_lexical);
     
     private :
+    
+    void incrementation_du_champ_lexical(std::string champ_lexical);
+
     
     std::map <std::string, int> __liste_champs_lexicaux;
 };

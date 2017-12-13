@@ -21,7 +21,7 @@ class Sujet
     public :
     
     Sujet();
-    int recuperer_valeur() const { return _valeur; };
+    int recuperer_valeur() { return _valeur; };
     void rechercher_le_sujet(std::vector <Groupe> & groupes);
     
     private :
@@ -30,10 +30,8 @@ class Sujet
 
     
     int _valeur;
-    
-    std::vector <std::string> __structure_sujet;
-    
-    enum Pronom{JE, TU, IL, ELLE, NEUTRE, NOUS, VOUS, ILS, ELLES};
+        
+    enum Pronom {JE, TU, IL, ELLE, NEUTRE, NOUS, VOUS, ILS, ELLES};
 };
 
 #endif /* sujet_hpp */

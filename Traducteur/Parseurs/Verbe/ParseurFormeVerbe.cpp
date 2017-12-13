@@ -22,7 +22,7 @@ ParseurFormeVerbe::ParseurFormeVerbe(string langue_source, string langue_sortie,
 
 
 
-vector <string> ParseurFormeVerbe::recuperer_composants_forme(string forme)
+vector <string> ParseurFormeVerbe::parser_forme(string forme)
 {
     string composant_distinct,
            structure_du_composant;
@@ -65,26 +65,26 @@ vector <string> ParseurFormeVerbe::recuperer_composants_forme(string forme)
 
 void ParseurFormeVerbe::parser()
 {
-    ifstream fichier_formes(_fichier);
-    
-    
     map <string, string> temps,
                          forme;
     
     
+    ifstream fichier_formes(_fichier);
+
+    
     while (!fichier_formes.eof())
     {
-        fichier_formes >> temps[_langue_source] >> temps[_langue_sortie] >> forme[_langue_source] >> forme[_langue_sortie];
+        fichier_formes >> temps["A"] >> temps["F"] >> forme["A"] >> forme["F"];
         
         
-        __temps[_langue_source].push_back(temps[_langue_source]);
+        __donnees.ajouter_temps(temps[_langue_source], _langue_source);
         
-        __formes_decoupees[_langue_source].push_back(recuperer_composants_forme(forme[_langue_source]));
-
+        __donnees.ajouter_forme(parser_forme(forme[_langue_source]), _langue_source);
         
-        __temps[_langue_sortie].push_back(temps[_langue_sortie]);
-
-        __formes_decoupees[_langue_sortie].push_back(recuperer_composants_forme(forme[_langue_sortie]));
+        
+        __donnees.ajouter_temps(temps[_langue_sortie], _langue_sortie);
+        
+        __donnees.ajouter_forme(parser_forme(forme[_langue_sortie]), _langue_sortie);
     }
     
     fichier_formes.close();

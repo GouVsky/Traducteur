@@ -20,6 +20,18 @@ Groupe::Groupe(string mot_source)
 
 
 
+Groupe & Groupe::operator=(Groupe groupe)
+{
+    _mot_source = groupe._mot_source;
+    
+    __familles = groupe.__familles;
+    
+    return * this;
+}
+
+
+
+
 void Groupe::ajouter_famille(Famille famille)
 {
     __familles.push_back(famille);

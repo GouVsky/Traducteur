@@ -22,6 +22,7 @@ class Mot
     public :
     
     Mot(std::string mot);
+    Mot & operator=(Mot mot);
     ChampsLexicaux recuperer_champs_lexicaux() const { return __champs_lexicaux; };
     std::string & recuperer_mot() { return _mot; };
     void definir_les_differents_champs_lexicaux(ChampsLexicaux champs_lexicaux);

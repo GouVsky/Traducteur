@@ -21,6 +21,7 @@ class Groupe
     public :
     
     Groupe(std::string mot_source);
+    Groupe & operator=(Groupe groupe);
     std::string recuperer_mot_source() const { return _mot_source; };
     size_t recuperer_nombre_de_familles() const { return __familles.size(); };
     Famille & recuperer_famille(int numero_famille) { return __familles[numero_famille]; };

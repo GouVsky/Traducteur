@@ -16,6 +16,17 @@ ChampsLexicaux::ChampsLexicaux() {}
 
 
 
+ChampsLexicaux::ChampsLexicaux(vector <string> champs_lexicaux)
+{
+    for (int i = 0; i < champs_lexicaux.size(); i++)
+    {
+        incrementation_du_champ_lexical(champs_lexicaux[i]);
+    }
+}
+
+
+
+
 ChampsLexicaux & ChampsLexicaux::operator=(ChampsLexicaux champs_lexicaux)
 {
     __liste_champs_lexicaux = champs_lexicaux.__liste_champs_lexicaux;

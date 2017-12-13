@@ -13,6 +13,8 @@
 #include <vector>
 #include <stdio.h>
 
+#include "Nom.hpp"
+
 
 class Type
 {

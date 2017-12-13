@@ -11,12 +11,31 @@
 using namespace std;
 
 
-Famille::Famille() {}
+Famille::Famille(vector <string> mots)
+{
+    for (int i = 0; i < mots.size(); i++)
+    {
+        Mot mot(mots[i]);
+        
+        __mots.push_back(mot);
+    }
+}
+
+
+
+Famille & Famille::operator=(Famille famille)
+{
+    __type = famille.__type;
+    
+    __mots = famille.__mots;
+    
+    return * this;
+}
 
 
 
 
-void Famille::definir_type(Type type)
+void Famille::ajouter_type(Type type)
 {
     __type = type;
 }
@@ -24,26 +43,10 @@ void Famille::definir_type(Type type)
 
 
 
-void Famille::definir_les_champs_lexicaux_des_mots(vector <ChampsLexicaux> champs_lexicaux)
+void Famille::ajouter_champs_lexicaux(vector <ChampsLexicaux> champs_lexicaux)
 {
-    for (int i = 0; i < __sens_sortie.size(); i++)
+    for (int i = 0; i < __mots.size(); i++)
     {
-        __sens_sortie[i].definir_les_differents_champs_lexicaux(champs_lexicaux[i]);
+        __mots[i].definir_les_differents_champs_lexicaux(champs_lexicaux[i]);
     }
-}
-
-
-
-
-void Famille::ajouter_sens_sortie(Mot mot)
-{
-    __sens_sortie.push_back(mot);
-}
-
-
-
-
-void Famille::ajouter_sens_sortie(vector <Mot> mots)
-{
-    __sens_sortie = mots;
 }

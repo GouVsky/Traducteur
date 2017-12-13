@@ -13,13 +13,21 @@
 #include <vector>
 #include <stdio.h>
 
+#include "Mot.hpp"
+#include "Sujet.hpp"
+#include "Groupe.hpp"
+#include "DonneesFormeVerbe.hpp"
 
 class Verbe
 {
     public :
     
-    Verbe();
-    static std::string recuperer_forme_verbe_irregulier(std::string langue, std::string temps, int sujet);
+    std::string recuperer_forme_verbe_irregulier(std::string langue, std::string temps, int sujet);
+    std::string construire_verbe(std::string mot, std::vector <Mot> & verbes, std::vector <Groupe> & groupes, std::vector <std::vector <Mot>> & verbes_sorties, DonneesFormeVerbe & donnees);
+    
+    private :
+    
+    Sujet __sujet;
 };
 
 #endif /* verbe_hpp */

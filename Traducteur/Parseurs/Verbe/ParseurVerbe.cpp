@@ -84,19 +84,23 @@ string ParseurVerbe::construire_verbe(string langue, string verbe, vector <strin
 
 bool ParseurVerbe::parser(string mot, vector <Mot> & verbes, vector <Groupe> & groupes, vector <vector <Mot>> & verbes_sorties)
 {
-    // On détermine le sujet.
+    /*// On détermine le sujet.
     
     __sujet.rechercher_le_sujet(groupes);
 
     
+    // Sauvegarde des différents paramètres.
+    
     string sauvegarde_temps;
     
+    size_t sauvegarde_indice = 0;
+    
     vector <string> sauvegarde_forme;
+    
 
     bool trouve = false;
     
-    size_t taille_max = 0,
-           indice_final = 0;
+    size_t taille_max = 0;
     
     size_t nombre_groupes = groupes.size();
     
@@ -142,7 +146,7 @@ bool ParseurVerbe::parser(string mot, vector <Mot> & verbes, vector <Groupe> & g
             {
                 taille_max = taille;
                 
-                indice_final = indice;
+                sauvegarde_indice = indice;
                 
                 sauvegarde_forme = __parseur_forme.recuperer_formes(_langue_sortie)[j];
                 
@@ -157,7 +161,7 @@ bool ParseurVerbe::parser(string mot, vector <Mot> & verbes, vector <Groupe> & g
     {
         // On supprime les groupes de mots qui font en fait partis du verbe.
         
-        groupes.erase(groupes.begin() + indice_final, groupes.end());
+        groupes.erase(groupes.begin() + sauvegarde_indice, groupes.end());
         
         
         // On conjugue tous les sens du verbe source.
@@ -171,5 +175,7 @@ bool ParseurVerbe::parser(string mot, vector <Mot> & verbes, vector <Groupe> & g
         }
     }
     
-    return trouve;
+    return trouve;*/
+    
+    return 0;
 }

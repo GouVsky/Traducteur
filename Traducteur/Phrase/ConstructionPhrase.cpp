@@ -77,7 +77,7 @@ void Phrase::choix_des_mots_selon_les_champs_lexicaux(vector <Groupe> & groupes,
                 
                 for (int k = 0; k < nombre_de_sens; k++)
                 {
-                    Mot & mot = groupes[i].recuperer_famille(j).recuperer_sens_sortie(k);
+                    Mot & mot = groupes[i].recuperer_famille(j).recuperer_mots()[k];
                     
                     
                     // On récupère le champ lexical dominant de la phrase.
@@ -120,7 +120,7 @@ void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
     
     for (int i = 0; i < nombre_de_sens; i++)
     {
-        __champs_lexicaux = __champs_lexicaux + famille.recuperer_sens_sortie(i).recuperer_champs_lexicaux();
+        __champs_lexicaux = __champs_lexicaux + famille.recuperer_mots()[i].recuperer_champs_lexicaux();
     }
 }
 
@@ -132,25 +132,19 @@ Groupe Phrase::traduction(string mot)
     Groupe groupe(mot);
     
     
-    size_t nombre_types_differents = 0;
+    size_t nombre_familles = 0;
     
     Parseur parseur(_langue_source, _langue_sortie, "./Resources/Dictionnaire/mots.txt");
     
     
     if (parseur.parser(mot, __groupes))
     {
-        nombre_types_differents = parseur.recuperer_nombre_types();
+        nombre_familles = parseur.recuperer_donnees().recuperer_nombre_familles(_langue_sortie);
     }
     
-    for (int i = 0; i < nombre_types_differents; i++)
+    for (int i = 0; i < nombre_familles; i++)
     {
-        Famille famille;
-        
-        famille.definir_type(parseur.recuperer_type(i));
-        
-        famille.ajouter_sens_sortie(parseur.recuperer_mots(i));
-        
-        famille.definir_les_champs_lexicaux_des_mots(parseur.recuperer_champs_lexicaux(i));
+        Famille famille = parseur.recuperer_donnees().recuperer_famille(_langue_sortie, i);
         
         
         incrementer_les_champs_lexicaux(famille);
