@@ -41,7 +41,7 @@ void Groupe::ajouter_famille(Famille famille)
 
 
 
-#include <iostream>
+
 void Groupe::determiner_famille_dominante()
 {
     int max = -1,
@@ -52,7 +52,10 @@ void Groupe::determiner_famille_dominante()
     {
         valeur_champ_lexical_dominant = __familles[famille].recuperer_mot_dominant().recuperer_champs_lexicaux().recuperer_champ_lexical_dominant().second;
 
-        //cout << __familles[famille].recuperer_mot_dominant().recuperer_mot() << " " << valeur_champ_lexical_dominant << endl;
+        
+        // On récupère le mot dominant de la famille dominante en fonction des champs lexicaux de la phrase.
+        // Pour cela, on récupère le champ lexical du mot dominant de chaque famille.
+        // S'il y a un conflit entre plusieurs familles, on les garde.
         
         if (valeur_champ_lexical_dominant > max)
         {

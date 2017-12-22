@@ -24,6 +24,7 @@ class Famille
     public :
     
     Famille();
+    Famille(std::string mot);
     Famille(std::vector <std::string> mots);
     Famille & operator=(Famille famille);
     Famille operator+(Famille famille);

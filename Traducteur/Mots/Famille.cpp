@@ -29,6 +29,16 @@ Famille::Famille(vector <string> mots)
 
 
 
+Famille::Famille(string mot)
+{
+    Mot inconnu(mot);
+    
+    __mot_dominant = inconnu;
+}
+
+
+
+
 Famille & Famille::operator=(Famille famille)
 {
     __type = famille.__type;
@@ -99,7 +109,6 @@ void Famille::ajouter_champs_lexicaux(vector <ChampsLexicaux> champs_lexicaux)
 
 
 
-#include <iostream>
 
 void Famille::determiner_mot_dominant(ChampsLexicaux & champs_lexicaux)
 {

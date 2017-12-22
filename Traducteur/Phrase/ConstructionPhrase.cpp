@@ -94,21 +94,32 @@ Groupe Phrase::traduction(string mot)
     if (parseur.parser(mot, __groupes))
     {
         nombre_familles = parseur.recuperer_donnees().recuperer_nombre_familles(_langue_sortie);
+        
+        
+        for (int i = 0; i < nombre_familles; i++)
+        {
+            Famille famille = parseur.recuperer_donnees().recuperer_famille(_langue_sortie, i);
+            
+            
+            famille.ajouter_type(parseur.recuperer_donnees().recuperer_type(i));
+            
+            famille.ajouter_champs_lexicaux(parseur.recuperer_donnees().recuperer_champs_lexicaux(_langue_sortie, i));
+            
+            incrementer_les_champs_lexicaux(famille);
+            
+            groupe.ajouter_famille(famille);
+        }
     }
     
-    for (int i = 0; i < nombre_familles; i++)
+    // Le mot n'est pas répertorié dans la base de données.
+    
+    else
     {
-        Famille famille = parseur.recuperer_donnees().recuperer_famille(_langue_sortie, i);
+        Famille inconnue = Famille(mot);
         
-        
-        famille.ajouter_type(parseur.recuperer_donnees().recuperer_type(i));
-
-        famille.ajouter_champs_lexicaux(parseur.recuperer_donnees().recuperer_champs_lexicaux(_langue_sortie, i));
-        
-        incrementer_les_champs_lexicaux(famille);
-        
-        groupe.ajouter_famille(famille);
+        groupe.ajouter_famille(inconnue);
     }
+    
     
     return groupe;
 }
