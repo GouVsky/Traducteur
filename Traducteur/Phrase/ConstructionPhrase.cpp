@@ -39,75 +39,29 @@ Phrase::Phrase(vector <string> mots_source, string langue_source, string langue_
 
 void Phrase::choix_des_mots_selon_les_champs_lexicaux(vector <Groupe> & groupes, int indice)
 {
-    string mots;
-
-    int max = -1,
-        valeur_champ_lexical = -1;
-    
-    size_t nombre_de_sens,
-           nombre_de_familles;
+    size_t nombre_de_familles;
     
     __sous_phrases_sorties.push_back(vector <Mot> ());
 
     
-    // Pour toutes les groupes d'une sous-phrase.
+    // Pour tous les groupes d'une sous-phrase.
 
-    for (int i = 0; i < groupes.size(); i++)
+    for (int groupe = 0; groupe < groupes.size(); groupe++)
     {
-        nombre_de_familles = groupes[i].recuperer_nombre_de_familles();
+        nombre_de_familles = groupes[groupe].recuperer_nombre_de_familles();
         
-        // Le mot est inconnu s'il n'y a pas de famille.
-        
-        if (nombre_de_familles == 0)
+
+        for (int famille = 0; famille < nombre_de_familles; famille++)
         {
-            Mot mot_inconnu(groupes[i].recuperer_mot_source());
-            
-            __sous_phrases_sorties[indice].push_back(mot_inconnu);
+            groupes[groupe].recuperer_famille(famille).determiner_mot_dominant(__champs_lexicaux);
         }
         
-        else
-        {
-            // Pour chaque famille.
-            
-            for (int j = 0; j < nombre_de_familles; j++)
-            {
-                // Pour chaque sens.
-                
-                nombre_de_sens = groupes[i].recuperer_famille(j).recuperer_nombre_de_sens_sortie();
-                
-                for (int k = 0; k < nombre_de_sens; k++)
-                {
-                    Mot & mot = groupes[i].recuperer_famille(j).recuperer_mots()[k];
-                    
-                    
-                    // On récupère le champ lexical dominant de la phrase.
-                    // On n'effectue pas cela entre tous les champs lexicaux, mais seulement entre ceux qui sont communs avec le mot.
-                    
-                    valeur_champ_lexical = __champs_lexicaux.recuperation_plus_grand_champ_lexical_commun(mot.recuperer_champs_lexicaux()).first;
-                    
-                    if (valeur_champ_lexical > max)
-                    {
-                        max = valeur_champ_lexical;
-                        
-                        mots = mot.recuperer_mot();
-                    }
-                    
-                    else if (valeur_champ_lexical == max)
-                    {
-                        mots += '/' + mot.recuperer_mot();
-                    }
-                }
-            }
-            
-            Mot mot(mots);
-            
-            __sous_phrases_sorties[indice].push_back(mot);
-            
-            
-            max = -1;
-            
-            mots = "";
-        }
+        // On détermine la famille dominante de chaque groupe.
+        // Une famille dominante est celle qui possède le mot dominant le plus dominant.
+        
+        groupes[groupe].determiner_famille_dominante();
+        
+        __sous_phrases_sorties[indice].push_back(groupes[groupe].recuperer_famille_dominante().recuperer_mot_dominant());
     }
 }
 
@@ -146,6 +100,10 @@ Groupe Phrase::traduction(string mot)
     {
         Famille famille = parseur.recuperer_donnees().recuperer_famille(_langue_sortie, i);
         
+        
+        famille.ajouter_type(parseur.recuperer_donnees().recuperer_type(i));
+
+        famille.ajouter_champs_lexicaux(parseur.recuperer_donnees().recuperer_champs_lexicaux(_langue_sortie, i));
         
         incrementer_les_champs_lexicaux(famille);
         

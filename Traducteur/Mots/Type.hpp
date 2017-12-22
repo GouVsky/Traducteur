@@ -23,6 +23,7 @@ class Type
     Type();
     Type(std::vector <std::string> type);
     Type & operator=(Type type);
+    Type operator+(Type type);
     std::string type();
     std::string classe() const { return __type[0]; };
     std::string categorie() const { return __type[1]; };

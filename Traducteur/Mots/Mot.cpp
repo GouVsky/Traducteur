@@ -11,6 +11,11 @@
 using namespace std;
 
 
+Mot::Mot() {}
+
+
+
+
 Mot::Mot(string mot)
 {
     _mot = mot;
@@ -24,6 +29,28 @@ Mot & Mot::operator=(Mot mot)
     _mot = mot._mot;
     
     __champs_lexicaux = mot.__champs_lexicaux;
+    
+    return * this;
+}
+
+
+
+
+Mot Mot::operator+(Mot mot)
+{
+    Mot concatenation(_mot + '/' + mot.recuperer_mot());
+    
+    concatenation.__champs_lexicaux = __champs_lexicaux + mot.__champs_lexicaux;
+    
+    return concatenation;
+}
+
+
+
+
+Mot & Mot::operator+=(Mot mot)
+{
+    * this = * this + mot;
     
     return * this;
 }

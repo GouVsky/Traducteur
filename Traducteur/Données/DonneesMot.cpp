@@ -21,18 +21,6 @@ DonneesMot::DonneesMot(string langue_source, string langue_sortie)
 
 
 
-DonneesMot::~DonneesMot()
-{
-    __types.clear();
-    
-    __champs_lexicaux.clear();
-    
-    __famille[_langue_source].clear();
-}
-
-
-
-
 void DonneesMot::ajouter_type(vector <string> types)
 {
     Type type(types);
@@ -64,4 +52,16 @@ void DonneesMot::ajouter_champs_lexicaux(vector <vector <string>> champs_lexicau
     }
     
     __champs_lexicaux.push_back(champs_lexicaux_par_famille);
+}
+
+
+
+
+void DonneesMot::reinitialisation()
+{
+    __types.clear();
+    
+    __champs_lexicaux.clear();
+    
+    __famille[_langue_source].clear();
 }

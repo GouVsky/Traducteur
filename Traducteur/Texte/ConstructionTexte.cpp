@@ -14,6 +14,7 @@ using namespace std;
 Texte::Texte(string source, string sortie)
 {
     _langue_source = source;
+    
     _langue_sortie = sortie;
 }
 

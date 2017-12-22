@@ -34,6 +34,23 @@ Type & Type::operator=(Type type)
 
 
 
+Type Type::operator+(Type type)
+{
+    Type concatenation;
+    
+    
+    type.__type[0] = __type[0] + type.__type[0];
+    
+    type.__type[1] = __type[1] + type.__type[1];
+
+    type.__type[2] = __type[2] + ((__type.size() == 3) ? type.__type[2] : "");
+    
+    return concatenation;
+}
+
+
+
+
 string Type::type()
 {
     // On gère le cas où il le mot n'a pas de propriété, car elle n'est pas obligatoire.

@@ -23,8 +23,9 @@ class ChampsLexicaux
     ChampsLexicaux(std::vector <std::string> champs_lexicaux);
     ChampsLexicaux & operator=(ChampsLexicaux champs_lexicaux);
     ChampsLexicaux operator+(ChampsLexicaux champs_lexicaux);
+    std::pair <std::string, int> recuperer_champ_lexical_dominant() { return __champ_lexical_dominant; };
     size_t recuperer_nombre_champs_lexicaux() const { return __liste_champs_lexicaux.size(); };
-    std::pair <int, std::string> recuperation_plus_grand_champ_lexical_commun(ChampsLexicaux champs_lexicaux);
+    void recuperation_plus_grand_champ_lexical_commun(ChampsLexicaux & champs_lexicaux);
     
     private :
     
@@ -32,6 +33,8 @@ class ChampsLexicaux
 
     
     std::map <std::string, int> __liste_champs_lexicaux;
+    
+    std::pair <std::string, int> __champ_lexical_dominant;
 };
 
 #endif /* champsLexicaux_hpp */

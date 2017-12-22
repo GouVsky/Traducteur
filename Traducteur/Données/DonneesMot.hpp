@@ -24,7 +24,6 @@ class DonneesMot
     public :
     
     DonneesMot(std::string langue_source, std::string langue_sortie);
-    ~DonneesMot();
     Type & recuperer_type(int famille) { return __types[famille]; };
     Famille & recuperer_famille(std::string langue, int famille) { return __famille[langue][famille]; };
     std::vector <ChampsLexicaux> & recuperer_champs_lexicaux(std::string langue, int famille) { return __champs_lexicaux[famille]; };
@@ -33,6 +32,7 @@ class DonneesMot
     void ajouter_type(std::vector <std::string> types);
     void ajouter_famille(std::vector <std::string> mots, std::string langue);
     void ajouter_champs_lexicaux(std::vector <std::vector <std::string>> champs_lexicaux);
+    void reinitialisation();
     
     private :
     

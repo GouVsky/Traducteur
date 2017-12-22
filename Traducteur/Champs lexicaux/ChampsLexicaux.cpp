@@ -28,8 +28,10 @@ ChampsLexicaux::ChampsLexicaux(vector <string> champs_lexicaux)
 
 
 ChampsLexicaux & ChampsLexicaux::operator=(ChampsLexicaux champs_lexicaux)
-{
+{    
     __liste_champs_lexicaux = champs_lexicaux.__liste_champs_lexicaux;
+    
+    __champ_lexical_dominant = champs_lexicaux.__champ_lexical_dominant;
    
     return * this;
 }
@@ -41,7 +43,7 @@ ChampsLexicaux ChampsLexicaux::operator+(ChampsLexicaux champs_lexicaux)
 {
     map <string, int>::iterator it;
     
-    
+
     for (it = champs_lexicaux.__liste_champs_lexicaux.begin(); it != champs_lexicaux.__liste_champs_lexicaux.end(); it++)
     {
         __liste_champs_lexicaux[it->first] += it->second;
@@ -53,29 +55,22 @@ ChampsLexicaux ChampsLexicaux::operator+(ChampsLexicaux champs_lexicaux)
 
 
 
-pair <int, string> ChampsLexicaux::recuperation_plus_grand_champ_lexical_commun(ChampsLexicaux champs_lexicaux)
+void ChampsLexicaux::recuperation_plus_grand_champ_lexical_commun(ChampsLexicaux & champs_lexicaux)
 {
-    int max_comparant = 0,
-        max_compare = 0;
-    
-    string champ_lexical;
+    int max = -1;
     
     map <string, int>::iterator it;
     
 
     for (it = champs_lexicaux.__liste_champs_lexicaux.begin(); it != champs_lexicaux.__liste_champs_lexicaux.end(); it++)
     {
-        if (it->second > max_comparant)
+        if (it->second > max)
         {
-            max_comparant = it->second;
+            max = it->second;
             
-            max_compare = __liste_champs_lexicaux[it->first];
-            
-            champ_lexical = it->second;
+            champs_lexicaux.__champ_lexical_dominant = make_pair(it->first, __liste_champs_lexicaux[it->first]);
         }
     }
-    
-    return make_pair(max_compare, champ_lexical);
 }
 
 
