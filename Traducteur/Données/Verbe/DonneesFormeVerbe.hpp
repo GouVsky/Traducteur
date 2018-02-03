@@ -20,10 +20,10 @@ class DonneesFormeVerbe
     
     DonneesFormeVerbe();
     size_t recuperer_nombre_formes(std::string langue) { return __temps[langue].size(); };
-    void ajouter_temps(std::string temps, std::string langue) { __temps[langue].push_back(temps); };
-    void ajouter_forme(std::vector <std::string> forme, std::string langue) { __formes_decoupees[langue].push_back(forme); };
-    std::vector <std::string> & recuperer_temps(std::string langue) { return __temps[langue]; };
-    std::vector <std::vector <std::string>> & recuperer_formes(std::string langue) { return __formes_decoupees[langue]; };
+    void ajouter_temps(std::string temps, std::string langue);
+    void ajouter_forme(std::vector <std::string> forme, std::string langue);
+    std::string recuperer_temps(std::string langue, int temps) { return __temps[langue][temps]; };
+    std::vector <std::string> & recuperer_formes(std::string langue, int temps) { return __formes_decoupees[langue][temps]; };
     
     
     private :

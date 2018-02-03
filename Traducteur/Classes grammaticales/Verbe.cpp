@@ -11,107 +11,86 @@
 using namespace std;
 
 
-string Verbe::recuperer_forme_verbe_irregulier(string langue, string temps, int sujet)
+Verbe::Verbe()
 {
-    transform(langue.begin(), langue.end(), langue.begin(), ::tolower);
+    _taille = 0;
     
-    string fichier = "./Resources/Dictionnaire/Verbes/Irreguliers/" + langue + ".txt";
+    _verbe_construit = "";
     
-    return 0;
+    _indice_groupe_debut_verbe = 0;
 }
 
 
 
 
-string Verbe::construire_verbe(string mot, vector <Mot> & verbes, vector <Groupe> & groupes, vector <vector <Mot>> & verbes_sorties, DonneesFormeVerbe & donnees)
+void Verbe::calculer_taille()
 {
-    /*// On détermine au préalable le sujet.
+    _taille = count(_verbe_construit.begin(), _verbe_construit.end(), ' ');
+}
+
+
+
+
+Verbe & Verbe::operator=(Verbe verbe)
+{
+    _taille = verbe._taille;
     
-    Sujet::rechercher_le_sujet(groupes);
+    _verbe_construit = verbe._verbe_construit;
+    
+    return * this;
+}
+
+
+
+
+void Verbe::definir_indice_groupe_debut_verbe(size_t indice)
+{
+    _indice_groupe_debut_verbe = indice;
+}
+
+
+
+
+void Verbe::construire_verbe(string langue, string verbe, vector <string> & formes, string temps, int sujet)
+{
+    _temps = temps;
+
+    string sauvegarde = verbe;
     
     
-    // Sauvegarde des différents paramètres.
+    // On récupère chaque partie qui compose la forme du verbe.
     
-    string sauvegarde_temps;
-    
-    size_t sauvegarde_indice = 0;
-    
-    vector <string> sauvegarde_forme;
-    
-    
-    bool trouve = false;
-    
-    size_t taille_max = 0;
-    
-    size_t nombre_groupes = groupes.size();
-    
-    size_t nombre_verbes = verbes.size();
-    
-    
-    size_t nombre_formes = donnees.recuperer_nombre_formes("");
-    
-    
-    // Pour tous les sens possibles, on teste lequel correspond à celui de la phrase.
-    
-    for (int i = 0; i < nombre_verbes; i++)
+    for (int i = 0; i < formes.size(); i++)
     {
-        for (int j = 0; j < nombre_formes; j++)
+        string partie_forme = formes[i];
+        
+        
+        if (partie_forme == "verbe")
         {
-            string verbe_dans_phrase;
-            
-            string verbe = construire_verbe(_langue_source, verbes[i].recuperer_mot(), __parseur_forme.recuperer_formes(_langue_source)[j], __parseur_forme.recuperer_temps(_langue_source)[j]);
-            
-            size_t taille = count(verbe.begin(), verbe.end(), ' ') + 1;
-            
-            
-            // Comparaison du verbe avec celui de la phrase.
-            // On construit le verbe avec les mots précédents et le mot actuel.
-            
-            size_t indice = nombre_groupes - taille + 1;
-            
-            
-            for (size_t k = indice; k < nombre_groupes; k++)
-            {
-                verbe_dans_phrase += groupes[k].recuperer_mot_source() + ' ';
-            }
-            
-            verbe_dans_phrase += mot;
-            
-            
-            // On récupère toujours la forme du verbe la plus grande.
-            
-            if (verbe_dans_phrase == verbe && taille > taille_max)
-            {
-                taille_max = taille;
-                
-                sauvegarde_indice = indice;
-                
-                sauvegarde_forme = __parseur_forme.recuperer_formes(_langue_sortie)[j];
-                
-                sauvegarde_temps = __parseur_forme.recuperer_temps(_langue_sortie)[j];
-                
-                trouve = true;
-            }
+            _verbe_construit += verbe;
+        }
+        
+        /*else if (partie_forme == "radical")
+         {
+         __terminaison.determiner_ancienne_terminaison(langue, verbe, __groupe[langue]);
+         
+         sauvegarde.erase(sauvegarde.size() - __terminaison.recuperer_ancienne_terminaison().size());
+         
+         _verbe_construit += sauvegarde;
+         }
+         
+         else if (partie_forme == "terminaison")
+         {
+         __terminaison.determiner_nouvelle_terminaison(langue, temps, __sujet.recuperer_valeur(), __groupe[langue]);
+         
+         _verbe_construit += __terminaison.recuperer_nouvelle_terminaison();
+         }*/
+        
+        else
+        {
+            _verbe_construit += partie_forme;
         }
     }
     
-    if (trouve)
-    {
-        // On supprime les groupes de mots qui font en fait partis du verbe.
-        
-        groupes.erase(groupes.begin() + sauvegarde_indice, groupes.end());
-        
-        
-        // On conjugue tous les sens du verbe source.
-        
-        for (int j = 0; j < verbes_sorties.size(); j++)
-        {
-            for (int k = 0; k < verbes_sorties[j].size(); k++)
-            {
-                verbes_sorties[j][k].recuperer_mot() = construire_verbe(_langue_sortie, verbes_sorties[j][k].recuperer_mot(), sauvegarde_forme, sauvegarde_temps);
-            }
-        }
-    }*/
-    
-    return 0;
+    calculer_taille();
 }

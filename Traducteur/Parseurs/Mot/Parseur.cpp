@@ -17,50 +17,6 @@ Parseur::Parseur(string langue_source, string langue_sortie, string fichier)
     _langue_sortie = langue_sortie;
     
     _fichier = fichier;
-    
-    __donnees = new DonneesMot(_langue_source, _langue_sortie);
-}
-
-
-
-
-Parseur::~Parseur()
-{
-    delete __donnees;
-}
-
-
-
-
-bool Parseur::tester_mot(string mot)
-{
-    bool trouve = false;
-    
-    size_t nombre_familles = __donnees->recuperer_nombre_familles(_langue_source);
-    
-    
-    for (int famille = 0; famille < nombre_familles && !trouve; famille++)
-    {
-        size_t nombre_sens = __donnees->recuperer_nombre_sens(_langue_source, famille);
-        
-
-        for (int sens = 0; sens < nombre_sens; sens++)
-        {
-            if (__donnees->recuperer_type(famille).classe() == "VERBE")
-            {
-                //
-            }
-            
-            else if (__donnees->recuperer_famille(_langue_source, famille).recuperer_mots()[sens].recuperer_mot() == mot)
-            {
-                trouve = true;
-                
-                break;
-            }
-        }
-    }
-    
-    return trouve;
 }
 
 
@@ -103,7 +59,7 @@ void Parseur::parser_champs_lexicaux(string champs_lexicaux)
             champs_lexicaux_par_famille.push_back(champs_lexicaux_par_sens);
         }
         
-        __donnees->ajouter_champs_lexicaux(champs_lexicaux_par_famille);
+        __donnees.ajouter_champs_lexicaux(champs_lexicaux_par_famille);
     }
 }
 
@@ -134,7 +90,7 @@ void Parseur::parser_types(string types, string langue)
             types.push_back(type);
         }
         
-        __donnees->ajouter_type(types);
+        __donnees.ajouter_type(types);
     }
 }
 
@@ -165,7 +121,7 @@ void Parseur::parser_mots(string mots, string langue)
             sens.push_back(mot);
         }
         
-        __donnees->ajouter_famille(sens, langue);
+        __donnees.ajouter_famille(sens, langue);
     }
 }
 
@@ -192,7 +148,7 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
         // Si le mot du fichier correspond au mot du texte, on récupère les traductions.
         // Les champs lexicaux ne sont récupérés que maintenant car ils n'étaient pas utiles pour la reconnaissance du mot.
         
-        if ((trouve = tester_mot(mot_a_trouver)))
+        if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, _langue_source, __donnees)))
         {
             parser_mots(__mots_fichier[_langue_sortie], _langue_sortie);
             
@@ -201,9 +157,14 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
             parser_champs_lexicaux(_champs_lexicaux);
         }
         
+        else if ((trouve = __testeur_verbe.tester_verbe(mot_a_trouver, _langue_source, _langue_sortie, _langue_source, groupes, __donnees)))
+        {
+            //
+        }
+        
         else
         {
-            __donnees->reinitialisation();
+            __donnees.reinitialisation();
         }
     }
     

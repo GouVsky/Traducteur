@@ -19,6 +19,16 @@ Sujet::Sujet()
 
 
 
+Sujet & Sujet::operator=(Sujet sujet)
+{
+    _valeur = sujet._valeur;
+    
+    return * this;
+}
+
+
+
+
 void Sujet::transformer_le_sujet(int masculin, int feminin)
 {
     // Un nom féminin.

@@ -11,12 +11,7 @@
 using namespace std;
 
 
-DonneesMot::DonneesMot(string langue_source, string langue_sortie)
-{
-    _langue_source = langue_source;
-    
-    _langue_sortie = langue_sortie;
-}
+DonneesMot::DonneesMot() {}
 
 
 
@@ -61,7 +56,7 @@ void DonneesMot::reinitialisation()
 {
     __types.clear();
     
+    __famille.clear();
+
     __champs_lexicaux.clear();
-    
-    __famille[_langue_source].clear();
 }

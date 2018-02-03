@@ -9,11 +9,10 @@
 #ifndef constructionPhrase_hpp
 #define constructionPhrase_hpp
 
-#include <map>
+
 #include <thread>
 #include <vector>
 #include <string>
-#include <sstream>
 #include <stdio.h>
 #include <iostream>
 
@@ -55,9 +54,7 @@ class Phrase
     
     
     std::vector <Groupe> __groupes;
-    
-    std::vector <char> __ponctuation;
-    
+        
     std::vector <std::vector <Mot>> __sous_phrases_sorties;
     
     // Chaque sous-phrase contient un ensemble de groupes.

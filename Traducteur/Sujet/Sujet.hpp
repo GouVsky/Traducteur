@@ -12,15 +12,16 @@
 #include <string>
 #include <vector>
 #include <stdio.h>
-#include <fstream>
 
 #include "Groupe.hpp"
+
 
 class Sujet
 {
     public :
     
     Sujet();
+    Sujet & operator=(Sujet sujet);
     int recuperer_valeur() { return _valeur; };
     void rechercher_le_sujet(std::vector <Groupe> & groupes);
     
@@ -30,7 +31,7 @@ class Sujet
 
     
     int _valeur;
-        
+    
     enum Pronom {JE, TU, IL, ELLE, NEUTRE, NOUS, VOUS, ILS, ELLES};
 };
 

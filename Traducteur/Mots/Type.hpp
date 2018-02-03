@@ -13,8 +13,6 @@
 #include <vector>
 #include <stdio.h>
 
-#include "Nom.hpp"
-
 
 class Type
 {
@@ -31,7 +29,7 @@ class Type
     
     private :
     
-    /* Les chaînes de caractères permettent de définir le type exacte de la famille,
+    /* Le tableau de chaînes de caractères permet de définir le type exacte de la famille,
        et de retrouver la classe grammaticale, la catégorie et les propriétés qui lui sont associées. */
     
     std::vector <std::string> __type;
