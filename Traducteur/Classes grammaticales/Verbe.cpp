@@ -11,51 +11,31 @@
 using namespace std;
 
 
-Verbe::Verbe()
+Verbe::Verbe() {}
+
+
+
+
+size_t Verbe::calculer_taille(string verbe)
 {
-    _taille = 0;
-    
-    _verbe_construit = "";
-    
-    _indice_groupe_debut_verbe = 0;
+    return count(verbe.begin(), verbe.end(), ' ');
 }
 
 
 
 
-void Verbe::calculer_taille()
+bool Verbe::comparer_taille(string verbe_compare, string verbe_comparant)
 {
-    _taille = count(_verbe_construit.begin(), _verbe_construit.end(), ' ');
+    return calculer_taille(verbe_compare) < calculer_taille(verbe_comparant);
 }
 
 
 
 
-Verbe & Verbe::operator=(Verbe verbe)
+string Verbe::construire_verbe(string langue, string verbe, vector <string> & formes, string temps, int sujet)
 {
-    _taille = verbe._taille;
-    
-    _verbe_construit = verbe._verbe_construit;
-    
-    return * this;
-}
-
-
-
-
-void Verbe::definir_indice_groupe_debut_verbe(size_t indice)
-{
-    _indice_groupe_debut_verbe = indice;
-}
-
-
-
-
-void Verbe::construire_verbe(string langue, string verbe, vector <string> & formes, string temps, int sujet)
-{
-    _temps = temps;
-
-    string sauvegarde = verbe;
+    string verbe_construit,
+           sauvegarde = verbe;
     
     
     // On récupère chaque partie qui compose la forme du verbe.
@@ -67,19 +47,19 @@ void Verbe::construire_verbe(string langue, string verbe, vector <string> & form
         
         if (partie_forme == "verbe")
         {
-            _verbe_construit += verbe;
+            verbe_construit += verbe;
         }
         
         /*else if (partie_forme == "radical")
-         {
-         __terminaison.determiner_ancienne_terminaison(langue, verbe, __groupe[langue]);
+        {
+            __terminaison.determiner_ancienne_terminaison(langue, verbe, __groupe[langue]);
          
-         sauvegarde.erase(sauvegarde.size() - __terminaison.recuperer_ancienne_terminaison().size());
+            sauvegarde.erase(sauvegarde.size() - __terminaison.recuperer_ancienne_terminaison().size());
          
-         _verbe_construit += sauvegarde;
-         }
+            verbe_construit += sauvegarde;
+        }*/
          
-         else if (partie_forme == "terminaison")
+         /*else if (partie_forme == "terminaison")
          {
          __terminaison.determiner_nouvelle_terminaison(langue, temps, __sujet.recuperer_valeur(), __groupe[langue]);
          
@@ -88,9 +68,9 @@ void Verbe::construire_verbe(string langue, string verbe, vector <string> & form
         
         else
         {
-            _verbe_construit += partie_forme;
+            verbe_construit += partie_forme;
         }
     }
     
-    calculer_taille();
+    return verbe_construit;
 }

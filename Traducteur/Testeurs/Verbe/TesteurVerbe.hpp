@@ -24,15 +24,22 @@ class TesteurVerbe
     public :
     
     TesteurVerbe();
-    bool tester_verbe(std::string verbe, std::string langue_source, std::string langue_sortie, std::string langue_courante, std::vector <Groupe> & groupes, DonneesMot & donnees);
+    bool tester_verbe(std::string verbe, std::string langue_source, std::string langue_sortie, std::vector <Groupe> & groupes, DonneesMot & donnees);
     
     private :
     
-    bool comparer(std::string verbe, std::vector <Groupe> & groupes);
+    bool comparer(std::string verbe_dans_phrase, std::string verbe_construit, std::vector <Groupe> & groupes);
     
     
-    Verbe __verbe,
-          __sauvegarde;
+    Verbe __verbe;
+    
+    
+    std::string _sauvegarde;
+    
+    size_t _indice_groupe_debut_verbe;
+    
+    /*Verbe __sauvegarde,
+          __verbe_source;*/
 };
 
 #endif /* TesteurVerbe_hpp */

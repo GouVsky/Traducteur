@@ -9,10 +9,11 @@
 #ifndef verbe_hpp
 #define verbe_hpp
 
-#include <map>
 #include <string>
 #include <vector>
 #include <stdio.h>
+
+#include "Terminaison.hpp"
 
 
 class Verbe
@@ -20,22 +21,13 @@ class Verbe
     public :
     
     Verbe();
-    size_t recuperer_taille() { return _taille; };
-    std::string recuperer_verbe() { return _verbe_construit; };
-    Verbe & operator=(Verbe verbe);
-    void definir_indice_groupe_debut_verbe(size_t indice);
-    void construire_verbe(std::string langue, std::string verbe, std::vector <std::string> & formes, std::string temps, int sujet);
+    size_t calculer_taille(std::string verbe);
+    bool comparer_taille(std::string verbe_compare, std::string verbe_comparant);
+    std::string construire_verbe(std::string langue, std::string verbe, std::vector <std::string> & formes, std::string temps, int sujet);
     
     private :
     
-    void calculer_taille();
-    
-        
-    size_t _taille,
-           _indice_groupe_debut_verbe;
-    
-    std::string _temps,
-                _verbe_construit;
+    Terminaison __terminaison;
 };
 
 #endif /* verbe_hpp */

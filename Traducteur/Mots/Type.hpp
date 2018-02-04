@@ -13,6 +13,9 @@
 #include <vector>
 #include <stdio.h>
 
+#include "Action.hpp"
+#include "Commun.hpp"
+
 
 class Type
 {
@@ -26,6 +29,13 @@ class Type
     std::string classe() const { return __type[0]; };
     std::string categorie() const { return __type[1]; };
     std::string propriete() { return (__type.size() == 3) ? __type[2] : ""; };
+    
+    struct __Types
+    {
+        Commun __commun;
+        VerbeAction __verbe_action;
+        
+    } __categories;
     
     private :
     

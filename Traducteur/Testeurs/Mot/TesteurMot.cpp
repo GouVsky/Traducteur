@@ -30,7 +30,7 @@ bool TesteurMot::tester_mot(string mot, string langue, DonneesMot & donnees)
         size_t nombre_sens = donnees.recuperer_nombre_sens(langue, famille);
         
         
-        // On teste chaque significations.
+        // On teste chaque signification.
         
         for (int sens = 0; sens < nombre_sens; sens++)
         {

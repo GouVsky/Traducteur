@@ -141,25 +141,25 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
         
 
         parser_mots(__mots_fichier[_langue_source], _langue_source);
+        
+        parser_mots(__mots_fichier[_langue_sortie], _langue_sortie);
+        
 
         parser_types(_types, _langue_source);
 
+        parser_types(_types, _langue_sortie);
         
         // Si le mot du fichier correspond au mot du texte, on récupère les traductions.
         // Les champs lexicaux ne sont récupérés que maintenant car ils n'étaient pas utiles pour la reconnaissance du mot.
         
         if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, _langue_source, __donnees)))
         {
-            parser_mots(__mots_fichier[_langue_sortie], _langue_sortie);
-            
-            parser_types(_types, _langue_sortie);
-            
             parser_champs_lexicaux(_champs_lexicaux);
         }
         
-        else if ((trouve = __testeur_verbe.tester_verbe(mot_a_trouver, _langue_source, _langue_sortie, _langue_source, groupes, __donnees)))
+        else if ((trouve = __testeur_verbe.tester_verbe(mot_a_trouver, _langue_source, _langue_sortie, groupes, __donnees)))
         {
-            //
+            parser_champs_lexicaux(_champs_lexicaux);
         }
         
         else
