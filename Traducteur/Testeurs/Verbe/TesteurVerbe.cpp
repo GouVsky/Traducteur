@@ -66,11 +66,9 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
     size_t nombre_familles = donnees.recuperer_nombre_familles(langue_source);
     
     
-    // On détermine le sujet.
+    // On détermine le sujet du verbe.
     
-    Sujet sujet;
-    
-    sujet.rechercher_le_sujet(groupes);
+    int sujet = Sujet::recuperer_valeur_sujet(groupes);
     
     
     // On teste chaque famille.
@@ -102,7 +100,7 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
                     vector <string> formes = parseur_formes.recuperer_donnees().recuperer_formes(langue_source, temps);
                     
                     
-                    string verbe_construit = __verbe.construire_verbe(langue_source, verbe, formes, temps_verbe, sujet.recuperer_valeur());
+                    string verbe_construit = __verbe.construire_verbe(langue_source, verbe, formes, temps_verbe, sujet);
                     
                     
                     // La recherche ne s'arrête pas lorsque l'on a trouvé une correspondance.
@@ -119,11 +117,11 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
                         
                         for (int mot = 0; mot < nombre_mots; mot++)
                         {
-                            string verbe_sortie = donnees.recuperer_famille(langue_sortie, famille).recuperer_mots()[mot].recuperer_mot();
+                            string verbe_sortie = donnees.recuperer_famille(langue_sortie, famille).recuperer_mot(mot).recuperer_mot();
                             
-                            string verbe_traduit = __verbe.construire_verbe(langue_sortie, verbe_sortie, formes, temps_verbe, sujet.recuperer_valeur());
+                            string verbe_traduit = __verbe.construire_verbe(langue_sortie, verbe_sortie, formes, temps_verbe, sujet);
                             
-                            donnees.recuperer_famille(langue_sortie, famille).recuperer_mots()[mot].recuperer_mot() = verbe_traduit;
+                            donnees.recuperer_famille(langue_sortie, famille).recuperer_mot(mot).recuperer_mot() = verbe_traduit;
                         }
                     }
                 }

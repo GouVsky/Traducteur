@@ -31,6 +31,7 @@ class Famille
     Famille & operator+=(Famille famille);
     Type & recuperer_type() { return __type; };
     Mot & recuperer_mot_dominant() { return __mot_dominant; };
+    Mot & recuperer_mot(int mot) { return __mots[mot]; };
     std::vector <Mot> & recuperer_mots() { return __mots; };
     size_t recuperer_nombre_de_sens_sortie() const { return __mots.size(); };
     void ajouter_type(Type type);

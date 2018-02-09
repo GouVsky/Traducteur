@@ -38,7 +38,7 @@ int main(int argc, const char * argv[])
     
     Texte bob_le_bricoleur(langue_source, langue_sortie);
 
-    bob_le_bricoleur.construction_du_texte(texte);
+    bob_le_bricoleur.construire_texte(texte);
     
     cout << endl << bob_le_bricoleur.recuperer_texte_traduit() << endl << endl << endl;
     

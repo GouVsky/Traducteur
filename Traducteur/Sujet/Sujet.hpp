@@ -20,17 +20,12 @@ class Sujet
 {
     public :
     
-    Sujet();
-    Sujet & operator=(Sujet sujet);
-    int recuperer_valeur() { return _valeur; };
-    void rechercher_le_sujet(std::vector <Groupe> & groupes);
+    int static recuperer_valeur_sujet(std::vector <Groupe> & groupes);
     
     private :
     
-    void transformer_le_sujet(int masculin, int feminin);
+    int static transformer_le_sujet(int masculin, int feminin);
 
-    
-    int _valeur;
     
     enum Pronom {JE, TU, IL, ELLE, NEUTRE, NOUS, VOUS, ILS, ELLES};
 };

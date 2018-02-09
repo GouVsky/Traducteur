@@ -14,6 +14,7 @@
 #include <stdio.h>
 
 #include "Action.hpp"
+#include "Propre.hpp"
 #include "Commun.hpp"
 
 
@@ -32,7 +33,8 @@ class Type
     
     struct __Types
     {
-        Commun __commun;
+        Propre __nom_propre;
+        Commun __nom_commun;
         VerbeAction __verbe_action;
         
     } __categories;

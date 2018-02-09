@@ -27,7 +27,7 @@ class Texte
     bool recherche_expression(std::vector <std::string> tableau);
     void recherche_conjonction_coordination(std::vector <std::string> tableau);
     void decouper_en_phrases(std::string texte);
-    void construction_du_texte(std::string texte);
+    void construire_texte(std::string texte);
     
     private :
         

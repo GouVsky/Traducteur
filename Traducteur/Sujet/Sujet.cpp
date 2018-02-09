@@ -11,60 +11,47 @@
 using namespace std;
 
 
-Sujet::Sujet()
+int Sujet::transformer_le_sujet(int masculin, int feminin)
 {
-    _valeur = NEUTRE;
-}
-
-
-
-
-Sujet & Sujet::operator=(Sujet sujet)
-{
-    _valeur = sujet._valeur;
+    int valeur = NEUTRE;
     
-    return * this;
-}
-
-
-
-
-void Sujet::transformer_le_sujet(int masculin, int feminin)
-{
+    
     // Un nom féminin.
     
     if (masculin == 0 && feminin == 1)
     {
-        _valeur = ELLE;
+        valeur = ELLE;
     }
     
     // Plusieurs noms féminins.
     
     else if (masculin == 0 && feminin > 1)
     {
-        _valeur = ELLES;
+        valeur = ELLES;
     }
     
     // Un nom masculin.
     
     else if (masculin == 1 && feminin == 0)
     {
-        _valeur = IL;
+        valeur = IL;
     }
     
     // Plusieurs noms masculins.
     
     else if ((masculin == 1 && feminin >= 1) || masculin > 1)
     {
-        _valeur = ILS;
+        valeur = ILS;
     }
+    
+    return valeur;
 }
 
 
 
 // Création du sujet.
 
-void Sujet::rechercher_le_sujet(vector <Groupe> & groupes)
+int  Sujet::recuperer_valeur_sujet(vector <Groupe> & groupes)
 {
     int feminin = 0,
         masculin = 0;
@@ -92,5 +79,5 @@ void Sujet::rechercher_le_sujet(vector <Groupe> & groupes)
         }
     }
     
-    transformer_le_sujet(masculin, feminin);
+    return transformer_le_sujet(masculin, feminin);
 }

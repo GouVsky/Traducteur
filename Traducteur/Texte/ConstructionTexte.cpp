@@ -194,7 +194,7 @@ void Texte::decouper_en_phrases(string texte)
 
 // Découpe le texte en plusieurs phrases.
 
-void Texte::construction_du_texte(string texte)
+void Texte::construire_texte(string texte)
 {
     vector <thread> phrases;
     

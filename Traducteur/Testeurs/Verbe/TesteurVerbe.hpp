@@ -37,9 +37,6 @@ class TesteurVerbe
     std::string _sauvegarde;
     
     size_t _indice_groupe_debut_verbe;
-    
-    /*Verbe __sauvegarde,
-          __verbe_source;*/
 };
 
 #endif /* TesteurVerbe_hpp */
