@@ -6,31 +6,17 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
-#include "ConstructionPhrase.hpp"
+#include "Phrase.hpp"
 
 using namespace std;
 
 
-Phrase::Phrase(string phrase_traduite, string langue_source, string langue_sortie)
-{
-    _traduite = true;
-    
-    _phrase_sortie = phrase_traduite;
-    
-    _langue_source = langue_source;
-    _langue_sortie = langue_sortie;
-}
-
-
-
-
 Phrase::Phrase(vector <string> mots_source, string langue_source, string langue_sortie)
 {
-    _traduite = false;
-    
     __mots_source = mots_source;
     
     _langue_source = langue_source;
+    
     _langue_sortie = langue_sortie;
 }
 
@@ -41,7 +27,7 @@ void Phrase::choix_des_mots_selon_les_champs_lexicaux(vector <Groupe> & groupes,
 {
     size_t nombre_de_familles;
     
-    __sous_phrases_sorties.push_back(vector <Mot> ());
+    __phrases_sortie_sens_unique.push_back(vector <Mot> ());
 
     
     // Pour tous les groupes d'une sous-phrase.
@@ -61,7 +47,7 @@ void Phrase::choix_des_mots_selon_les_champs_lexicaux(vector <Groupe> & groupes,
         
         groupes[groupe].determiner_famille_dominante();
         
-        __sous_phrases_sorties[indice].push_back(groupes[groupe].recuperer_famille_dominante().recuperer_mot_dominant());
+        __phrases_sortie_sens_unique[indice].push_back(groupes[groupe].recuperer_famille_dominante().recuperer_mot_dominant());
     }
 }
 
@@ -81,7 +67,7 @@ void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
 
 
 
-Groupe Phrase::traduction(string mot)
+Groupe Phrase::traduire_mot(string mot)
 {
     Groupe groupe(mot);
     
@@ -127,54 +113,25 @@ Groupe Phrase::traduction(string mot)
 
 
 
-void Phrase::construire_les_sous_phrases()
+void Phrase::traduire()
 {
-    string mot,
-           phrase;
+    size_t nombre_mots = __mots_source.size();
     
     
-    for (int i = 0; i < __mots_source.size(); i++)
+    for (int i = 0; i < nombre_mots; i++)
     {
-        string mot = __mots_source[i];
-        
-        
-        // Il y a la présence d'une virgule, on l'enlève temporairement.
-        
-        if (mot[mot.size() - 1] == ',')
-        {
-            mot.erase(mot.size() - 1);
-        }
-        
-        __groupes.push_back(traduction(mot));
+        __groupes.push_back(traduire_mot(__mots_source[i]));
     }
     
-    __sous_phrases_sources.push_back(__groupes);
-}
-
-
-
-
-void Phrase::construire_la_phrase()
-{
-    if (!_traduite)
+    __phrases_sortie_plusieurs_sens.push_back(__groupes);
+    
+    
+    // On sélectionne la traduction correcte des mots possédant plusieurs significations.
+    
+    size_t nombre_sous_phrases = __phrases_sortie_plusieurs_sens.size();
+    
+    for (int i = 0; i < nombre_sous_phrases; i++)
     {
-        construire_les_sous_phrases();
-        
-        for (int i = 0; i < __sous_phrases_sources.size(); i++)
-        {
-            choix_des_mots_selon_les_champs_lexicaux(__sous_phrases_sources[i], i);
-        }
-        
-        // Construction de la phrase finale traduite.
-        
-        for (int i = 0; i < __sous_phrases_sorties.size(); i++)
-        {
-            for (int j = 0; j < __sous_phrases_sorties[i].size(); j++)
-            {
-                _phrase_sortie += __sous_phrases_sorties[i][j].recuperer_mot() + ' ';
-            }
-        }
-        
-        _phrase_sortie.erase(_phrase_sortie.size() - 1);
+        choix_des_mots_selon_les_champs_lexicaux(__phrases_sortie_plusieurs_sens[i], i);
     }
 }

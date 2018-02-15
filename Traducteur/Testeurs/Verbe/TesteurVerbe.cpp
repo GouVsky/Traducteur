@@ -111,7 +111,7 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
                         trouve = true;
                         
                         
-                        // On traduit le verbe (toutes les significations différentes).
+                        // On traduit toutes les significations différentes du verbe.
                         
                         size_t nombre_mots = donnees.recuperer_famille(langue_sortie, famille).recuperer_mots().size();
                         

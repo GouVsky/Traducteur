@@ -9,7 +9,7 @@
 #include <string>
 #include <iostream>
 
-#include "ConstructionTexte.hpp"
+#include "ConstructeurTexte.hpp"
 
 
 #define ANGLAIS "A"
@@ -36,9 +36,9 @@ int main(int argc, const char * argv[])
     
     // Traduction du texte.
     
-    Texte bob_le_bricoleur(langue_source, langue_sortie);
+    ConstructeurTexte bob_le_bricoleur(texte, langue_source, langue_sortie);
 
-    bob_le_bricoleur.construire_texte(texte);
+    bob_le_bricoleur.construire_texte();
     
     cout << endl << bob_le_bricoleur.recuperer_texte_traduit() << endl << endl << endl;
     

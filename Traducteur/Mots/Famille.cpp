@@ -16,6 +16,16 @@ Famille::Famille() {}
 
 
 
+Famille::Famille(string mot)
+{
+    Mot inconnu(mot);
+    
+    __mot_dominant = inconnu;
+}
+
+
+
+
 Famille::Famille(vector <string> mots)
 {
     for (int i = 0; i < mots.size(); i++)
@@ -24,16 +34,6 @@ Famille::Famille(vector <string> mots)
         
         __mots.push_back(mot);
     }
-}
-
-
-
-
-Famille::Famille(string mot)
-{
-    Mot inconnu(mot);
-    
-    __mot_dominant = inconnu;
 }
 
 

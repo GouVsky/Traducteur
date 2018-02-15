@@ -34,7 +34,7 @@ bool TesteurMot::tester_mot(string mot, string langue, DonneesMot & donnees)
         
         for (int sens = 0; sens < nombre_sens; sens++)
         {
-            if (donnees.recuperer_famille(langue, famille).recuperer_mots()[sens].recuperer_mot() == mot)
+            if (donnees.recuperer_famille(langue, famille).recuperer_mot(sens).recuperer_mot() == mot)
             {
                 trouve = true;
                 

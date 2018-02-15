@@ -28,7 +28,9 @@ void DonneesMot::ajouter_type(vector <string> types)
 
 void DonneesMot::ajouter_famille(vector <string> mots, string langue)
 {
-    __famille[langue].push_back(mots);
+    Famille famille(mots);
+    
+    __famille[langue].push_back(famille);
 }
 
 
