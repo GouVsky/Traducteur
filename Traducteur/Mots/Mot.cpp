@@ -58,6 +58,14 @@ Mot & Mot::operator+=(Mot mot)
 
 
 
+void Mot::definir_mot(string mot)
+{
+    _mot = mot;
+}
+
+
+
+
 void Mot::definir_les_differents_champs_lexicaux(ChampsLexicaux champs_lexicaux)
 {
     __champs_lexicaux = __champs_lexicaux + champs_lexicaux;

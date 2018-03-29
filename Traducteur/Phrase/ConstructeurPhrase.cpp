@@ -11,7 +11,7 @@
 using namespace std;
 
 
-/*Texte::Texte(string source, string sortie)
+ConstructeurPhrase::ConstructeurPhrase(string source, string sortie) : constructeur_expression(source, sortie)
 {
     _langue_source = source;
     
@@ -21,60 +21,7 @@ using namespace std;
 
 
 
-bool Texte::recherche_expression(vector <string> mots)
-{
-    bool expression = false;
-    
-    ifstream fichier("./Resources/Dictionnaire/expressions.txt");
-    
-    
-    while (!(fichier.eof() || expression))
-    {
-        fichier >> __expression["A"] >> __expression["F"];
-        
-        
-        int taille_expression = (int) count(__expression[_langue_source].begin(), __expression[_langue_source].end(), ';');
-        
-        string expression_de_la_phrase;
-        
-        // Comparaison de l'expression avec celle de la phrase.
-        
-        for (int i = 0; i < min(taille_expression, (int) (mots.size())); i++)
-        {
-            expression_de_la_phrase += mots[i] + ';';
-        }
-        
-        
-        if (expression_de_la_phrase == __expression[_langue_source])
-        {
-            expression = true;
-            
-            replace(__expression[_langue_sortie].begin(), __expression[_langue_sortie].end(), ';', ' ');
-            
-            Phrase phrase(__expression[_langue_sortie], _langue_source, _langue_sortie);
-            
-            __phrase.push_back(phrase);
-        }
-    }
-    
-    fichier.close();
-    
-    return expression;
-}*/
-
-
-
-ConstructeurPhrase::ConstructeurPhrase(string source, string sortie)
-{
-    _langue_source = source;
-    
-    _langue_sortie = sortie;
-}
-
-
-
-
-void ConstructeurPhrase::assembler_phrases_traduites(size_t nombre_phrases)
+void ConstructeurPhrase::assembler_sous_phrases_traduites(size_t nombre_phrases)
 {
     size_t nombre_mots,
            nombre_sous_phrases;
@@ -215,5 +162,5 @@ void ConstructeurPhrase::construire_phrases(string texte)
     
     traduction_multithreading(nombre_phrases);
     
-    assembler_phrases_traduites(nombre_phrases);
+    assembler_sous_phrases_traduites(nombre_phrases);
 }

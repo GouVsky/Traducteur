@@ -59,7 +59,7 @@ void Parseur::parser_champs_lexicaux(string champs_lexicaux)
             champs_lexicaux_par_famille.push_back(champs_lexicaux_par_sens);
         }
         
-        __donnees.ajouter_champs_lexicaux(champs_lexicaux_par_famille);
+        __donnees_mot.ajouter_champs_lexicaux(champs_lexicaux_par_famille);
     }
 }
 
@@ -90,7 +90,7 @@ void Parseur::parser_types(string types, string langue)
             types.push_back(type);
         }
         
-        __donnees.ajouter_type(types);
+        __donnees_mot.ajouter_type(types);
     }
 }
 
@@ -121,7 +121,7 @@ void Parseur::parser_mots(string mots, string langue)
             sens.push_back(mot);
         }
         
-        __donnees.ajouter_famille(sens, langue);
+        __donnees_mot.ajouter_famille(sens, langue);
     }
 }
 
@@ -137,6 +137,9 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
 
     while (!fichier.eof() && !trouve)
     {
+        __donnees_mot.reinitialisation();
+
+        
         fichier >> __mots_fichier["A"] >> __mots_fichier["F"] >> _types >> _champs_lexicaux;
         
 
@@ -144,28 +147,24 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
         
         parser_mots(__mots_fichier[_langue_sortie], _langue_sortie);
         
-
         parser_types(_types, _langue_source);
-
+        
         parser_types(_types, _langue_sortie);
-        
-        
+
+
         // Si le mot du fichier correspond au mot du texte, on récupère les traductions.
-        // Les champs lexicaux ne sont récupérés que maintenant car ils n'étaient pas utiles pour la reconnaissance du mot.
+        // Les champs lexicaux et les types ne sont récupérés que maintenant car ils n'étaient pas utiles pour la reconnaissance du mot.
         
-        if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, _langue_source, __donnees)))
+        if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, _langue_source, __donnees_mot)))
         {
             parser_champs_lexicaux(_champs_lexicaux);
         }
         
-        else if ((trouve = __testeur_verbe.tester_verbe(mot_a_trouver, _langue_source, _langue_sortie, groupes, __donnees)))
+        else if ((trouve = __testeur_verbe.tester_verbe(mot_a_trouver, _langue_source, _langue_sortie, groupes, __donnees_mot)))
         {
             parser_champs_lexicaux(_champs_lexicaux);
-        }
-        
-        else
-        {
-            __donnees.reinitialisation();
+            
+            __donnees_verbe = __testeur_verbe.recuperer_donnees_verbe();
         }
     }
     

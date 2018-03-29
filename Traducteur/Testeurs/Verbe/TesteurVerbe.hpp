@@ -16,6 +16,7 @@
 #include "Verbe.hpp"
 #include "Groupe.hpp"
 #include "DonneesMot.hpp"
+#include "DonneesVerbe.hpp"
 #include "ParseurFormeVerbe.hpp"
 
 
@@ -24,19 +25,20 @@ class TesteurVerbe
     public :
     
     TesteurVerbe();
+    DonneesVerbe & recuperer_donnees_verbe() { return __donnees_verbe; };
     bool tester_verbe(std::string verbe, std::string langue_source, std::string langue_sortie, std::vector <Groupe> & groupes, DonneesMot & donnees);
     
     private :
     
     bool comparer(std::string verbe_dans_phrase, std::string verbe_construit, std::vector <Groupe> & groupes);
+    std::string construction(ParseurFormeVerbe & parseur, DonneesMot & donnees, std::string langue, int temps, int famille, int mot);
+
     
+    int _sujet;
     
     Verbe __verbe;
     
-    
-    std::string _sauvegarde;
-    
-    size_t _indice_groupe_debut_verbe;
+    DonneesVerbe __donnees_verbe;
 };
 
 #endif /* TesteurVerbe_hpp */

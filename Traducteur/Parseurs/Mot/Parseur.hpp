@@ -20,6 +20,7 @@
 #include "TesteurMot.hpp"
 #include "DonneesMot.hpp"
 #include "TesteurVerbe.hpp"
+#include "DonneesVerbe.hpp"
 
 
 class Parseur
@@ -27,7 +28,8 @@ class Parseur
     public :
     
     Parseur(std::string source, std::string sortie, std::string fichier);
-    DonneesMot & recuperer_donnees() { return __donnees; };
+    DonneesVerbe & recuperer_donnees_verbe() { return __donnees_verbe; };
+    DonneesMot & recuperer_donnees_mot() { return __donnees_mot; };
     bool parser(std::string mot_a_trouver, std::vector <Groupe> & groupes);
     
     private :
@@ -37,7 +39,9 @@ class Parseur
     void parser_mots(std::string mots, std::string langue);
     
     
-    DonneesMot __donnees;
+    DonneesMot __donnees_mot;
+    
+    DonneesVerbe __donnees_verbe;
 
     TesteurMot __testeur_mot;
     

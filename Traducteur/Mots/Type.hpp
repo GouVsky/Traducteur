@@ -27,9 +27,9 @@ class Type
     Type & operator=(Type type);
     Type operator+(Type type);
     std::string type();
-    std::string classe() const { return __type[0]; };
-    std::string categorie() const { return __type[1]; };
-    std::string propriete() { return (__type.size() == 3) ? __type[2] : ""; };
+    std::string classe() const { return (__type.size() > 0) ? __type[0] : ""; };
+    std::string categorie() const { return (__type.size() > 1) ? __type[1] : ""; };
+    std::string propriete() { return (__type.size() > 2) ? __type[2] : ""; };
     
     struct __Types
     {

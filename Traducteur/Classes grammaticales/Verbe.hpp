@@ -23,7 +23,7 @@ class Verbe
     Verbe();
     size_t calculer_taille(std::string verbe);
     bool comparer_taille(std::string verbe_compare, std::string verbe_comparant);
-    std::string construire_verbe(std::string langue, std::string verbe, std::vector <std::string> & formes, std::string temps, int sujet);
+    std::string construire_verbe(std::string langue, std::string verbe, std::vector <std::string> & formes, std::string temps, int groupe,int sujet);
     
     private :
     

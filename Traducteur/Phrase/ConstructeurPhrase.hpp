@@ -16,6 +16,7 @@
 #include <sstream>
 
 #include "Phrase.hpp"
+#include "ConstructeurExpression.hpp"
 
 
 class ConstructeurPhrase
@@ -29,7 +30,7 @@ class ConstructeurPhrase
     
     private :
     
-    void assembler_phrases_traduites(size_t nombre_phrases);
+    void assembler_sous_phrases_traduites(size_t nombre_phrases);
     void traduction_multithreading(size_t nombre_phrases);
     Phrase decouper_en_mots(std::string phrase);
     void decouper_par_ponctuation(std::string texte);
@@ -44,6 +45,8 @@ class ConstructeurPhrase
 
     std::vector <std::string> __phrases_sources,
                               __phrases_sorties;
+    
+    ConstructeurExpression constructeur_expression;
 };
 
 #endif /* ConstructionTexte_hpp */

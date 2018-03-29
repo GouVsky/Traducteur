@@ -18,7 +18,15 @@ Verbe::Verbe() {}
 
 size_t Verbe::calculer_taille(string verbe)
 {
-    return count(verbe.begin(), verbe.end(), ' ');
+    if (verbe.empty())
+    {
+        return 0;
+    }
+    
+    else
+    {
+        return count(verbe.begin(), verbe.end(), ' ') + 1;
+    }
 }
 
 
@@ -32,10 +40,13 @@ bool Verbe::comparer_taille(string verbe_compare, string verbe_comparant)
 
 
 
-string Verbe::construire_verbe(string langue, string verbe, vector <string> & formes, string temps, int sujet)
+string Verbe::construire_verbe(string langue, string verbe, vector <string> & formes, string temps, int groupe, int sujet)
 {
-    string verbe_construit,
-           sauvegarde = verbe;
+    string verbe_construit;
+    
+    // Cette sauvegarde va nous permettre de créer le radical.
+    
+    string sauvegarde = verbe;
     
     
     // On récupère chaque partie qui compose la forme du verbe.
@@ -50,21 +61,21 @@ string Verbe::construire_verbe(string langue, string verbe, vector <string> & fo
             verbe_construit += verbe;
         }
         
-        /*else if (partie_forme == "radical")
+        else if (partie_forme == "radical")
         {
-            __terminaison.determiner_ancienne_terminaison(langue, verbe, __groupe[langue]);
+            __terminaison.determiner_ancienne_terminaison(langue, verbe, groupe);
          
             sauvegarde.erase(sauvegarde.size() - __terminaison.recuperer_ancienne_terminaison().size());
          
             verbe_construit += sauvegarde;
-        }*/
+        }
          
-         /*else if (partie_forme == "terminaison")
+         else if (partie_forme == "terminaison")
          {
-         __terminaison.determiner_nouvelle_terminaison(langue, temps, __sujet.recuperer_valeur(), __groupe[langue]);
+             __terminaison.determiner_nouvelle_terminaison(langue, temps, sujet, groupe);
          
-         _verbe_construit += __terminaison.recuperer_nouvelle_terminaison();
-         }*/
+             verbe_construit += __terminaison.recuperer_nouvelle_terminaison();
+         }
         
         else
         {

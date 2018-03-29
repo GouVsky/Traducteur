@@ -53,10 +53,5 @@ Type Type::operator+(Type type)
 
 string Type::type()
 {
-    // On gère le cas où il le mot n'a pas de propriété, car elle n'est pas obligatoire.
-    
-    string propriete = (__type.size() == 3) ? ("_" + __type[2]) : "";
-
-
-    return __type[0] + "_" + __type[1] + propriete;
+    return classe() + "_" + categorie() + "_" + propriete();
 }

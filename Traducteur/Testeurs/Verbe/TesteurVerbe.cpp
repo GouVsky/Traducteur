@@ -37,20 +37,31 @@ bool TesteurVerbe::comparer(string verbe, string verbe_construit, vector <Groupe
     }
     
     verbe_dans_phrase += verbe;
-    
-    
+
+
     // On récupère toujours le verbe le plus grand.
-    
-    if (__verbe.comparer_taille(_sauvegarde, verbe_construit) && verbe_construit == verbe_dans_phrase)
+
+    if (__verbe.comparer_taille(__donnees_verbe.recuperer_verbe_source(), verbe_construit) && verbe_construit == verbe_dans_phrase)
     {
         trouve = true;
-
-        _sauvegarde = verbe_construit;
-        
-        _indice_groupe_debut_verbe = indice;
     }
     
     return trouve;
+}
+
+
+
+
+string TesteurVerbe::construction(ParseurFormeVerbe & parseur, DonneesMot & donnees, string langue, int temps, int famille, int mot)
+{
+    vector <string> formes = parseur.recuperer_donnees().recuperer_formes(langue, temps);
+    
+    string verbe = donnees.recuperer_famille(langue, famille).recuperer_mot(mot).recuperer_mot();
+    
+    string temps_verbe = parseur.recuperer_donnees().recuperer_temps(langue, temps);
+
+    
+    return __verbe.construire_verbe(langue, verbe, formes, temps_verbe, __donnees_verbe.recuperer_groupe(langue), _sujet);
 }
 
 
@@ -62,67 +73,69 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
     
     
     bool trouve = false;
-    
+        
     size_t nombre_familles = donnees.recuperer_nombre_familles(langue_source);
+    
+    
+    parseur_formes.parser();
     
     
     // On détermine le sujet du verbe.
     
-    int sujet = Sujet::recuperer_valeur_sujet(groupes);
+    _sujet = Sujet::recuperer_valeur_sujet(groupes);
     
-    
+
     // On teste chaque famille.
     
     for (int famille = 0; famille < nombre_familles; famille++)
     {
-        // On ne réalise le test que si la famille est de type 'Verbe'.
+        size_t nombre_sens = donnees.recuperer_nombre_sens(langue_source, famille);
         
-        if (donnees.recuperer_type(famille).classe() == "VERBE")
-        {
-            size_t nombre_sens = donnees.recuperer_nombre_sens(langue_source, famille);
+        
+        __donnees_verbe.ajouter_groupe(langue_source, donnees.recuperer_type(famille).propriete()[0] - '0');
+        
+        __donnees_verbe.ajouter_groupe(langue_sortie, donnees.recuperer_type(famille).propriete()[1] - '0');
 
+        
+        // On teste chaque signification.
+
+        for (int sens = 0; sens < nombre_sens; sens++)
+        {
+            size_t nombre_temps = parseur_formes.recuperer_donnees().recuperer_nombre_formes(langue_source);
             
-            // On teste chaque signification.
+
+            // On teste chaque temps.
             
-            for (int sens = 0; sens < nombre_sens; sens++)
+            for (int temps = 0; temps < nombre_temps; temps++)
             {
-                size_t nombre_temps = parseur_formes.recuperer_donnees().recuperer_nombre_formes(langue_source);
-                
-                
-                // On teste chaque temps.
-                
-                for (int temps = 0; temps < nombre_temps; temps++)
+                string verbe_construit = construction(parseur_formes, donnees, langue_source, temps, famille, sens);
+
+
+                // La recherche ne s'arrête pas lorsque l'on a trouvé une correspondance.
+                // Il peut exister une construction de taille plus grande.
+
+                if (comparer(verbe, verbe_construit, groupes))
                 {
-                    // Construction du verbe.
-                    
-                    string temps_verbe = parseur_formes.recuperer_donnees().recuperer_temps(langue_source, temps);
-                    
-                    vector <string> formes = parseur_formes.recuperer_donnees().recuperer_formes(langue_source, temps);
+                    trouve = true;
                     
                     
-                    string verbe_construit = __verbe.construire_verbe(langue_source, verbe, formes, temps_verbe, sujet);
+                    // On traduit toutes les significations différentes du verbe.
+                    
+                    size_t nombre_mots = donnees.recuperer_nombre_sens(langue_sortie, famille);
                     
                     
-                    // La recherche ne s'arrête pas lorsque l'on a trouvé une correspondance.
-                    // Il peut exister une construction de taille plus grande.
-                    
-                    if (comparer(verbe, verbe_construit, groupes))
+                    for (int mot = 0; mot < nombre_mots; mot++)
                     {
-                        trouve = true;
+                        string verbe_traduit = construction(parseur_formes, donnees, langue_sortie, temps, famille, sens);
                         
+
+                        donnees.recuperer_famille(langue_sortie, famille).recuperer_mot(mot).definir_mot(verbe_traduit);
                         
-                        // On traduit toutes les significations différentes du verbe.
+                        __donnees_verbe.ajouter_verbe_source(verbe_construit);
+
+                        __donnees_verbe.ajouter_verbe_traduit(verbe_traduit);
                         
-                        size_t nombre_mots = donnees.recuperer_famille(langue_sortie, famille).recuperer_mots().size();
-                        
-                        for (int mot = 0; mot < nombre_mots; mot++)
-                        {
-                            string verbe_sortie = donnees.recuperer_famille(langue_sortie, famille).recuperer_mot(mot).recuperer_mot();
-                            
-                            string verbe_traduit = __verbe.construire_verbe(langue_sortie, verbe_sortie, formes, temps_verbe, sujet);
-                            
-                            donnees.recuperer_famille(langue_sortie, famille).recuperer_mot(mot).recuperer_mot() = verbe_traduit;
-                        }
+                        __donnees_verbe.ajouter_indice_groupe_debut_verbe(__verbe.calculer_taille(verbe_construit) - 1);
                     }
                 }
             }

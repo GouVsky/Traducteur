@@ -27,18 +27,24 @@ bool TesteurMot::tester_mot(string mot, string langue, DonneesMot & donnees)
     
     for (int famille = 0; famille < nombre_familles && !trouve; famille++)
     {
-        size_t nombre_sens = donnees.recuperer_nombre_sens(langue, famille);
-        
-        
-        // On teste chaque signification.
-        
-        for (int sens = 0; sens < nombre_sens; sens++)
+        if (donnees.recuperer_type(famille).classe() == "VERBE")
         {
-            if (donnees.recuperer_famille(langue, famille).recuperer_mot(sens).recuperer_mot() == mot)
+            trouve = false;
+        }
+        
+        else
+        {
+            size_t nombre_sens = donnees.recuperer_nombre_sens(langue, famille);
+            
+            
+            // On teste chaque signification.
+            
+            for (int sens = 0; sens < nombre_sens && !trouve; sens++)
             {
-                trouve = true;
-                
-                break;
+                if (donnees.recuperer_famille(langue, famille).recuperer_mot(sens).recuperer_mot() == mot)
+                {
+                    trouve = true;
+                }
             }
         }
     }
