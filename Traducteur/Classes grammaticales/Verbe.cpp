@@ -73,9 +73,9 @@ string Verbe::construire_verbe(string langue, string verbe, vector <string> & fo
          else if (partie_forme == "terminaison")
          {
              __terminaison.determiner_nouvelle_terminaison(langue, temps, sujet, groupe);
-         
+
              verbe_construit += __terminaison.recuperer_nouvelle_terminaison();
-         }
+        }
         
         else
         {

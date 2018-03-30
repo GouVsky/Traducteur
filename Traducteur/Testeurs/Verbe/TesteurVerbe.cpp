@@ -91,7 +91,6 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
     {
         size_t nombre_sens = donnees.recuperer_nombre_sens(langue_source, famille);
         
-        
         __donnees_verbe.ajouter_groupe(langue_source, donnees.recuperer_type(famille).propriete()[0] - '0');
         
         __donnees_verbe.ajouter_groupe(langue_sortie, donnees.recuperer_type(famille).propriete()[1] - '0');

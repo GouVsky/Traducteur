@@ -12,56 +12,51 @@
 using namespace std;
 
 
-Terminaison::Terminaison()
-{
-    // Présent.
-
-    __terminaisons["A"]["PRE"] = {"", "", "s", "s", "s", "", "", "", ""};
-    
-    __terminaisons["F"]["PREer"] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
-    __terminaisons["F"]["PREir"] = {"is", "is", "it", "it", "it", "issons", "issez", "issent", "issent"};
-    __terminaisons["F"]["PRE3ir"] = {"e", "es", "e", "e", "e", "ons", "ez", "ent", "ent"};
-    __terminaisons["F"]["PRE3tir"] = {"s", "s", "t", "t", "t", "tons", "tez", "tent", "tent"};
-    __terminaisons["F"]["PRE3ire"] = {"s", "s", "t", "t", "t", "ions", "iez", "ient", "ient"};
-    __terminaisons["F"]["PRE3dre"] = {"ds", "ds", "d", "d", "d", "dons", "dez", "dent", "dent"};
-    __terminaisons["F"]["PRE3oir"] = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
-    __terminaisons["F"]["PRE3oire"] = {"ois", "ois", "oit", "oit", "oit", "oyons", "oyez", "oient", "oient"};
-    __terminaisons["F"]["PRE3evoir"] = {"ois", "ois", "oit", "oit", "oit", "evons", "evez", "oivent", "oivent"};
-    
-    
-    // Futur.
-    
-    __terminaisons["F"]["FUSer"] = {"erai", "eras", "era", "era", "era", "erons", "erez", "eront", "eront"};
-    __terminaisons["F"]["FUSir"] = __terminaisons["F"]["FUSer"];
-    
-    
-    // Passé.
-    
-    __terminaisons["F"]["PASer"] = {"ais", "ais", "a", "a", "a", "ions", "iez", "èrent", "èrent"};
-    __terminaisons["F"]["PASir"] = __terminaisons["F"]["PASer"];
-    
-    __terminaisons["F"]["IMPer"] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
-    __terminaisons["F"]["IMPir"] = __terminaisons["F"]["IMPer"];
-    
-    
-    // Conditionnel.
-    
-    __terminaisons["F"]["CONer"] = {"ais", "ais", "ait", "ait", "ait", "ions", "iez", "aient", "aient"};
-    __terminaisons["F"]["CONir"] = __terminaisons["F"]["CONer"];
-}
+Terminaison::Terminaison() {}
 
 
 
 
 void Terminaison::determiner_nouvelle_terminaison(string langue, string temps, int sujet, int groupe)
 {
-    // Ajout du chiffre 3 pour différencier un cas spécifique du troisième groupe français.
-    // Ce cas concerne une terminaison identique à celle du deuxième groupe.
+    char fichier_groupe;
     
-    string groupe_verbe = (groupe == 3 && langue == "F") ? "3" : "";
+    string fichier_temps,
+           fichier_terminaison,
+           fichier_liste_terminaisons;
+    
+    ifstream fichier(_fichier  + langue + ".txt");
+    
 
+    while (!fichier.eof())
+    {
+        vector <string> fichier_liste_terminaisons_tableau;
 
-    _nouvelle_terminaison = __terminaisons[langue][temps + groupe_verbe + _ancienne_terminaison][sujet];
+        
+        fichier >> fichier_temps >> fichier_groupe >> fichier_terminaison >> fichier_liste_terminaisons;
+        
+
+        // On récupère la liste des terminaisons correspondant au temps et au groupe du verbe.
+        // Les différentes conditions ternaires sont utilisées pour gérer le cas où il n'y a pas de terminaison.
+
+        if (fichier_temps == temps
+            && ((fichier_groupe - '0') == groupe)
+            && (fichier_terminaison == "-" ? "" : fichier_terminaison) == _ancienne_terminaison)
+        {
+            string terminaison;
+            
+            istringstream lecture(fichier_liste_terminaisons);
+            
+            while (getline(lecture, terminaison, '/'))
+            {
+                fichier_liste_terminaisons_tableau.push_back((terminaison == "-" ? "" : terminaison));
+            }
+            
+            // On récupère la terminaison associée au sujet.
+            
+            _nouvelle_terminaison = fichier_liste_terminaisons_tableau[sujet];
+        }
+    }
 }
 
 

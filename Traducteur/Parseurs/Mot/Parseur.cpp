@@ -154,7 +154,7 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
 
         // Si le mot du fichier correspond au mot du texte, on récupère les traductions.
         // Les champs lexicaux et les types ne sont récupérés que maintenant car ils n'étaient pas utiles pour la reconnaissance du mot.
-        
+
         if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, _langue_source, __donnees_mot)))
         {
             parser_champs_lexicaux(_champs_lexicaux);
