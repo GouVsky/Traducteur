@@ -48,6 +48,10 @@ string Verbe::construire_verbe(string langue, string verbe, vector <string> & fo
     
     string sauvegarde = verbe;
     
+    Terminaison terminaison(langue);
+    
+    terminaison.parser_terminaisons(verbe, temps, groupe);
+    
     
     // On récupère chaque partie qui compose la forme du verbe.
     
@@ -63,18 +67,14 @@ string Verbe::construire_verbe(string langue, string verbe, vector <string> & fo
         
         else if (partie_forme == "radical")
         {
-            __terminaison.determiner_ancienne_terminaison(langue, verbe, groupe);
-         
-            sauvegarde.erase(sauvegarde.size() - __terminaison.recuperer_ancienne_terminaison().size());
+            sauvegarde.erase(sauvegarde.size() - terminaison.recuperer_ancienne_terminaison().size());
          
             verbe_construit += sauvegarde;
         }
          
-         else if (partie_forme == "terminaison")
-         {
-             __terminaison.determiner_nouvelle_terminaison(langue, temps, sujet, groupe);
-
-             verbe_construit += __terminaison.recuperer_nouvelle_terminaison();
+        else if (partie_forme == "terminaison")
+        {
+            verbe_construit += terminaison.recuperer_nouvelle_terminaison(sujet);
         }
         
         else

@@ -9,6 +9,7 @@
 #ifndef terminaison_hpp
 #define terminaison_hpp
 
+#include <map>
 #include <string>
 #include <vector>
 #include <stdio.h>
@@ -20,21 +21,22 @@ class Terminaison
 {
     public :
     
-    Terminaison();
+    Terminaison(std::string langue);
     std::string recuperer_ancienne_terminaison() const { return _ancienne_terminaison; };
-    std::string recuperer_nouvelle_terminaison() const { return _nouvelle_terminaison; };
-    void determiner_nouvelle_terminaison(std::string langue, std::string temps, int sujet, int groupe);
-    void determiner_ancienne_terminaison(std::string langue, std::string verbe, int groupe_verbe);
+    std::string recuperer_nouvelle_terminaison(int sujet) const { return (__nouvelles_terminaisons.size() > 0 ? __nouvelles_terminaisons[sujet] : ""); };
+    void parser_terminaisons(std::string verbe, std::string temps, int groupe);
     
     private :
     
     void ancienne_terminaison_troisieme_groupe(std::string verbe);
 
     
-    std::string _fichier = "./Resources/Dictionnaire/Terminaisons/";
-    
-    std::string _nouvelle_terminaison,
+    std::string _langue,
                 _ancienne_terminaison;
+    
+    std::vector <std::string> __nouvelles_terminaisons;
+    
+    std::string _fichier = "./Resources/Dictionnaire/Terminaisons/";
 };
 
 #endif /* terminaison_hpp */

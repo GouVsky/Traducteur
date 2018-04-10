@@ -24,21 +24,28 @@ class TesteurVerbe
 {
     public :
     
-    TesteurVerbe();
+    TesteurVerbe(std::string langue_source, std::string langue_sortie);
     DonneesVerbe & recuperer_donnees_verbe() { return __donnees_verbe; };
-    bool tester_verbe(std::string verbe, std::string langue_source, std::string langue_sortie, std::vector <Groupe> & groupes, DonneesMot & donnees);
+    bool tester_verbe(std::string verbe, std::vector <Groupe> & groupes, DonneesMot & donnees);
     
     private :
     
     bool comparer(std::string verbe_dans_phrase, std::string verbe_construit, std::vector <Groupe> & groupes);
-    std::string construction(ParseurFormeVerbe & parseur, DonneesMot & donnees, std::string langue, int temps, int famille, int mot);
+    std::string construction(DonneesMot & donnees, std::string langue, int temps, int famille, int mot);
 
     
     int _sujet;
     
+    std::string _langue_source,
+                _langue_sortie;
+    
     Verbe __verbe;
     
     DonneesVerbe __donnees_verbe;
+    
+    ParseurFormeVerbe __parseur_formes;
+    
+    DonneesFormeVerbe __donnees_formes_verbes;
 };
 
 #endif /* TesteurVerbe_hpp */

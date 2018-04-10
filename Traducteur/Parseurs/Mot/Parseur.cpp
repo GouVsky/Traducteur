@@ -11,7 +11,7 @@
 using namespace std;
 
 
-Parseur::Parseur(string langue_source, string langue_sortie, string fichier)
+Parseur::Parseur(string langue_source, string langue_sortie, string fichier) : __testeur_verbe(langue_source, langue_sortie)
 {
     _langue_source = langue_source;
     _langue_sortie = langue_sortie;
@@ -160,7 +160,7 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
             parser_champs_lexicaux(_champs_lexicaux);
         }
         
-        else if ((trouve = __testeur_verbe.tester_verbe(mot_a_trouver, _langue_source, _langue_sortie, groupes, __donnees_mot)))
+        else if ((trouve = __testeur_verbe.tester_verbe(mot_a_trouver, groupes, __donnees_mot)))
         {
             parser_champs_lexicaux(_champs_lexicaux);
             

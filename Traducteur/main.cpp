@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
+#include <ctime>
 #include <string>
 #include <iostream>
 
@@ -34,13 +35,17 @@ int main(int argc, const char * argv[])
     texte += '\0';
     
     
+    double debut = clock();
+    
     // Traduction du texte.
     
     ConstructeurTexte bob_le_bricoleur(texte, langue_source, langue_sortie);
 
     bob_le_bricoleur.construire_texte();
     
-    cout << endl << bob_le_bricoleur.recuperer_texte_traduit() << endl << endl << endl;
+    cout << endl << bob_le_bricoleur.recuperer_texte_traduit() << endl << endl;
+    
+    cout << "Temps de traduction : " << (clock() - debut) / CLOCKS_PER_SEC << endl << endl;
     
     
     return 0;

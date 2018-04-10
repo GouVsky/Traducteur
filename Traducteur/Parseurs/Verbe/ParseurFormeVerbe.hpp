@@ -23,8 +23,8 @@ class ParseurFormeVerbe
     public :
     
     ParseurFormeVerbe(std::string langue_source, std::string langue_sortie, std::string fichier);
-    DonneesFormeVerbe & recuperer_donnees() { return __donnees; };
-    void parser();
+    ~ParseurFormeVerbe();
+    DonneesFormeVerbe parser();
     
     private :
     
@@ -34,8 +34,6 @@ class ParseurFormeVerbe
     std::string _fichier,
                 _langue_source,
                 _langue_sortie;
-    
-    DonneesFormeVerbe __donnees;
 };
 
 #endif /* ParseurFormeVerbe_hpp */

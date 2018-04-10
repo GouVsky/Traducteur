@@ -11,7 +11,14 @@
 using namespace std;
 
 
-TesteurVerbe::TesteurVerbe() {}
+TesteurVerbe::TesteurVerbe(string langue_source, string langue_sortie) : __parseur_formes(langue_source, langue_sortie, "./Resources/Dictionnaire/Verbes/formes.txt")
+{
+    _langue_source = langue_source;
+    
+    _langue_sortie = langue_sortie;
+    
+    __donnees_formes_verbes = __parseur_formes.parser();
+}
 
 
 
@@ -52,14 +59,14 @@ bool TesteurVerbe::comparer(string verbe, string verbe_construit, vector <Groupe
 
 
 
-string TesteurVerbe::construction(ParseurFormeVerbe & parseur, DonneesMot & donnees, string langue, int temps, int famille, int mot)
+string TesteurVerbe::construction(DonneesMot & donnees, string langue, int temps, int famille, int mot)
 {
-    vector <string> formes = parseur.recuperer_donnees().recuperer_formes(langue, temps);
+    string temps_verbe = __donnees_formes_verbes.recuperer_temps(langue, temps);
+
+    vector <string> formes = __donnees_formes_verbes.recuperer_formes(langue, temps);
     
     string verbe = donnees.recuperer_famille(langue, famille).recuperer_mot(mot).recuperer_mot();
     
-    string temps_verbe = parseur.recuperer_donnees().recuperer_temps(langue, temps);
-
     
     return __verbe.construire_verbe(langue, verbe, formes, temps_verbe, __donnees_verbe.recuperer_groupe(langue), _sujet);
 }
@@ -67,17 +74,11 @@ string TesteurVerbe::construction(ParseurFormeVerbe & parseur, DonneesMot & donn
 
 
 
-bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langue_sortie, vector <Groupe> & groupes, DonneesMot & donnees)
+bool TesteurVerbe::tester_verbe(string verbe, vector <Groupe> & groupes, DonneesMot & donnees)
 {
-    ParseurFormeVerbe parseur_formes(langue_source, langue_sortie, "./Resources/Dictionnaire/Verbes/formes.txt");
-    
-    
     bool trouve = false;
         
-    size_t nombre_familles = donnees.recuperer_nombre_familles(langue_source);
-    
-    
-    parseur_formes.parser();
+    size_t nombre_familles = donnees.recuperer_nombre_familles(_langue_source);
     
     
     // On détermine le sujet du verbe.
@@ -89,25 +90,25 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
     
     for (int famille = 0; famille < nombre_familles; famille++)
     {
-        size_t nombre_sens = donnees.recuperer_nombre_sens(langue_source, famille);
+        size_t nombre_sens = donnees.recuperer_nombre_sens(_langue_source, famille);
         
-        __donnees_verbe.ajouter_groupe(langue_source, donnees.recuperer_type(famille).propriete()[0] - '0');
+        __donnees_verbe.ajouter_groupe(_langue_source, donnees.recuperer_type(famille).propriete()[0] - '0');
         
-        __donnees_verbe.ajouter_groupe(langue_sortie, donnees.recuperer_type(famille).propriete()[1] - '0');
+        __donnees_verbe.ajouter_groupe(_langue_sortie, donnees.recuperer_type(famille).propriete()[1] - '0');
 
         
         // On teste chaque signification.
 
         for (int sens = 0; sens < nombre_sens; sens++)
         {
-            size_t nombre_temps = parseur_formes.recuperer_donnees().recuperer_nombre_formes(langue_source);
+            size_t nombre_temps = __donnees_formes_verbes.recuperer_nombre_formes(_langue_source);
             
 
             // On teste chaque temps.
             
             for (int temps = 0; temps < nombre_temps; temps++)
             {
-                string verbe_construit = construction(parseur_formes, donnees, langue_source, temps, famille, sens);
+                string verbe_construit = construction(donnees, _langue_source, temps, famille, sens);
 
 
                 // La recherche ne s'arrête pas lorsque l'on a trouvé une correspondance.
@@ -120,15 +121,15 @@ bool TesteurVerbe::tester_verbe(string verbe, string langue_source, string langu
                     
                     // On traduit toutes les significations différentes du verbe.
                     
-                    size_t nombre_mots = donnees.recuperer_nombre_sens(langue_sortie, famille);
+                    size_t nombre_mots = donnees.recuperer_nombre_sens(_langue_sortie, famille);
                     
                     
                     for (int mot = 0; mot < nombre_mots; mot++)
                     {
-                        string verbe_traduit = construction(parseur_formes, donnees, langue_sortie, temps, famille, sens);
+                        string verbe_traduit = construction(donnees, _langue_sortie, temps, famille, sens);
                         
 
-                        donnees.recuperer_famille(langue_sortie, famille).recuperer_mot(mot).definir_mot(verbe_traduit);
+                        donnees.recuperer_famille(_langue_sortie, famille).recuperer_mot(mot).definir_mot(verbe_traduit);
                         
                         __donnees_verbe.ajouter_verbe_source(verbe_construit);
 

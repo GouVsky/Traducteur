@@ -16,7 +16,15 @@ ParseurFormeVerbe::ParseurFormeVerbe(string langue_source, string langue_sortie,
     _fichier = fichier;
     
     _langue_source = langue_source;
+    
     _langue_sortie = langue_sortie;
+}
+
+
+
+
+ParseurFormeVerbe::~ParseurFormeVerbe()
+{
 }
 
 
@@ -63,11 +71,12 @@ vector <string> ParseurFormeVerbe::parser_forme(string forme)
 
 
 
-void ParseurFormeVerbe::parser()
+DonneesFormeVerbe ParseurFormeVerbe::parser()
 {
     map <string, string> temps,
                          forme;
     
+    DonneesFormeVerbe donnees;
     
     ifstream fichier_formes(_fichier);
 
@@ -77,15 +86,17 @@ void ParseurFormeVerbe::parser()
         fichier_formes >> temps["A"] >> temps["F"] >> forme["A"] >> forme["F"];
         
         
-        __donnees.ajouter_temps(temps[_langue_source], _langue_source);
+        donnees.ajouter_temps(temps[_langue_source], _langue_source);
         
-        __donnees.ajouter_forme(parser_forme(forme[_langue_source]), _langue_source);
+        donnees.ajouter_forme(parser_forme(forme[_langue_source]), _langue_source);
         
         
-        __donnees.ajouter_temps(temps[_langue_sortie], _langue_sortie);
+        donnees.ajouter_temps(temps[_langue_sortie], _langue_sortie);
         
-        __donnees.ajouter_forme(parser_forme(forme[_langue_sortie]), _langue_sortie);
+        donnees.ajouter_forme(parser_forme(forme[_langue_sortie]), _langue_sortie);
     }
     
     fichier_formes.close();
+    
+    return donnees;
 }
