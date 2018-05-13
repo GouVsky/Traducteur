@@ -18,17 +18,48 @@ Type::Type() {}
 
 Type::Type(vector <string> type)
 {
-    __type = type;
-}
-
-
-
-
-Type & Type::operator=(Type type)
-{
-    __type = type.__type;
+    _classe = type[0];
     
-    return * this;
+    _categorie = (type.size() > 1) ? type[1] : "";
+    
+    _propriete = (type.size() > 2) ? type[2] : "";
+    
+    
+    if (_classe == "NOM")
+    {
+        if (_categorie == "COMMUN")
+        {
+            __types.commun = new Commun;
+        }
+        
+        else if (_categorie == "PROPRE")
+        {
+            __types.propre = new Propre;
+        }
+    }
+    
+    else if (_classe == "VERBE")
+    {
+        if (_categorie == "ACTION")
+        {
+            __types.action = new VerbeAction(_propriete);
+        }
+    }
+    
+    else if (_classe == "PRONOM")
+    {
+        __types.pronom = new Pronom;
+    }
+    
+    else if (_classe == "ADJECTIF")
+    {
+        __types.adjectif = new Adjectif;
+    }
+    
+    else if (_classe == "INVARIABLE")
+    {
+        __types.invariable = new Invariable;
+    }
 }
 
 
@@ -36,22 +67,36 @@ Type & Type::operator=(Type type)
 
 Type Type::operator+(Type type)
 {
-    Type concatenation;
+    _classe += '/' + type._classe;
+    
+    _categorie += '/' + type._categorie;
+    
+    _propriete += '/' + type._propriete;
     
     
-    type.__type[0] = __type[0] + type.__type[0];
-    
-    type.__type[1] = __type[1] + type.__type[1];
-
-    type.__type[2] = __type[2] + ((__type.size() == 3) ? type.__type[2] : "");
-    
-    return concatenation;
+    return * this;
 }
 
 
 
 
-string Type::type()
+void Type::definir_classe(string classe)
 {
-    return classe() + "_" + categorie() + "_" + propriete();
+    _classe = classe;
+}
+
+
+
+
+void Type::definir_categorie(string categorie)
+{
+    _categorie = categorie;
+}
+
+
+
+
+void Type::definir_propriete(string propriete)
+{
+    _propriete = propriete;
 }

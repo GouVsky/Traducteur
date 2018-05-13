@@ -6,7 +6,6 @@
 //  Copyright © 2015 Grégoire. All rights reserved.
 //
 
-#include "Auxiliaire.hpp"
 #include "Terminaison.hpp"
 
 using namespace std;
@@ -41,22 +40,29 @@ void Terminaison::parser_terminaisons(string verbe, string temps, int groupe)
         
         _ancienne_terminaison = fichier_terminaison == "-" ? "" : fichier_terminaison;
 
+
         // On récupère la liste des terminaisons correspondant au temps et au groupe du verbe.
         // Un même groupe peut posséder différentes terminaisons, il faut donc récupérer la plus grande possible.
         
-        // On précise que la chaîne de caractères recherchée est à la fin,
+        // On précise que la chaîne de caractères recherchée est à la fin.
+        // On vérifie d'abord qu'elle n'est pas plus grande que le verbe.
         
-        string fin_du_verbe = verbe.substr(verbe.size() - _ancienne_terminaison.size());
+        int taille_terminaison = (int) (verbe.size() - _ancienne_terminaison.size());
         
-        if (fichier_temps == temps && (fichier_groupe - '0') == groupe && fin_du_verbe.size() >= _ancienne_terminaison.size())
+        if (taille_terminaison > 0)
         {
-            string terminaison;
-            
-            istringstream lecture(fichier_liste_terminaisons);
-            
-            while (getline(lecture, terminaison, '/'))
+            string fin_du_verbe = verbe.substr(taille_terminaison);
+
+            if (fichier_temps == temps && (fichier_groupe - '0') == groupe && fin_du_verbe.size() >= _ancienne_terminaison.size())
             {
-                __nouvelles_terminaisons.push_back((terminaison == "-" ? "" : terminaison));
+                string terminaison;
+                
+                istringstream lecture(fichier_liste_terminaisons);
+                
+                while (getline(lecture, terminaison, '/'))
+                {
+                    __nouvelles_terminaisons.push_back((terminaison == "-" ? "" : terminaison));
+                }
             }
         }
     }

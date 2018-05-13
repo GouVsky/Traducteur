@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Grégoire. All rights reserved.
 //
 
-#ifndef __Traducteur_universel__motInvariable__
-#define __Traducteur_universel__motInvariable__
+#ifndef Invariable_hpp
+#define Invariable_hpp
 
 #include <stdio.h>
 

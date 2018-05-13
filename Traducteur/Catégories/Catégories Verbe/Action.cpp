@@ -8,5 +8,12 @@
 
 #include "Action.hpp"
 
+using namespace std;
+
 
 VerbeAction::VerbeAction() : Verbe() {}
+
+
+
+
+VerbeAction::VerbeAction(string propriete) : Verbe(propriete) {}

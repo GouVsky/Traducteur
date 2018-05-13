@@ -16,7 +16,6 @@
 #define ANGLAIS "A"
 #define FRANCAIS "F"
 
-
 using namespace std;
 
 

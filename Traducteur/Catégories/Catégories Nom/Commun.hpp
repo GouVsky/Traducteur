@@ -21,7 +21,6 @@ class Commun : public Nom
     public :
     
     Commun();
-    void accorder_pluriel(Mot & mot, std::string langue);
 };
 
 #endif /* Commun_hpp */

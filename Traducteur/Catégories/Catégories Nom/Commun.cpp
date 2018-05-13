@@ -12,10 +12,3 @@ using namespace std;
 
 
 Commun::Commun() : Nom() {}
-
-
-
-
-void Commun::accorder_pluriel(Mot & mot, string langue)
-{
-}

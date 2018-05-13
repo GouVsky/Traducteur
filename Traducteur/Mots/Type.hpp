@@ -13,9 +13,33 @@
 #include <vector>
 #include <stdio.h>
 
-#include "Action.hpp"
-#include "Propre.hpp"
 #include "Commun.hpp"
+#include "Propre.hpp"
+#include "Action.hpp"
+#include "Pronom.hpp"
+#include "Adjectif.hpp"
+#include "Invariable.hpp"
+
+
+/* Cette structure permet de définir le type exacte de la famille,
+   et de retrouver la classe grammaticale, la catégorie et les propriétés qui lui sont associées.
+ 
+   - niveau 0 : classe
+   - niveau 1 : catégorie
+   - niveau 2 : propriété
+ 
+   Une classe est associée à chaque niveau. Chacun hérite du niveau qui le précède dans la hiérarchie.
+   Si un niveau n'existe pas, on remonte d'un niveau d'abstraction. */
+
+struct __Types
+{
+    Commun * commun = nullptr;
+    Propre * propre = nullptr;
+    VerbeAction * action = nullptr;
+    Pronom * pronom = nullptr;
+    Adjectif * adjectif = nullptr;
+    Invariable * invariable = nullptr;
+};
 
 
 class Type
@@ -24,27 +48,23 @@ class Type
     
     Type();
     Type(std::vector <std::string> type);
-    Type & operator=(Type type);
     Type operator+(Type type);
-    std::string type();
-    std::string classe() const { return (__type.size() > 0) ? __type[0] : ""; };
-    std::string categorie() const { return (__type.size() > 1) ? __type[1] : ""; };
-    std::string propriete() { return (__type.size() > 2) ? __type[2] : ""; };
-    
-    struct __Types
-    {
-        Propre __nom_propre;
-        Commun __nom_commun;
-        VerbeAction __verbe_action;
-        
-    } __categories;
+    void definir_classe(std::string classe);
+    void definir_categorie(std::string categorie);
+    void definir_propriete(std::string propriete);
+    std::string recuperer_classe() const { return _classe; }
+    std::string recuperer_categorie() const { return _categorie; }
+    std::string recuperer_propriete() { return _propriete; }
+    std::string recuperer_type() const { return _classe + '_' + _categorie + '_' + _propriete; }
+    __Types & recuperer_structure_types() { return __types; }
     
     private :
     
-    /* Le tableau de chaînes de caractères permet de définir le type exacte de la famille,
-       et de retrouver la classe grammaticale, la catégorie et les propriétés qui lui sont associées. */
+    __Types __types;
     
-    std::vector <std::string> __type;
+    std::string _classe,
+                _categorie,
+                _propriete;
 };
 
 #endif /* Type_hpp */

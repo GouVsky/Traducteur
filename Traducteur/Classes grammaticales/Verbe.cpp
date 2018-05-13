@@ -16,6 +16,16 @@ Verbe::Verbe() {}
 
 
 
+Verbe::Verbe(string propriete)
+{
+    __groupe["A"] = propriete[0] - '0';
+    
+    __groupe["F"] = propriete[1] - '0';
+}
+
+
+
+
 size_t Verbe::calculer_taille(string verbe)
 {
     if (verbe.empty())

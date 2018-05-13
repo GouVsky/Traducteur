@@ -9,6 +9,7 @@
 #ifndef Action_hpp
 #define Action_hpp
 
+#include <string>
 #include <stdio.h>
 
 #include "Verbe.hpp"
@@ -19,6 +20,7 @@ class VerbeAction : public Verbe
     public :
     
     VerbeAction();
+    VerbeAction(std::string propriete);
 };
 
 #endif /* Action_hpp */
