@@ -35,33 +35,37 @@ bool ConstructeurExpression::construire_expression(vector <string> mots)
     
     while (!(fichier.eof() || trouve))
     {
+        __mots_expression_traduite.clear();
+        
+        
         fichier >> __expression["A"] >> __expression["F"];
         
         
-        _taille_source = count(__expression[_langue_source].begin(), __expression[_langue_source].end(), ';');
+        // On récupère les mots de l'expression source.
+        
+        vector <string> mots_expression_source;
+
+        istringstream decouper_expression_source(__expression[_langue_source]);
+        
+        while (getline(decouper_expression_source, mot, ';'))
+        {
+            mots_expression_source.push_back(mot);
+        }
+        
+        _taille_source = mots_expression_source.size();
+        
+        
+        // On récupère les mots de l'expression traduite.
+        // Celle-ci doit contenir le même nombre de mots que l'expression source.
+        
+        __mots_expression_traduite.assign(mots_expression_source.begin(), mots_expression_source.begin() + _taille_source);
         
         
         // Comparaison de l'expression avec celle de la phrase.
-        // Pour cela, on récupère autant de mots que la taille de l'expression du fichier.
-        // On effectue un minimum afin de ne pas dépasser la taille du tableau de mots.
         
-        for (int i = 0; i < min(_taille_source, mots.size()); i++)
-        {
-            expression += mots[i] + ';';
-        }
-        
-        
-        if (expression == __expression[_langue_source])
+        if (__mots_expression_traduite == mots_expression_source)
         {
             trouve = true;
-            
-            istringstream decouper_expression(__expression[_langue_sortie]);
-            
-            
-            while (getline(decouper_expression, mot, ';'))
-            {
-                __mots_expression_traduite.push_back(mot);
-            }
         }
     }
     

@@ -28,7 +28,7 @@ class Parseur
     public :
     
     Parseur(std::string source, std::string sortie, std::string fichier);
-    DonneesVerbe & recuperer_donnees_verbe() { return __donnees_verbe; };
+    DonneesVerbe & recuperer_donnees_verbe() { return __testeur_verbe.recuperer_donnees_verbe(); };
     DonneesMot & recuperer_donnees_mot() { return __donnees_mot; };
     bool parser(std::string mot_a_trouver, std::vector <Groupe> & groupes);
     
@@ -41,8 +41,6 @@ class Parseur
     
     DonneesMot __donnees_mot;
     
-    DonneesVerbe __donnees_verbe;
-
     TesteurMot __testeur_mot;
     
     TesteurVerbe __testeur_verbe;

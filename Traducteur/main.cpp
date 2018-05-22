@@ -12,7 +12,6 @@
 
 #include "ConstructeurTexte.hpp"
 
-
 #define ANGLAIS "A"
 #define FRANCAIS "F"
 

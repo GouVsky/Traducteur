@@ -30,16 +30,17 @@ class TesteurVerbe
     
     private :
     
-    bool comparer(std::string verbe_dans_phrase, std::string verbe_construit, std::vector <Groupe> & groupes);
-    std::string construction(DonneesMot & donnees, std::string langue, int temps, int famille, int mot);
+    bool comparer(std::string verbe_dans_phrase, std::vector <std::string> verbes_construits, std::vector <Groupe> & groupes);
+    std::vector <std::string> construction(DonneesMot & donnees, std::string langue, int temps, int famille, int mot);
 
     
     int _sujet;
     
     std::string _langue_source,
-                _langue_sortie;
+                _langue_sortie,
+                _verbe_construit;
     
-    Verbe __verbe;
+    Verbe * __verbe;
     
     DonneesVerbe __donnees_verbe;
     

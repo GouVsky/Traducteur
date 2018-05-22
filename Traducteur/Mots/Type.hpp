@@ -16,6 +16,7 @@
 #include "Commun.hpp"
 #include "Propre.hpp"
 #include "Action.hpp"
+#include "Attributif.hpp"
 #include "Pronom.hpp"
 #include "Adjectif.hpp"
 #include "Invariable.hpp"
@@ -36,6 +37,7 @@ struct __Types
     Commun * commun = nullptr;
     Propre * propre = nullptr;
     VerbeAction * action = nullptr;
+    VerbeAttributif * attributif = nullptr;
     Pronom * pronom = nullptr;
     Adjectif * adjectif = nullptr;
     Invariable * invariable = nullptr;
@@ -59,6 +61,9 @@ class Type
     __Types & recuperer_structure_types() { return __types; }
     
     private :
+    
+    void definir_type();
+    
     
     __Types __types;
     

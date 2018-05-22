@@ -26,6 +26,7 @@ class DonneesVerbe
     void ajouter_verbe_source(std::string verbe_source);
     void ajouter_verbe_traduit(std::string verbe_traduit);
     void ajouter_indice_groupe_debut_verbe(size_t indice_groupe_debut_verbe);
+    void reinitialisation();
     
     private :
     

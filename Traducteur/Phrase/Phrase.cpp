@@ -66,7 +66,7 @@ void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
 
 
 
-
+#include <iostream>
 Groupe Phrase::traduire_mot(string mot)
 {
     Groupe groupe(mot);
@@ -112,7 +112,7 @@ Groupe Phrase::traduire_mot(string mot)
     
     else
     {
-        Famille inconnue = Famille(mot);
+        Famille inconnue(mot);
         
         groupe.ajouter_famille(inconnue);
     }
@@ -131,6 +131,8 @@ void Phrase::traduire()
     
     for (int i = 0; i < nombre_mots; i++)
     {
+        
+        
         __groupes.push_back(traduire_mot(__mots_source[i]));
     }
     

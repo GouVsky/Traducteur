@@ -50,3 +50,11 @@ void DonneesVerbe::ajouter_indice_groupe_debut_verbe(size_t indice_groupe_verbe_
 {
     _indice_groupe_debut_verbe = indice_groupe_verbe_debut;
 }
+
+
+
+
+void DonneesVerbe::reinitialisation()
+{
+    __groupe.clear();
+}

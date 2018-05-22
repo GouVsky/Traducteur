@@ -25,7 +25,7 @@ class Verbe
     Verbe(std::string propriete);
     size_t calculer_taille(std::string verbe);
     bool comparer_taille(std::string verbe_compare, std::string verbe_comparant);
-    std::string construire_verbe(std::string langue, std::string verbe, std::vector <std::string> & formes, std::string temps, int groupe,int sujet);
+    std::vector <std::string> construire_verbe(std::string langue, std::string verbe, std::vector <std::string> & formes, std::string temps, int groupe,int sujet);
     int recuperer_groupe(std::string langue) { return __groupe[langue]; }
 
     private :

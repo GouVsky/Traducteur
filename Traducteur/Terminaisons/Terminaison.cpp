@@ -21,7 +21,7 @@ Terminaison::Terminaison(string langue)
 
 void Terminaison::parser_terminaisons(string verbe, string temps, int groupe)
 {
-    char fichier_groupe;
+    int fichier_groupe;
     
     string fichier_temps,
            fichier_terminaison,
@@ -53,7 +53,7 @@ void Terminaison::parser_terminaisons(string verbe, string temps, int groupe)
         {
             string fin_du_verbe = verbe.substr(taille_terminaison);
 
-            if (fichier_temps == temps && (fichier_groupe - '0') == groupe && fin_du_verbe.size() >= _ancienne_terminaison.size())
+            if (fichier_temps == temps && fichier_groupe == groupe && fin_du_verbe.size() >= _ancienne_terminaison.size())
             {
                 string terminaison;
                 

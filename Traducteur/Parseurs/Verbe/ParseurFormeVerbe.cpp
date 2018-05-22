@@ -38,19 +38,19 @@ vector <string> ParseurFormeVerbe::parser_forme(string forme)
     vector <string> forme_decoupee;
     
     
-    istringstream forme_verbe(forme);
-    
     // On récupère chaque composant distinct du verbe.
     // Il s'agit de tous les mots séparés par un espace.
+    
+    istringstream forme_verbe(forme);
     
     while (getline(forme_verbe, composant_distinct, '+'))
     {
         // On récupère la structure de chaque composant.
         // Ces différentes structures sont composées des radicaux, des terminaisons, etc.
         
-        istringstream structure(composant_distinct);
+        istringstream structure_moins(composant_distinct);
         
-        while (getline(structure, structure_du_composant, '-'))
+        while (getline(structure_moins, structure_du_composant, '-'))
         {
             forme_decoupee.push_back(structure_du_composant);
         }

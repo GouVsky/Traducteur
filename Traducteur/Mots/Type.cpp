@@ -25,6 +25,14 @@ Type::Type(vector <string> type)
     _propriete = (type.size() > 2) ? type[2] : "";
     
     
+    definir_type();
+}
+
+
+
+
+void Type::definir_type()
+{
     if (_classe == "NOM")
     {
         if (_categorie == "COMMUN")
@@ -43,6 +51,11 @@ Type::Type(vector <string> type)
         if (_categorie == "ACTION")
         {
             __types.action = new VerbeAction(_propriete);
+        }
+        
+        else if (_categorie == "ATTRIBUTIF")
+        {
+            __types.attributif = new VerbeAttributif(_propriete);
         }
     }
     
