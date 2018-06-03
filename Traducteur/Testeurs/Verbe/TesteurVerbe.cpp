@@ -20,7 +20,7 @@ TesteurVerbe::TesteurVerbe(string langue_source, string langue_sortie) : __parse
     __donnees_formes_verbes = __parseur_formes.parser();
 }
 
-#include <iostream>
+
 
 
 bool TesteurVerbe::comparer(string verbe, vector <string> verbes_construits, vector <Groupe> & groupes)
@@ -30,6 +30,7 @@ bool TesteurVerbe::comparer(string verbe, vector <string> verbes_construits, vec
     
     // Comparaison des verbes avec celui de la phrase.
     // Pour cela, on récupère autant de mots traduits précédemment que la taille du verbe construit.
+    // (En fait "taille - 1" car on prend le mot courant).
     
     for (int i = 0; i < verbes_construits.size(); i++)
     {
@@ -42,7 +43,7 @@ bool TesteurVerbe::comparer(string verbe, vector <string> verbes_construits, vec
         
         for (size_t j = indice; j < groupes.size(); j++)
         {
-            verbe_dans_phrase += groupes[i].recuperer_mot_source() + ' ';
+            verbe_dans_phrase += groupes[j].recuperer_mot_source() + ' ';
         }
         
         verbe_dans_phrase += verbe;

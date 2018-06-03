@@ -85,15 +85,15 @@ Phrase ConstructeurPhrase::decouper_en_mots(string phrase)
 {
     string mot;
     
-    istringstream chaine(phrase);
-
+    vector <string> mots;
+    
     
     // Suppression de la casse de la phrase pour les traitements.
     
     transform(phrase.begin(), phrase.end(), phrase.begin(), ::tolower);
     
     
-    vector <string> mots;
+    istringstream chaine(phrase);
     
     while (getline(chaine, mot, ' '))
     {
