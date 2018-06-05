@@ -16,7 +16,7 @@ TesteurMot::TesteurMot() {}
 
 
 
-bool TesteurMot::tester_mot(string mot, string langue, DonneesMot & donnees)
+bool TesteurMot::tester_mot(string mot, int langue, DonneesMot & donnees)
 {
     bool trouve = false;
     
@@ -36,7 +36,9 @@ bool TesteurMot::tester_mot(string mot, string langue, DonneesMot & donnees)
             
             for (int sens = 0; sens < nombre_sens && !trouve; sens++)
             {
-                if (donnees.recuperer_famille(langue, famille).recuperer_mot(sens).recuperer_mot() == mot)
+                string mot_dans_donnees = donnees.recuperer_famille(langue, famille).recuperer_mot(sens).recuperer_mot();
+                
+                if (mot_dans_donnees == mot)
                 {
                     trouve = true;
                 }

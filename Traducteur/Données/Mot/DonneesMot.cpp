@@ -26,7 +26,7 @@ void DonneesMot::ajouter_type(vector <string> types)
 
 
 
-void DonneesMot::ajouter_famille(vector <string> mots, string langue)
+void DonneesMot::ajouter_famille(vector <string> mots, int langue)
 {
     Famille famille(mots);
     

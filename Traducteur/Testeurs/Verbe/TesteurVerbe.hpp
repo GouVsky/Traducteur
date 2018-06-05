@@ -12,6 +12,7 @@
 #include <string>
 #include <stdio.h>
 
+#include "config.hpp"
 #include "Sujet.hpp"
 #include "Verbe.hpp"
 #include "Groupe.hpp"
@@ -24,21 +25,19 @@ class TesteurVerbe
 {
     public :
     
-    TesteurVerbe(std::string langue_source, std::string langue_sortie);
+    TesteurVerbe();
     DonneesVerbe & recuperer_donnees_verbe() { return __donnees_verbe; };
     bool tester_verbe(std::string verbe, std::vector <Groupe> & groupes, DonneesMot & donnees);
     
     private :
     
     bool comparer(std::string verbe_dans_phrase, std::vector <std::string> verbes_construits, std::vector <Groupe> & groupes);
-    std::vector <std::string> construction(DonneesMot & donnees, std::string langue, int temps, int famille, int mot);
+    std::vector <std::string> construction(DonneesMot & donnees, int langue, int temps, int famille, int mot);
 
     
     int _sujet;
     
-    std::string _langue_source,
-                _langue_sortie,
-                _verbe_construit;
+    std::string _verbe_construit;
     
     Verbe * __verbe;
     

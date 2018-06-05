@@ -20,7 +20,7 @@ class TesteurMot
     public :
     
     TesteurMot();
-    bool tester_mot(std::string mot, std::string langue, DonneesMot & donnees);
+    bool tester_mot(std::string mot, int langue, DonneesMot & donnees);
 };
 
 #endif /* Testeur_hpp */

@@ -11,13 +11,9 @@
 using namespace std;
 
 
-ParseurFormeVerbe::ParseurFormeVerbe(string langue_source, string langue_sortie, string fichier)
+ParseurFormeVerbe::ParseurFormeVerbe(string fichier)
 {
     _fichier = fichier;
-    
-    _langue_source = langue_source;
-    
-    _langue_sortie = langue_sortie;
 }
 
 
@@ -73,8 +69,11 @@ vector <string> ParseurFormeVerbe::parser_forme(string forme)
 
 DonneesFormeVerbe ParseurFormeVerbe::parser()
 {
-    map <string, string> temps,
-                         forme;
+    map <int, string> temps,
+                      forme;
+    
+    int langue_source = config::langue_source;
+    int langue_sortie = config::langue_sortie;
     
     DonneesFormeVerbe donnees;
     
@@ -83,17 +82,17 @@ DonneesFormeVerbe ParseurFormeVerbe::parser()
     
     while (!fichier_formes.eof())
     {
-        fichier_formes >> temps["A"] >> temps["F"] >> forme["A"] >> forme["F"];
+        fichier_formes >> temps[config::ANGLAIS] >> temps[config::FRANCAIS] >> forme[config::ANGLAIS] >> forme[config::FRANCAIS];
         
         
-        donnees.ajouter_temps(temps[_langue_source], _langue_source);
+        donnees.ajouter_temps(temps[langue_source], langue_source);
         
-        donnees.ajouter_forme(parser_forme(forme[_langue_source]), _langue_source);
+        donnees.ajouter_forme(parser_forme(forme[langue_source]), langue_source);
         
         
-        donnees.ajouter_temps(temps[_langue_sortie], _langue_sortie);
+        donnees.ajouter_temps(temps[langue_sortie], langue_sortie);
         
-        donnees.ajouter_forme(parser_forme(forme[_langue_sortie]), _langue_sortie);
+        donnees.ajouter_forme(parser_forme(forme[langue_sortie]), langue_sortie);
     }
     
     fichier_formes.close();

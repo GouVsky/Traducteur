@@ -12,3 +12,11 @@ using namespace std;
 
 
 Commun::Commun() : Nom() {}
+
+
+
+
+void Commun::ajouter_pluriel(string & nom_commun)
+{
+    nom_commun += 's';
+}

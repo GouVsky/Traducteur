@@ -22,7 +22,7 @@ DonneesVerbe::DonneesVerbe()
 
 
 
-void DonneesVerbe::ajouter_groupe(string langue, int groupe)
+void DonneesVerbe::ajouter_groupe(int langue, int groupe)
 {
     __groupe[langue] = groupe;
 }

@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <iostream>
 
+#include "config.hpp"
 #include "Groupe.hpp"
 #include "Famille.hpp"
 #include "Parseur.hpp"
@@ -26,7 +27,7 @@ class Phrase
 {
     public :
     
-    Phrase(std::vector <std::string> mots_source, std::string langue_source, std::string langue_sortie);
+    Phrase(std::vector <std::string> mots_source);
     size_t recuperer_nombre_mots(int sous_phrase) { return __phrases_sortie_sens_unique[sous_phrase].size(); };
     size_t recuperer_nombre_sous_phrases() { return __phrases_sortie_sens_unique.size(); };
     size_t recuperer_nombre_expressions() { return __expressions.size(); };
@@ -41,9 +42,6 @@ class Phrase
     Groupe traduire_mot(std::string mot);
     
 
-    std::string _langue_source,
-                _langue_sortie;
-    
     ChampsLexicaux __champs_lexicaux;
     
     std::vector <std::string> __mots_source;

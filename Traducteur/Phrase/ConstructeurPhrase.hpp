@@ -23,7 +23,7 @@ class ConstructeurPhrase
 {
     public :
     
-    ConstructeurPhrase(std::string source, std::string sortie);
+    ConstructeurPhrase();
     size_t recuperer_nombre_phrases_traduites() { return __phrases_sorties.size(); };
     std::string recuperer_phrase_traduite(int phrase) { return __phrases_sorties[phrase]; };
     void construire_phrases(std::string texte);
@@ -34,10 +34,7 @@ class ConstructeurPhrase
     void traduction_multithreading(size_t nombre_phrases);
     Phrase decouper_en_mots(std::string phrase);
     void decouper_par_ponctuation(std::string texte);
-    
-    
-    std::string _langue_source,
-                _langue_sortie;
+
     
     std::vector <Phrase> __phrases;
     

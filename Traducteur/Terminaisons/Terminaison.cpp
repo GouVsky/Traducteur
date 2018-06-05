@@ -11,7 +11,7 @@
 using namespace std;
 
 
-Terminaison::Terminaison(string langue)
+Terminaison::Terminaison(int langue)
 {
     _langue = langue;
 }
@@ -27,7 +27,7 @@ void Terminaison::parser_terminaisons(string verbe, string temps, int groupe)
            fichier_terminaison,
            fichier_liste_terminaisons;
     
-    ifstream fichier(_fichier  + _langue + ".txt");
+    ifstream fichier(_fichier  + to_string(_langue) + ".txt");
     
 
     while (!fichier.eof())

@@ -10,10 +10,8 @@
 #include <string>
 #include <iostream>
 
+#include "config.hpp"
 #include "ConstructeurTexte.hpp"
-
-#define ANGLAIS "A"
-#define FRANCAIS "F"
 
 using namespace std;
 
@@ -22,8 +20,8 @@ int main(int argc, const char * argv[])
 {
     string texte = "";
 
-    string langue_source = ANGLAIS;
-    string langue_sortie = FRANCAIS;
+    config::langue_source = config::ANGLAIS;
+    config::langue_sortie = config::FRANCAIS;
     
     
     cout << "Entrer un texte à traduire :" << endl << endl;
@@ -37,7 +35,7 @@ int main(int argc, const char * argv[])
     
     // Traduction du texte.
     
-    ConstructeurTexte bob_le_bricoleur(texte, langue_source, langue_sortie);
+    ConstructeurTexte bob_le_bricoleur(texte);
 
     bob_le_bricoleur.construire_texte();
     

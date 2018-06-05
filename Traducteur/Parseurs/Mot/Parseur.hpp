@@ -16,6 +16,7 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "config.hpp"
 #include "Groupe.hpp"
 #include "TesteurMot.hpp"
 #include "DonneesMot.hpp"
@@ -27,7 +28,7 @@ class Parseur
 {
     public :
     
-    Parseur(std::string source, std::string sortie, std::string fichier);
+    Parseur(std::string fichier);
     DonneesVerbe & recuperer_donnees_verbe() { return __testeur_verbe.recuperer_donnees_verbe(); };
     DonneesMot & recuperer_donnees_mot() { return __donnees_mot; };
     bool parser(std::string mot_a_trouver, std::vector <Groupe> & groupes);
@@ -35,8 +36,8 @@ class Parseur
     private :
     
     void parser_champs_lexicaux(std::string champs_lexicaux);
-    void parser_types(std::string types, std::string langue);
-    void parser_mots(std::string mots, std::string langue);
+    void parser_types(std::string types, int langue);
+    void parser_mots(std::string mots, int langue);
     
     
     DonneesMot __donnees_mot;
@@ -48,11 +49,9 @@ class Parseur
     
     std::string _types,
                 _fichier,
-                _langue_source,
-                _langue_sortie,
                 _champs_lexicaux;
     
-    std::map <std::string, std::string> __mots_fichier;
+    std::map <int, std::string> __mots_fichier;
 };
 
 #endif /* Parseur_hpp */

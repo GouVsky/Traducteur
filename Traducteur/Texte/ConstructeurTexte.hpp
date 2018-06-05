@@ -11,13 +11,15 @@
 
 #include <stdio.h>
 
+#include "config.hpp"
 #include "ConstructeurPhrase.hpp"
+
 
 class ConstructeurTexte
 {
     public :
     
-    ConstructeurTexte(std::string texte, std::string source, std::string sortie);
+    ConstructeurTexte(std::string texte);
     std::string recuperer_texte_traduit() { return _texte_traduit; };
     void construire_texte();
     

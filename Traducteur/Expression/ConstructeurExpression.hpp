@@ -16,11 +16,13 @@
 #include <sstream>
 #include <stdio.h>
 
+#include "config.hpp"
+
 class ConstructeurExpression
 {
     public :
     
-    ConstructeurExpression(std::string source, std::string sortie);
+    ConstructeurExpression();
     std::string recuperer_mots(int mot) { return __mots_expression_traduite[mot]; };
     size_t recuperer_taille_source() { return _taille_source; };
     size_t recuperer_taille_sortie() { return __mots_expression_traduite.size(); };
@@ -30,12 +32,9 @@ class ConstructeurExpression
     
     size_t _taille_source;
     
-    std::string _langue_source,
-                _langue_sortie;
-    
     std::vector <std::string> __mots_expression_traduite;
     
-    std::map <std::string, std::string> __expression;
+    std::map <int, std::string> __expression;
 };
 
 #endif /* ConstructeurExpression_hpp */

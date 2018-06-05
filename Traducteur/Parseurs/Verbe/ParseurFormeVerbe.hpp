@@ -16,13 +16,14 @@
 #include <sstream>
 #include <fstream>
 
+#include "config.hpp"
 #include "DonneesFormeVerbe.hpp"
 
 class ParseurFormeVerbe
 {
     public :
     
-    ParseurFormeVerbe(std::string langue_source, std::string langue_sortie, std::string fichier);
+    ParseurFormeVerbe(std::string fichier);
     ~ParseurFormeVerbe();
     DonneesFormeVerbe parser();
     
@@ -31,9 +32,7 @@ class ParseurFormeVerbe
     std::vector <std::string> parser_forme(std::string forme);
     
     
-    std::string _fichier,
-                _langue_source,
-                _langue_sortie;
+    std::string _fichier;
 };
 
 #endif /* ParseurFormeVerbe_hpp */

@@ -18,9 +18,9 @@ Verbe::Verbe() {}
 
 Verbe::Verbe(string propriete)
 {
-    __groupe["A"] = propriete[0] - '0';
+    __groupe[config::ANGLAIS] = propriete[0] - '0';
     
-    __groupe["F"] = propriete[1] - '0';
+    __groupe[config::FRANCAIS] = propriete[1] - '0';
 }
 
 
@@ -50,7 +50,7 @@ bool Verbe::comparer_taille(string verbe_compare, string verbe_comparant)
 
 
 
-vector <string> Verbe::construire_verbe(string langue, string verbe, vector <string> & formes, string temps, int groupe, int sujet)
+vector <string> Verbe::construire_verbe(int langue, string verbe, vector <string> & formes, string temps, int groupe, int sujet)
 {
     // On retourne 2^(nombre d'options) formes distinctes.
     vector <string> verbes_construits;

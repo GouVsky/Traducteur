@@ -21,7 +21,7 @@ class Terminaison
 {
     public :
     
-    Terminaison(std::string langue);
+    Terminaison(int langue);
     std::string recuperer_ancienne_terminaison() const { return _ancienne_terminaison; };
     std::string recuperer_nouvelle_terminaison(int sujet) const { return (__nouvelles_terminaisons.size() > 0 ? __nouvelles_terminaisons[sujet] : ""); };
     void parser_terminaisons(std::string verbe, std::string temps, int groupe);
@@ -31,8 +31,9 @@ class Terminaison
     void ancienne_terminaison_troisieme_groupe(std::string verbe);
 
     
-    std::string _langue,
-                _ancienne_terminaison;
+    int _langue;
+    
+    std::string _ancienne_terminaison;
     
     std::vector <std::string> __nouvelles_terminaisons;
     

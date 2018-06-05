@@ -11,11 +11,8 @@
 using namespace std;
 
 
-Parseur::Parseur(string langue_source, string langue_sortie, string fichier) : __testeur_verbe(langue_source, langue_sortie)
+Parseur::Parseur(string fichier) : __testeur_verbe()
 {
-    _langue_source = langue_source;
-    _langue_sortie = langue_sortie;
-    
     _fichier = fichier;
 }
 
@@ -66,7 +63,7 @@ void Parseur::parser_champs_lexicaux(string champs_lexicaux)
 
 
 
-void Parseur::parser_types(string types, string langue)
+void Parseur::parser_types(string types, int langue)
 {
     string type_par_famille,
            type;
@@ -97,7 +94,7 @@ void Parseur::parser_types(string types, string langue)
 
 
 
-void Parseur::parser_mots(string mots, string langue)
+void Parseur::parser_mots(string mots, int langue)
 {
     string mot,
            famille;
@@ -126,11 +123,14 @@ void Parseur::parser_mots(string mots, string langue)
 }
 
 
-
+#include <iostream>
 
 bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
 {
     bool trouve = false;
+    
+    int langue_source = config::langue_source;
+    int langue_sortie = config::langue_sortie;
     
     ifstream fichier(_fichier);
     
@@ -140,22 +140,22 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
         __donnees_mot.reinitialisation();
 
         
-        fichier >> __mots_fichier["A"] >> __mots_fichier["F"] >> _types >> _champs_lexicaux;
+        fichier >> __mots_fichier[config::ANGLAIS] >> __mots_fichier[config::FRANCAIS] >> _types >> _champs_lexicaux;
         
 
-        parser_mots(__mots_fichier[_langue_source], _langue_source);
+        parser_mots(__mots_fichier[langue_source], langue_source);
         
-        parser_mots(__mots_fichier[_langue_sortie], _langue_sortie);
+        parser_mots(__mots_fichier[langue_sortie], langue_sortie);
         
-        parser_types(_types, _langue_source);
+        parser_types(_types, langue_source);
         
-        parser_types(_types, _langue_sortie);
+        parser_types(_types, langue_sortie);
 
 
         // Si le mot du fichier correspond au mot du texte, on récupère les traductions.
         // Les champs lexicaux et les types ne sont récupérés que maintenant car ils n'étaient pas utiles pour la reconnaissance du mot.
 
-        if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, _langue_source, __donnees_mot))
+        if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, langue_source, __donnees_mot))
             || (trouve = __testeur_verbe.tester_verbe(mot_a_trouver, groupes, __donnees_mot)))
         {
             parser_champs_lexicaux(_champs_lexicaux);

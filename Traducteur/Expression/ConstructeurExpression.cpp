@@ -11,12 +11,8 @@
 using namespace std;
 
 
-ConstructeurExpression::ConstructeurExpression(string source, string sortie)
+ConstructeurExpression::ConstructeurExpression()
 {
-    _langue_source = source;
-    
-    _langue_sortie = sortie;
-    
     _taille_source = 0;
 }
 
@@ -38,14 +34,14 @@ bool ConstructeurExpression::construire_expression(vector <string> mots)
         __mots_expression_traduite.clear();
         
         
-        fichier >> __expression["A"] >> __expression["F"];
+        fichier >> __expression[config::ANGLAIS] >> __expression[config::FRANCAIS];
         
         
         // On récupère les mots de l'expression source.
         
         vector <string> mots_expression_source;
 
-        istringstream decouper_expression_source(__expression[_langue_source]);
+        istringstream decouper_expression_source(__expression[config::langue_source]);
         
         while (getline(decouper_expression_source, mot, ';'))
         {

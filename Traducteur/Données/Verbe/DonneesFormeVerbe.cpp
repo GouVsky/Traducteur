@@ -16,7 +16,7 @@ DonneesFormeVerbe::DonneesFormeVerbe() {}
 
 
 
-void DonneesFormeVerbe::ajouter_temps(string temps, string langue)
+void DonneesFormeVerbe::ajouter_temps(string temps, int langue)
 {
     __temps[langue].push_back(temps);
 }
@@ -24,7 +24,7 @@ void DonneesFormeVerbe::ajouter_temps(string temps, string langue)
 
 
 
-void DonneesFormeVerbe::ajouter_forme(vector <string> forme, string langue)
+void DonneesFormeVerbe::ajouter_forme(vector <string> forme, int langue)
 {
     __formes_decoupees[langue].push_back(forme);
 }

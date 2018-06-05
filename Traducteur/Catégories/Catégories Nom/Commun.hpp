@@ -12,7 +12,6 @@
 #include <string>
 #include <stdio.h>
 
-#include "Mot.hpp"
 #include "Nom.hpp"
 
 
@@ -21,6 +20,7 @@ class Commun : public Nom
     public :
     
     Commun();
+    void ajouter_pluriel(std::string & nom_commun);
 };
 
 #endif /* Commun_hpp */

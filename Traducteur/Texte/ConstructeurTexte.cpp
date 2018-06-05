@@ -11,7 +11,7 @@
 using namespace std;
 
 
-ConstructeurTexte::ConstructeurTexte(string texte, string source, string sortie) : __constructeur_phrase(source, sortie)
+ConstructeurTexte::ConstructeurTexte(string texte) : __constructeur_phrase()
 {
     _texte_source = texte;
 }

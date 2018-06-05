@@ -11,13 +11,9 @@
 using namespace std;
 
 
-Phrase::Phrase(vector <string> mots_source, string langue_source, string langue_sortie)
+Phrase::Phrase(vector <string> mots_source)
 {
     __mots_source = mots_source;
-    
-    _langue_source = langue_source;
-    
-    _langue_sortie = langue_sortie;
 }
 
 
@@ -66,7 +62,7 @@ void Phrase::incrementer_les_champs_lexicaux(Famille & famille)
 
 
 
-#include <iostream>
+
 Groupe Phrase::traduire_mot(string mot)
 {
     Groupe groupe(mot);
@@ -74,22 +70,22 @@ Groupe Phrase::traduire_mot(string mot)
     
     size_t nombre_familles = 0;
     
-    Parseur parseur(_langue_source, _langue_sortie, "./Resources/Dictionnaire/mots.txt");
+    Parseur parseur("./Resources/Dictionnaire/mots.txt");
     
     
     if (parseur.parser(mot, __groupes))
     {
-        nombre_familles = parseur.recuperer_donnees_mot().recuperer_nombre_familles(_langue_sortie);
+        nombre_familles = parseur.recuperer_donnees_mot().recuperer_nombre_familles(config::langue_sortie);
         
         
         for (int i = 0; i < nombre_familles; i++)
         {
-            Famille famille = parseur.recuperer_donnees_mot().recuperer_famille(_langue_sortie, i);
+            Famille famille = parseur.recuperer_donnees_mot().recuperer_famille(config::langue_sortie, i);
             
             
             famille.ajouter_type(parseur.recuperer_donnees_mot().recuperer_type(i));
             
-            famille.ajouter_champs_lexicaux(parseur.recuperer_donnees_mot().recuperer_champs_lexicaux(_langue_sortie, i));
+            famille.ajouter_champs_lexicaux(parseur.recuperer_donnees_mot().recuperer_champs_lexicaux(config::langue_sortie, i));
             
             incrementer_les_champs_lexicaux(famille);
             

@@ -18,11 +18,11 @@ class DonneesVerbe
     public :
     
     DonneesVerbe();
-    int recuperer_groupe(std::string langue) { return __groupe[langue]; };
+    int recuperer_groupe(int langue) { return __groupe[langue]; };
     std::string recuperer_verbe_source() { return _verbe_source; };
     std::string recuperer_verbe_traduit() { return _verbe_traduit; };
     size_t recuperer_indice_groupe_debut_verbe() { return _indice_groupe_debut_verbe; };
-    void ajouter_groupe(std::string langue, int groupe);
+    void ajouter_groupe(int langue, int groupe);
     void ajouter_verbe_source(std::string verbe_source);
     void ajouter_verbe_traduit(std::string verbe_traduit);
     void ajouter_indice_groupe_debut_verbe(size_t indice_groupe_debut_verbe);
@@ -35,7 +35,7 @@ class DonneesVerbe
     
     size_t _indice_groupe_debut_verbe;
     
-    std::map <std::string, int> __groupe;
+    std::map <int, int> __groupe;
 };
 
 #endif /* DonneesVerbe_hpp */

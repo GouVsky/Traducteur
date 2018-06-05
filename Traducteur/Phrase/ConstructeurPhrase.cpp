@@ -11,12 +11,7 @@
 using namespace std;
 
 
-ConstructeurPhrase::ConstructeurPhrase(string source, string sortie) : constructeur_expression(source, sortie)
-{
-    _langue_source = source;
-    
-    _langue_sortie = sortie;
-}
+ConstructeurPhrase::ConstructeurPhrase() : constructeur_expression() {}
 
 
 
@@ -100,7 +95,7 @@ Phrase ConstructeurPhrase::decouper_en_mots(string phrase)
         mots.push_back(mot);
     }
     
-    return Phrase(mots, _langue_source, _langue_sortie);
+    return Phrase(mots);
 }
 
 
