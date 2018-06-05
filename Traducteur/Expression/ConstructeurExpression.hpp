@@ -22,7 +22,7 @@ class ConstructeurExpression
 {
     public :
     
-    ConstructeurExpression();
+    ConstructeurExpression(std::string fichier);
     std::string recuperer_mots(int mot) { return __mots_expression_traduite[mot]; };
     size_t recuperer_taille_source() { return _taille_source; };
     size_t recuperer_taille_sortie() { return __mots_expression_traduite.size(); };
@@ -30,11 +30,13 @@ class ConstructeurExpression
     
     private :
     
+    std::string _fichier;
+
     size_t _taille_source;
     
-    std::vector <std::string> __mots_expression_traduite;
-    
     std::map <int, std::string> __expression;
+
+    std::vector <std::string> __mots_expression_traduite;
 };
 
 #endif /* ConstructeurExpression_hpp */

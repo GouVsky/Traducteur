@@ -13,6 +13,7 @@
 #include <vector>
 #include <stdio.h>
 
+#include "config.hpp"
 #include "Groupe.hpp"
 
 
@@ -27,7 +28,7 @@ class Sujet
     int static transformer_le_sujet(int masculin, int feminin);
 
     
-    enum Pronom {JE, TU, IL, ELLE, NEUTRE, NOUS, VOUS, ILS, ELLES};
+    enum __pronoms {JE, TU, IL, ELLE, NEUTRE, NOUS, VOUS, ILS, ELLES};
 };
 
 #endif /* sujet_hpp */

@@ -11,8 +11,10 @@
 using namespace std;
 
 
-ConstructeurExpression::ConstructeurExpression()
+ConstructeurExpression::ConstructeurExpression(string fichier)
 {
+    _fichier = fichier;
+    
     _taille_source = 0;
 }
 
@@ -26,7 +28,7 @@ bool ConstructeurExpression::construire_expression(vector <string> mots)
     string mot,
            expression;
     
-    ifstream fichier("./Resources/Dictionnaire/expressions.txt");
+    ifstream fichier(_fichier);
     
     
     while (!(fichier.eof() || trouve))

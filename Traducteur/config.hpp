@@ -20,7 +20,12 @@ class config
     static int langue_source;
     static int langue_sortie;
     
-    enum Langues {ANGLAIS, FRANCAIS};
+    enum __langues {ANGLAIS, FRANCAIS};
+    
+    static std::string fichier_mots;
+    static std::string fichier_formes;
+    static std::string fichier_expressions;
+    static std::string dossier_terminaisons;
 };
 
 #endif /* config_hpp */

@@ -13,9 +13,6 @@ using namespace std;
 
 DonneesVerbe::DonneesVerbe()
 {
-    _verbe_source = "";
-    _verbe_traduit = "";
-    
     _indice_groupe_debut_verbe = 0;
 }
 

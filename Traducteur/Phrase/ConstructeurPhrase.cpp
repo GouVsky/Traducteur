@@ -11,7 +11,7 @@
 using namespace std;
 
 
-ConstructeurPhrase::ConstructeurPhrase() : constructeur_expression() {}
+ConstructeurPhrase::ConstructeurPhrase() : constructeur_expression(config::fichier_expressions) {}
 
 
 

@@ -21,7 +21,7 @@ class Terminaison
 {
     public :
     
-    Terminaison(int langue);
+    Terminaison(std::string dossier, int langue);
     std::string recuperer_ancienne_terminaison() const { return _ancienne_terminaison; };
     std::string recuperer_nouvelle_terminaison(int sujet) const { return (__nouvelles_terminaisons.size() > 0 ? __nouvelles_terminaisons[sujet] : ""); };
     void parser_terminaisons(std::string verbe, std::string temps, int groupe);
@@ -33,11 +33,10 @@ class Terminaison
     
     int _langue;
     
-    std::string _ancienne_terminaison;
+    std::string _dossier,
+                _ancienne_terminaison;
     
     std::vector <std::string> __nouvelles_terminaisons;
-    
-    std::string _fichier = "./Resources/Dictionnaire/Terminaisons/";
 };
 
 #endif /* terminaison_hpp */

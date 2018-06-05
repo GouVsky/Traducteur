@@ -27,7 +27,7 @@ bool TesteurMot::tester_mot(string mot, int langue, DonneesMot & donnees)
     
     for (int famille = 0; famille < nombre_familles && !trouve; famille++)
     {
-        if (donnees.recuperer_type(famille).recuperer_classe() != "VERBE")
+        if (donnees.recuperer_type(famille).classe() != "VERBE")
         {
             size_t nombre_sens = donnees.recuperer_nombre_sens(langue, famille);
             

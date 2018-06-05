@@ -49,7 +49,6 @@ int Sujet::transformer_le_sujet(int masculin, int feminin)
 
 
 
-// Création du sujet.
 
 int  Sujet::recuperer_valeur_sujet(vector <Groupe> & groupes)
 {
@@ -64,15 +63,14 @@ int  Sujet::recuperer_valeur_sujet(vector <Groupe> & groupes)
         
         for (int j = 0; j < nombre_familles; j++)
         {
-            string type = groupes[i].recuperer_famille(j).recuperer_type().recuperer_type();
-            
+            string type = groupes[i].recuperer_famille(j).recuperer_type().type_complet();
 
             if (type == "NOM_COMMUN_MASCULIN")
             {
                 masculin++;
             }
             
-            else if (type == "NOM_COMMUN_FEMININ")
+            else if (type == "NOM_COMMUN_fEMININ")
             {
                 feminin++;
             }

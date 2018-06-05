@@ -2,8 +2,8 @@
 //  Type.cpp
 //  Traducteur
 //
-//  Created by Grégoire on 16/06/2017.
-//  Copyright © 2017 Grégoire. All rights reserved.
+//  Created by Grégoire on 05/06/2018.
+//  Copyright © 2018 Grégoire. All rights reserved.
 //
 
 #include "Type.hpp"
@@ -16,63 +16,21 @@ Type::Type() {}
 
 
 
-Type::Type(vector <string> type)
+Type::Type(vector <string> types)
 {
-    _classe = type[0];
+    _classe = types[0];
     
-    _categorie = (type.size() > 1) ? type[1] : "";
-    
-    _propriete = (type.size() > 2) ? type[2] : "";
-    
-    
-    definir_type();
-}
-
-
-
-
-void Type::definir_type()
-{
-    if (_classe == "NOM")
+    if (types.size() > 1)
     {
-        if (_categorie == "COMMUN")
-        {
-            __types.commun = new Commun;
-        }
+        _categorie = types[1];
         
-        else if (_categorie == "PROPRE")
+        if (types.size() > 2)
         {
-            __types.propre = new Propre;
+            _propriete = types[2];
         }
     }
     
-    else if (_classe == "VERBE")
-    {
-        if (_categorie == "ACTION")
-        {
-            __types.action = new VerbeAction(_propriete);
-        }
-        
-        else if (_categorie == "ATTRIBUTIF")
-        {
-            __types.attributif = new VerbeAttributif(_propriete);
-        }
-    }
-    
-    else if (_classe == "PRONOM")
-    {
-        __types.pronom = new Pronom;
-    }
-    
-    else if (_classe == "ADJECTIF")
-    {
-        __types.adjectif = new Adjectif;
-    }
-    
-    else if (_classe == "INVARIABLE")
-    {
-        __types.invariable = new Invariable;
-    }
+    _type_complet = _classe + '_' + _categorie + '_' + _propriete;
 }
 
 
@@ -86,30 +44,7 @@ Type Type::operator+(Type type)
     
     _propriete += '/' + type._propriete;
     
+    _type_complet += '/' + type._type_complet;
     
     return * this;
-}
-
-
-
-
-void Type::definir_classe(string classe)
-{
-    _classe = classe;
-}
-
-
-
-
-void Type::definir_categorie(string categorie)
-{
-    _categorie = categorie;
-}
-
-
-
-
-void Type::definir_propriete(string propriete)
-{
-    _propriete = propriete;
 }

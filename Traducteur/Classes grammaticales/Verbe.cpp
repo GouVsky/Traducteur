@@ -58,7 +58,7 @@ vector <string> Verbe::construire_verbe(int langue, string verbe, vector <string
     // Cette sauvegarde va nous permettre de créer le radical.
     string sauvegarde = verbe;
     
-    Terminaison terminaison(langue);
+    Terminaison terminaison(config::dossier_terminaisons, langue);
     
     terminaison.parser_terminaisons(verbe, temps, groupe);
     

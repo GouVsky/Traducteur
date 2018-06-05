@@ -70,7 +70,7 @@ Groupe Phrase::traduire_mot(string mot)
     
     size_t nombre_familles = 0;
     
-    Parseur parseur("./Resources/Dictionnaire/mots.txt");
+    Parseur parseur(config::fichier_mots);
     
     
     if (parseur.parser(mot, __groupes))
@@ -92,7 +92,7 @@ Groupe Phrase::traduire_mot(string mot)
             
             // Si le mot faisait parti d'une forme verbale, on supprime tous les groupes créés précédemment.
 
-            if (famille.recuperer_type().recuperer_classe() == "VERBE")
+            if (famille.recuperer_type().classe() == "VERBE")
             {
                 size_t indice = parseur.recuperer_donnees_verbe().recuperer_indice_groupe_debut_verbe();
 

@@ -123,7 +123,7 @@ void Parseur::parser_mots(string mots, int langue)
 }
 
 
-#include <iostream>
+
 
 bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
 {
@@ -156,7 +156,7 @@ bool Parseur::parser(string mot_a_trouver, vector <Groupe> & groupes)
         // Les champs lexicaux et les types ne sont récupérés que maintenant car ils n'étaient pas utiles pour la reconnaissance du mot.
 
         if ((trouve = __testeur_mot.tester_mot(mot_a_trouver, langue_source, __donnees_mot))
-            || (trouve = __testeur_verbe.tester_verbe(mot_a_trouver, groupes, __donnees_mot)))
+             || (trouve = __testeur_verbe.tester_verbe(mot_a_trouver, groupes, __donnees_mot)))
         {
             parser_champs_lexicaux(_champs_lexicaux);
         }

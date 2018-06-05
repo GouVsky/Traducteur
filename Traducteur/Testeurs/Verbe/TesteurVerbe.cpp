@@ -11,7 +11,7 @@
 using namespace std;
 
 
-TesteurVerbe::TesteurVerbe() : __parseur_formes("./Resources/Dictionnaire/Verbes/formes.txt")
+TesteurVerbe::TesteurVerbe() : __parseur_formes(config::fichier_formes)
 {
     __donnees_formes_verbes = __parseur_formes.parser();
 }
@@ -95,29 +95,18 @@ bool TesteurVerbe::tester_verbe(string verbe, vector <Groupe> & groupes, Donnees
     
     for (int famille = 0; famille < nombre_familles; famille++)
     {
-        if (donnees.recuperer_type(famille).recuperer_classe() == "VERBE")
+        if (donnees.recuperer_type(famille).classe() == "VERBE")
         {
             __donnees_verbe.reinitialisation();
             
             
             size_t nombre_sens = donnees.recuperer_nombre_sens(langue_source, famille);
             
-
-            if (donnees.recuperer_type(famille).recuperer_categorie() == "ACTION")
-            {
-                __verbe = donnees.recuperer_type(famille).recuperer_structure_types().action;
-            }
             
-            else if (donnees.recuperer_type(famille).recuperer_categorie() == "ATTRIBUTIF")
-            {
-                __verbe = donnees.recuperer_type(famille).recuperer_structure_types().attributif;
-            }
+            __donnees_verbe.ajouter_groupe(langue_source, donnees.recuperer_type(famille).propriete()[langue_source] - '0');
             
+            __donnees_verbe.ajouter_groupe(langue_sortie, donnees.recuperer_type(famille).propriete()[langue_sortie] - '0');
             
-            __donnees_verbe.ajouter_groupe(langue_source, __verbe->recuperer_groupe(langue_source));
-            
-            __donnees_verbe.ajouter_groupe(langue_sortie, __verbe->recuperer_groupe(langue_sortie));
-
             
             // On teste chaque signification.
             
